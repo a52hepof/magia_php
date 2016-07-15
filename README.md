@@ -47,6 +47,7 @@ $password = "";
 
 
 ?>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/_2snk1yRuZY" frameborder="0" allowfullscreen></iframe>
+
+https://www.youtube.com/watch?v=_2snk1yRuZY
 
 
