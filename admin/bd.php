@@ -1,5 +1,5 @@
 <?php  
 $servidor = "localhost"; 
-$bdatos = "mibasedatos"; 
+$bdatos = "ecuasoluciones"; 
 $usuario = "root"; 
-$clave = "micalve"; 
+$clave = "phlpd021"; 
