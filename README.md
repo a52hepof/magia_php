@@ -47,13 +47,3 @@ $password = "";
 
 
 ?>
-
-1era parte
-https://www.youtube.com/watch?v=_2snk1yRuZY
-
-2da parte
-https://www.youtube.com/watch?v=oBXfToUfj7M
-
-
-
-

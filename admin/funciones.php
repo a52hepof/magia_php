@@ -1171,7 +1171,7 @@ while ($reg = mysql_fetch_array($sql)) {
             break;
     }
 }
-/*
+
 function contenido_admin($pagina) {
     global $servidor, $bdatos, $usuario, $clave;
     switch ($pagina) {
@@ -1660,8 +1660,7 @@ function formularios_opciones(){
             return $fuente;
     }
 }
-*/
-/*
+
 function contenido_config($pagina) {
     switch ($pagina) {
         case 'footer.php':
@@ -1710,14 +1709,13 @@ function contenido_config($pagina) {
             break;
     }
 }
- * 
- */
 
-/*
 function contenido_gestion($pagina) {
     switch ($pagina) {
         case 'estilo.css':
-            $fuente = '
+            $fuente = '/*-------------------------
+    Simple reset
+--------------------------*/
 
 
 *{
@@ -1726,7 +1724,13 @@ function contenido_gestion($pagina) {
 }
 
 
+/*-------------------------
+    General Styles
+--------------------------*/
 
+/*----------------------------
+    The file upload form
+-----------------------------*/
 #upload{
     font-family:\'PT Sans Narrow\', sans-serif;
     background-color:#373a3d;
@@ -1972,7 +1976,7 @@ include "home/vista/footer.php";
             break;
     }
 }
-*/
+
 function registrar_pagina_en_bd($pagina) {
     global $dbh;
     $sql = "INSERT INTO _paginas (pagina) VALUES (:pagina)";
@@ -2121,7 +2125,7 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
 
     // preparo las carpetas a crear    
     $carpetas = [
-       // 'admin',
+        'admin',
         'gestion',
         'imagenes',
         'includes',
@@ -2130,7 +2134,6 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
     // con esto creo las carpetas
     crear_carpetas($path_web, $carpetas);
     // copiamos el home en gestion y en config
-    copiar_carpeta("./codigo_fuente/admin", "$path_web/gestion");
     copiar_carpeta("./codigo_fuente/gestion", "$path_web/gestion");
     copiar_carpeta("./codigo_fuente/includes", "$path_web/includes");
     copiar_carpeta("./codigo_fuente/extenciones/funciones", "$path_web/extenciones/funciones");
@@ -2144,7 +2147,7 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
         if (file_exists("$path_web/$carpetas[$i]")) {
             // creamos los ficheros denttro de cada carpeta del proyecto
             switch ($carpetas[$i]) {
-              /*  case 'admin':
+                case 'admin':
                     $ficheros = [
                         'bd.php',
                         'conec.php',
@@ -2164,8 +2167,6 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
                         $j++;
                     }
                     break;
-               * 
-               */
                 case 'config':
                     $ficheros = [
                         'footer.php',
