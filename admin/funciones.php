@@ -487,9 +487,11 @@ function contenido_vista($vista, $nombrePlugin) {
             return $fuente;
             break;
 
-        case 'buscar.php':
-
-            $fuente = '<h2><?php _t("Resultados de su busqueda","' . $nombrePlugin . '"); ?></h2>' . "\n\n";
+        case 'buscar.php':            
+            $fuente = '<?php include "tabs.php"; ?>' . "\n\n";
+            $fuente .= '<h2> ' . "\n\n";
+            $fuente .= '<span class="glyphicon glyphicon-search"></span> ' . "\n\n";
+            $fuente .= '<?php _t("Resultados de su busqueda","' . $nombrePlugin . '"); ?></h2>' . "\n\n";
             $fuente .= '
 <table class="table table-striped">
     <thead>
@@ -517,6 +519,7 @@ function contenido_vista($vista, $nombrePlugin) {
    
 
         <?php
+        $i = 1;
         while ($reg = mysql_fetch_array($sql)) {
             include "./' . $nombrePlugin . '/reg/reg.php"; 
                 if(permisos_tiene_permiso("editar", "' . $nombrePlugin . '", $u_grupo)){
@@ -524,7 +527,8 @@ function contenido_vista($vista, $nombrePlugin) {
                    // include "./' . $nombrePlugin . '/vista/tr_editar.php";
                 }else{
                     include "./' . $nombrePlugin . '/vista/tr.php";
-                }            
+                }
+            $i++;    
         }
         ?>
     </tbody>
@@ -544,10 +548,7 @@ function contenido_vista($vista, $nombrePlugin) {
             return $fuente;
             break;
 
-        case 'crear.php':
-           
-            
-            
+        case 'crear.php':                                   
             $f  = '<h2><?php _t("Nuevo ' . $nombrePlugin . '","' . $nombrePlugin . '"); ?></h2> ' . "\n\n";            
             $f .= '<form class="form-horizontal" action="index.php" method="post"> ' . "\n";
             $f .= '<input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
@@ -615,7 +616,7 @@ function contenido_vista($vista, $nombrePlugin) {
             break;
 
         case 'editar.php':
-            $fuente = '<h2><?php echo _t("Editar","' . $nombrePlugin . '"); ?></h2>' . "\n\n";
+            $fuente  = '<h2><?php echo _t("Editar","' . $nombrePlugin . '"); ?></h2>' . "\n\n";
             $fuente .= '     <form class="form-horizontal" method="post" action="index.php"> ' . "\n";
             $fuente .= '     <input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
             $fuente .= '     <input type="hidden" name="c" value="editar"> ' . "\n";
@@ -646,13 +647,15 @@ function contenido_vista($vista, $nombrePlugin) {
        
         case 'index.php':
 
-            $fuente = '<h2><?php echo _t("Lista de ' . $nombrePlugin . '","' . $nombrePlugin . '"); ?>
-                <a type="button" class="btn btn-primary navbar-btn" href="?p=' . $nombrePlugin . '&c=crear"><?php _t("Nueva","' . $nombrePlugin . '"); ?></a></h2>';
+            $fuente  = '<?php include "tabs.php"; ?>' . "\n";
+            $fuente .= '<h2> ' . "\n";
+            $fuente .= '<?php echo _t("Lista de ' . $nombrePlugin . '","' . $nombrePlugin . '"); ?> <a type="button" class="btn btn-primary navbar-btn" href="?p=' . $nombrePlugin . '&c=crear"> <?php _t("Nueva","' . $nombrePlugin . '"); ?></a>' . "\n";
+            $fuente .= '</h2>' . "\n";
 
             $fuente .= '
 <table class="table table-striped">
     <thead>
-        <tr> ' . "\n\n";
+        <tr> <td>#</td>' . "\n\n";
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
@@ -675,6 +678,7 @@ function contenido_vista($vista, $nombrePlugin) {
    
 
         <?php
+        $i=1;
         while ($reg = mysql_fetch_array($sql)) {
             include "./' . $nombrePlugin . '/reg/reg.php"; 
                 if(permisos_tiene_permiso("editar", "' . $nombrePlugin . '", $u_grupo)){
@@ -682,7 +686,8 @@ function contenido_vista($vista, $nombrePlugin) {
                    // include "./' . $nombrePlugin . '/vista/tr_editar.php";
                 }else{
                     include "./' . $nombrePlugin . '/vista/tr.php";
-                }            
+                }      
+            $i++;    
         }
         ?>
     </tbody>
@@ -776,16 +781,58 @@ function contenido_vista($vista, $nombrePlugin) {
             //$fuente .= '   </div> ' . "\n";
             $fuente .= ' </form> ' . "\n";
             $fuente .= ' </div> ' . "\n";
+            return $fuente;
+            break;
+            
+            
+            
+            
+            
+            
+            
+            case 'buscar_form.php':
+            $fuente  = '<h2>' . "\n\n";
+            $fuente .= '<span class="glyphicon glyphicon-search"></span>' . "\n\n";
+            $fuente .= '<?php _t("Buscar","' . $nombrePlugin . '"); ?> ' . "\n\n";
+            $fuente .= '</h2> ' . "\n\n";
+            $fuente .= '<form class="" action="index.php" method="get"> ' . "\n";
+            $fuente .= '<input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
+            $fuente .= '<input type="hidden" name="c" value="buscar"> ' . "\n";
 
-
-
-
+            $i = 0;
+            $usar_id = 0; // 0 no usa, -1 si usa
+            foreach ($resultados as $reg) {
+                if ($i > $usar_id) {
+                    $fuente .= '     <div class="form-group"> ' . "\n";
+                    $fuente .= '     <label for="' . $reg[0] . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '");?></label> ' . "\n";
+                    // $fuente .= '     <div class="col-sm-10"> ' . "\n";
+                    $fuente .= '       <input type="text" class="form-control" name="' . $reg[0] . '" id="' . $reg[0] . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?> "> ' . "\n";
+                    // $fuente .= '     </div> ' . "\n";
+                    $fuente .= '   </div> ' . "\n\n\n";
+                }
+                $i++;
+            }
+            //  $fuente .= ' <div class="form-group"> ' . "\n";
+            //  $fuente .= '     <div class="col-sm-offset-2 col-sm-10"> ' . "\n";
+            $fuente .= '       <button type="submit" class="btn btn-primary"><?php _t("Buscar","' . $nombrePlugin . '"); ?></button> ' . "\n";
+            //$fuente .= '     </div> ' . "\n";
+            //$fuente .= '   </div> ' . "\n";
+            $fuente .= ' </form> ' . "\n";
+            
             return $fuente;
             break;
 
+            
+            
+            
+            
+            
+            
         case 'tr.php':
             $fuente = ' <?php  ' . "\n";
-            $fuente .= '    echo \' <tr>';
+            $fuente .= '    echo \' <tr>' . "\n";
+            $fuente .= '    <td>\'.$i.\'</td> ' . "\n";
+            
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
@@ -803,7 +850,52 @@ function contenido_vista($vista, $nombrePlugin) {
 
             return $fuente;
             break;
+            
+            
 
+        case 'tabs.php':
+            $fuente  = '<div>' . "\n\n";
+            $fuente .= '  <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">        
+                            <a href="#inicio" aria-controls="inicio" role="tab" data-toggle="tab">
+                                <span class="glyphicon glyphicon-list-alt"></span>
+                                Lista
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#buscar" aria-controls="buscar" role="tab" data-toggle="tab">
+                                <span class="glyphicon glyphicon-search"></span>
+                                Buscar
+                            </a>
+                        </li>
+                      </ul>
+
+                      <!-- Tab panes -->
+                      <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="inicio"></div>
+                        <div role="tabpanel" class="tab-pane" id="buscar">
+                            <?php include "buscar_form.php"; ?>        
+                        </div>        
+                      </div>
+                    </div>' . "\n\n";
+            return $fuente;
+            break;
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
         case 'tr_anadir.php':
             $fuente = '
             <form method="post" action="index.php" >
@@ -1975,11 +2067,13 @@ function magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvcg) {
             $c = [
                 'borrar.php',
                 'buscar.php',
+                'buscar_form.php',
                 'crear.php',
                 'editar.php',
                 'index.php',
                 'sidebar.php',
                 'menu.php',
+                'tabs.php',
                 'tr.php',
                 'tr_anadir.php',
                 'tr_editar.php',

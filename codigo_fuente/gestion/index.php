@@ -1,9 +1,5 @@
 <?php
 session_start("magia_php") ;
-// para mostrar los errores
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
-//
 $u_grupo = "root";
 $u_login = "roencosa";
 include "z_verificar.php";
@@ -69,19 +65,7 @@ include "home/vista/nav_sup.php";
 
 <?php
 
-
-
-
-switch ($p) {
-    case 'config':
-        include "config/vista/sidebar.php";
-        break;
-
-    default:
-        include "$p/vista/sidebar.php";
-        break;
-}
-
+include "home/vista/sidebar.php";
 
 include './'.$p.'/controlador/'.$c.'.php';
 

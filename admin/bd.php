@@ -1,5 +1,6 @@
-<?php  
-$servidor = "localhost"; 
-$bdatos = "ecuasoluciones"; 
-$usuario = "root"; 
-$clave = "phlpd021"; 
+<?php
+
+$servidor = "localhost";
+$bdatos = "ecuasoluciones_magia";
+$usuario = "root";
+$clave = "***";
