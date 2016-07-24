@@ -18,6 +18,9 @@
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
             
+            <?php _menu_top(); ?>
+            
+            
             
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>

@@ -1300,9 +1300,6 @@ while ($i < $menu_total_items) {
 
 }
 
-
-
-
 function _estatus($estatus) {
     if($estatus==0){
         return _t("Activo","formularios");
@@ -1310,90 +1307,6 @@ function _estatus($estatus) {
         return _t("Bloqueado","formularios");
     }
 }
-
-
-function _formulario_texto($nombre, $marca_agua="",$valor="", $desactivar=false, $clase="form-control") {    
-    
-    $desactivado    = ($desactivar)? " disabled " : "";
-    //$clase          = ($clase)? " form-control " : "";
-    
-    return "<input "
-            . "type=\"text\" "
-            . "class=\"$clase\" "
-            . "name=\"$nombre\" "
-            . "id=\"$nombre\" "
-            . "placeholder=\"$marca_agua\" "
-            . "value=\"$valor\" $desactivado > ";
-}
-
-
-function _formulario_opciones($tabla, $campo, $selecionado = "", $excluir = "") {
-    global $conexion;
-    $sql = mysql_query(
-            "SELECT $campo FROM $tabla  ", $conexion) or die("Error:" . mysql_error());
-    while ($reg = mysql_fetch_array($sql)) {
-
-        echo "<option ";
-        if ($selecionado == $reg[0]) {
-            echo " selected ";
-        } else {
-            echo "";
-        }
-        if ($excluir == $reg[0]) {
-            echo " disabled ";
-        } else {
-            echo "";
-        }
-        echo "value=\"$reg[0]\">$reg[0]</option>";
-    }
-}
-
-function _formulario_radio($tabla, $campo, $selecionado = "", $excluir = "") {
-    global $conexion;
-    $sql = mysql_query(
-            "SELECT $campo FROM $tabla  ", $conexion) or die("Error:" . mysql_error());
-    while ($reg = mysql_fetch_array($sql)) {
-
-        echo "<input ";
-        if ($selecionado == $reg[0]) {
-            echo " checked ";
-        } else {
-            echo "";
-        }
-        if ($excluir == $reg[0]) {
-            echo " disabled ";
-        } else {
-            echo "";
-        }
-        echo "type=\"radio\" name=\"$campo\" id=\"$reg[0]\" value=\"$reg[0]\" ><label for=\"$reg[0]\">$reg[0]</label> \n";
-    }
-}
-
-function _formulario_checkbox($tabla, $campo, $selecionar = "", $desactivar = "",$excluir="") {
-    global $conexion;
-    $sql = mysql_query(
-            "SELECT $campo FROM $tabla  ", $conexion) or die("Error:" . mysql_error());
-    while ($reg = mysql_fetch_array($sql)) {
-
-        $seleccionado   =  ($selecionar == $reg[0]) ? " checked " : "" ;
-        $excluido       =  ($excluir == $reg[0]) ? true : false ;
-        $desactivado    =  ($desactivar == $reg[0]) ? " disabled " : "" ;
-        
-        if(!$excluido){
-        echo "<input "
-        . "$seleccionado "
-                . "$excluido "
-                . "$desactivado "
-                . "type=\"checkbox\" "
-                . "name=\"$reg[0]\" "
-                . "id=\"$reg[0]\" "
-                . "value=\"$reg[0]\" >"
-                . "<label for=\"$reg[0]\">$reg[0]</label>\n ";
-        }
-    }
-}
-
-
 ';
             return $fuente;
             break;
@@ -1648,6 +1561,78 @@ function contenido_registra($frase,$contexto="") {
 return 0;
 }';
             return $fuente;
+            
+            
+            
+            
+            
+        case 'menu.php':
+            $fuente = '<?php
+function _menu_top(){
+    global $conexion;
+    $sql = mysql_query(
+            "SELECT distinct(padre) FROM _menu WHERE ubicacion = \'top\'  ", $conexion) or die("Error:" . mysql_error());
+        
+    while ($reg = mysql_fetch_array($sql)) {
+        echo \'<li class="dropdown">
+          <a href="#" 
+          class="dropdown-toggle" 
+          data-toggle="dropdown" 
+          role="button" 
+          aria-haspopup="true" 
+          aria-expanded="false">
+          \'.$reg[padre].\' 
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            \'; 
+            
+             _menu_items_segun_padre_ubicacion($reg[\'padre\'], \'top\');
+        
+            echo \'<li role="separator" class="divider"></li>            
+            
+            
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>\'; 
+    }        
+}
+function _menu_items_segun_padre_ubicacion($padre, $ubicacion){
+    global $conexion;
+    $sql = mysql_query(
+            "SELECT label, url FROM _menu WHERE padre = \'$padre\' AND ubicacion = \'$ubicacion\'  ORDER BY orden  ", $conexion) or die("Error:" . mysql_error());
+        
+    while ($reg = mysql_fetch_array($sql)) {
+        echo \'
+            <li><a href="\'.$reg[url].\'">\'.$reg[label].\'</a></li>
+          
+        \'; 
+    }
+    
+    
+}
+
+//------------------------------------------------------
+function _menu_sidebar($p){
+    global $conexion;
+    $sql = mysql_query(
+            "SELECT distinct(padre), label, url  FROM _menu WHERE ubicacion = \'sidebar\'  ", $conexion) or die("Error:" . mysql_error());
+        
+    while ($reg = mysql_fetch_array($sql)) {
+        echo \'<li\';
+        if ($p == $reg[\'label\']) { echo " class=\"active\" "; } 
+        echo \'>
+                    <a href="\'.$reg[url].\'">
+                        <span class="glyphicon glyphicon-folder-close"></span> 
+                \'.$reg[\'label\'].\'
+                    </a>
+                </li>\'; 
+    }        
+}
+
+
+
+';
+            return $fuente;            
     
     
     case 'formularios.php':
@@ -1671,6 +1656,90 @@ function formularios_campo($tipo, $nombre, $id, $valor="", $clase="", $placehold
 function formularios_opciones(){
     
 }
+
+
+function _formulario_texto($nombre, $marca_agua="",$valor="", $desactivar=false, $clase="form-control") {    
+    
+    $desactivado    = ($desactivar)? " disabled " : "";
+    //$clase          = ($clase)? " form-control " : "";
+    
+    return "<input "
+            . "type=\"text\" "
+            . "class=\"$clase\" "
+            . "name=\"$nombre\" "
+            . "id=\"$nombre\" "
+            . "placeholder=\"$marca_agua\" "
+            . "value=\"$valor\" $desactivado > ";
+}
+
+
+function _formulario_opciones($tabla, $campo, $selecionado = "", $excluir = "") {
+    global $conexion;
+    $sql = mysql_query(
+            "SELECT $campo FROM $tabla  ", $conexion) or die("Error:" . mysql_error());
+    while ($reg = mysql_fetch_array($sql)) {
+
+        echo "<option ";
+        if ($selecionado == $reg[0]) {
+            echo " selected ";
+        } else {
+            echo "";
+        }
+        if ($excluir == $reg[0]) {
+            echo " disabled ";
+        } else {
+            echo "";
+        }
+        echo "value=\"$reg[0]\">$reg[0]</option>";
+    }
+}
+
+function _formulario_radio($tabla, $campo, $selecionado = "", $excluir = "") {
+    global $conexion;
+    $sql = mysql_query(
+            "SELECT $campo FROM $tabla  ", $conexion) or die("Error:" . mysql_error());
+    while ($reg = mysql_fetch_array($sql)) {
+
+        echo "<input ";
+        if ($selecionado == $reg[0]) {
+            echo " checked ";
+        } else {
+            echo "";
+        }
+        if ($excluir == $reg[0]) {
+            echo " disabled ";
+        } else {
+            echo "";
+        }
+        echo "type=\"radio\" name=\"$campo\" id=\"$reg[0]\" value=\"$reg[0]\" ><label for=\"$reg[0]\">$reg[0]</label> \n";
+    }
+}
+
+function _formulario_checkbox($tabla, $campo, $selecionar = "", $desactivar = "",$excluir="") {
+    global $conexion;
+    $sql = mysql_query(
+            "SELECT $campo FROM $tabla  ", $conexion) or die("Error:" . mysql_error());
+    while ($reg = mysql_fetch_array($sql)) {
+
+        $seleccionado   =  ($selecionar == $reg[0]) ? " checked " : "" ;
+        $excluido       =  ($excluir == $reg[0]) ? true : false ;
+        $desactivado    =  ($desactivar == $reg[0]) ? " disabled " : "" ;
+        
+        if(!$excluido){
+        echo "<input "
+        . "$seleccionado "
+                . "$excluido "
+                . "$desactivado "
+                . "type=\"checkbox\" "
+                . "name=\"$reg[0]\" "
+                . "id=\"$reg[0]\" "
+                . "value=\"$reg[0]\" >"
+                . "<label for=\"$reg[0]\">$reg[0]</label>\n ";
+        }
+    }
+}
+
+
 ';
             return $fuente;
     }
@@ -2572,6 +2641,7 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
                         'configuracion.php',
                         'funciones.php',
                         'index.php',
+                        'menu.php',
                         'modelo.css',
                         'permisos.php',
                         'traductor.php',
