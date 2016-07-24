@@ -1,8 +1,7 @@
 <?php
 // para mostrar los errores
 error_reporting(E_ALL);
-ini_set('display_errors', '1');
-     
+ini_set('display_errors', '1');     
 include "./admin/bd.php";
 include "./admin/config.php";
 include "./admin/conec.php";
