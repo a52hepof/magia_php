@@ -79,8 +79,9 @@ $p = (isset($_GET['p']))? "$_GET[p]" : "plugins_lista";
   <div class="form-group">
     <label for="exampleInputName2">Ubicacion</label>
     <select class="form-control" name="ubicacion">
-        <option value="top" <?php ?>>Top menu</option>
-        <option value="sidebar" <?php if($ubicacion = 'sidebar'){echo " selected"; }?>>sidebar menu</option>        
+        
+        <option value="top" <?php if($ubicacion == 'top'){echo " selected"; }?>>Top menu</option>        
+        <option value="sidebar" <?php if($ubicacion == 'sidebar'){echo " selected"; }?>>sidebar menu</option>        
     </select>
     
 
@@ -94,16 +95,16 @@ $p = (isset($_GET['p']))? "$_GET[p]" : "plugins_lista";
     <label for="padre">Menu Padre</label>
     <select class="form-control" name="padre">
         <option value="config">config</option>
-  <?php
-  $i = 1;
-  foreach ($resultado as $reg) {  
-    echo '<option value="' . $reg[0] . '"'; 
-    if($padre == $reg[0]){echo " selected"; }
-    echo '>' . $reg[0] . ' </option>';
-  
-  $i++;
-  }
-  ?>
+            <?php
+            $i = 1;
+            foreach ($resultado as $reg) {  
+              echo '<option value="' . $reg[0] . '"'; 
+              if($padre == $reg[0]){echo " selected"; }
+              echo '>' . $reg[0] . ' </option>';
+
+            $i++;
+            }
+            ?>
   </select>
   </div>
     
