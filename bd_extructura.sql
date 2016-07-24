@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `_idiomas` (
 
 CREATE TABLE IF NOT EXISTS `_menu` (
 `id` int(11) NOT NULL,
-  `ubicacion` int(11) NOT NULL,
+  `ubicacion` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `padre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `label` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `url` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
