@@ -73,6 +73,9 @@ $p = (isset($_GET['p']))? "$_GET[p]" : "plugins_lista";
 
 <p>configuracion del menu</p>
 
+
+
+
 <form class="form-horizontal" method="get" action="?">
     <input  type="hidden" name="p" value="plugins_lista">
     
@@ -95,6 +98,7 @@ $p = (isset($_GET['p']))? "$_GET[p]" : "plugins_lista";
     <label for="padre">Menu Padre</label>
     <select class="form-control" name="padre">
         <option value="config">config</option>
+        <option value="admin">admin</option>
             <?php
             $i = 1;
             foreach ($resultado as $reg) {  
