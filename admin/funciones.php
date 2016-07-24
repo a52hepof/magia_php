@@ -1290,9 +1290,9 @@ while ($i < $menu_total_items) {
 
 function _estatus($estatus) {
     if($estatus==0){
-        return _t("Activo","' . $nombrePlugin . '");
+        return _t("Activo","formularios");
     }else {
-        return _t("Bloqueado","' . $nombrePlugin . '");
+        return _t("Bloqueado","formularios");
     }
 }
 
