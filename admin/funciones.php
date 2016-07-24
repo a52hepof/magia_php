@@ -2213,6 +2213,7 @@ body {
 
 
         <link href="carrusel.css" rel="stylesheet">
+        <link href="estilo.css" rel="stylesheet">
     </head>
 
     <body>
@@ -2356,6 +2357,10 @@ body {
     </div>
 </nav>
 ';
+            return $fuente;
+            break;
+        case 'estilo.css':
+            $fuente = '/*Aca puedes escribir tu propia hoja css*/';
             return $fuente;
             break;
         case 'otro.php':
@@ -2610,6 +2615,7 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
     
     $ficheros_publicos = [
         'carrusel.css',
+        'estilo.css',
         'carrusel.php',
         'detalles.php',
         'index.php',
