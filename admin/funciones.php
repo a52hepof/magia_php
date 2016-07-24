@@ -16,7 +16,7 @@ function muestra_errores($d, $f, $l) {
 }
 
 
-function plugin_crear($path_plugins, $nombrePlugin, $padre, $label) {
+function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) {
     global $path_web;
     // verifico si el nombre existe
     // verifico que la carpeta de plugins existe $path_plugins 
@@ -41,7 +41,7 @@ function plugin_crear($path_plugins, $nombrePlugin, $padre, $label) {
         registrar_pagina_en_bd($nombrePlugin);
 
 // tambien registro el item en el menu    
-        registra_item_al_menu($nombrePlugin, $padre, $label);
+        registra_item_al_menu($nombrePlugin, $ubicacion, $padre, $label);
 
 // ahora registro el permiso del root en 1111
         registrar_permiso_pagina_grupo('root', "$nombrePlugin", '1111');
@@ -2004,15 +2004,16 @@ function registrar_permiso_pagina_grupo($grupo, $pagina, $permiso) {
  * @global type $dbh
  * @param type $nombre_carpeta
  */
-function registra_item_al_menu($nombre_carpeta, $padre, $label) {
+function registra_item_al_menu($plugin, $ubicacion, $padre, $label) {
     global $dbh;
     
-    $sql = "INSERT INTO _menu (padre,label,url,orden) VALUES (:padre,:label,:url,:orden)";
+    $sql = "INSERT INTO _menu (ubicacion, padre,label,url,orden) VALUES (:ubicacion, :padre,:label,:url,:orden)";
     $stmt = $dbh->prepare($sql);
     $stmt->execute(array(
+        ":ubicacion" => "$ubicacion",
         ":padre" => "$padre",
         ":label" => "$label",
-        ":url" => "?p=$nombre_carpeta&c=index",
+        ":url" => "?p=$plugin&c=index",
         ":orden" => 0
             )
     );

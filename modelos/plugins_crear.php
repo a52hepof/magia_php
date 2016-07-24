@@ -1,5 +1,7 @@
 <ul>
     <?php
+
+// nombre plugin
     if (isset($_GET['nombrePlugin'])) {
         $nombrePlugin = trim(strtolower($_GET['nombrePlugin']));
         echo "<li>ok: Nombre de plugin: $nombrePlugin</li>";
@@ -8,7 +10,15 @@
         die("Olvido el nombre del plugin");
     }
 
-
+// ubicacion
+    if (isset($_GET['ubicacion'])) {
+        $ubicacion = trim(strtolower($_GET['ubicacion']));
+        echo "<li>ok:Su ubicacion en el menu es: $ubicacion</li>";
+    } else {
+        $ubicacion = false;
+        die("Olvido la ubicacion");
+    }
+// Padre
     if (isset($_GET['padre'])) {
         $padre = trim(strtolower($_GET['padre']));
         echo "<li>ok: Nombre padre es: $padre</li>";
@@ -16,7 +26,7 @@
         $menu = false;
         die("Olvido el nombre del menu");
     }
-
+// Label
     if (isset($_GET['label'])) {
         $label = trim(strtolower($_GET['label']));
         echo "<li>ok: Nombre de plugin: $label</li>";
@@ -50,7 +60,7 @@
 
         $label = ($label)?"$label":"$nombrePlugin";
         
-        plugin_crear($path_plugins, $nombrePlugin, $padre, $label);        
+        plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label);        
 
 
   
