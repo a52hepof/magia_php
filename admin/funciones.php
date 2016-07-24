@@ -143,7 +143,9 @@ global $icon_error, $icon_ok, $icon_fichero;
 }
 
 function copiar_carpeta($origen, $destino) {
-     echo "<p>Copiar $origen a $destino</p>";     
+global $icon_error, $icon_ok, $icon_fichero;     
+     echo "<p><b>Copiar:</b> $origen <b>a:</b> $destino</p>";   
+     
     if (is_dir($origen)) {
         @mkdir($destino);
         $d = dir($origen);
@@ -152,12 +154,25 @@ function copiar_carpeta($origen, $destino) {
                 continue;
             }
             $Entry = $origen . '/' . $entry;
-            if (is_dir($Entry)) {
-                copiar_carpeta($Entry, $destino . '/' . $entry);                
+            if (is_dir($Entry)    ) {
+                
+                if(!file_exists($destino . '/' . $entry)){
+                    copiar_carpeta($Entry, $destino . '/' . $entry);   
+                }else {
+                    echo "<p><b>$icon_error [error]</b> : ya existe: $destino/$entry </p>"; 
+                }
+                
+                             
+                
                 continue;
             }
-            copy($Entry, $destino . '/' . $entry);
-            chmod("$destino", 0777);
+            if(!file_exists($destino . '/' . $entry)){
+                copy($Entry, $destino . '/' . $entry);
+                chmod("$destino", 0777);
+            }else {
+                echo "<p><b>$icon_error [error]</b>  Ya existe: $destino/$entry)</p>"; 
+            }
+            
             
         }
 
