@@ -468,7 +468,7 @@ function contenido_modelos($modelos, $nombrePlugin) {
 
         case 'index.php':
             $fuente = '<?php ' . "\n";
-            $fuente = '$comando = "SELECT * FROM '.$nombrePlugin.' ORDER BY id "; ' . "\n";
+            $fuente .= '$comando = "SELECT * FROM '.$nombrePlugin.' ORDER BY id "; ' . "\n";
             $fuente .= '$sql=mysql_query("$comando LIMIT $inicio,$config_total_items_por_pagina ",$conexion) ' . "\n";
             $fuente .= 'or die ("Error: en el fichero:" .__FILE__ .\' linea: \'. __LINE__ .\'  \'.mysql_error());	  ' . "\n";
             $fuente .= '// esto es para la paginacion	  ' . "\n";
