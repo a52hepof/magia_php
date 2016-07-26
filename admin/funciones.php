@@ -196,7 +196,7 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' $accion = "borrar"; ' . "\n";
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             $fuente .= ' if (permisos_tiene_permiso($accion, $pagina, $u_grupo)) { ' . "\n";
-            $fuente .= ' $id 		= mysql_real_escape_string($_REQUEST[\'id\']); ' . "\n";
+            $fuente .= ' $'.$nombrePlugin.'_id 		= mysql_real_escape_string($_REQUEST[\''.$nombrePlugin.'_id\']); ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/borrar.php"; ' . "\n";
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $u_login); ' . "\n";
@@ -217,7 +217,9 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                    $fuente .= ' $' . $reg[0] . ' = mysql_real_escape_string($_REQUEST[\'' . $reg[0] . '\']);' . "\n";
+                $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1";                     
+                    $fuente .= ' $' . $var2 . ' = mysql_real_escape_string($_REQUEST[\'' . $var2 . '\']);' . "\n";
                     $fuente .= ($i < $total_resultados - 1) ? " " : "";
                 }
                 $i++;
@@ -277,31 +279,16 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente = ' <?php ' . "\n";
             $fuente .= ' $accion = "editar"; ' . "\n";
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
-            // $fuente .= ' //include \'header.php\'; '."\n";
-            // $fuente .= ' include "./'.$nombrePlugin.'/funciones.php"; '."\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina, $u_grupo)) { ' . "\n";
-            $fuente .= ' if(isset($_REQUEST[\'a\'])==\'editar\'){ ' . "\n";
-            
-            $fuente .= ' include "./' . $nombrePlugin . '/reg/post.php";  ' . "\n";            
-            
-            /*
-            $i = 0;
-            foreach ($resultados as $reg) {
-                include './reg/reg.php';
-                //$fuente .= ' $'.$resultados[$i].' = mysql_real_escape_string($_REQUEST[\''.$resultados[$i].'\']);     '."\n"; 
-                $fuente .= ' $' . $reg[0] . ' = mysql_real_escape_string($_REQUEST[\'' . $reg[0] . '\']);     ' . "\n";
-                $fuente .= ($i < $total_resultados - 1) ? " " : "";
-
-                $i++;
-            }
-            */
+            $fuente .= ' if(isset($_REQUEST[\'a\'])==\'editar\'){ ' . "\n";            
+            $fuente .= ' include "./' . $nombrePlugin . '/reg/post.php";  ' . "\n";                                    
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/editar.php";  ' . "\n\n";
 
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/ver.php";  ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/vista/ver.php";  ' . "\n";
             $fuente .= ' }else{ ' . "\n";
-            $fuente .= ' $id = mysql_real_escape_string($_REQUEST[\'id\']);      ' . "\n";
+            $fuente .= ' $'.$nombrePlugin.'_id = mysql_real_escape_string($_REQUEST[\''.$nombrePlugin.'_id\']);      ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/vista/editar.php"; ' . "\n";
@@ -336,7 +323,7 @@ function contenido_controlador($controlador, $nombrePlugin) {
             //     $fuente .= ' include "./'.$nombrePlugin.'/funciones.php"; '."\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$u_grupo)) { ' . "\n";
 
-            $fuente .= '     $id 		= mysql_real_escape_string($_REQUEST[\'id\']);   ' . "\n";
+            $fuente .= '     $'.$nombrePlugin.'_id 		= mysql_real_escape_string($_REQUEST[\''.$nombrePlugin.'_id\']);   ' . "\n";
 
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
@@ -367,7 +354,7 @@ function contenido_modelos($modelos, $nombrePlugin) {
             $fuente .= ' $sql=mysql_query(" ' . "\n";
             $fuente .= ' DELETE FROM  ' . "\n";
             $fuente .= ' ' . $nombrePlugin . '  ' . "\n";
-            $fuente .= ' WHERE id = \'$id\' ' . "\n";
+            $fuente .= ' WHERE id = \'$'.$nombrePlugin.'_id\' ' . "\n";
             $fuente .= ' ",$conexion) or die ("Error ".mysql_error()); ' . "\n";
             $fuente .= '  ' . "\n";
             $fuente .= ' $mensaje = "Realizado"; ' . "\n";
@@ -390,9 +377,13 @@ function contenido_modelos($modelos, $nombrePlugin) {
                 if ($i > $usar_id) {
                     // esto es para correjir el error
                     $remplaza_busqueda = '$busqueda';
+                    
+                $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1"; 
+                
 
                     //$fuente .= " $reg[0] like '%$remplaza_busqueda%'    "."\n";
-                    $fuente .= " $reg[0] like '%$$reg[0]%'    " . "\n";
+                    $fuente .= " $var1 like '%$$var2%'    " . "\n";
                     $fuente .= ($i < $total_resultados - 1) ? " AND " : "";
                 }
                 $i++;
@@ -411,7 +402,7 @@ function contenido_modelos($modelos, $nombrePlugin) {
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
-                if ($i > $usar_id) {
+                if ($i > $usar_id) {                    
                     $fuente .= ' ' . $reg[0] . ' ';
                     $fuente .= ($i < $total_resultados - 1) ? " , " : "";
                 }
@@ -432,10 +423,15 @@ function contenido_modelos($modelos, $nombrePlugin) {
             $fuente .= ' $stmt = $dbh->prepare($sql); ' . "\n";
             $fuente .= ' $stmt->execute(array( ' . "\n";
             $i = 0;
-            $usar_id = 0; // 0 no usa, -1 si usa
+            $usar_id = 0; // 0 no usa el id, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                    $fuente .= ' ":' . $reg[0] . '"=>"$' . $reg[0] . '" ' . "";
+                
+                $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1"; 
+                
+                
+                    $fuente .= ' ":' . $reg[0] . '"=>"$' . $var2 . '" ' . "";
                     $fuente .= ($i < $total_resultados - 1) ? " , " : "";
                 }
                 $i++;
@@ -453,12 +449,15 @@ function contenido_modelos($modelos, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                    $fuente .= ' ' . $reg[0] . ' = \'$' . $reg[0] . '\'  ' . "\n";
+                $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1"; 
+                
+                    $fuente .= ' ' . $reg[0] . ' = \'$' . $var2 . '\'  ' . "\n";
                     $fuente .= ($i < $total_resultados - 1) ? " , " : "";
                 }
                 $i++;
             }
-            $fuente .= ' WHERE id = \'$id\' ",$conexion) or die ("Error: ".mysql_error());   ' . "\n";
+            $fuente .= ' WHERE id = \'$'.$nombrePlugin.'_id\' ",$conexion) or die ("Error: ".mysql_error());   ' . "\n";
             return $fuente;
             break;
 
@@ -474,9 +473,9 @@ function contenido_modelos($modelos, $nombrePlugin) {
         case 'ver.php':
             $fuente = ' <?php ' . "\n";
             $fuente .= '$sql=mysql_query( ' . "\n";
-            $fuente .= ' "SELECT * FROM ' . $nombrePlugin . ' WHERE id = \'$id\' ORDER BY id DESC   ",$conexion) 	  ' . "\n";
+            $fuente .= ' "SELECT * FROM ' . $nombrePlugin . ' WHERE id = \'$'.$nombrePlugin.'_id\' ORDER BY id DESC   ",$conexion) 	  ' . "\n";
             $fuente .= ' or die ("Error: en el fichero:" .__FILE__ .\' linea: \'. __LINE__ .\' / \'.mysql_error());	' . "\n";
-            $fuente .= ' $reg = mysql_fetch_array($sql);	  ' . "\n";
+            $fuente .= ' $'.$nombrePlugin.' = mysql_fetch_array($sql);	  ' . "\n";
             return $fuente;
             break;
 
@@ -497,7 +496,7 @@ function contenido_vista($vista, $nombrePlugin) {
         case 'borrar.php':
             $fuente = '<h2><?php _t("Atencion","' . $nombrePlugin . '"); ?></h2>
                 <p><?php _t("Ud esta a por borrar definiticamente este registro, desea hacerlo?"); ?></p>
-                <a class="btn btn-danger" href="index.php?p=' . $nombrePlugin . '&c=borrar&id=<?php echo $id; ?>"><?php _t("Si,borrar"); ?></a>';
+                <a class="btn btn-danger" href="index.php?p=' . $nombrePlugin . '&c=borrar&'.$nombrePlugin.'_id=<?php echo $'.$nombrePlugin.'_id; ?>"><?php _t("Si,borrar"); ?></a>';
 
             return $fuente;
             break;
@@ -506,7 +505,7 @@ function contenido_vista($vista, $nombrePlugin) {
             $fuente = '<?php include "tabs.php"; ?>' . "\n\n";
             $fuente .= '<h2> ' . "\n\n";
             $fuente .= '<span class="glyphicon glyphicon-search"></span> ' . "\n\n";
-            $fuente .= '<?php _t("Resultados de su busqueda","' . $nombrePlugin . '"); ?></h2>' . "\n\n";
+            $fuente .= '<?php _t("Resultados de su busqueda en ","' . $nombrePlugin . '"); ?></h2>' . "\n\n";
             $fuente .= '
 <table class="table table-striped">
     <thead>
@@ -535,7 +534,7 @@ function contenido_vista($vista, $nombrePlugin) {
 
         <?php
         $i = 1;
-        while ($reg = mysql_fetch_array($sql)) {
+        while ($'.$nombrePlugin.' = mysql_fetch_array($sql)) {
             include "./' . $nombrePlugin . '/reg/reg.php"; 
                 if(permisos_tiene_permiso("editar", "' . $nombrePlugin . '", $u_grupo)){
                     include "./' . $nombrePlugin . '/vista/tr.php";
@@ -575,12 +574,16 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
+                $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1"; 
+                
+                
                     $f .= ' [ ' . "\n";
                     $f .= '        "tipo" => "text", ' . "\n";
-                    $f .= '        "nombre" => "' . $reg[0] . '",' . "\n";
+                    $f .= '        "nombre" => "' . $var2 . '",' . "\n";
                     $f .= '        "valor" => "",' . "\n";
                     $f .= '        "clase" => "form-control",' . "\n";
-                    $f .= '        "id" => "' . $reg[0] . '",' . "\n";
+                    $f .= '        "id" => "' . $var2 . '",' . "\n";
                     $f .= '        "placeholder" => "' . ucfirst($reg[0]) . '",' . "\n";                    
                     $f .= '    ], ' . "\n";
                     
@@ -636,15 +639,18 @@ function contenido_vista($vista, $nombrePlugin) {
             $fuente .= '     <input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
             $fuente .= '     <input type="hidden" name="c" value="editar"> ' . "\n";
             $fuente .= '     <input type="hidden" name="a" value="editar"> ' . "\n";
-            $fuente .= '     <input type="hidden" name="id" value="<?php echo $id; ?>"> ' . "\n\n";
+            $fuente .= '     <input type="hidden" name="'.$nombrePlugin.'_id" value="<?php echo $'.$nombrePlugin.'_id; ?>"> ' . "\n\n";
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
+                $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1"; 
+                
                     $fuente .= ' <div class="form-group"> ' . "\n";
                     $fuente .= '     <label for="' . $reg[0] . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?></label> ' . "\n";
                     $fuente .= '     <div class="col-sm-10"> ' . "\n";
-                    $fuente .= '       <input type="text" class="form-control" name="' . $reg[0] . '" id="' . $reg[0] . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>" value="<?php echo $' . $reg[0] . '; ?>"> ' . "\n";
+                    $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>" value="<?php echo $' . $var2 . '; ?>"> ' . "\n";
                     $fuente .= '     </div> ' . "\n";
                     $fuente .= '   </div> ' . "\n\n\n";
                 }
@@ -694,7 +700,7 @@ function contenido_vista($vista, $nombrePlugin) {
 
         <?php
         $i=1;
-        while ($reg = mysql_fetch_array($sql)) {
+        while ($'.$nombrePlugin.' = mysql_fetch_array($sql)) {
             include "./' . $nombrePlugin . '/reg/reg.php"; 
                 if(permisos_tiene_permiso("editar", "' . $nombrePlugin . '", $u_grupo)){
                     include "./' . $nombrePlugin . '/vista/tr.php";
@@ -734,23 +740,15 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                    /* $fuente .=  ' <div class="form-group">
-                      <label for="'.$nombrePlugin.'">'.$reg[0].'</label>
-                      <select class="form-control" name="'.$nombrePlugin.'">
-                      <option value="todas"><?php _t("Todas","' . $nombrePlugin . '"); ?></option>
-                      <?php '.$nombrePlugin.'_add(); ?>
-                      </select>
-                      </div> '."\n"; */
-
-
-
+                $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1";  
 
                     $fuente .= '
-  <div class="form-group">
-    <label for="' . ucfirst($reg[0]) . '"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?></label>
-    <input type="text" class="form-control" name="' . $reg[0] . '" id="' . $reg[0] . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>">
-  </div>
-   ';
+                    <div class="form-group">
+                      <label for="' . ucfirst($reg[0]) . '"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?></label>
+                      <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>">
+                    </div>
+                     ';
                 }
 
                 $i++;
@@ -780,10 +778,14 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
+                $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1"; 
+                
+                
                     $fuente .= '     <div class="form-group"> ' . "\n";
-                    $fuente .= '     <label for="' . $reg[0] . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '");?></label> ' . "\n";
+                    $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '");?></label> ' . "\n";
                     // $fuente .= '     <div class="col-sm-10"> ' . "\n";
-                    $fuente .= '       <input type="text" class="form-control" name="' . $reg[0] . '" id="' . $reg[0] . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?> "> ' . "\n";
+                    $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?> "> ' . "\n";
                     // $fuente .= '     </div> ' . "\n";
                     $fuente .= '   </div> ' . "\n\n\n";
                 }
@@ -818,10 +820,13 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
+                $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1";                      
+                    
                     $fuente .= '     <div class="form-group"> ' . "\n";
-                    $fuente .= '     <label for="' . $reg[0] . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '");?></label> ' . "\n";
+                    $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '");?></label> ' . "\n";
                     // $fuente .= '     <div class="col-sm-10"> ' . "\n";
-                    $fuente .= '       <input type="text" class="form-control" name="' . $reg[0] . '" id="' . $reg[0] . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?> "> ' . "\n";
+                    $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($var1) . '","' . $nombrePlugin . '"); ?> "> ' . "\n";
                     // $fuente .= '     </div> ' . "\n";
                     $fuente .= '   </div> ' . "\n\n\n";
                 }
@@ -852,14 +857,17 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                    $fuente .= ' <td>\'.$' . $reg[0] . '.\'</td> ' . "\n";
+                 $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1";    
+                
+                    $fuente .= ' <td>\'.$' . $var2 . '.\'</td> ' . "\n";
                 }
 
                 $i++;
             }
             $fuente .=' <td>
-<a href=\'.$_SERVER[\'PHP_SELF\'].\'?p=' . $nombrePlugin . '&c=ver&id=\'.$id.\'>Ver</a> |  
-<a href=\'.$_SERVER[\'PHP_SELF\'].\'?p=' . $nombrePlugin . '&c=editar&id=\'.$id.\'>Editar</a>  
+<a href=\'.$_SERVER[\'PHP_SELF\'].\'?p=' . $nombrePlugin . '&c=ver&'.$nombrePlugin.'_id=\'.$'.$nombrePlugin.'_id.\'>Ver</a> |  
+<a href=\'.$_SERVER[\'PHP_SELF\'].\'?p=' . $nombrePlugin . '&c=editar&'.$nombrePlugin.'_id=\'.$'.$nombrePlugin.'_id.\'>Editar</a>  
                       
                 </td></tr>\';  ';
 
@@ -874,13 +882,14 @@ function contenido_vista($vista, $nombrePlugin) {
                         <li role="presentation" class="active">        
                             <a href="#inicio" aria-controls="inicio" role="tab" data-toggle="tab">
                                 <span class="glyphicon glyphicon-list-alt"></span>
-                                Lista
+                                <?php _t(\'Lista\',\'tabs\');?>
+                                
                             </a>
                         </li>
                         <li role="presentation">
                             <a href="#buscar" aria-controls="buscar" role="tab" data-toggle="tab">
                                 <span class="glyphicon glyphicon-search"></span>
-                                Buscar
+                                <?php _t(\'Buscar\',\'tabs\');?>
                             </a>
                         </li>
                       </ul>
@@ -922,7 +931,9 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                    $fuente .= ' <td><input class="form-control" type="text" name="' . $reg[0] . '" value="" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>"></td> ' . "\n";
+                $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1";                      
+                    $fuente .= ' <td><input class="form-control" type="text" name="' . $var2 . '" value="" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>"></td> ' . "\n";
                 }
                 $i++;
             }
@@ -934,7 +945,6 @@ function contenido_vista($vista, $nombrePlugin) {
 
         case 'tr_editar.php':
 
-
             $fuente = ' <?php  ' . "\n";
             $fuente .= '$borrar = (permisos_tiene_permiso("borrar", "' . $nombrePlugin . '", $u_grupo))?\'<a class="btn btn-danger" href="index.php?p=' . $nombrePlugin . '&c=borrar&a=borrar&id=\'.$id.\'">Borrar</a>\':\'\'; ?>
 ';
@@ -942,16 +952,18 @@ function contenido_vista($vista, $nombrePlugin) {
 
 
             $fuente .= '<form method="post" action="index.php" >
-    <input type="hidden" name="p" value="' . $nombrePlugin . '">
-    <input type="hidden" name="c" value="editar">    
-    <input type="hidden" name="a" value="editar">    
-    <input type="hidden" name="id" value="<?php echo $id; ?>">    
-    <tr>';
+            <input type="hidden" name="p" value="' . $nombrePlugin . '">
+            <input type="hidden" name="c" value="editar">    
+            <input type="hidden" name="a" value="editar">    
+            <input type="hidden" name="'.$nombrePlugin.'_id" value="<?php echo $'.$nombrePlugin.'_id; ?>">    
+            <tr>';
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                    $fuente .= ' <td><input class="form-control" type="text" name="' . $reg[0] . '" value="<?php echo $' . $reg[0] . '; ?>" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>"></td> ' . "\n";
+                $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1";                      
+                    $fuente .= ' <td><input class="form-control" type="text" name="' . $var2 . '" value="<?php echo $' . $var2 . '; ?>" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>"></td> ' . "\n";
                 }
                 $i++;
             }
@@ -967,15 +979,17 @@ function contenido_vista($vista, $nombrePlugin) {
 
         case 'tr_buscar.php':
             $fuente = '<form method="get" action="index.php" >
-    <input type="hidden" name="p" value="' . $nombrePlugin . '">
-    <input type="hidden" name="c" value="buscar">       
-    <tr>';
+                <input type="hidden" name="p" value="' . $nombrePlugin . '">
+                <input type="hidden" name="c" value="buscar">       
+                <tr>';
 
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                    $fuente .= ' <td><input class="form-control" type="text" name="' . $reg[0] . '" value="" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>"></td> ' . "\n";
+                $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1";                      
+                    $fuente .= ' <td><input class="form-control" type="text" name="' . $var2 . '" value="" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>"></td> ' . "\n";
                 }
                 $i++;
             }
@@ -991,24 +1005,21 @@ function contenido_vista($vista, $nombrePlugin) {
 
         case 'ver.php':
             $fuente = '<h1><?php _t("Detalles","' . $nombrePlugin . '"); ?></h1> ' . "\n";
-            /* $fuente .= '<h2>
-              <?php echo _t("Lista de '.$nombrePlugin.'","' . $nombrePlugin . '"); ?>
-              <a type="button" class="btn btn-primary navbar-btn" href="?p='.$nombrePlugin.'&c=crear">Nueva</a>
-              </h2>'; */
-
 
             $fuente .= '     <form class="form-horizontal" method="" action=""> ' . "\n";
             $fuente .= '     <input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
             $fuente .= '     <input type="hidden" name="c" value="editar"> ' . "\n";
-            $fuente .= '     <input type="hidden" name="id" value="<?php echo $id; ?>"> ' . "\n";
+            $fuente .= '     <input type="hidden" name="'.$nombrePlugin.'_id" value="<?php echo $'.$nombrePlugin.'_id; ?>"> ' . "\n";
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
+                $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1";                      
                     $fuente .= ' <div class="form-group"> ' . "\n";
-                    $fuente .= '     <label for="' . $reg[0] . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?></label> ' . "\n";
+                    $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?></label> ' . "\n";
                     $fuente .= '     <div class="col-sm-10"> ' . "\n";
-                    $fuente .= '       <input type="text" class="form-control" name="' . $reg[0] . '" id="' . $reg[0] . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>" value="<?php echo $' . $reg[0] . '; ?>" disabled=""> ' . "\n";
+                    $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>" value="<?php echo $' . $var2 . '; ?>" disabled=""> ' . "\n";
                     $fuente .= '     </div> ' . "\n";
                     $fuente .= '   </div> ' . "\n";
                     $fuente .= '  ' . "\n\n";
@@ -1044,20 +1055,23 @@ function contenido_reg($controlador, $nombrePlugin) {
             $fuente = ' <?php ' . "\n";
             $i = 0;
             foreach ($resultados as $reg) {
-                $var = $reg[0];
-                //$fuente .= " $$var = mysql_real_escape_string($_GET['$var']);   ";    
-                $fuente .= '  $' . $var . ' = mysql_real_escape_string($_GET[\'' . $var . '\']); ' . "\n";
+                $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1";                                     
+                $fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_GET[\'' . $var2 . '\']); ' . "\n";
                 $i++;
             }
-
             return $fuente;
             break;
+            
+            
         case 'post.php':
             $fuente = ' <?php ' . "\n";
             $i = 0;
             foreach ($resultados as $reg) {
-                $var = $reg[0];
-                $fuente .= '  $' . $var . ' = mysql_real_escape_string($_POST[\'' . $var . '\']); ' . "\n";
+                $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1";      
+                                                    
+                $fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_POST[\'' . $var2 . '\']); ' . "\n";
                 $i++;
             }
             return $fuente;
@@ -1066,8 +1080,10 @@ function contenido_reg($controlador, $nombrePlugin) {
             $fuente = ' <?php ' . "\n";
             $i = 0;
             foreach ($resultados as $reg) {
-                $var = $reg[0];
-                $fuente .= '  $' . $var . ' = $reg[\'' . $var . '\']; ' . "\n";
+                $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1";                                
+                
+                $fuente .= '  $' . $var2 . ' = $'.$nombrePlugin.'[\'' . $var1 . '\']; ' . "\n";
                 $i++;
             }
 
@@ -1077,8 +1093,9 @@ function contenido_reg($controlador, $nombrePlugin) {
             $fuente = ' <?php ' . "\n";
             $i = 0;
             foreach ($resultados as $reg) {
-                $var = $reg[0];
-                $fuente .= '  $' . $var . ' = mysql_real_escape_string($_REQUEST[\'' . $var . '\']); ' . "\n";
+                $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1";                      
+                $fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_REQUEST[\'' . $var2 . '\']); ' . "\n";
                 $i++;
             }
             return $fuente;
@@ -1101,17 +1118,6 @@ function contenido_plugin($pagina, $nombrePlugin) {
         case 'funciones.php':
 
             $fuente = '<?php ';
-            /*   $fuente .=  '  function ' . $nombrePlugin . '_campo($tabla,$id, $campo){
-              global $conexion;
-              $sql=mysql_query(
-              "SELECT $campo FROM $tabla WHERE id = \'$id\'   ",$conexion) or die ("Error:".mysql_error());
-              $reg = mysql_fetch_array($sql);
-              return $reg[$campo];
-              }';
-
-             * 
-             */
-
             $fuente .='/**
  * si deseas agregar alguna funcion haslo en las extenciones
  */
@@ -1122,20 +1128,20 @@ function contenido_plugin($pagina, $nombrePlugin) {
     $sql = mysql_query(
             "SELECT DISTINCT $campo FROM _menu order by $campo   ", $conexion) 
             or die("Error:" . mysql_error());
-    while ($reg = mysql_fetch_array($sql)) {
+    while ($'.$nombrePlugin.' = mysql_fetch_array($sql)) {
 
         echo "<option ";
-        if ($selecionado == $reg[$campo]) {
+        if ($selecionado == $'.$nombrePlugin.'[$campo]) {
             echo " selected ";
         } else {
             echo "";
         }
-        if ($excluir == $reg[$campo]) {
+        if ($excluir == $'.$nombrePlugin.'[$campo]) {
             echo " disabled ";
         } else {
             echo "";
         }
-        echo "value=\"$reg[$campo]\">$reg[$campo]</option> \n";
+        echo "value=\"$'.$nombrePlugin.'[$campo]\">$'.$nombrePlugin.'[$campo]</option> \n";
     }
 }
 
@@ -1143,12 +1149,12 @@ function ' . $nombrePlugin . '_add($selecionado="",$excluir=""){
 global $conexion; 
 $sql=mysql_query(
         "SELECT * FROM ' . $nombrePlugin . '  ",$conexion) or die ("Error:".mysql_error());
-while ($reg = mysql_fetch_array($sql)) {
+while ($'.$nombrePlugin.' = mysql_fetch_array($sql)) {
     
    echo "<option "; 
-   if($selecionado==$reg[0]) {echo " selected "; } else {echo ""; }
-   if($excluir==$reg[0]) {echo " disabled "; } else {echo ""; }
-   echo "value=\"$reg[0]\">$reg[0]</option>";
+   if($selecionado==$'.$nombrePlugin.'[0]) {echo " selected "; } else {echo ""; }
+   if($excluir==$'.$nombrePlugin.'[0]) {echo " disabled "; } else {echo ""; }
+   echo "value=\"$'.$nombrePlugin.'[0]\">$'.$nombrePlugin.'[0]</option>";
 } 
 }
 
@@ -1560,12 +1566,7 @@ function contenido_registra($frase,$contexto="") {
    
 return 0;
 }';
-            return $fuente;
-            
-            
-            
-            
-            
+            return $fuente;                                                            
         case 'menu.php':
             $fuente = '<?php
 function _menu_top(){
@@ -1633,9 +1634,7 @@ function _menu_sidebar($p){
 
 ';
             return $fuente;            
-    
-    
-    case 'formularios.php':
+        case 'formularios.php':
             $fuente = '<?php
 
 
@@ -1769,24 +1768,18 @@ function contenido_config($pagina) {
             $fuente = 'header contenido';
             return $fuente;
             break;
-
         case 'index.php':
             $fuente = 'index contenido';
             return $fuente;
             break;
-
-
         case 'menu.php':
             $fuente = 'menu contanido';
             return $fuente;
             break;
-
-
         case 'modelo.css':
             $fuente = '';
             return $fuente;
             break;
-
         case 'z_verificar.php':
             $fuente = 'verif';
             return $fuente;
