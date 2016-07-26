@@ -585,6 +585,7 @@ function contenido_vista($vista, $nombrePlugin) {
                     $f .= '        "clase" => "form-control",' . "\n";
                     $f .= '        "id" => "' . $var2 . '",' . "\n";
                     $f .= '        "placeholder" => "' . ucfirst($reg[0]) . '",' . "\n";                    
+                    $f .= '        "label" => "' . ucfirst($reg[0]) . '",' . "\n";                    
                     $f .= '    ], ' . "\n";
                     
                 }
@@ -605,9 +606,10 @@ function contenido_vista($vista, $nombrePlugin) {
                         $valor = $c[$i][\'valor\'];
                         $clase = $c[$i][\'clase\'];
                         $placeholder = $c[$i][\'placeholder\'];
+                        $label = $c[$i][\'label\'];
 
                         echo \'<div class="form-group"> 
-                        <label for="\' . $id . \'" class="col-sm-2 control-label">\' . $nombre . \'</label> 
+                        <label for="\' . $id . \'" class="col-sm-2 control-label">\' . $label . \'</label> 
                         <div class="col-sm-8"> \';
                             formularios_campo($tipo, $nombre, $id, $valor, $clase, $placeholder);
                         echo \'</div> 
