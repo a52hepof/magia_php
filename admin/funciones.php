@@ -307,8 +307,13 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente = ' <?php ' . "\n";
             $fuente .= ' $accion = "ver"; ' . "\n";
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
-            $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$u_grupo)) { ' . "\n";
+            $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$u_grupo)) { ' . "\n";                        
+            $fuente .= ' $pag = $_GET[\'pag\'];   ' . "\n";
+            $fuente .= ' $inicio = $pag * $config_total_items_por_pagina;   ' . "\n";                        
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/index.php"; ' . "\n";
+            $fuente .= ' // esto es par el paginador     ' . "\n";
+            $fuente .= ' $total_items_por_pagina = $config_total_items_por_pagina; // esto viene de la configuracion    ' . "\n";
+            $fuente .= ' $total_paginas = ceil($total_items / $total_items_por_pagina);    ' . "\n";                        
             $fuente .= '     include "./' . $nombrePlugin . '/vista/index.php"; ' . "\n";
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $u_login); ' . "\n";
@@ -463,9 +468,13 @@ function contenido_modelos($modelos, $nombrePlugin) {
 
         case 'index.php':
             $fuente = '<?php ' . "\n";
-            $fuente .= '$sql=mysql_query("SELECT * FROM ' . $nombrePlugin . ' ORDER BY id DESC ",$conexion) ' . "\n";
+            $fuente = '$comando = "SELECT * FROM '.$nombrePlugin.' ORDER BY id "; ' . "\n";
+            $fuente .= '$sql=mysql_query("$comando LIMIT $inicio,$config_total_items_por_pagina ",$conexion) ' . "\n";
             $fuente .= 'or die ("Error: en el fichero:" .__FILE__ .\' linea: \'. __LINE__ .\'  \'.mysql_error());	  ' . "\n";
-            // $fuente .= '$reg = mysql_fetch_array($sql);	  '."\n";
+            $fuente .= '// esto es para la paginacion	  ' . "\n";
+            $fuente .= '$total_items = mysql_num_rows(mysql_query("$comando ",$conexion));	  ' . "\n";
+            
+            
 
             return $fuente;
             break;
@@ -724,6 +733,10 @@ function contenido_vista($vista, $nombrePlugin) {
     
 </table> 
 
+<?php include \'paginador.php\'; ?>
+    
+
+
 
 ';
 
@@ -768,6 +781,28 @@ function contenido_vista($vista, $nombrePlugin) {
 
             return $fuente;
             break;
+            
+        case 'paginador.php':
+            $fuente = '<?php if($total_items > $total_items_por_pagina){?>
+                
+<nav aria-label="Page navigation">
+  <ul class="pagination">
+    <li>
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <?php for($i=1; $i<=$total_paginas; $i++){echo \'<li><a href="?p=\'.$p.\'&c=\'.$c.\'&pag=\'.$i.\'#">\'.$i.\'</a></li>\'; }?>
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<?php }?>';
+            return $fuente;                                     
 
         case 'sidebar.php':
             $fuente = '﻿ <div class="col-sm-3 col-md-2 sidebar"> ' . "\n\n";
@@ -802,14 +837,8 @@ function contenido_vista($vista, $nombrePlugin) {
             $fuente .= ' </div> ' . "\n";
             return $fuente;
             break;
-            
-            
-            
-            
-            
-            
-            
-            case 'buscar_form.php':
+                                          
+        case 'buscar_form.php':
             $fuente  = '<h2>' . "\n\n";
             $fuente .= '<span class="glyphicon glyphicon-search"></span>' . "\n\n";
             $fuente .= '<?php _t("Buscar","' . $nombrePlugin . '"); ?> ' . "\n\n";
@@ -842,13 +871,7 @@ function contenido_vista($vista, $nombrePlugin) {
             $fuente .= ' </form> ' . "\n";
             
             return $fuente;
-            break;
-
-            
-            
-            
-            
-            
+            break;   
             
         case 'tr.php':
             $fuente = ' <?php  ' . "\n";
@@ -906,19 +929,6 @@ function contenido_vista($vista, $nombrePlugin) {
                     </div>' . "\n\n";
             return $fuente;
             break;
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             
             
             
@@ -1223,7 +1233,9 @@ mysql_select_db("$bdatos", $conexion) or die("Problemas conexion en local");
         case 'configuracion.php':
             $fuente = '<?php 
 $config_nombre_web          = "Mi sitio web";
-$config_idioma_por_defecto  = "es"; ';
+$config_idioma_por_defecto  = "es"; 
+$config_total_items_por_pagina = 25; 
+';
             return $fuente;
             break;
         case 'funciones.php':
@@ -1574,7 +1586,7 @@ return 0;
 function _menu_top(){
     global $conexion;
     $sql = mysql_query(
-            "SELECT distinct(padre) FROM _menu WHERE ubicacion = \'top\'  ", $conexion) or die("Error:" . mysql_error());
+            "SELECT distinct(padre) FROM _menu WHERE ubicacion = \'superior\'  ", $conexion) or die("Error:" . mysql_error());
         
     while ($reg = mysql_fetch_array($sql)) {
         echo \'<li class="dropdown">
@@ -1589,7 +1601,7 @@ function _menu_top(){
           <ul class="dropdown-menu">
             \'; 
             
-             _menu_items_segun_padre_ubicacion($reg[\'padre\'], \'top\');
+             _menu_items_segun_padre_ubicacion($reg[\'padre\'], \'superior\');
         
             echo \'<li role="separator" class="divider"></li>            
             
@@ -1618,7 +1630,7 @@ function _menu_items_segun_padre_ubicacion($padre, $ubicacion){
 function _menu_sidebar($p){
     global $conexion;
     $sql = mysql_query(
-            "SELECT distinct(padre), label, url  FROM _menu WHERE ubicacion = \'sidebar\'  ", $conexion) or die("Error:" . mysql_error());
+            "SELECT distinct(padre), label, url  FROM _menu WHERE ubicacion = \'lateral\'  ", $conexion) or die("Error:" . mysql_error());
         
     while ($reg = mysql_fetch_array($sql)) {
         echo \'<li\';
@@ -1635,7 +1647,13 @@ function _menu_sidebar($p){
 
 
 ';
-            return $fuente;            
+            return $fuente;  
+            
+
+            
+            
+            
+            
         case 'formularios.php':
             $fuente = '<?php
 
@@ -2554,6 +2572,7 @@ function magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvcg) {
                 'index.php',
                 'sidebar.php',
                 'menu.php',
+                'paginador.php',
                 'tabs.php',
                 'tr.php',
                 'tr_anadir.php',
