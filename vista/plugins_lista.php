@@ -83,8 +83,8 @@ $p = (isset($_GET['p']))? "$_GET[p]" : "plugins_lista";
     <label for="exampleInputName2">Ubicacion</label>
     <select class="form-control" name="ubicacion">
         
-        <option value="superior" <?php if($ubicacion == 'top'){echo " selected"; }?>>Menu Superior</option>        
-        <option value="lateral" <?php if($ubicacion == 'sidebar'){echo " selected"; }?>>Menu Lateral</option>        
+        <option value="superior" <?php if($ubicacion == 'superior'){echo " selected"; }?>>Menu Superior</option>        
+        <option value="lateral" <?php if($ubicacion == 'lateral'){echo " selected"; }?>>Menu Lateral</option>        
     </select>
     
 
@@ -97,8 +97,13 @@ $p = (isset($_GET['p']))? "$_GET[p]" : "plugins_lista";
   <div class="form-group">
     <label for="padre">Menu Padre</label>
     <select class="form-control" name="padre">
-        <option value="config">config</option>
-        <option value="admin">admin</option>
+        
+        
+        <option value="gestion">Gestion</option>
+        <option value="admin">Admininistracion</option>
+        <option value="mantenimiento">Mantenimiento</option>
+        <option value="config">Configuracion</option>
+        <option value="sistema">Sistema</option>
             <?php
             $i = 1;
             foreach ($resultado as $reg) {  
