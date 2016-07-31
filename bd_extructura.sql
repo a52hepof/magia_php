@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 10, 2016 at 12:22 PM
+-- Generation Time: Jul 31, 2016 at 08:51 PM
 -- Server version: 5.5.49-0+deb8u1
--- PHP Version: 5.6.22-0+deb8u1
+-- PHP Version: 5.6.23-0+deb8u1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `test`
+-- Database: `magia`
 --
 
 -- --------------------------------------------------------
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `_contenido` (
 `id` int(11) NOT NULL,
   `frase` varchar(250) COLLATE utf8_bin NOT NULL,
   `contexto` varchar(45) COLLATE utf8_bin DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -41,17 +41,17 @@ CREATE TABLE IF NOT EXISTS `_contenido` (
 CREATE TABLE IF NOT EXISTS `_grupos` (
 `id` int(11) NOT NULL,
   `grupo` varchar(50) COLLATE utf8_bin NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `_grupos`
 --
 
 INSERT INTO `_grupos` (`id`, `grupo`) VALUES
-(7, 'administradores'),
-(9, 'invitados'),
-(6, 'root'),
-(8, 'usuarios');
+(12, 'administradores'),
+(14, 'invitados'),
+(11, 'root'),
+(13, 'usuarios');
 
 -- --------------------------------------------------------
 
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `_idiomas` (
 `id` int(11) NOT NULL,
   `idioma` varchar(2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `nombre` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -77,8 +77,9 @@ CREATE TABLE IF NOT EXISTS `_menu` (
   `padre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `label` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `url` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `icono` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `orden` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -89,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `_menu` (
 CREATE TABLE IF NOT EXISTS `_paginas` (
 `id` int(11) NOT NULL,
   `pagina` varchar(50) COLLATE utf8_bin NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -102,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `_permisos` (
   `grupo` varchar(50) COLLATE utf8_bin NOT NULL,
   `pagina` varchar(50) COLLATE utf8_bin NOT NULL,
   `permiso` int(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -115,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `_traducciones` (
   `contenido_id` int(11) NOT NULL,
   `idioma` varchar(2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `traduccion` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -130,17 +131,17 @@ CREATE TABLE IF NOT EXISTS `_usuarios` (
   `usuario` varchar(50) COLLATE utf8_bin NOT NULL,
   `clave` varchar(50) COLLATE utf8_bin NOT NULL,
   `estatus` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `_usuarios`
 --
 
 INSERT INTO `_usuarios` (`id`, `grupo`, `nombres`, `usuario`, `clave`, `estatus`) VALUES
-(1, 'administradores', 'admin', 'admin', 'admin', 1),
-(2, 'invitados', 'invitado', 'invitado', 'invitado', 1),
-(3, 'root', 'root', 'root', 'root', 1),
-(4, 'usuarios', 'usuario', 'usuario', 'usuario', 1);
+(1, 'root', 'root', 'root', 'root', 1),
+(2, 'administradores', 'admin', 'admin', 'admin', 1),
+(3, 'usuarios', 'usuario', 'usuario', 'usuario', 1),
+(4, 'invitados', 'invitado', 'invitado', 'invitado', 1);
 
 --
 -- Indexes for dumped tables
@@ -156,7 +157,7 @@ ALTER TABLE `_contenido`
 -- Indexes for table `_grupos`
 --
 ALTER TABLE `_grupos`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `grupo_UNIQUE` (`grupo`), ADD UNIQUE KEY `grupo` (`grupo`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `grupo_UNIQUE` (`grupo`), ADD UNIQUE KEY `grupo` (`grupo`), ADD UNIQUE KEY `grupo_2` (`grupo`);
 
 --
 -- Indexes for table `_idiomas`
@@ -202,42 +203,53 @@ ALTER TABLE `_usuarios`
 -- AUTO_INCREMENT for table `_contenido`
 --
 ALTER TABLE `_contenido`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `_grupos`
 --
 ALTER TABLE `_grupos`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `_idiomas`
 --
 ALTER TABLE `_idiomas`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `_menu`
 --
 ALTER TABLE `_menu`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `_paginas`
 --
 ALTER TABLE `_paginas`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `_permisos`
 --
 ALTER TABLE `_permisos`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=39;
 --
 -- AUTO_INCREMENT for table `_traducciones`
 --
 ALTER TABLE `_traducciones`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `_usuarios`
 --
 ALTER TABLE `_usuarios`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `_permisos`
+--
+ALTER TABLE `_permisos`
+ADD CONSTRAINT `fk_permisos_paginas` FOREIGN KEY (`pagina`) REFERENCES `_paginas` (`pagina`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `fk_permisos_grupos` FOREIGN KEY (`grupo`) REFERENCES `_grupos` (`grupo`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

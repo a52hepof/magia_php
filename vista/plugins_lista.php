@@ -83,8 +83,8 @@ $p = (isset($_GET['p']))? "$_GET[p]" : "plugins_lista";
     <label for="exampleInputName2">Ubicacion</label>
     <select class="form-control" name="ubicacion">
         
-        <option value="superior" <?php if($ubicacion == 'superior'){echo " selected"; }?>>Menu Superior</option>        
-        <option value="lateral" <?php if($ubicacion == 'lateral'){echo " selected"; }?>>Menu Lateral</option>        
+        <option value="top" <?php if($ubicacion == 'top'){echo " selected"; }?>>Menu Superior</option>        
+        <option value="sidebar" <?php if($ubicacion == 'sidebar'){echo " selected"; }?>>Menu Lateral</option>        
     </select>
     
 

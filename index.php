@@ -298,6 +298,11 @@ if (isset($_REQUEST['tabla'])) {
                         case "maqueta":                            
                             include "./vista/maqueta.php";
                             break;
+//    maqueta                      
+                        case "demo":                            
+                           include "./request/demo.php";
+                           include "./vista/demo.php";
+                            break;
 
 
 

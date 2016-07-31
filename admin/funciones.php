@@ -16,6 +16,54 @@ function muestra_errores($d, $f, $l) {
 }
 
 
+function largo_del_campo($campo){
+    // http://www.bufa.es/extraer-numeros-cadena/
+    $resultado = intval(preg_replace('/[^0-9]+/', '', $campo), 10);
+    
+    return $resultado;
+}
+
+
+function tipo_campo($tipo){
+
+     // int(11)
+     
+     // si en tipo encuentro la cadena int es un numerico
+     
+     if(strpos($tipo, 'int') !==FALSE){
+         if(largo_del_campo($tipo) > 1){
+             return "numerico";
+         }else {
+             return "buleano";
+         }     
+     }
+     
+     if(strpos($tipo, 'varchar')!==FALSE){
+         return "texto";         
+     }
+     if(strpos($tipo, 'text')!==FALSE){
+         return "areaDeTexto";         
+     }
+     if(strpos($tipo, 'date')!==FALSE){
+         return "fecha";         
+     }
+     if(strpos($tipo, 'time')!==FALSE){
+         return "hora";         
+     }
+     
+     return "text";
+     
+     
+
+
+}
+
+
+
+
+
+
+
 function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) {
     global $path_web;
     // verifico si el nombre existe
@@ -583,16 +631,27 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1"; 
+                    
+                $nombre = $reg['Field'];
+                $tipo = $reg['Type'];
+                $nul = $reg['Null'];
+                $clave = $reg['Key'];
+                $defecto = $reg['Default'];
+                $extra = $reg['Extra'];
+
                 
+                $tabla_nombre = "$nombrePlugin"."_"."$nombre"; 
+                
+                $tipo_campo = tipo_campo($tipo);
+                
+                               
                 
                     $f .= ' [ ' . "\n";
-                    $f .= '        "tipo" => "text", ' . "\n";
-                    $f .= '        "nombre" => "' . $var2 . '",' . "\n";
+                    $f .= '        "tipo" => "'.$tipo_campo.'", ' . "\n";
+                    $f .= '        "nombre" => "' . $tabla_nombre . '",' . "\n";
                     $f .= '        "valor" => "",' . "\n";
                     $f .= '        "clase" => "form-control",' . "\n";
-                    $f .= '        "id" => "' . $var2 . '",' . "\n";
+                    $f .= '        "id" => "' . $tabla_nombre . '",' . "\n";
                     $f .= '        "placeholder" => "' . ucfirst($reg[0]) . '",' . "\n";                    
                     $f .= '        "label" => "' . ucfirst($reg[0]) . '",' . "\n";                    
                     $f .= '    ], ' . "\n";
@@ -1210,12 +1269,13 @@ function contenido_admin($pagina) {
     switch ($pagina) {
         case 'bd.php':
             $fuente = '<?php  
-                        $servidor = "' . $servidor . '"; 
-                        $bdatos = "' . $bdatos . '"; 
-                        $usuario = "' . $usuario . '"; 
-                        $clave = "' . $clave . '";';
+$bd_servidor = "' . $servidor . '"; 
+$bd_bdatos = "' . $bdatos . '"; 
+$bd_usuario = "' . $usuario . '"; 
+$bd_clave = "' . $clave . '";';
             return $fuente;
             break;
+        
         case 'conec.php':
             $fuente = '<?php	
 $dbh = new PDO("mysql:host=$servidor; dbname=$bdatos",   $usuario, $clave);
@@ -1586,7 +1646,7 @@ return 0;
 function _menu_top(){
     global $conexion;
     $sql = mysql_query(
-            "SELECT distinct(padre) FROM _menu WHERE ubicacion = \'superior\'  ", $conexion) or die("Error:" . mysql_error());
+            "SELECT distinct(padre) FROM _menu WHERE ubicacion = \'top\'  ", $conexion) or die("Error:" . mysql_error());
         
     while ($reg = mysql_fetch_array($sql)) {
         echo \'<li class="dropdown">
@@ -1601,7 +1661,7 @@ function _menu_top(){
           <ul class="dropdown-menu">
             \'; 
             
-             _menu_items_segun_padre_ubicacion($reg[\'padre\'], \'superior\');
+             _menu_items_segun_padre_ubicacion($reg[\'padre\'], \'top\');
         
             echo \'<li role="separator" class="divider"></li>            
             
@@ -1618,7 +1678,7 @@ function _menu_items_segun_padre_ubicacion($padre, $ubicacion){
         
     while ($reg = mysql_fetch_array($sql)) {
         echo \'
-            <li><a href="\'.$reg[url].\'">\'.$reg[label].\'</a></li>
+            <li><a href="\'.$reg[\'url\'].\'">\'.$reg[\'label\'].\'</a></li>
           
         \'; 
     }
@@ -1630,7 +1690,7 @@ function _menu_items_segun_padre_ubicacion($padre, $ubicacion){
 function _menu_sidebar($p){
     global $conexion;
     $sql = mysql_query(
-            "SELECT distinct(padre), label, url  FROM _menu WHERE ubicacion = \'lateral\'  ", $conexion) or die("Error:" . mysql_error());
+            "SELECT distinct(padre), label, url  FROM _menu WHERE ubicacion = \'sidebar\'  ", $conexion) or die("Error:" . mysql_error());
         
     while ($reg = mysql_fetch_array($sql)) {
         echo \'<li\';
@@ -1647,13 +1707,7 @@ function _menu_sidebar($p){
 
 
 ';
-            return $fuente;  
-            
-
-            
-            
-            
-            
+            return $fuente;                        
         case 'formularios.php':
             $fuente = '<?php
 
@@ -2634,7 +2688,9 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
     // con esto creo las carpetas
     crear_carpetas($path_web, $carpetas);
     // copiamos el home en gestion y en config
+    copiar_carpeta("./codigo_fuente/admin", "$path_web/admin");
     copiar_carpeta("./codigo_fuente/gestion", "$path_web/gestion");
+    copiar_carpeta("./codigo_fuente/imagenes", "$path_web/imagenes");
     copiar_carpeta("./codigo_fuente/includes", "$path_web/includes");
     copiar_carpeta("./codigo_fuente/extenciones/funciones", "$path_web/extenciones/funciones");
 
@@ -2649,8 +2705,8 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
             switch ($carpetas[$i]) {
                 case 'admin':
                     $ficheros = [
-                        'bd.php',
-                        'conec.php',
+                        'bd.php'
+/*                        'conec.php',
                         'coneccion.php',
                         'configuracion.php',
                         'funciones.php',
@@ -2660,7 +2716,7 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
                         'permisos.php',
                         'traductor.php',
                         'contenido.php',
-                        'formularios.php'
+                        'formularios.php'*/
                     ];                   
                     $j = 0;
                     while ($j < count($ficheros)) {
@@ -2668,7 +2724,7 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
                         $j++;
                     }
                     break;
-                case 'config':
+                case '--config':
                     $ficheros = [
                         'footer.php',
                         'funciones.php',
@@ -2685,7 +2741,7 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
                         $j++;
                     }
                     break;
-                case 'gestion---------------------':
+                case '--gestion---------------------':
                     $ficheros = [
                         'estilo.css',
                         'index.php',
