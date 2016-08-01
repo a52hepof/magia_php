@@ -14,7 +14,7 @@ if (isset($_SESSION['s_username'])) {
             . "<b>Linea:</b>:" . __LINE__ . "<br>"
             . "<b>Error SQL:</b>"
             . ":" . mysql_error() . "<br>");          
-    $reg = mysql_fetch_array($sql);   
+    $_usuarios = mysql_fetch_array($sql);   
     //include "_usuarios/reg/reg.php";          
 } else {
     header("Location: zz_login.php");
