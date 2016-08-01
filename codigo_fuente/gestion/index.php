@@ -1,7 +1,5 @@
 <?php
 session_start("magia_php") ;
-$u_grupo = "root";
-$u_login = "roencosa";
 include "z_verificar.php";
 include "../admin/bd.php";
 include "../admin/configuracion.php";

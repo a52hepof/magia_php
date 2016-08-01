@@ -15,7 +15,7 @@ if (isset($_SESSION['s_username'])) {
             . "<b>Error SQL:</b>"
             . ":" . mysql_error() . "<br>");          
     $_usuarios = mysql_fetch_array($sql);   
-    //include "_usuarios/reg/reg.php";          
+    include "_usuarios/reg/reg.php";          
 } else {
     header("Location: zz_login.php");
     exit("<hr>");

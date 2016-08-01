@@ -619,7 +619,7 @@ function contenido_vista($vista, $nombrePlugin) {
             return $fuente;
             break;
 
-        case 'crear.php':                                   
+        case 'xxxxcrear.php':                                   
             $f  = '<h2><?php _t("Nuevo ' . $nombrePlugin . '","' . $nombrePlugin . '"); ?></h2> ' . "\n\n";            
             $f .= '<form class="form-horizontal" action="index.php" method="post"> ' . "\n";
             $f .= '<input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
@@ -654,6 +654,7 @@ function contenido_vista($vista, $nombrePlugin) {
                     $f .= '        "id" => "' . $tabla_nombre . '",' . "\n";
                     $f .= '        "placeholder" => "' . ucfirst($reg[0]) . '",' . "\n";                    
                     $f .= '        "label" => "' . ucfirst($reg[0]) . '",' . "\n";                    
+                    $f .= '        "desactivado" => "no",' . "\n";                    
                     $f .= '    ], ' . "\n";
                     
                 }
@@ -675,11 +676,12 @@ function contenido_vista($vista, $nombrePlugin) {
                         $clase = $c[$i][\'clase\'];
                         $placeholder = $c[$i][\'placeholder\'];
                         $label = $c[$i][\'label\'];
+                        $desactivado = $c[$i][\'desactivado\'];
 
                         echo \'<div class="form-group"> 
                         <label for="\' . $id . \'" class="col-sm-2 control-label">\' . $label . \'</label> 
                         <div class="col-sm-8"> \';
-                            formularios_campo($tipo, $nombre, $id, $valor, $clase, $placeholder);
+                            formularios_campo($tipo, $nombre, $id, $valor, $clase, $placeholder,$desactivado);
                         echo \'</div> 
                     </div> \';
                     }
@@ -694,10 +696,116 @@ function contenido_vista($vista, $nombrePlugin) {
             $f .= '       <button type="submit" class="btn btn-primary"><?php _t("Registrar","' . $nombrePlugin . '"); ?></button> ' . "\n";
             $f .= '     </div> ' . "\n";
             $f .= '   </div> ' . "\n";
-            $f .= ' </form> ' . "\n";
+            $f .= ' </form> ' . "\n";                        
+            return $f;                                    
+            break;
+        case 'crear.php':                                   
+            $fuente  = '<h2><?php _t("Nuevo ' . $nombrePlugin . '","' . $nombrePlugin . '"); ?></h2> ' . "\n\n";            
+            $fuente .= '<form class="form-horizontal" action="index.php" method="post"> ' . "\n";
+            $fuente .= '<input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
+            $fuente .= '<input type="hidden" name="c" value="crear"> ' . "\n";
+            $fuente .= '<input type="hidden" name="a" value="crear"> ' . "\n\n";
+           
+            $i = 0;
+            $usar_id = 0; // 0 no usa, -1 si usa
+            foreach ($resultados as $reg) {
+                if ($i > $usar_id) {
+                    
+                $nombre = $reg['Field'];
+                $tipo = $reg['Type'];
+                $nul = $reg['Null'];
+                $clave = $reg['Key'];
+                $defecto = $reg['Default'];
+                $extra = $reg['Extra'];
+                
+                $tabla_nombre = "$nombrePlugin"."_"."$nombre"; 
+                
+                $tipo_campo = tipo_campo($tipo);
+                
+                                                
+                $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1"; 
+                
+                
+                switch ($tipo_campo) {
+                    case 'texto':
+                    $fuente .= ' <div class="form-group"> ' . "\n";
+                    $fuente .= '     <label for="' . $reg[0] . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?></label> ' . "\n";
+                    $fuente .= '     <div class="col-sm-10"> ' . "\n";
+                    $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>" value=""> ' . "\n";
+                    $fuente .= '     </div> ' . "\n";
+                    $fuente .= '   </div> ' . "\n\n\n";
+                        break;
+                    
+                    case 'areaDeTexto':
+                    $fuente .= ' <div class="form-group"> ' . "\n";
+                    $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?></label> ' . "\n";
+                    $fuente .= '     <div class="col-sm-10"> ' . "\n";
+                    $fuente .= '       <textarea class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>"></textarea> ' . "\n";
+                    $fuente .= '     </div> ' . "\n";
+                    $fuente .= '   </div> ' . "\n\n\n";
+                        break;
+                    
+                    case 'buleano':
+                    $fuente .= ' <div class="form-group"> ' . "\n";
+                    $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?></label> ' . "\n";
+                    $fuente .= '     <div class="col-sm-10"> ' . "\n";
+                    $fuente .= '     <div class="radio">' . "\n";
+                    $fuente .= '        <label>' . "\n";
+                    $fuente .= '            <input type="radio" name="' . $var2 . '" value="1" checked>' . "\n";
+                    $fuente .= '            <?php _t("Activo","formularios"); ?>' . "\n";
+                    $fuente .= '        </label>' . "\n";
+                    $fuente .= '     </div>' . "\n";                                        
+
+                    $fuente .= '     <div class="radio">' . "\n";
+                    $fuente .= '        <label>' . "\n";
+                    $fuente .= '            <input type="radio" name="' . $var2 . '" value="0">' . "\n";
+                    $fuente .= '            <?php _t("Bloqueado","formularios"); ?> ' . "\n";
+                    $fuente .= '        </label>' . "\n";
+                    $fuente .= '     </div>' . "\n";                                        
+                    $fuente .= '   </div> ' . "\n";
+                    $fuente .= '   </div> ' . "\n\n\n";
+                        break;
+
+                    case 'opciones':
+                    $fuente .= ' <div class="form-group"> ' . "\n";
+                    $fuente .= '     <label for="' . $reg[0] . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?></label> ' . "\n";
+                    $fuente .= '     <div class="col-sm-10"> ' . "\n";
+                    $fuente .= '        <select class="form-control" name="' . $var2 . '" >' . "\n";
+                    $fuente .= '        <?php _grupos_add(); ?>' . "\n";
+                    
+                    
+                    $fuente .= '        </select>' . "\n";
+                    $fuente .= '     </div> ' . "\n";
+                    $fuente .= '   </div> ' . "\n\n\n";
+                        break;                    
+
+                    default:
+                        break;
+                }
+                
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                }
+                $i++;
+            }            
+            
+            $fuente .= ' <div class="form-group"> ' . "\n";
+            $fuente .= '     <div class="col-sm-offset-2 col-sm-10"> ' . "\n";
+            $fuente .= '       <button type="submit" class="btn btn-primary"><?php _t("Registrar","' . $nombrePlugin . '"); ?></button> ' . "\n";
+            $fuente .= '     </div> ' . "\n";
+            $fuente .= '   </div> ' . "\n";
+            $fuente .= ' </form> ' . "\n";
             
             
-            return $f;
+            return $fuente;
             
             
             

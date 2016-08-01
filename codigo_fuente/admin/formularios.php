@@ -1,59 +1,86 @@
 <?php
-
-
 function formularios_campo_escondido($nombre,$valor){    
     echo '<input type="hidden" name="'.$nombre.'" value="'.$valor.'">'; 
 }
 
 
-function formularios_campo($tipo, $nombre, $id, $valor="", $clase="", $placeholder=""){    
-    echo '<input 
-                type="'.$tipo.'" 
-                name="'.$nombre.'" 
-                value="'.$valor.'" 
-                id="'.$id.'"                 
-                class="'.$clase.'"                                     
-                placeholder="'.$placeholder.'" > '; 
-}
-function formularios_opciones(){
+function formularios_campo($tipo, $nombre, $id, $valor="", $clase="", $placeholder="", $desactivado=FALSE){    
     
+    
+    switch ($tipo) {
+        case 'text':
+        case 'texto':
+            formularios_campo_texto($nombre, $id, $valor, $clase, $placeholder,$desactivado);
+            break;
+        case 'date':
+        case 'fecha':
+            formularios_campo_texto($nombre, $id, $valor, $clase, $placeholder,$desactivado);
+            break;
+        case 'textarea':
+        case 'areadetexto':
+        case 'areaDeTexto':        
+            formularios_campo_areaDeTexto($nombre, $id, $valor, $clase, $placeholder,$desactivado);
+            break;
+        case 'opciones':     
+            formularios_opciones($nombre, $id, $valor, $clase, $placeholder,$desactivado);
+            break;
+        case 'buleano':     
+            formularios_opciones($nombre, $id, $valor, $clase, $placeholder,$desactivado);
+            break;
+
+        default:
+            break;
+    }
+}
+
+function formularios_campo_texto( $nombre, $id, $valor="", $clase="", $placeholder="", $desactivado=false)  {    
+    
+    $desactivado    = ($desactivado=='si')? " disabled " : "";
+    $clase          = ($clase)? " form-control " : "";
+    
+    echo "<input 
+            type=\"text\" 
+            class=\"$clase\" 
+            name=\"$nombre\" 
+            id=\"$nombre\" 
+            placeholder=\"$placeholder\" 
+            value=\"$valor\" $desactivado > ";
+}
+function formularios_campo_areaDeTexto( $nombre, $id, $valor="", $clase="", $placeholder="", $desactivado=false)  {    
+    
+    $desactivado    = ($desactivado=='si')? " disabled " : "";
+    $clase          = ($clase)? " form-control " : "";
+    
+    echo "<textarea             
+            class=\"$clase\" 
+            name=\"$nombre\" 
+            id=\"$nombre\" 
+            placeholder=\"$placeholder\" $desactivado>$valor</textarea> ";
 }
 
 
-function _formulario_texto($nombre, $marca_agua="",$valor="", $desactivar=false, $clase="form-control") {    
-    
-    $desactivado    = ($desactivar)? " disabled " : "";
-    //$clase          = ($clase)? " form-control " : "";
-    
-    return "<input "
-            . "type=\"text\" "
-            . "class=\"$clase\" "
-            . "name=\"$nombre\" "
-            . "id=\"$nombre\" "
-            . "placeholder=\"$marca_agua\" "
-            . "value=\"$valor\" $desactivado > ";
-}
 
+function formularios_opciones( $nombre, $id, $valor="", $clase="form-control", $placeholder="", $desactivado=false) {
 
-function _formulario_opciones($tabla, $campo, $selecionado = "", $excluir = "") {
-    global $conexion;
-    $sql = mysql_query(
-            "SELECT $campo FROM $tabla  ", $conexion) or die("Error:" . mysql_error());
-    while ($reg = mysql_fetch_array($sql)) {
+    $i = 0;
+    echo "<select class=\"$clase\">";
+    while ($i < count($valor)) {
 
         echo "<option ";
-        if ($selecionado == $reg[0]) {
+        if ($selecionado == $valor[$i]) {
             echo " selected ";
         } else {
             echo "";
         }
-        if ($excluir == $reg[0]) {
+        if ($excluir == $valor[$i]) {
             echo " disabled ";
         } else {
             echo "";
         }
-        echo "value=\"$reg[0]\">$reg[0]</option>";
+        echo "value=\"$valor[$i]\">$valor[$i]</option>";
+        $i++;
     }
+    echo "</select>"; 
 }
 
 function _formulario_radio($tabla, $campo, $selecionado = "", $excluir = "") {
