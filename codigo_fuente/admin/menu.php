@@ -12,7 +12,7 @@ function _menu_top(){
           role="button" 
           aria-haspopup="true" 
           aria-expanded="false">
-          '.$reg[padre].' 
+          '.  ucfirst($reg['padre']).' 
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
             '; 
@@ -36,7 +36,7 @@ function _menu_items_segun_padre_ubicacion($padre, $ubicacion){
         $icono = (!$reg['icono'])? "folder-close":"$reg[icono]";
         
         echo '
-            <li><a href="'.$reg['url'].'"> <span class="glyphicon glyphicon-'.$icono.'" aria-hidden="true"></span> '.$reg['label'].'</a></li>
+            <li><a href="'.$reg['url'].'"> <span class="glyphicon glyphicon-'.$icono.'" aria-hidden="true"></span> '.  ucfirst($reg['label']).'</a></li>
           
         '; 
     }
@@ -48,7 +48,7 @@ function _menu_items_segun_padre_ubicacion($padre, $ubicacion){
 function _menu_sidebar($p){
     global $conexion;
     $sql = mysql_query(
-            "SELECT distinct(padre), label, url, icono  FROM _menu WHERE ubicacion = 'sidebar'  ", $conexion) or die("Error:" . mysql_error());
+            "SELECT distinct(padre), label, url, icono  FROM _menu WHERE ubicacion = 'sidebar' ORDER BY orden ", $conexion) or die("Error:" . mysql_error());
         
     while ($reg = mysql_fetch_array($sql)) {
         
@@ -60,7 +60,7 @@ function _menu_sidebar($p){
         echo '>
                     <a href="'.$reg[url].'">
                         <span class="glyphicon glyphicon-'.$icono.'"></span> 
-                '.$reg['label'].'
+                '.  ucfirst($reg['label']).'
                     </a>
                 </li>'; 
     }        

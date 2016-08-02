@@ -54,12 +54,21 @@ include "home/vista/nav_sup.php";
             <div class="row">	<!-- 2 -->
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main"> <!-- 3 -->                                        
                     <br><br>
+
                     <ol class="breadcrumb">
-                        <li><a href="index.php"><?php _t("Inicio"); ?></a></li>
-                        <li class="active"><a href="<?php echo "index.php?p=$p"; ?>"><?php _t("$p"); ?></a></li>
+                        <li>
+                            <span class="glyphicon glyphicon-home"></span> 
+                            <a href="index.php"><?php _t("Inicio"); ?>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> 
+                            <a href="<?php echo "index.php?p=$p"; ?>">
+                                <?php _t("$p"); ?>
+                            </a>
+                        </li>
                         <li><a href="#"><?php _t("$c"); ?></a></li>
                     </ol>    
-                    
                     
 
 <?php
