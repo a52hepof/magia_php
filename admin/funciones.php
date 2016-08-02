@@ -50,7 +50,7 @@ function tipo_campo($tipo){
 }
 
 
-function campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor=""){
+function campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor="",$extras=""){
 
     $html  = ' <div class="form-group"> ' . "\n";
     $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '","' . $contexto . '"); ?></label> ' . "\n";
@@ -60,24 +60,25 @@ function campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor=
             . 'name="' . $nombre . '" '
             . 'id="' . $id . '" '
             . 'placeholder="<?php _t("' . ucfirst($placeholder) . '","' . $contexto . '"); ?>" '
-            . 'value="'.$valor.'"> ' . "\n";
+            . 'value="'.$valor.'" '
+            . ' '.$extras.' > ' . "\n";
     $html .= '     </div> ' . "\n";
     $html .= '   </div> ' . "\n\n\n";
     
     return $html;
     
 }
-function campo_html_areaDeTexto($nombre, $id, $placeholder, $label, $contexto, $valor=""){
+function campo_html_areaDeTexto($nombre, $id, $placeholder, $label, $contexto, $valor="",$extras=""){
     $fuente  = ' <div class="form-group"> ' . "\n";
     $fuente .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '","' . $contexto . '"); ?></label> ' . "\n";
     $fuente .= '     <div class="col-sm-10"> ' . "\n";
-    $fuente .= '       <textarea class="form-control" name="' . $nombre . '" id="' . $id . '" placeholder="<?php _t("' . ucfirst($placeholder) . '","' . $contexto . '"); ?>">' . $valor . '</textarea> ' . "\n";
+    $fuente .= '       <textarea '.$extras.' class="form-control" name="' . $nombre . '" id="' . $id . '" placeholder="<?php _t("' . ucfirst($placeholder) . '","' . $contexto . '"); ?>">' . $valor . '</textarea> ' . "\n";
     $fuente .= '     </div> ' . "\n";
     $fuente .= '   </div> ' . "\n\n\n";
     
     return $fuente;
 }
-function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado=""){
+function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado="",$extras=""){
     
     $seleccionado_0 = ($selecionado==false) ? " checked " : " " ; 
     $seleccionado_1 = ($selecionado==true) ? " checked " : " " ; 
@@ -87,14 +88,14 @@ function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado=""){
     $fuente .= '     <div class="col-sm-10"> ' . "\n";
     $fuente .= '     <div class="radio">' . "\n";
     $fuente .= '        <label>' . "\n";
-    $fuente .= '            <input type="radio" name="' . $nombre . '" value="1" <?php echo "$'.$nombre.'_1"; ?>  >' . "\n";
+    $fuente .= '            <input '.$extras. ' type="radio" name="' . $nombre . '" value="1" <?php echo "$'.$nombre.'_1"; ?>  >' . "\n";
     $fuente .= '            <?php _t("Activo","formularios"); ?> ' . "\n";
     $fuente .= '        </label>' . "\n";
     $fuente .= '     </div>' . "\n";
 
     $fuente .= '     <div class="radio">' . "\n";
     $fuente .= '        <label>' . "\n";
-    $fuente .= '            <input type="radio" name="' . $nombre . '" value="0"  <?php echo "$'.$nombre.'_0"; ?>  >' . "\n";
+    $fuente .= '            <input '.$extras.' type="radio" name="' . $nombre . '" value="0"  <?php echo "$'.$nombre.'_0"; ?>  >' . "\n";
     $fuente .= '            <?php _t("Bloqueado","formularios"); ?>  ' . "\n";
     $fuente .= '        </label>' . "\n";
     $fuente .= '     </div>' . "\n";
@@ -104,7 +105,7 @@ function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado=""){
     return $fuente;    
 }
 
-function campo_html_opciones($nombre, $id, $placeholder, $label, $contexto, $valor=""){
+function campo_html_opciones($nombre, $id, $placeholder, $label, $contexto, $valor="",$extras=""){
                     
     $fuente = ' <div class="form-group"> ' . "\n";
     $fuente .= '     <label for="' . $reg[0] . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?></label> ' . "\n";
@@ -762,7 +763,10 @@ function contenido_vista($vista, $nombrePlugin) {
             return $f;                                    
             break;
         case 'crear.php':                                   
-            $fuente  = '<h2><?php _t("Nuevo ' . $nombrePlugin . '","' . $nombrePlugin . '"); ?></h2> ' . "\n\n";            
+            $fuente  = '<h2>' . "\n\n";            
+            $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
+            $fuente .= '<h2><?php _t("Nuevo ' . $nombrePlugin . '","' . $nombrePlugin . '"); ?></h2> ' . "\n\n";            
+            $fuente .= '</h2> ' . "\n\n";            
             $fuente .= '<form class="form-horizontal" action="index.php" method="post"> ' . "\n";
             $fuente .= '<input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
             $fuente .= '<input type="hidden" name="c" value="crear"> ' . "\n";
@@ -827,7 +831,10 @@ function contenido_vista($vista, $nombrePlugin) {
             break;
 
         case 'editar.php':
-            $fuente  = '<h2><?php echo _t("Editar","' . $nombrePlugin . '"); ?></h2>' . "\n\n";
+            $fuente  = '<h2>' . "\n\n";            
+            $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
+            $fuente .= '<h2><?php _t("Editar ' . $nombrePlugin . '","' . $nombrePlugin . '"); ?></h2> ' . "\n\n";            
+            $fuente .= '</h2> ' . "\n\n";   
             $fuente .= '     <form class="form-horizontal" method="post" action="index.php"> ' . "\n";
             $fuente .= '     <input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
             $fuente .= '     <input type="hidden" name="c" value="editar"> ' . "\n";
@@ -906,6 +913,7 @@ function contenido_vista($vista, $nombrePlugin) {
 
             $fuente  = '<?php include "tabs.php"; ?>' . "\n";
             $fuente .= '<h2> ' . "\n";
+            $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";            
             $fuente .= '<?php echo _t("Lista de ' . $nombrePlugin . '","' . $nombrePlugin . '"); ?> <a type="button" class="btn btn-primary navbar-btn" href="?p=' . $nombrePlugin . '&c=crear"> <?php _t("Nueva","' . $nombrePlugin . '"); ?></a>' . "\n";
             $fuente .= '</h2>' . "\n";
 
@@ -1241,7 +1249,10 @@ function contenido_vista($vista, $nombrePlugin) {
             break;
 
         case 'ver.php':
-            $fuente = '<h1><?php _t("Detalles","' . $nombrePlugin . '"); ?></h1> ' . "\n";
+            $fuente = '<h1> ' . "\n";
+            $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";            
+            $fuente = '<?php _t("Detalles","' . $nombrePlugin . '"); ?> ' . "\n";
+            $fuente = '</h1> ' . "\n";
 
             $fuente .= '     <form class="form-horizontal" method="" action=""> ' . "\n";
             $fuente .= '     <input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
@@ -1264,13 +1275,13 @@ function contenido_vista($vista, $nombrePlugin) {
                 $var2 = "$nombrePlugin"."_"."$var1";                                 
                 switch ($tipo_campo) {
                     case 'texto':                        
-                        $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, '<?php echo $' . $var2 . '; ?>'); 
+                        $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, '<?php echo $' . $var2 . '; ?>', 'disabled'); 
                         break;                    
                     case 'areaDeTexto':
-                        $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin, '<?php echo $' . $var2 . '; ?>');
+                        $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin, '<?php echo $' . $var2 . '; ?>', 'disabled' );
                         break;                    
                     case 'buleano':                        
-                        $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, $selecionado=false);
+                        $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, $selecionado=false, 'disabled');
                         break;                  
 
                     default:
