@@ -87,14 +87,14 @@ function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado=""){
     $fuente .= '     <div class="col-sm-10"> ' . "\n";
     $fuente .= '     <div class="radio">' . "\n";
     $fuente .= '        <label>' . "\n";
-    $fuente .= '            <input type="radio" name="' . $nombre . '" value="1" '.$$seleccionado_1.' >' . "\n";
+    $fuente .= '            <input type="radio" name="' . $nombre . '" value="1" <?php echo "$'.$nombre.'_1"; ?>  >' . "\n";
     $fuente .= '            <?php _t("Activo","formularios"); ?>' . "\n";
     $fuente .= '        </label>' . "\n";
     $fuente .= '     </div>' . "\n";
 
     $fuente .= '     <div class="radio">' . "\n";
     $fuente .= '        <label>' . "\n";
-    $fuente .= '            <input type="radio" name="' . $nombre . '" value="0" '.$seleccionado_0.' >' . "\n";
+    $fuente .= '            <input type="radio" name="' . $nombre . '" value="0"  <?php echo "$'.$nombre.'_0"; ?>  >' . "\n";
     $fuente .= '            <?php _t("Bloqueado","formularios"); ?> ' . "\n";
     $fuente .= '        </label>' . "\n";
     $fuente .= '     </div>' . "\n";
@@ -1353,10 +1353,42 @@ function contenido_reg($controlador, $nombrePlugin) {
             $fuente = ' <?php ' . "\n";
             $i = 0;
             foreach ($resultados as $reg) {
+                
+                
+                                    
+                $nombre = $reg['Field'];
+                $tipo = $reg['Type'];
+                $nul = $reg['Null'];
+                $clave = $reg['Key'];
+                $defecto = $reg['Default'];
+                $extra = $reg['Extra'];
+
+                
+                $tabla_nombre = "$nombrePlugin"."_"."$nombre"; 
+                
+                $tipo_campo = tipo_campo($tipo);
+
+                
                 $var1 = $reg[0];                
                 $var2 = "$nombrePlugin"."_"."$var1";                                
                 
                 $fuente .= '  $' . $var2 . ' = $'.$nombrePlugin.'[\'' . $var1 . '\']; ' . "\n";
+                
+                if($tipo_campo=='buleano'){
+                    $fuente .= '    if($'.$var2.'==0){
+      $'.$var2.'_0 = " checked "; 
+      $'.$var2.'_1 = ""; 
+  }else {
+      $'.$var2.'_0 = ""; 
+      $'.$var2.'_1 = "checked";       
+  }  ' . "\n"; 
+                }
+                
+                
+                
+                
+                
+                
                 $i++;
             }
 
