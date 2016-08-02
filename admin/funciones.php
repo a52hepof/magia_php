@@ -765,7 +765,7 @@ function contenido_vista($vista, $nombrePlugin) {
         case 'crear.php':                                   
             $fuente  = '<h2>' . "\n\n";            
             $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
-            $fuente .= '<h2><?php _t("Nuevo ' . $nombrePlugin . '","' . $nombrePlugin . '"); ?></h2> ' . "\n\n";            
+            $fuente .= '<?php _t("Nuevo ' . $nombrePlugin . '","' . $nombrePlugin . '"); ?></h2> ' . "\n\n";            
             $fuente .= '</h2> ' . "\n\n";            
             $fuente .= '<form class="form-horizontal" action="index.php" method="post"> ' . "\n";
             $fuente .= '<input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
@@ -833,7 +833,7 @@ function contenido_vista($vista, $nombrePlugin) {
         case 'editar.php':
             $fuente  = '<h2>' . "\n\n";            
             $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
-            $fuente .= '<h2><?php _t("Editar ' . $nombrePlugin . '","' . $nombrePlugin . '"); ?></h2> ' . "\n\n";            
+            $fuente .= '<?php _t("Editar ' . $nombrePlugin . '","' . $nombrePlugin . '"); ?></h2> ' . "\n\n";            
             $fuente .= '</h2> ' . "\n\n";   
             $fuente .= '     <form class="form-horizontal" method="post" action="index.php"> ' . "\n";
             $fuente .= '     <input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
