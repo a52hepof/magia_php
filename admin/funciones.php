@@ -88,14 +88,14 @@ function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado=""){
     $fuente .= '     <div class="radio">' . "\n";
     $fuente .= '        <label>' . "\n";
     $fuente .= '            <input type="radio" name="' . $nombre . '" value="1" <?php echo "$'.$nombre.'_1"; ?>  >' . "\n";
-    $fuente .= '            <?php _t("Activo","formularios"); ?>' . "\n";
+    $fuente .= '            <?php _t("Activo","formularios"); ?> ' . "\n";
     $fuente .= '        </label>' . "\n";
     $fuente .= '     </div>' . "\n";
 
     $fuente .= '     <div class="radio">' . "\n";
     $fuente .= '        <label>' . "\n";
     $fuente .= '            <input type="radio" name="' . $nombre . '" value="0"  <?php echo "$'.$nombre.'_0"; ?>  >' . "\n";
-    $fuente .= '            <?php _t("Bloqueado","formularios"); ?> ' . "\n";
+    $fuente .= '            <?php _t("Bloqueado","formularios"); ?>  ' . "\n";
     $fuente .= '        </label>' . "\n";
     $fuente .= '     </div>' . "\n";
     $fuente .= '   </div> ' . "\n";
