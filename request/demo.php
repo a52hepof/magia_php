@@ -7,6 +7,7 @@ FROM
 WHERE
   REFERENCED_TABLE_SCHEMA = '_premisos' AND
   REFERENCED_TABLE_NAME = 'grupo';
+  
   ;",$conexion);
     
      $reg = mysql_fetch_array($sql);	

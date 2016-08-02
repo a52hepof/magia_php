@@ -1,6 +1,1 @@
-<?php
-
-$servidor = "localhost";
-$bdatos = "test";
-$usuario = "root";
-$clave = "demo";
+<?php  $servidor = "localhost"; $bdatos = "inmoweb"; $usuario = "root"; $clave = "demo";
