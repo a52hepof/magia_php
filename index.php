@@ -60,7 +60,7 @@ if (isset($_REQUEST['tabla'])) {
             ?>
 
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-1">
                     
                     
                     <?php
@@ -80,7 +80,7 @@ if (isset($_REQUEST['tabla'])) {
                     ?>                  
 
                 </div>
-                <div class="col-lg-9">
+                <div class="col-lg-11">
 
                     <?php
                     switch ($p) {

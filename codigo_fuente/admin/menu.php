@@ -58,7 +58,7 @@ function _menu_sidebar($p){
         echo '<li';
         if ($p == $reg['label']) { echo " class=\"active\" "; } 
         echo '>
-                    <a href="'.$reg[url].'">
+                    <a href="'.$reg['url'].'">
                         <span class="glyphicon glyphicon-'.$icono.'"></span> 
                 '.  ucfirst($reg['label']).'
                     </a>
