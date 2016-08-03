@@ -866,7 +866,10 @@ function contenido_vista($vista, $nombrePlugin) {
                 switch ($tipo_campo) {
                     case 'texto':                        
                         $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin,'<?php echo $' . $var2 . '; ?>'); 
-                        break;                    
+                        break;    
+                    case 'numerico':                        
+                        $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin); 
+                        break;                         
                     case 'areaDeTexto':
                         $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin,'<?php echo $' . $var2 . '; ?>');
                         break;                    
@@ -1279,7 +1282,10 @@ function contenido_vista($vista, $nombrePlugin) {
                 switch ($tipo_campo) {
                     case 'texto':                        
                         $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, '<?php echo $' . $var2 . '; ?>', 'disabled'); 
-                        break;                    
+                        break;  
+                    case 'numerico':                        
+                        $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin); 
+                        break;                         
                     case 'areaDeTexto':
                         $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin, '<?php echo $' . $var2 . '; ?>', 'disabled' );
                         break;                    
