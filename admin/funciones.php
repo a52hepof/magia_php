@@ -792,6 +792,9 @@ function contenido_vista($vista, $nombrePlugin) {
                     case 'texto':                        
                         $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin); 
                         break;                    
+                    case 'numerico':                        
+                        $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin); 
+                        break;                    
                     case 'areaDeTexto':
                         $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin);
                         break;                    
@@ -1386,6 +1389,12 @@ function contenido_reg($controlador, $nombrePlugin) {
                 $fuente .= '  $' . $var2 . ' = $'.$nombrePlugin.'[\'' . $var1 . '\']; ' . "\n";
                 
                 if($tipo_campo=='buleano'){
+                    
+                    
+                    
+                    $fuente .= ' $'.$var2.'_0 = "";  ';
+                    $fuente .= ' $'.$var2.'_1 = "";  ';
+                    
                     $fuente .= '    if($'.$var2.'==0){
       $'.$var2.'_0 = " checked "; 
       $'.$var2.'_1 = ""; 
