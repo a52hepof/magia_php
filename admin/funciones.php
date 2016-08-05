@@ -1354,8 +1354,7 @@ function contenido_reg($controlador, $nombrePlugin) {
                 $i++;
             }
             return $fuente;
-            break;
-            
+            break;            
             
         case 'post.php':
             $fuente = ' <?php ' . "\n";
@@ -1431,6 +1430,30 @@ function contenido_reg($controlador, $nombrePlugin) {
             }
             return $fuente;
             break;
+            
+        case 'var.php':
+            $fuente = ' <?php ' . "\n";
+            $i = 0;
+            foreach ($resultados as $reg) {
+                $var1 = $reg[0];                
+                $var2 = "$nombrePlugin"."_"."$var1";                                     
+                
+               // $fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_GET[\'' . $var2 . '\']); ' . "\n";
+                $fuente .= '  $html = str_replace(\'%'.$nombrePlugin.'_'.$var1.'%\',       $datos[\''.$nombrePlugin.'\'][\''.$var1.'\'], $html); ' . "\n";
+                
+                $i++;
+            }
+            
+            
+           
+            
+            
+            
+            
+            return $fuente;
+            break;            
+            
+            
         default:
             $fuente = "";
             return $fuente;
@@ -2863,7 +2886,7 @@ function magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvcg) {
             }
             break;
         case 'reg':
-            $c = ['get.php', 'post.php', 'reg.php', 'request.php'];            
+            $c = ['get.php', 'post.php', 'reg.php', 'request.php','var.php'];            
             $i = 0;
             while ($i < count($c)) {
                 $path = "$path_plugins/$nombrePlugin/reg";
