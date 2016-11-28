@@ -1,1 +1,6 @@
-<?php  $servidor = "localhost"; $bdatos = "ecuasolu_web"; $usuario = "root"; $clave = "demo";
+<?php
+
+$servidor = "localhost";
+$bdatos = "magia_php";
+$usuario = "root";
+$clave = "root";

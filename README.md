@@ -30,20 +30,24 @@ cd Magia_php
 
 ## Configuración
 La primer cosa que debes hacer es configurar el fichero bd.php con los datos de tu base de datos:
+```
 <?php  
 $hostname = "localhost"; 
 $dbname = "gestionInmoweb"; 
 $username = "root"; 
 $password = ""; 
+```
 
 ## Configuration
 
 First edit the file bd.php:
+
+```
 <?php  
 $hostname = "localhost"; 
 $dbname = "gestionInmoweb"; 
 $username = "root"; 
 $password = ""; 
-
-
 ?>
+
+```
