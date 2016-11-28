@@ -1,6 +1,6 @@
 <?php
 
 $servidor = "localhost";
-$bdatos = "magia_php";
+$bdatos = "magia_blog";
 $usuario = "root";
 $clave = "root";
