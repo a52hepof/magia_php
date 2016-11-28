@@ -4,12 +4,8 @@
 
 <h2>Crear el proyecto</h2>
 
-<p>El path es el lugar donde magia instalara el proyecto, este es generalmente la 
-raiz de tu sitio web</p>
 
-<p>Ejemplo: /var/www/html/miweb O en ocaciones: /home/[usuario]/public_html 
-    Magia detecto que tu path es: <b>PATH</b>, si esto es incorrecto puedes
-modificarlo</p>
+
 
 
 
@@ -21,7 +17,8 @@ modificarlo</p>
         type="text" 
         class="form-control" 
         id="magia_path" 
-        placeholder="Ejemplo: /var/www/html">
+        placeholder="Ejemplo: /var/www/html"
+        value="<?php echo $_SERVER['DOCUMENT_ROOT']?>/magia_blog">
   </div>
 
     

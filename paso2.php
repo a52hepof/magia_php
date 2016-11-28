@@ -8,10 +8,6 @@
 <p>Conección a la ase de datos</p>
 
 
-
-
-
-
 <form class="form-horizontal" method="" action="paso3.php">
     
   <div class="form-group">
@@ -36,7 +32,7 @@
           class="form-control" 
           id="basedatos" 
           placeholder="Tu base de datos"
-          value="NombreDeLaBasedeDatos"
+          value="magia_php"
           >
     </div>
   </div>
@@ -63,7 +59,7 @@
           class="form-control" 
           id="basedatos" 
           placeholder="Tu clave"
-          value="MiClaveExtraSecreta"
+          value="clave"
           >
     </div>
   </div>

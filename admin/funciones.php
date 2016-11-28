@@ -53,13 +53,13 @@ function tipo_campo($tipo){
 function campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor="",$extras=""){
 
     $html  = ' <div class="form-group"> ' . "\n";
-    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '","' . $contexto . '"); ?></label> ' . "\n";
+    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
     $html .= '     <div class="col-sm-10"> ' . "\n";
     $html .= '       <input type="text" '
             . 'class="form-control" '
             . 'name="' . $nombre . '" '
             . 'id="' . $id . '" '
-            . 'placeholder="<?php _t("' . ucfirst($placeholder) . '","' . $contexto . '"); ?>" '
+            . 'placeholder="<?php _t("' . ucfirst($placeholder) . '"); ?>" '
             . 'value="'.$valor.'" '
             . ' '.$extras.' > ' . "\n";
     $html .= '     </div> ' . "\n";
@@ -70,9 +70,9 @@ function campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor=
 }
 function campo_html_areaDeTexto($nombre, $id, $placeholder, $label, $contexto, $valor="",$extras=""){
     $fuente  = ' <div class="form-group"> ' . "\n";
-    $fuente .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '","' . $contexto . '"); ?></label> ' . "\n";
+    $fuente .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
     $fuente .= '     <div class="col-sm-10"> ' . "\n";
-    $fuente .= '       <textarea '.$extras.' class="form-control" name="' . $nombre . '" id="' . $id . '" placeholder="<?php _t("' . ucfirst($placeholder) . '","' . $contexto . '"); ?>">' . $valor . '</textarea> ' . "\n";
+    $fuente .= '       <textarea '.$extras.' class="form-control" name="' . $nombre . '" id="' . $id . '" placeholder="<?php _t("' . ucfirst($placeholder) . '"); ?>">' . $valor . '</textarea> ' . "\n";
     $fuente .= '     </div> ' . "\n";
     $fuente .= '   </div> ' . "\n\n\n";
     
@@ -84,19 +84,19 @@ function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado="",$ex
     $seleccionado_1 = ($selecionado==true) ? " checked " : " " ; 
     
     $fuente  = ' <div class="form-group"> ' . "\n";
-    $fuente .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '","' . $contexto . '"); ?></label> ' . "\n";
+    $fuente .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
     $fuente .= '     <div class="col-sm-10"> ' . "\n";
     $fuente .= '     <div class="radio">' . "\n";
     $fuente .= '        <label>' . "\n";
     $fuente .= '            <input '.$extras. ' type="radio" name="' . $nombre . '" value="1" <?php echo "$'.$nombre.'_1"; ?>  >' . "\n";
-    $fuente .= '            <?php _t("Activo","formularios"); ?> ' . "\n";
+    $fuente .= '            <?php _t("Activo"); ?> ' . "\n";
     $fuente .= '        </label>' . "\n";
     $fuente .= '     </div>' . "\n";
 
     $fuente .= '     <div class="radio">' . "\n";
     $fuente .= '        <label>' . "\n";
     $fuente .= '            <input '.$extras.' type="radio" name="' . $nombre . '" value="0"  <?php echo "$'.$nombre.'_0"; ?>  >' . "\n";
-    $fuente .= '            <?php _t("Bloqueado","formularios"); ?>  ' . "\n";
+    $fuente .= '            <?php _t("Bloqueado"); ?>  ' . "\n";
     $fuente .= '        </label>' . "\n";
     $fuente .= '     </div>' . "\n";
     $fuente .= '   </div> ' . "\n";
@@ -108,7 +108,7 @@ function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado="",$ex
 function campo_html_opciones($nombre, $id, $placeholder, $label, $contexto, $valor="",$extras=""){
                     
     $fuente = ' <div class="form-group"> ' . "\n";
-    $fuente .= '     <label for="' . $reg[0] . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?></label> ' . "\n";
+    $fuente .= '     <label for="' . $reg[0] . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '"); ?></label> ' . "\n";
     $fuente .= '     <div class="col-sm-10"> ' . "\n";
     $fuente .= '        <select class="form-control" name="' . $var2 . '" >' . "\n";
     $fuente .= '        <?php _grupos_add(); ?>' . "\n";
@@ -614,7 +614,7 @@ function contenido_vista($vista, $nombrePlugin) {
 
     switch ($vista) {
         case 'borrar.php':
-            $fuente = '<h2><?php _t("Atencion","' . $nombrePlugin . '"); ?></h2>
+            $fuente = '<h2><?php _t("Atencion"); ?></h2>
                 <p><?php _t("Ud esta a por borrar definiticamente este registro, desea hacerlo?"); ?></p>
                 <a class="btn btn-danger" href="index.php?p=' . $nombrePlugin . '&c=borrar&'.$nombrePlugin.'_id=<?php echo $'.$nombrePlugin.'_id; ?>"><?php _t("Si,borrar"); ?></a>';
 
@@ -625,7 +625,7 @@ function contenido_vista($vista, $nombrePlugin) {
             $fuente = '<?php include "tabs.php"; ?>' . "\n\n";
             $fuente .= '<h2> ' . "\n\n";
             $fuente .= '<span class="glyphicon glyphicon-search"></span> ' . "\n\n";
-            $fuente .= '<?php _t("Resultados de su busqueda en ","' . $nombrePlugin . '"); ?></h2>' . "\n\n";
+            $fuente .= '<?php _t("Resultados de su busqueda en "); ?></h2>' . "\n\n";
             $fuente .= '
 <table class="table table-striped">
     <thead>
@@ -635,11 +635,11 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                    $fuente .= '<th><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?></th> ' . "\n";
+                    $fuente .= '<th><?php _t("' . ucfirst($reg[0]) . '"); ?></th> ' . "\n";
                 }
                 $i++;
             }
-            $fuente .= ' <th><?php _t("Accion","' . $nombrePlugin . '"); ?></th> ' . "\n";
+            $fuente .= ' <th><?php _t("Accion"); ?></th> ' . "\n";
             $fuente .=' </tr>
     </thead>
     <tbody>
@@ -683,7 +683,7 @@ function contenido_vista($vista, $nombrePlugin) {
             break;
 
         case 'xxxxcrear.php':                                   
-            $f  = '<h2><?php _t("Nuevo ' . $nombrePlugin . '","' . $nombrePlugin . '"); ?></h2> ' . "\n\n";            
+            $f  = '<h2><?php _t("Nuevo ' . $nombrePlugin . '"); ?></h2> ' . "\n\n";            
             $f .= '<form class="form-horizontal" action="index.php" method="post"> ' . "\n";
             $f .= '<input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
             $f .= '<input type="hidden" name="c" value="crear"> ' . "\n";
@@ -756,7 +756,7 @@ function contenido_vista($vista, $nombrePlugin) {
             
             $f .= ' <div class="form-group"> ' . "\n";
             $f .= '     <div class="col-sm-offset-2 col-sm-10"> ' . "\n";
-            $f .= '       <button type="submit" class="btn btn-primary"><?php _t("Registrar","' . $nombrePlugin . '"); ?></button> ' . "\n";
+            $f .= '       <button type="submit" class="btn btn-primary"><?php _t("Registrar"); ?></button> ' . "\n";
             $f .= '     </div> ' . "\n";
             $f .= '   </div> ' . "\n";
             $f .= ' </form> ' . "\n";                        
@@ -765,7 +765,7 @@ function contenido_vista($vista, $nombrePlugin) {
         case 'crear.php':                                   
             $fuente  = '<h2>' . "\n\n";            
             $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
-            $fuente .= '<?php _t("Nuevo ' . $nombrePlugin . '","' . $nombrePlugin . '"); ?></h2> ' . "\n\n";            
+            $fuente .= '<?php _t("Nuevo ' . $nombrePlugin . '"); ?></h2> ' . "\n\n";            
             $fuente .= '</h2> ' . "\n\n";            
             $fuente .= '<form class="form-horizontal" action="index.php" method="post"> ' . "\n";
             $fuente .= '<input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
@@ -821,7 +821,7 @@ function contenido_vista($vista, $nombrePlugin) {
             
             $fuente .= ' <div class="form-group"> ' . "\n";
             $fuente .= '     <div class="col-sm-offset-2 col-sm-10"> ' . "\n";
-            $fuente .= '       <button type="submit" class="btn btn-primary"><?php _t("Registrar","' . $nombrePlugin . '"); ?></button> ' . "\n";
+            $fuente .= '       <button type="submit" class="btn btn-primary"><?php _t("Registrar"); ?></button> ' . "\n";
             $fuente .= '     </div> ' . "\n";
             $fuente .= '   </div> ' . "\n";
             $fuente .= ' </form> ' . "\n";
@@ -836,7 +836,7 @@ function contenido_vista($vista, $nombrePlugin) {
         case 'editar.php':
             $fuente  = '<h2>' . "\n\n";            
             $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
-            $fuente .= '<?php _t("Editar ' . $nombrePlugin . '","' . $nombrePlugin . '"); ?></h2> ' . "\n\n";            
+            $fuente .= '<?php _t("Editar ' . $nombrePlugin . '"); ?></h2> ' . "\n\n";            
             $fuente .= '</h2> ' . "\n\n";   
             $fuente .= '     <form class="form-horizontal" method="post" action="index.php"> ' . "\n";
             $fuente .= '     <input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
@@ -893,9 +893,9 @@ function contenido_vista($vista, $nombrePlugin) {
                 $var2 = "$nombrePlugin"."_"."$var1"; 
                 
                     $fuente .= ' <div class="form-group"> ' . "\n";
-                    $fuente .= '     <label for="' . $reg[0] . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?></label> ' . "\n";
+                    $fuente .= '     <label for="' . $reg[0] . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '"); ?></label> ' . "\n";
                     $fuente .= '     <div class="col-sm-10"> ' . "\n";
-                    $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>" value="<?php echo $' . $var2 . '; ?>"> ' . "\n";
+                    $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?>" value="<?php echo $' . $var2 . '; ?>"> ' . "\n";
                     $fuente .= '     </div> ' . "\n";
                     $fuente .= '   </div> ' . "\n\n\n";
                 
@@ -908,7 +908,7 @@ function contenido_vista($vista, $nombrePlugin) {
 
             $fuente .= '   <div class="form-group"> ' . "\n";
             $fuente .= ' <div class="col-sm-offset-2 col-sm-10"> ' . "\n";
-            $fuente .= '       <button type="submit" class="btn btn-primary"><?php _t("Editar","' . $nombrePlugin . '"); ?></button> ' . "\n";
+            $fuente .= '       <button type="submit" class="btn btn-primary"><?php _t("Editar"); ?></button> ' . "\n";
             $fuente .= '     </div> ' . "\n";
             $fuente .= '   </div>     ' . "\n";
             $fuente .= ' </form> ' . "\n";
@@ -920,7 +920,7 @@ function contenido_vista($vista, $nombrePlugin) {
             $fuente  = '<?php include "tabs.php"; ?>' . "\n";
             $fuente .= '<h2> ' . "\n";
             $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";            
-            $fuente .= '<?php echo _t("Lista de ' . $nombrePlugin . '","' . $nombrePlugin . '"); ?> <a type="button" class="btn btn-primary navbar-btn" href="?p=' . $nombrePlugin . '&c=crear"> <?php _t("Nueva","' . $nombrePlugin . '"); ?></a>' . "\n";
+            $fuente .= '<?php echo _t("Lista de ' . $nombrePlugin . '"); ?> <a type="button" class="btn btn-primary navbar-btn" href="?p=' . $nombrePlugin . '&c=crear"> <?php _t("Nueva"); ?></a>' . "\n";
             $fuente .= '</h2>' . "\n";
 
             $fuente .= '
@@ -931,11 +931,11 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                    $fuente .= ' <th><?php echo _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?></th> ' . "\n";
+                    $fuente .= ' <th><?php echo _t("' . ucfirst($reg[0]) . '"); ?></th> ' . "\n";
                 }
                 $i++;
             }
-            $fuente .= ' <th><?php echo _t("Accion","' . $nombrePlugin . '"); ?></th> ' . "\n";
+            $fuente .= ' <th><?php echo _t("Accion"); ?></th> ' . "\n";
             $fuente .=' </tr>
     </thead>
     <tbody>
@@ -984,7 +984,7 @@ function contenido_vista($vista, $nombrePlugin) {
 
         case 'menu.php':
 
-            $fuente = '<h1><?php _t("Buscar","' . $nombrePlugin . '"); ?></h1>
+            $fuente = '<h1><?php _t("Buscar"); ?></h1>
 
 <form method="get" action="index.php">
     <input  type="hidden" name="p" value="' . $nombrePlugin . '">
@@ -999,8 +999,8 @@ function contenido_vista($vista, $nombrePlugin) {
 
                     $fuente .= '
                     <div class="form-group">
-                      <label for="' . ucfirst($reg[0]) . '"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?></label>
-                      <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>">
+                      <label for="' . ucfirst($reg[0]) . '"><?php _t("' . ucfirst($reg[0]) . '"); ?></label>
+                      <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?>">
                     </div>
                      ';
                 }
@@ -1013,7 +1013,7 @@ function contenido_vista($vista, $nombrePlugin) {
 
 
             $fuente .= '    
-  <button type="submit" class="btn btn-default"><?php _t("Buscar","' . $nombrePlugin . '"); ?></button>
+  <button type="submit" class="btn btn-default"><?php _t("Buscar"); ?></button>
 </form>';
 
 
@@ -1045,7 +1045,7 @@ function contenido_vista($vista, $nombrePlugin) {
 
         case 'sidebar.php':
             $fuente = '﻿ <div class="col-sm-3 col-md-2 sidebar"> ' . "\n\n";
-            $fuente .= '<h2><?php _t("Buscar","' . $nombrePlugin . '"); ?></h2> ' . "\n\n";
+            $fuente .= '<h2><?php _t("Buscar"); ?></h2> ' . "\n\n";
             $fuente .= '<form class="" action="index.php" method="get"> ' . "\n";
             $fuente .= '<input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
             $fuente .= '<input type="hidden" name="c" value="buscar"> ' . "\n";
@@ -1059,9 +1059,9 @@ function contenido_vista($vista, $nombrePlugin) {
                 
                 
                     $fuente .= '     <div class="form-group"> ' . "\n";
-                    $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '");?></label> ' . "\n";
+                    $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '");?></label> ' . "\n";
                     // $fuente .= '     <div class="col-sm-10"> ' . "\n";
-                    $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?> "> ' . "\n";
+                    $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?> "> ' . "\n";
                     // $fuente .= '     </div> ' . "\n";
                     $fuente .= '   </div> ' . "\n\n\n";
                 }
@@ -1069,7 +1069,7 @@ function contenido_vista($vista, $nombrePlugin) {
             }
             //  $fuente .= ' <div class="form-group"> ' . "\n";
             //  $fuente .= '     <div class="col-sm-offset-2 col-sm-10"> ' . "\n";
-            $fuente .= '       <button type="submit" class="btn btn-primary"><?php _t("Buscar","' . $nombrePlugin . '"); ?></button> ' . "\n";
+            $fuente .= '       <button type="submit" class="btn btn-primary"><?php _t("Buscar"); ?></button> ' . "\n";
             //$fuente .= '     </div> ' . "\n";
             //$fuente .= '   </div> ' . "\n";
             $fuente .= ' </form> ' . "\n";
@@ -1080,7 +1080,7 @@ function contenido_vista($vista, $nombrePlugin) {
         case 'buscar_form.php':
             $fuente  = '<h2>' . "\n\n";
             $fuente .= '<span class="glyphicon glyphicon-search"></span>' . "\n\n";
-            $fuente .= '<?php _t("Buscar","' . $nombrePlugin . '"); ?> ' . "\n\n";
+            $fuente .= '<?php _t("Buscar"); ?> ' . "\n\n";
             $fuente .= '</h2> ' . "\n\n";
             $fuente .= '<form class="" action="index.php" method="get"> ' . "\n";
             $fuente .= '<input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
@@ -1094,9 +1094,9 @@ function contenido_vista($vista, $nombrePlugin) {
                 $var2 = "$nombrePlugin"."_"."$var1";                      
                     
                     $fuente .= '     <div class="form-group"> ' . "\n";
-                    $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '");?></label> ' . "\n";
+                    $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '");?></label> ' . "\n";
                     // $fuente .= '     <div class="col-sm-10"> ' . "\n";
-                    $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($var1) . '","' . $nombrePlugin . '"); ?> "> ' . "\n";
+                    $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($var1) . '"); ?> "> ' . "\n";
                     // $fuente .= '     </div> ' . "\n";
                     $fuente .= '   </div> ' . "\n\n\n";
                 }
@@ -1104,7 +1104,7 @@ function contenido_vista($vista, $nombrePlugin) {
             }
             //  $fuente .= ' <div class="form-group"> ' . "\n";
             //  $fuente .= '     <div class="col-sm-offset-2 col-sm-10"> ' . "\n";
-            $fuente .= '       <button type="submit" class="btn btn-primary"><?php _t("Buscar","' . $nombrePlugin . '"); ?></button> ' . "\n";
+            $fuente .= '       <button type="submit" class="btn btn-primary"><?php _t("Buscar"); ?></button> ' . "\n";
             //$fuente .= '     </div> ' . "\n";
             //$fuente .= '   </div> ' . "\n";
             $fuente .= ' </form> ' . "\n";
@@ -1184,11 +1184,11 @@ function contenido_vista($vista, $nombrePlugin) {
                 if ($i > $usar_id) {
                 $var1 = $reg[0];                
                 $var2 = "$nombrePlugin"."_"."$var1";                      
-                    $fuente .= ' <td><input class="form-control" type="text" name="' . $var2 . '" value="" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>"></td> ' . "\n";
+                    $fuente .= ' <td><input class="form-control" type="text" name="' . $var2 . '" value="" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?>"></td> ' . "\n";
                 }
                 $i++;
             }
-            $fuente .='<td><input class="btn btn-primary" type="submit" value="<?php _t("Registrar","' . $nombrePlugin . '"); ?>" ></td>        
+            $fuente .='<td><input class="btn btn-primary" type="submit" value="<?php _t("Registrar"); ?>" ></td>        
     </tr>
 </form> ';
             return $fuente;
@@ -1214,12 +1214,12 @@ function contenido_vista($vista, $nombrePlugin) {
                 if ($i > $usar_id) {
                 $var1 = $reg[0];                
                 $var2 = "$nombrePlugin"."_"."$var1";                      
-                    $fuente .= ' <td><input class="form-control" type="text" name="' . $var2 . '" value="<?php echo $' . $var2 . '; ?>" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>"></td> ' . "\n";
+                    $fuente .= ' <td><input class="form-control" type="text" name="' . $var2 . '" value="<?php echo $' . $var2 . '; ?>" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?>"></td> ' . "\n";
                 }
                 $i++;
             }
 
-            $fuente .= '<td><input class="btn btn-primary" type="submit" value="<?php _t("Registrar","' . $nombrePlugin . '"); ?>" >
+            $fuente .= '<td><input class="btn btn-primary" type="submit" value="<?php _t("Registrar"); ?>" >
         <?php echo $borrar; ?>
         </td>        
     </tr>
@@ -1240,12 +1240,12 @@ function contenido_vista($vista, $nombrePlugin) {
                 if ($i > $usar_id) {
                 $var1 = $reg[0];                
                 $var2 = "$nombrePlugin"."_"."$var1";                      
-                    $fuente .= ' <td><input class="form-control" type="text" name="' . $var2 . '" value="" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>"></td> ' . "\n";
+                    $fuente .= ' <td><input class="form-control" type="text" name="' . $var2 . '" value="" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?>"></td> ' . "\n";
                 }
                 $i++;
             }
 
-            $fuente .= '<td><input class="btn btn-info" type="submit" value="<?php _t("Buscar","' . $nombrePlugin . '"); ?>" >
+            $fuente .= '<td><input class="btn btn-info" type="submit" value="<?php _t("Buscar"); ?>" >
         
         </td>        
     </tr>
@@ -1257,7 +1257,7 @@ function contenido_vista($vista, $nombrePlugin) {
         case 'ver.php':
             $fuente = '<h1> ' . "\n";
             $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";            
-            $fuente = '<?php _t("Detalles","' . $nombrePlugin . '"); ?> ' . "\n";
+            $fuente = '<?php _t("Detalles"); ?> ' . "\n";
             $fuente = '</h1> ' . "\n";
 
             $fuente .= '     <form class="form-horizontal" method="" action=""> ' . "\n";
@@ -1304,9 +1304,9 @@ function contenido_vista($vista, $nombrePlugin) {
                 $var1 = $reg[0];                
                 $var2 = "$nombrePlugin"."_"."$var1";                      
                     $fuente .= ' <div class="form-group"> ' . "\n";
-                    $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?></label> ' . "\n";
+                    $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '"); ?></label> ' . "\n";
                     $fuente .= '     <div class="col-sm-10"> ' . "\n";
-                    $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '","' . $nombrePlugin . '"); ?>" value="<?php echo $' . $var2 . '; ?>" disabled=""> ' . "\n";
+                    $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?>" value="<?php echo $' . $var2 . '; ?>" disabled=""> ' . "\n";
                     $fuente .= '     </div> ' . "\n";
                     $fuente .= '   </div> ' . "\n";
                     $fuente .= '  ' . "\n\n";
@@ -1322,7 +1322,7 @@ function contenido_vista($vista, $nombrePlugin) {
 
             $fuente .= '   <div class="form-group"> ' . "\n";
             $fuente .= ' <div class="col-sm-offset-2 col-sm-10"> ' . "\n";
-            $fuente .= '       <button type="submit" class="btn btn-primary"><?php _t("Editar","' . $nombrePlugin . '"); ?></button> ' . "\n";
+            $fuente .= '       <button type="submit" class="btn btn-primary"><?php _t("Editar"); ?></button> ' . "\n";
             $fuente .= '     </div> ' . "\n";
             $fuente .= '   </div>     ' . "\n";
             $fuente .= ' </form> ' . "\n";
@@ -1665,9 +1665,9 @@ while ($i < $menu_total_items) {
 
 function _estatus($estatus) {
     if($estatus==0){
-        return _t("Activo","formularios");
+        return _t("Activo");
     }else {
-        return _t("Bloqueado","formularios");
+        return _t("Bloqueado");
     }
 }
 ';

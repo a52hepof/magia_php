@@ -28,22 +28,6 @@ $controlador = [
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ?>
 <?php
 if (isset($_REQUEST['a'])) {
@@ -112,7 +96,15 @@ if (isset($_REQUEST['tabla'])) {
                     }
                     
                     
-                    ?>                  
+                    ?>    
+                    
+                    <ul>
+                        <li><a href="paso1.php">Paso 1</a></li>
+                        <li><a href="paso2.php">Paso 2</a></li>
+                        <li><a href="paso3.php">Paso 3</a></li>
+                    </ul>
+                    
+                    
 
                 </div>
                 <div class="col-lg-9">
