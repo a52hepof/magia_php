@@ -179,7 +179,15 @@ function campo_html_opciones($nombre, $id, $placeholder, $label, $contexto, $val
 
 
 
-
+/**
+ * 
+ * @global type $path_web
+ * @param type $path_plugins
+ * @param type $ubicacion
+ * @param type $nombrePlugin
+ * @param type $padre
+ * @param type $label
+ */
 
 function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) {
     global $path_web;
@@ -227,7 +235,10 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
         }
     }
 }
-
+/**
+ * 
+ * @global type $dbh
+ */
 function menu_add_plugin() {
     global $dbh;
     $sql = "SELECT padre,label FROM _menu where padre like '' group by padre  order by label ";
@@ -267,9 +278,19 @@ function menu_add_plugin_segun_padre($padre) {
         $i++;
     }
 }
-
+/**
+ * Crea las carpetas de una lista de nombres que se le pase
+ * @global string $icon_error
+ * @global string $icon_ok
+ * @global string $icon_carpeta_cerrada
+ * @global string $icon_carpeta_abierta
+ * @param type $path Donde se creara la carpeta
+ * @param type $nombre_carpeta La carpeta a ser creada
+ * @return int
+ */
 function crear_carpeta($path, $nombre_carpeta) {
     global $icon_error, $icon_ok, $icon_carpeta_cerrada, $icon_carpeta_abierta; 
+    
     if (file_exists("$path/$nombre_carpeta")) {
         echo "<p><b>$icon_error [error]</b> La carpeta $path/<b>$nombre_carpeta</b>, existe o no tiene derechos de escritura</p>";
     } else {
@@ -281,7 +302,11 @@ function crear_carpeta($path, $nombre_carpeta) {
 
     return 0;
 }
-
+/**
+ * Se le pasa uno o varios nombres y crea carpetas en el path que se le diga
+ * @param type $path
+ * @param type $carpetas
+ */
 function crear_carpetas($path, $carpetas) {
     $i = 0;
     while ($i < count($carpetas)) {
@@ -289,7 +314,16 @@ function crear_carpetas($path, $carpetas) {
         $i++;
     }
 }
-
+/**
+ * 
+ * @global string $icon_error
+ * @global string $icon_ok
+ * @global string $icon_fichero
+ * @param type $path
+ * @param type $fichero
+ * @param type $contenido
+ * @return int
+ */
 function crear_fichero($path, $fichero, $contenido = '') {
 global $icon_error, $icon_ok, $icon_fichero; 
     $contiene = ($contenido) ? $contenido : '';
