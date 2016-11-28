@@ -6,16 +6,25 @@ $icon_carpeta_abierta = '<span class="glyphicon glyphicon-folder-open"></span>';
 $icon_fichero = '<span class="glyphicon glyphicon-file"></span>'; 
 $icon_fichero_copiar = '<span class="glyphicon glyphicon-copy"></span>'; 
 
-
-function muestra_errores($d, $f, $l) {
+/**
+ * Muestra los errores mas detalladamente
+ * @param type $documento
+ * @param type $funcion
+ * @param type $linea
+ */
+function muestra_errores($documento, $funcion, $linea) {
     echo "<pre>";
-    echo "Documento: $d <br>";
-    echo "Funcion: $f <br>";
-    echo "Linea: $l <br>";
+    echo "Documento: $documento <br>";
+    echo "Funcion: $funcion <br>";
+    echo "Linea: $linea <br>";
     echo "</pre>";
 }
 
-
+/**
+ * Extrae el largo del campo de una tabla
+ * @param type $campo
+ * @return type
+ */
 function largo_del_campo($campo){
     // http://www.bufa.es/extraer-numeros-cadena/
     $resultado = intval(preg_replace('/[^0-9]+/', '', $campo), 10);
@@ -23,7 +32,11 @@ function largo_del_campo($campo){
     return $resultado;
 }
 
-
+/**
+ * Regrese al tipo de campo de una tabla
+ * @param type $tipo
+ * @return string
+ */
 function tipo_campo($tipo){
      // int(11)     
      // si en tipo encuentro la cadena int es un numerico     
@@ -49,7 +62,17 @@ function tipo_campo($tipo){
      return "text";          
 }
 
-
+/**
+ * Genera el campo texto  de un formulario 
+ * @param type $nombre
+ * @param type $id
+ * @param type $placeholder
+ * @param type $label
+ * @param type $contexto
+ * @param type $valor
+ * @param type $extras
+ * @return string
+ */
 function campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor="",$extras=""){
 
     $html  = ' <div class="form-group"> ' . "\n";
@@ -68,6 +91,17 @@ function campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor=
     return $html;
     
 }
+/**
+ * Genera el area de texto del formulario
+ * @param type $nombre
+ * @param type $id
+ * @param type $placeholder
+ * @param type $label
+ * @param type $contexto
+ * @param type $valor
+ * @param type $extras
+ * @return string
+ */
 function campo_html_areaDeTexto($nombre, $id, $placeholder, $label, $contexto, $valor="",$extras=""){
     $fuente  = ' <div class="form-group"> ' . "\n";
     $fuente .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
@@ -78,6 +112,16 @@ function campo_html_areaDeTexto($nombre, $id, $placeholder, $label, $contexto, $
     
     return $fuente;
 }
+/**
+ * Si el campo en la base de datos es un buleano, crea un campo tipo radio
+ * @param type $nombre
+ * @param type $id
+ * @param type $label
+ * @param type $contexto
+ * @param type $selecionado
+ * @param type $extras
+ * @return string
+ */
 function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado="",$extras=""){
     
     $seleccionado_0 = ($selecionado==false) ? " checked " : " " ; 
@@ -104,7 +148,17 @@ function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado="",$ex
     
     return $fuente;    
 }
-
+/**
+ * Me genera un select
+ * @param type $nombre
+ * @param type $id
+ * @param type $placeholder
+ * @param type $label
+ * @param type $contexto
+ * @param type $valor
+ * @param type $extras
+ * @return string
+ */
 function campo_html_opciones($nombre, $id, $placeholder, $label, $contexto, $valor="",$extras=""){
                     
     $fuente = ' <div class="form-group"> ' . "\n";
