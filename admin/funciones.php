@@ -1146,14 +1146,14 @@ function contenido_vista($vista, $nombrePlugin) {
                         <li role="presentation" class="active">        
                             <a href="#inicio" aria-controls="inicio" role="tab" data-toggle="tab">
                                 <span class="glyphicon glyphicon-list-alt"></span>
-                                <?php _t(\'Lista\',\'tabs\');?>
+                                <?php _t(\'Lista\');?>
                                 
                             </a>
                         </li>
                         <li role="presentation">
                             <a href="#buscar" aria-controls="buscar" role="tab" data-toggle="tab">
                                 <span class="glyphicon glyphicon-search"></span>
-                                <?php _t(\'Buscar\',\'tabs\');?>
+                                <?php _t(\'Buscar\');?>
                             </a>
                         </li>
                       </ul>
