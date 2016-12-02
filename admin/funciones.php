@@ -512,7 +512,7 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/index.php"; ' . "\n";
 //            $fuente .= ' // esto es par el paginador     ' . "\n";
 //            $fuente .= ' $total_items_por_pagina = $config_total_items_por_pagina; // esto viene de la configuracion    ' . "\n";
-            $fuente .= ' $total_paginas = ceil($total_items / $cfg_limite_items_en_tablas);    ' . "\n";
+//            $fuente .= ' $total_paginas = ceil($total_items / $cfg_limite_items_en_tablas);    ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/vista/index.php"; ' . "\n";
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
@@ -537,6 +537,32 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' } ' . "\n";
             return $fuente;
             break;
+        
+
+        case 'txt.php':
+            $fuente = ' <?php ' . "\n";
+            $fuente .= ' $accion = "ver"; ' . "\n";
+            $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
+            //     $fuente .= ' include \'header.php\';  '."\n";
+            //     $fuente .= ' include "./'.$nombrePlugin.'/funciones.php"; '."\n";
+            $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";
+
+            $fuente .= '     $' . $nombrePlugin . '_id 		= mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);   ' . "\n";
+
+            $fuente .= '     include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
+            $fuente .= '     include "./' . $nombrePlugin . '/reg/var.php"; ' . "\n";
+            $fuente .= '     include "./' . $nombrePlugin . '/vista/txt.php"; ' . "\n";
+            $fuente .= ' } else { ' . "\n";
+            $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
+            $fuente .= ' } ' . "\n";
+            return $fuente;
+            break;
+        
+        
+        
+        
+        
+        
 
         default:
             $fuente = "";
@@ -1121,6 +1147,28 @@ echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
 <?php }?>';
             return $fuente;
 
+        case 'pdf.php':
+            $fuente = ' ' . "\n";
+
+            $i = 0;
+            $usar_id = -1; // 0 no usa, -1 si usa el primer campo de la tabla(id)
+            foreach ($resultados as $reg) {
+                if ($i > $usar_id) {
+                    $var1 = $reg[0];
+                    $var2 = "$nombrePlugin" . "_" . "$var1";
+
+                    $fuente .= ' '.$nombrePlugin.'_'.$var1.' : %'.$nombrePlugin.'_'.$var1.'% ' . "\n";
+                }
+
+                $i++;
+            }
+
+
+            return $fuente;
+            break;
+            
+            
+
         case 'sidebar.php':
             $fuente = '﻿ <div class="col-sm-3 col-md-2 sidebar"> ' . "\n\n";
             $fuente .= '<h2><?php _t("Buscar"); ?></h2> ' . "\n\n";
@@ -1332,6 +1380,18 @@ echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
             return $fuente;
             break;
 
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
         case 'ver.php':
             $fuente = '<h1> ' . "\n";
             $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
@@ -1402,6 +1462,41 @@ echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
             $fuente .= ' </form> ' . "\n";
             return $fuente;
             break;
+        
+        
+        
+            
+            
+        case 'txt.php':
+            $fuente = ' ' . "\n";            
+            $i = 0;
+            $usar_id = -1; // 0 no usa, -1 si usa
+            foreach ($resultados as $reg) {
+                if ($i > $usar_id) {
+                    $var1 = $reg[0];
+
+            $fuente .= "$nombrePlugin"."_".$var1." : "."%$nombrePlugin"."_"."$var1"."%\n";        
+
+                }
+                $i++;
+            }
+
+
+            return $fuente;
+            break;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
         default:
             $fuente = "";
@@ -1508,6 +1603,31 @@ function contenido_reg($controlador, $nombrePlugin) {
         case 'var.php':
             $fuente = ' <?php ' . "\n";
             $i = 0;
+            
+            $fuente .= ' $datos= [
+            "'.$nombrePlugin.'"=>[';
+            
+            foreach ($resultados as $reg) {
+                $var1 = $reg[0];
+                $var2 = "$nombrePlugin" . "_" . "$var1";
+
+                // $fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_GET[\'' . $var2 . '\']); ' . "\n";
+              // $fuente .= '  $html = str_replace(\'%' . $nombrePlugin . '_' . $var1 . '%\',       $datos[\'' . $nombrePlugin . '\'][\'' . $var1 . '\'], $html); ' . "\n";
+                $fuente .= ' "'.$var1.'"=>"$'.$nombrePlugin.'_'.$var1.'",  ' . "\n";
+
+                $i++;
+            }
+            
+            
+                
+            $fuente .='                ]
+        ];'; 
+
+            
+            
+            
+            
+            
             foreach ($resultados as $reg) {
                 $var1 = $reg[0];
                 $var2 = "$nombrePlugin" . "_" . "$var1";
@@ -2939,7 +3059,7 @@ function magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvcg) {
 
     switch ($mvcg) {
         case 'controlador':
-            $c = ['index.php', 'ver.php', 'crear.php', 'editar.php', 'borrar.php', 'buscar.php'];
+            $c = ['index.php', 'ver.php', 'txt.php','crear.php', 'editar.php', 'borrar.php', 'buscar.php'];
             $i = 0;
             while ($i < count($c)) {
                 $path = "$path_plugins/$nombrePlugin/controlador";
@@ -2983,12 +3103,14 @@ function magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvcg) {
                 'sidebar.php',
                 'menu.php',
                 'paginador.php',
+                'pdf.php',
                 'tabs.php',
                 'tr.php',
                 'tr_anadir.php',
                 'tr_editar.php',
                 'tr_buscar.php',
-                'ver.php'
+                'ver.php',
+                'txt.php'
             ];
             $total = count($c);
             $i = 0;
