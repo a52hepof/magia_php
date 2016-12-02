@@ -61,9 +61,9 @@ INSERT INTO `_grupos` (`id`, `grupo`) VALUES
 
 CREATE TABLE IF NOT EXISTS `_idiomas` (
 `id` int(11) NOT NULL,
-  `idioma` varchar(2) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `nombre` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `idioma` varchar(2) COLLATE utf8_bin DEFAULT NULL,
+  `nombre` varchar(45) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -73,13 +73,13 @@ CREATE TABLE IF NOT EXISTS `_idiomas` (
 
 CREATE TABLE IF NOT EXISTS `_menu` (
 `id` int(11) NOT NULL,
-  `ubicacion` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `padre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `label` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `url` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `icono` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `ubicacion` varchar(50) COLLATE utf8_bin NOT NULL,
+  `padre` varchar(50) COLLATE utf8_bin NOT NULL,
+  `label` varchar(50) COLLATE utf8_bin NOT NULL,
+  `url` varchar(50) COLLATE utf8_bin NOT NULL,
+  `icono` varchar(50) COLLATE utf8_bin NOT NULL,
   `orden` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -114,9 +114,9 @@ CREATE TABLE IF NOT EXISTS `_permisos` (
 CREATE TABLE IF NOT EXISTS `_traducciones` (
 `id` int(11) NOT NULL,
   `contenido_id` int(11) NOT NULL,
-  `idioma` varchar(2) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `traduccion` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `idioma` varchar(2) COLLATE utf8_bin DEFAULT NULL,
+  `traduccion` varchar(250) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
