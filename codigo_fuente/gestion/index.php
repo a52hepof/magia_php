@@ -11,6 +11,7 @@ include "../admin/traductor.php";
 include "../admin/contenido.php";
 include "../admin/formularios.php";
 include "../admin/menu.php";
+include "../admin/paginacion.php";
 _incluir_funciones();
 $aqui_seccion = "";
 $aqui_pagina = "";

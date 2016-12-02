@@ -1,10 +1,11 @@
 <?php
-$icon_ok = '<span class="glyphicon glyphicon-ok"></span>'; 
-$icon_error = '<span class="glyphicon glyphicon-remove"></span>'; 
-$icon_carpeta_cerrada = '<span class="glyphicon glyphicon-folder-close"></span>'; 
-$icon_carpeta_abierta = '<span class="glyphicon glyphicon-folder-open"></span>'; 
-$icon_fichero = '<span class="glyphicon glyphicon-file"></span>'; 
-$icon_fichero_copiar = '<span class="glyphicon glyphicon-copy"></span>'; 
+
+$icon_ok = '<span class="glyphicon glyphicon-ok"></span>';
+$icon_error = '<span class="glyphicon glyphicon-remove"></span>';
+$icon_carpeta_cerrada = '<span class="glyphicon glyphicon-folder-close"></span>';
+$icon_carpeta_abierta = '<span class="glyphicon glyphicon-folder-open"></span>';
+$icon_fichero = '<span class="glyphicon glyphicon-file"></span>';
+$icon_fichero_copiar = '<span class="glyphicon glyphicon-copy"></span>';
 
 /**
  * Muestra los errores mas detalladamente
@@ -25,10 +26,10 @@ function muestra_errores($documento, $funcion, $linea) {
  * @param type $campo
  * @return type
  */
-function largo_del_campo($campo){
+function largo_del_campo($campo) {
     // http://www.bufa.es/extraer-numeros-cadena/
     $resultado = intval(preg_replace('/[^0-9]+/', '', $campo), 10);
-    
+
     return $resultado;
 }
 
@@ -37,29 +38,29 @@ function largo_del_campo($campo){
  * @param type $tipo
  * @return string
  */
-function tipo_campo($tipo){
-     // int(11)     
-     // si en tipo encuentro la cadena int es un numerico     
-     if(strpos($tipo, 'int') !==FALSE){
-         if(largo_del_campo($tipo) > 1){
-             return "numerico";
-         }else {
-             return "buleano";
-         }     
-     }     
-     if(strpos($tipo, 'varchar')!==FALSE){
-         return "texto";         
-     }
-     if(strpos($tipo, 'text')!==FALSE){
-         return "areaDeTexto";         
-     }
-     if(strpos($tipo, 'date')!==FALSE){
-         return "fecha";         
-     }
-     if(strpos($tipo, 'time')!==FALSE){
-         return "hora";         
-     }     
-     return "text";          
+function tipo_campo($tipo) {
+    // int(11)     
+    // si en tipo encuentro la cadena int es un numerico     
+    if (strpos($tipo, 'int') !== FALSE) {
+        if (largo_del_campo($tipo) > 1) {
+            return "numerico";
+        } else {
+            return "buleano";
+        }
+    }
+    if (strpos($tipo, 'varchar') !== FALSE) {
+        return "texto";
+    }
+    if (strpos($tipo, 'text') !== FALSE) {
+        return "areaDeTexto";
+    }
+    if (strpos($tipo, 'date') !== FALSE) {
+        return "fecha";
+    }
+    if (strpos($tipo, 'time') !== FALSE) {
+        return "hora";
+    }
+    return "text";
 }
 
 /**
@@ -73,9 +74,9 @@ function tipo_campo($tipo){
  * @param type $extras
  * @return string
  */
-function campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor="",$extras=""){
+function campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
 
-    $html  = ' <div class="form-group"> ' . "\n";
+    $html = ' <div class="form-group"> ' . "\n";
     $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
     $html .= '     <div class="col-sm-10"> ' . "\n";
     $html .= '       <input type="text" '
@@ -83,14 +84,14 @@ function campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor=
             . 'name="' . $nombre . '" '
             . 'id="' . $id . '" '
             . 'placeholder="<?php _t("' . ucfirst($placeholder) . '"); ?>" '
-            . 'value="'.$valor.'" '
-            . ' '.$extras.' > ' . "\n";
+            . 'value="' . $valor . '" '
+            . ' ' . $extras . ' > ' . "\n";
     $html .= '     </div> ' . "\n";
     $html .= '   </div> ' . "\n\n\n";
-    
+
     return $html;
-    
 }
+
 /**
  * Genera el area de texto del formulario
  * @param type $nombre
@@ -102,16 +103,17 @@ function campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor=
  * @param type $extras
  * @return string
  */
-function campo_html_areaDeTexto($nombre, $id, $placeholder, $label, $contexto, $valor="",$extras=""){
-    $fuente  = ' <div class="form-group"> ' . "\n";
+function campo_html_areaDeTexto($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
+    $fuente = ' <div class="form-group"> ' . "\n";
     $fuente .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
     $fuente .= '     <div class="col-sm-10"> ' . "\n";
-    $fuente .= '       <textarea '.$extras.' class="form-control" name="' . $nombre . '" id="' . $id . '" placeholder="<?php _t("' . ucfirst($placeholder) . '"); ?>">' . $valor . '</textarea> ' . "\n";
+    $fuente .= '       <textarea ' . $extras . ' class="form-control" name="' . $nombre . '" id="' . $id . '" placeholder="<?php _t("' . ucfirst($placeholder) . '"); ?>">' . $valor . '</textarea> ' . "\n";
     $fuente .= '     </div> ' . "\n";
     $fuente .= '   </div> ' . "\n\n\n";
-    
+
     return $fuente;
 }
+
 /**
  * Si el campo en la base de datos es un buleano, crea un campo tipo radio
  * @param type $nombre
@@ -122,32 +124,33 @@ function campo_html_areaDeTexto($nombre, $id, $placeholder, $label, $contexto, $
  * @param type $extras
  * @return string
  */
-function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado="",$extras=""){
-    
-    $seleccionado_0 = ($selecionado==false) ? " checked " : " " ; 
-    $seleccionado_1 = ($selecionado==true) ? " checked " : " " ; 
-    
-    $fuente  = ' <div class="form-group"> ' . "\n";
+function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado = "", $extras = "") {
+
+    $seleccionado_0 = ($selecionado == false) ? " checked " : " ";
+    $seleccionado_1 = ($selecionado == true) ? " checked " : " ";
+
+    $fuente = ' <div class="form-group"> ' . "\n";
     $fuente .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
     $fuente .= '     <div class="col-sm-10"> ' . "\n";
     $fuente .= '     <div class="radio">' . "\n";
     $fuente .= '        <label>' . "\n";
-    $fuente .= '            <input '.$extras. ' type="radio" name="' . $nombre . '" value="1" <?php echo "$'.$nombre.'_1"; ?>  >' . "\n";
+    $fuente .= '            <input ' . $extras . ' type="radio" name="' . $nombre . '" value="1" <?php echo "$' . $nombre . '_1"; ?>  >' . "\n";
     $fuente .= '            <?php _t("Activo"); ?> ' . "\n";
     $fuente .= '        </label>' . "\n";
     $fuente .= '     </div>' . "\n";
 
     $fuente .= '     <div class="radio">' . "\n";
     $fuente .= '        <label>' . "\n";
-    $fuente .= '            <input '.$extras.' type="radio" name="' . $nombre . '" value="0"  <?php echo "$'.$nombre.'_0"; ?>  >' . "\n";
+    $fuente .= '            <input ' . $extras . ' type="radio" name="' . $nombre . '" value="0"  <?php echo "$' . $nombre . '_0"; ?>  >' . "\n";
     $fuente .= '            <?php _t("Bloqueado"); ?>  ' . "\n";
     $fuente .= '        </label>' . "\n";
     $fuente .= '     </div>' . "\n";
     $fuente .= '   </div> ' . "\n";
     $fuente .= '   </div> ' . "\n\n\n";
-    
-    return $fuente;    
+
+    return $fuente;
 }
+
 /**
  * Me genera un select
  * @param type $nombre
@@ -159,8 +162,8 @@ function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado="",$ex
  * @param type $extras
  * @return string
  */
-function campo_html_opciones($nombre, $id, $placeholder, $label, $contexto, $valor="",$extras=""){
-                    
+function campo_html_opciones($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
+
     $fuente = ' <div class="form-group"> ' . "\n";
     $fuente .= '     <label for="' . $reg[0] . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '"); ?></label> ' . "\n";
     $fuente .= '     <div class="col-sm-10"> ' . "\n";
@@ -176,9 +179,6 @@ function campo_html_opciones($nombre, $id, $placeholder, $label, $contexto, $val
     return $fuente;
 }
 
-
-
-
 /**
  * 
  * @global type $path_web
@@ -188,7 +188,6 @@ function campo_html_opciones($nombre, $id, $placeholder, $label, $contexto, $val
  * @param type $padre
  * @param type $label
  */
-
 function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) {
     global $path_web;
     // verifico si el nombre existe
@@ -227,7 +226,7 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
         $i = 0; // pongo 1 para no crear elfichero raiz
         while ($i < $t) {
             if ($mvc[$i] != 'raiz') { // la ultima no la creo (raiz)
-                crear_carpeta("$path_plugins/$nombrePlugin", $mvc[$i]);                                
+                crear_carpeta("$path_plugins/$nombrePlugin", $mvc[$i]);
             }
             // dentro de cada carpeta creo los ficheros que cada carpeta debe contenir
             magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvc[$i]);
@@ -235,6 +234,7 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
         }
     }
 }
+
 /**
  * 
  * @global type $dbh
@@ -278,6 +278,7 @@ function menu_add_plugin_segun_padre($padre) {
         $i++;
     }
 }
+
 /**
  * Crea las carpetas de una lista de nombres que se le pase
  * @global string $icon_error
@@ -289,8 +290,8 @@ function menu_add_plugin_segun_padre($padre) {
  * @return int
  */
 function crear_carpeta($path, $nombre_carpeta) {
-    global $icon_error, $icon_ok, $icon_carpeta_cerrada, $icon_carpeta_abierta; 
-    
+    global $icon_error, $icon_ok, $icon_carpeta_cerrada, $icon_carpeta_abierta;
+
     if (file_exists("$path/$nombre_carpeta")) {
         echo "<p><b>$icon_error [error]</b> La carpeta $path/<b>$nombre_carpeta</b>, existe o no tiene derechos de escritura</p>";
     } else {
@@ -302,6 +303,7 @@ function crear_carpeta($path, $nombre_carpeta) {
 
     return 0;
 }
+
 /**
  * Se le pasa uno o varios nombres y crea carpetas en el path que se le diga
  * @param type $path
@@ -314,6 +316,7 @@ function crear_carpetas($path, $carpetas) {
         $i++;
     }
 }
+
 /**
  * 
  * @global string $icon_error
@@ -325,7 +328,7 @@ function crear_carpetas($path, $carpetas) {
  * @return int
  */
 function crear_fichero($path, $fichero, $contenido = '') {
-global $icon_error, $icon_ok, $icon_fichero; 
+    global $icon_error, $icon_ok, $icon_fichero;
     $contiene = ($contenido) ? $contenido : '';
 
     if (file_exists("$path/$fichero")) {
@@ -342,9 +345,9 @@ global $icon_error, $icon_ok, $icon_fichero;
 }
 
 function copiar_carpeta($origen, $destino) {
-global $icon_error, $icon_ok, $icon_fichero;     
-     echo "<p><b>Copiar:</b> $origen <b>a:</b> $destino</p>";   
-     
+    global $icon_error, $icon_ok, $icon_fichero;
+    echo "<p><b>Copiar:</b> $origen <b>a:</b> $destino</p>";
+
     if (is_dir($origen)) {
         @mkdir($destino);
         $d = dir($origen);
@@ -353,26 +356,24 @@ global $icon_error, $icon_ok, $icon_fichero;
                 continue;
             }
             $Entry = $origen . '/' . $entry;
-            if (is_dir($Entry)    ) {
-                
-                if(!file_exists($destino . '/' . $entry)){
-                    copiar_carpeta($Entry, $destino . '/' . $entry);   
-                }else {
-                    echo "<p><b>$icon_error [error]</b> : ya existe: $destino/$entry </p>"; 
+            if (is_dir($Entry)) {
+
+                if (!file_exists($destino . '/' . $entry)) {
+                    copiar_carpeta($Entry, $destino . '/' . $entry);
+                } else {
+                    echo "<p><b>$icon_error [error]</b> : ya existe: $destino/$entry </p>";
                 }
-                
-                             
-                
+
+
+
                 continue;
             }
-            if(!file_exists($destino . '/' . $entry)){
+            if (!file_exists($destino . '/' . $entry)) {
                 copy($Entry, $destino . '/' . $entry);
                 chmod("$destino", 0777);
-            }else {
-                echo "<p><b>$icon_error [error]</b>  Ya existe: $destino/$entry)</p>"; 
+            } else {
+                echo "<p><b>$icon_error [error]</b>  Ya existe: $destino/$entry)</p>";
             }
-            
-            
         }
 
         $d->close();
@@ -391,11 +392,11 @@ function contenido_controlador($controlador, $nombrePlugin) {
     switch ($controlador) {
 
         case 'borrar.php':
-            $fuente  = ' <?php ' . "\n";
+            $fuente = ' <?php ' . "\n";
             $fuente .= ' $accion = "borrar"; ' . "\n";
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             $fuente .= ' if (permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo)) { ' . "\n";
-            $fuente .= ' $'.$nombrePlugin.'_id 		= mysql_real_escape_string($_REQUEST[\''.$nombrePlugin.'_id\']); ' . "\n";
+            $fuente .= ' $' . $nombrePlugin . '_id 		= mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']); ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/borrar.php"; ' . "\n";
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
@@ -409,23 +410,23 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' $accion = "buscar"; ' . "\n";
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina, $_usuarios_grupo)) { ' . "\n";
-            
-           
-            
+
+
+
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1";                     
+                    $var1 = $reg[0];
+                    $var2 = "$nombrePlugin" . "_" . "$var1";
                     $fuente .= ' $' . $var2 . ' = mysql_real_escape_string($_REQUEST[\'' . $var2 . '\']);' . "\n";
                     $fuente .= ($i < $total_resultados - 1) ? " " : "";
                 }
                 $i++;
             }
-            
-            
-            
+
+
+
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/buscar.php"; ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/vista/buscar.php"; ' . "\n";
             $fuente .= ' } else { ' . "\n";
@@ -444,19 +445,19 @@ function contenido_controlador($controlador, $nombrePlugin) {
             // $fuente .= ' include "./'.$nombrePlugin.'/funciones.php"; '."\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";
             $fuente .= ' if(isset($_REQUEST[\'a\'])==\'crear\'){ ' . "\n";
-            
-            $fuente .= ' include "./' . $nombrePlugin . '/reg/post.php";  ' . "\n";            
+
+            $fuente .= ' include "./' . $nombrePlugin . '/reg/post.php";  ' . "\n";
             /*
-            $i = 0;
-            $usar_id = 0; // 0 no usa, -1 si usa
-            foreach ($resultados as $reg) {
-                if ($i > $usar_id) {
-                    //$fuente .= ' $'.$reg[0].' = $_REQUEST[\''.$reg[0].'\'];     '."\n"; 
-                    $fuente .= ' $' . $reg[0] . ' = mysql_real_escape_string($_REQUEST[\'' . $reg[0] . '\']);     ' . "\n";
-                    $fuente .= ($i < $total_resultados - 1) ? " " : "";
-                }
-                $i++;
-            }
+              $i = 0;
+              $usar_id = 0; // 0 no usa, -1 si usa
+              foreach ($resultados as $reg) {
+              if ($i > $usar_id) {
+              //$fuente .= ' $'.$reg[0].' = $_REQUEST[\''.$reg[0].'\'];     '."\n";
+              $fuente .= ' $' . $reg[0] . ' = mysql_real_escape_string($_REQUEST[\'' . $reg[0] . '\']);     ' . "\n";
+              $fuente .= ($i < $total_resultados - 1) ? " " : "";
+              }
+              $i++;
+              }
              * 
              */
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/crear.php";  ' . "\n";
@@ -479,15 +480,15 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' $accion = "editar"; ' . "\n";
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina, $_usuarios_grupo)) { ' . "\n";
-            $fuente .= ' if(isset($_REQUEST[\'a\'])==\'editar\'){ ' . "\n";            
-            $fuente .= ' include "./' . $nombrePlugin . '/reg/post.php";  ' . "\n";                                    
+            $fuente .= ' if(isset($_REQUEST[\'a\'])==\'editar\'){ ' . "\n";
+            $fuente .= ' include "./' . $nombrePlugin . '/reg/post.php";  ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/editar.php";  ' . "\n\n";
 
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/ver.php";  ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/vista/ver.php";  ' . "\n";
             $fuente .= ' }else{ ' . "\n";
-            $fuente .= ' $'.$nombrePlugin.'_id = mysql_real_escape_string($_REQUEST[\''.$nombrePlugin.'_id\']);      ' . "\n";
+            $fuente .= ' $' . $nombrePlugin . '_id = mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);      ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/vista/editar.php"; ' . "\n";
@@ -506,13 +507,12 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente = ' <?php ' . "\n";
             $fuente .= ' $accion = "ver"; ' . "\n";
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
-            $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";                        
-            $fuente .= ' $pag = $_GET[\'pag\'];   ' . "\n";
-            $fuente .= ' $inicio = $pag * $config_total_items_por_pagina;   ' . "\n";                        
+            $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";            
+            $fuente .= '  $inicia = (isset($_REQUEST[\'pag\']) && $_REQUEST[\'pag\'] != 0 ) ? $_REQUEST[\'pag\'] * $cfg_limite_items_en_tablas : 0;    ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/index.php"; ' . "\n";
-            $fuente .= ' // esto es par el paginador     ' . "\n";
-            $fuente .= ' $total_items_por_pagina = $config_total_items_por_pagina; // esto viene de la configuracion    ' . "\n";
-            $fuente .= ' $total_paginas = ceil($total_items / $total_items_por_pagina);    ' . "\n";                        
+//            $fuente .= ' // esto es par el paginador     ' . "\n";
+//            $fuente .= ' $total_items_por_pagina = $config_total_items_por_pagina; // esto viene de la configuracion    ' . "\n";
+            $fuente .= ' $total_paginas = ceil($total_items / $cfg_limite_items_en_tablas);    ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/vista/index.php"; ' . "\n";
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
@@ -527,7 +527,7 @@ function contenido_controlador($controlador, $nombrePlugin) {
             //     $fuente .= ' include "./'.$nombrePlugin.'/funciones.php"; '."\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";
 
-            $fuente .= '     $'.$nombrePlugin.'_id 		= mysql_real_escape_string($_REQUEST[\''.$nombrePlugin.'_id\']);   ' . "\n";
+            $fuente .= '     $' . $nombrePlugin . '_id 		= mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);   ' . "\n";
 
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
@@ -558,7 +558,7 @@ function contenido_modelos($modelos, $nombrePlugin) {
             $fuente .= ' $sql=mysql_query(" ' . "\n";
             $fuente .= ' DELETE FROM  ' . "\n";
             $fuente .= ' ' . $nombrePlugin . '  ' . "\n";
-            $fuente .= ' WHERE id = \'$'.$nombrePlugin.'_id\' ' . "\n";
+            $fuente .= ' WHERE id = \'$' . $nombrePlugin . '_id\' ' . "\n";
             $fuente .= ' ",$conexion) or die ("Error ".mysql_error()); ' . "\n";
             $fuente .= '  ' . "\n";
             $fuente .= ' $mensaje = "Realizado"; ' . "\n";
@@ -571,20 +571,20 @@ function contenido_modelos($modelos, $nombrePlugin) {
             $fuente .= '         "SELECT *  ' . "\n";
             $fuente .= ' FROM ' . $nombrePlugin . '  ' . "\n";
             $fuente .= ' WHERE  ' . "\n";
-            
-                       
-            
-            
+
+
+
+
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
                     // esto es para correjir el error
                     $remplaza_busqueda = '$busqueda';
-                    
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1"; 
-                
+
+                    $var1 = $reg[0];
+                    $var2 = "$nombrePlugin" . "_" . "$var1";
+
 
                     //$fuente .= " $reg[0] like '%$remplaza_busqueda%'    "."\n";
                     $fuente .= " $var1 like '%$$var2%'    " . "\n";
@@ -592,7 +592,7 @@ function contenido_modelos($modelos, $nombrePlugin) {
                 }
                 $i++;
             }
-            
+
             $fuente .= ' ORDER BY id DESC    ' . "\n";
             $fuente .= ' ",$conexion) or die ("Error:".mysql_error());  ' . "\n";
             //$fuente .=  ' $reg = mysql_fetch_array($sql);	  '."\n";          
@@ -602,18 +602,18 @@ function contenido_modelos($modelos, $nombrePlugin) {
         case 'crear.php':
             $fuente = ' <?php ' . "\n";
             $fuente .= ' $sql = "INSERT INTO ' . $nombrePlugin . ' ( ' . "\n";
-            
+
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
-                if ($i > $usar_id) {                    
+                if ($i > $usar_id) {
                     $fuente .= ' ' . $reg[0] . ' ';
                     $fuente .= ($i < $total_resultados - 1) ? " , " : "";
                 }
                 $i++;
             }
-             
-             
+
+
             $fuente .= ' ) VALUES ( ' . "\n";
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
@@ -630,11 +630,11 @@ function contenido_modelos($modelos, $nombrePlugin) {
             $usar_id = 0; // 0 no usa el id, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1"; 
-                
-                
+
+                    $var1 = $reg[0];
+                    $var2 = "$nombrePlugin" . "_" . "$var1";
+
+
                     $fuente .= ' ":' . $reg[0] . '"=>"$' . $var2 . '" ' . "";
                     $fuente .= ($i < $total_resultados - 1) ? " , " : "";
                 }
@@ -653,27 +653,27 @@ function contenido_modelos($modelos, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1"; 
-                
+                    $var1 = $reg[0];
+                    $var2 = "$nombrePlugin" . "_" . "$var1";
+
                     $fuente .= ' ' . $reg[0] . ' = \'$' . $var2 . '\'  ' . "\n";
                     $fuente .= ($i < $total_resultados - 1) ? " , " : "";
                 }
                 $i++;
             }
-            $fuente .= ' WHERE id = \'$'.$nombrePlugin.'_id\' ",$conexion) or die ("Error: ".mysql_error());   ' . "\n";
+            $fuente .= ' WHERE id = \'$' . $nombrePlugin . '_id\' ",$conexion) or die ("Error: ".mysql_error());   ' . "\n";
             return $fuente;
             break;
 
         case 'index.php':
             $fuente = '<?php ' . "\n";
-            $fuente .= '$comando = "SELECT * FROM '.$nombrePlugin.' ORDER BY id "; ' . "\n";
-            $fuente .= '$sql=mysql_query("$comando LIMIT $inicio,$config_total_items_por_pagina ",$conexion) ' . "\n";
+            $fuente .= '$comando = "SELECT * FROM ' . $nombrePlugin . ' ORDER BY id  "; ' . "\n";
+            $fuente .= '$sql=mysql_query("$comando Limit $inicia, $cfg_limite_items_en_tablas ",$conexion) ' . "\n";
             $fuente .= 'or die ("Error: en el fichero:" .__FILE__ .\' linea: \'. __LINE__ .\'  \'.mysql_error());	  ' . "\n";
             $fuente .= '// esto es para la paginacion	  ' . "\n";
             $fuente .= '$total_items = mysql_num_rows(mysql_query("$comando ",$conexion));	  ' . "\n";
-            
-            
+
+
 
             return $fuente;
             break;
@@ -681,9 +681,9 @@ function contenido_modelos($modelos, $nombrePlugin) {
         case 'ver.php':
             $fuente = ' <?php ' . "\n";
             $fuente .= '$sql=mysql_query( ' . "\n";
-            $fuente .= ' "SELECT * FROM ' . $nombrePlugin . ' WHERE id = \'$'.$nombrePlugin.'_id\' ORDER BY id DESC   ",$conexion) 	  ' . "\n";
+            $fuente .= ' "SELECT * FROM ' . $nombrePlugin . ' WHERE id = \'$' . $nombrePlugin . '_id\' ORDER BY id DESC   ",$conexion) 	  ' . "\n";
             $fuente .= ' or die ("Error: en el fichero:" .__FILE__ .\' linea: \'. __LINE__ .\' / \'.mysql_error());	' . "\n";
-            $fuente .= ' $'.$nombrePlugin.' = mysql_fetch_array($sql);	  ' . "\n";
+            $fuente .= ' $' . $nombrePlugin . ' = mysql_fetch_array($sql);	  ' . "\n";
             return $fuente;
             break;
 
@@ -695,21 +695,21 @@ function contenido_modelos($modelos, $nombrePlugin) {
 }
 
 function contenido_vista($vista, $nombrePlugin) {
-    global $path_plugins, $dbh;    
+    global $path_plugins, $dbh;
     include "./modelos/v_crea_plug.php";
     $total_resultados = count($resultados);
-    
+
 
     switch ($vista) {
         case 'borrar.php':
             $fuente = '<h2><?php _t("Atencion"); ?></h2>
                 <p><?php _t("Ud esta a por borrar definiticamente este registro, desea hacerlo?"); ?></p>
-                <a class="btn btn-danger" href="index.php?p=' . $nombrePlugin . '&c=borrar&'.$nombrePlugin.'_id=<?php echo $'.$nombrePlugin.'_id; ?>"><?php _t("Si,borrar"); ?></a>';
+                <a class="btn btn-danger" href="index.php?p=' . $nombrePlugin . '&c=borrar&' . $nombrePlugin . '_id=<?php echo $' . $nombrePlugin . '_id; ?>"><?php _t("Si,borrar"); ?></a>';
 
             return $fuente;
             break;
 
-        case 'buscar.php':            
+        case 'buscar.php':
             $fuente = '<?php include "tabs.php"; ?>' . "\n\n";
             $fuente .= '<h2> ' . "\n\n";
             $fuente .= '<span class="glyphicon glyphicon-search"></span> ' . "\n\n";
@@ -728,7 +728,7 @@ function contenido_vista($vista, $nombrePlugin) {
                 $i++;
             }
             $fuente .= ' <th><?php _t("Accion"); ?></th> ' . "\n";
-            $fuente .=' </tr>
+            $fuente .= ' </tr>
     </thead>
     <tbody>
     
@@ -742,7 +742,7 @@ function contenido_vista($vista, $nombrePlugin) {
 
         <?php
         $i = 1;
-        while ($'.$nombrePlugin.' = mysql_fetch_array($sql)) {
+        while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
             include "./' . $nombrePlugin . '/reg/reg.php"; 
                 if(permisos_tiene_permiso("editar", "' . $nombrePlugin . '", $_usuarios_grupo)){
                     include "./' . $nombrePlugin . '/vista/tr.php";
@@ -770,8 +770,8 @@ function contenido_vista($vista, $nombrePlugin) {
             return $fuente;
             break;
 
-        case 'xxxxcrear.php':                                   
-            $f  = '<h2><?php _t("Nuevo ' . $nombrePlugin . '"); ?></h2> ' . "\n\n";            
+        case 'xxxxcrear.php':
+            $f = '<h2><?php _t("Nuevo ' . $nombrePlugin . '"); ?></h2> ' . "\n\n";
             $f .= '<form class="form-horizontal" action="index.php" method="post"> ' . "\n";
             $f .= '<input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
             $f .= '<input type="hidden" name="c" value="crear"> ' . "\n";
@@ -782,41 +782,40 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                    
-                $nombre = $reg['Field'];
-                $tipo = $reg['Type'];
-                $nul = $reg['Null'];
-                $clave = $reg['Key'];
-                $defecto = $reg['Default'];
-                $extra = $reg['Extra'];
 
-                
-                $tabla_nombre = "$nombrePlugin"."_"."$nombre"; 
-                
-                $tipo_campo = tipo_campo($tipo);
-                
-                               
-                
+                    $nombre = $reg['Field'];
+                    $tipo = $reg['Type'];
+                    $nul = $reg['Null'];
+                    $clave = $reg['Key'];
+                    $defecto = $reg['Default'];
+                    $extra = $reg['Extra'];
+
+
+                    $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
+
+                    $tipo_campo = tipo_campo($tipo);
+
+
+
                     $f .= ' [ ' . "\n";
-                    $f .= '        "tipo" => "'.$tipo_campo.'", ' . "\n";
+                    $f .= '        "tipo" => "' . $tipo_campo . '", ' . "\n";
                     $f .= '        "nombre" => "' . $tabla_nombre . '",' . "\n";
                     $f .= '        "valor" => "",' . "\n";
                     $f .= '        "clase" => "form-control",' . "\n";
                     $f .= '        "id" => "' . $tabla_nombre . '",' . "\n";
-                    $f .= '        "placeholder" => "' . ucfirst($reg[0]) . '",' . "\n";                    
-                    $f .= '        "label" => "' . ucfirst($reg[0]) . '",' . "\n";                    
-                    $f .= '        "desactivado" => "no",' . "\n";                    
+                    $f .= '        "placeholder" => "' . ucfirst($reg[0]) . '",' . "\n";
+                    $f .= '        "label" => "' . ucfirst($reg[0]) . '",' . "\n";
+                    $f .= '        "desactivado" => "no",' . "\n";
                     $f .= '    ], ' . "\n";
-                    
                 }
                 $i++;
             }
-            
+
             $f .= '        
                     ];
                     ?>   ' . "\n";
-            
-            
+
+
             $f .= ' <?php
                     for ($i = 0; $i < count($c); $i++) {
 
@@ -837,159 +836,147 @@ function contenido_vista($vista, $nombrePlugin) {
                     </div> \';
                     }
                     ?>';
-            
-            
-            
-            
-            
+
+
+
+
+
             $f .= ' <div class="form-group"> ' . "\n";
             $f .= '     <div class="col-sm-offset-2 col-sm-10"> ' . "\n";
             $f .= '       <button type="submit" class="btn btn-primary"><?php _t("Registrar"); ?></button> ' . "\n";
             $f .= '     </div> ' . "\n";
             $f .= '   </div> ' . "\n";
-            $f .= ' </form> ' . "\n";                        
-            return $f;                                    
+            $f .= ' </form> ' . "\n";
+            return $f;
             break;
-        case 'crear.php':                                   
-            $fuente  = '<h2>' . "\n\n";            
+        case 'crear.php':
+            $fuente = '<h2>' . "\n\n";
             $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
-            $fuente .= '<?php _t("Nuevo ' . $nombrePlugin . '"); ?></h2> ' . "\n\n";            
-            $fuente .= '</h2> ' . "\n\n";            
+            $fuente .= '<?php _t("Nuevo ' . $nombrePlugin . '"); ?></h2> ' . "\n\n";
+            $fuente .= '</h2> ' . "\n\n";
             $fuente .= '<form class="form-horizontal" action="index.php" method="post"> ' . "\n";
             $fuente .= '<input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
             $fuente .= '<input type="hidden" name="c" value="crear"> ' . "\n";
             $fuente .= '<input type="hidden" name="a" value="crear"> ' . "\n\n";
-           
+
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                    
-                    
-                $nombre = $reg['Field'];
-                $tipo = $reg['Type'];
-                $nul = $reg['Null'];
-                $clave = $reg['Key'];
-                $defecto = $reg['Default'];
-                $extra = $reg['Extra'];                
-                $tabla_nombre = "$nombrePlugin"."_"."$nombre";                 
-                $tipo_campo = tipo_campo($tipo);                                                                
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1";                                 
-                switch ($tipo_campo) {
-                    case 'texto':                        
-                        $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin); 
-                        break;                    
-                    case 'numerico':                        
-                        $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin); 
-                        break;                    
-                    case 'areaDeTexto':
-                        $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin);
-                        break;                    
-                    case 'buleano':                        
-                        $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, $selecionado=false);
-                        break;                  
 
-                    default:
-                        break;
-                }
-                
 
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                    $nombre = $reg['Field'];
+                    $tipo = $reg['Type'];
+                    $nul = $reg['Null'];
+                    $clave = $reg['Key'];
+                    $defecto = $reg['Default'];
+                    $extra = $reg['Extra'];
+                    $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
+                    $tipo_campo = tipo_campo($tipo);
+                    $var1 = $reg[0];
+                    $var2 = "$nombrePlugin" . "_" . "$var1";
+                    switch ($tipo_campo) {
+                        case 'texto':
+                            $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
+                            break;
+                        case 'numerico':
+                            $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
+                            break;
+                        case 'areaDeTexto':
+                            $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin);
+                            break;
+                        case 'buleano':
+                            $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, $selecionado = false);
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
                 $i++;
-            }            
-            
+            }
+
             $fuente .= ' <div class="form-group"> ' . "\n";
             $fuente .= '     <div class="col-sm-offset-2 col-sm-10"> ' . "\n";
             $fuente .= '       <button type="submit" class="btn btn-primary"><?php _t("Registrar"); ?></button> ' . "\n";
             $fuente .= '     </div> ' . "\n";
             $fuente .= '   </div> ' . "\n";
             $fuente .= ' </form> ' . "\n";
-            
-            
+
+
             return $fuente;
-            
-            
-            
+
+
+
             break;
 
         case 'editar.php':
-            $fuente  = '<h2>' . "\n\n";            
+            $fuente = '<h2>' . "\n\n";
             $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
-            $fuente .= '<?php _t("Editar ' . $nombrePlugin . '"); ?></h2> ' . "\n\n";            
-            $fuente .= '</h2> ' . "\n\n";   
+            $fuente .= '<?php _t("Editar ' . $nombrePlugin . '"); ?></h2> ' . "\n\n";
+            $fuente .= '</h2> ' . "\n\n";
             $fuente .= '     <form class="form-horizontal" method="post" action="index.php"> ' . "\n";
             $fuente .= '     <input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
             $fuente .= '     <input type="hidden" name="c" value="editar"> ' . "\n";
             $fuente .= '     <input type="hidden" name="a" value="editar"> ' . "\n";
-            $fuente .= '     <input type="hidden" name="'.$nombrePlugin.'_id" value="<?php echo $'.$nombrePlugin.'_id; ?>"> ' . "\n\n";
+            $fuente .= '     <input type="hidden" name="' . $nombrePlugin . '_id" value="<?php echo $' . $nombrePlugin . '_id; ?>"> ' . "\n\n";
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                    
-                    
-                $nombre = $reg['Field'];
-                $tipo = $reg['Type'];
-                $nul = $reg['Null'];
-                $clave = $reg['Key'];
-                $defecto = $reg['Default'];
-                $extra = $reg['Extra'];
-                //
-                $tabla_nombre = "$nombrePlugin"."_"."$nombre"; 
-                //
-                $tipo_campo = tipo_campo($tipo);
-                //                                                
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1"; 
-                //                
-                switch ($tipo_campo) {
-                    case 'texto':                        
-                        $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin,'<?php echo $' . $var2 . '; ?>'); 
-                        break;    
-                    case 'numerico':                        
-                        $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin); 
-                        break;                         
-                    case 'areaDeTexto':
-                        $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin,'<?php echo $' . $var2 . '; ?>');
-                        break;                    
-                    case 'buleano':                        
-                        $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, $selecionado=false);
-                        break;                  
 
-                    default:
-                        break;
-                }
-                    
-                    
-                    
-                    
-                    
-                   /* 
-                    
-                    
-                    
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1"; 
-                
-                    $fuente .= ' <div class="form-group"> ' . "\n";
-                    $fuente .= '     <label for="' . $reg[0] . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '"); ?></label> ' . "\n";
-                    $fuente .= '     <div class="col-sm-10"> ' . "\n";
-                    $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?>" value="<?php echo $' . $var2 . '; ?>"> ' . "\n";
-                    $fuente .= '     </div> ' . "\n";
-                    $fuente .= '   </div> ' . "\n\n\n";
-                
-                      */
-                     
-                    
+
+                    $nombre = $reg['Field'];
+                    $tipo = $reg['Type'];
+                    $nul = $reg['Null'];
+                    $clave = $reg['Key'];
+                    $defecto = $reg['Default'];
+                    $extra = $reg['Extra'];
+                    //
+                    $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
+                    //
+                    $tipo_campo = tipo_campo($tipo);
+                    //                                                
+                    $var1 = $reg[0];
+                    $var2 = "$nombrePlugin" . "_" . "$var1";
+                    //                
+                    switch ($tipo_campo) {
+                        case 'texto':
+                            $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, '<?php echo $' . $var2 . '; ?>');
+                            break;
+                        case 'numerico':
+                            $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
+                            break;
+                        case 'areaDeTexto':
+                            $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin, '<?php echo $' . $var2 . '; ?>');
+                            break;
+                        case 'buleano':
+                            $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, $selecionado = false);
+                            break;
+
+                        default:
+                            break;
+                    }
+
+
+
+
+
+                    /*
+
+
+
+                      $var1 = $reg[0];
+                      $var2 = "$nombrePlugin"."_"."$var1";
+
+                      $fuente .= ' <div class="form-group"> ' . "\n";
+                      $fuente .= '     <label for="' . $reg[0] . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '"); ?></label> ' . "\n";
+                      $fuente .= '     <div class="col-sm-10"> ' . "\n";
+                      $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?>" value="<?php echo $' . $var2 . '; ?>"> ' . "\n";
+                      $fuente .= '     </div> ' . "\n";
+                      $fuente .= '   </div> ' . "\n\n\n";
+
+                     */
                 }
                 $i++;
             }
@@ -1002,12 +989,12 @@ function contenido_vista($vista, $nombrePlugin) {
             $fuente .= ' </form> ' . "\n";
             return $fuente;
             break;
-       
+
         case 'index.php':
 
-            $fuente  = '<?php include "tabs.php"; ?>' . "\n";
+            $fuente = '<?php include "tabs.php"; ?>' . "\n";
             $fuente .= '<h2> ' . "\n";
-            $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";            
+            $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
             $fuente .= '<?php echo _t("Lista de ' . $nombrePlugin . '"); ?> <a type="button" class="btn btn-primary navbar-btn" href="?p=' . $nombrePlugin . '&c=crear"> <?php _t("Nueva"); ?></a>' . "\n";
             $fuente .= '</h2>' . "\n";
 
@@ -1024,7 +1011,7 @@ function contenido_vista($vista, $nombrePlugin) {
                 $i++;
             }
             $fuente .= ' <th><?php echo _t("Accion"); ?></th> ' . "\n";
-            $fuente .=' </tr>
+            $fuente .= ' </tr>
     </thead>
     <tbody>
     
@@ -1038,7 +1025,7 @@ function contenido_vista($vista, $nombrePlugin) {
 
         <?php
         $i=1;
-        while ($'.$nombrePlugin.' = mysql_fetch_array($sql)) {
+        while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
             include "./' . $nombrePlugin . '/reg/reg.php"; 
                 if(permisos_tiene_permiso("editar", "' . $nombrePlugin . '", $_usuarios_grupo)){
                     include "./' . $nombrePlugin . '/vista/tr.php";
@@ -1060,7 +1047,10 @@ function contenido_vista($vista, $nombrePlugin) {
     
 </table> 
 
-<?php include \'paginador.php\'; ?>
+<?php  
+//echo paginacion($p, $c, isset($_REQUEST[\'pag\'])); 
+echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
+?>
     
 
 
@@ -1082,8 +1072,8 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1";  
+                    $var1 = $reg[0];
+                    $var2 = "$nombrePlugin" . "_" . "$var1";
 
                     $fuente .= '
                     <div class="form-group">
@@ -1108,7 +1098,7 @@ function contenido_vista($vista, $nombrePlugin) {
 
             return $fuente;
             break;
-            
+
         case 'paginador.php':
             $fuente = '<?php if($total_items > $total_items_por_pagina){?>
                 
@@ -1129,7 +1119,7 @@ function contenido_vista($vista, $nombrePlugin) {
 </nav>
 
 <?php }?>';
-            return $fuente;                                     
+            return $fuente;
 
         case 'sidebar.php':
             $fuente = '﻿ <div class="col-sm-3 col-md-2 sidebar"> ' . "\n\n";
@@ -1142,10 +1132,10 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1"; 
-                
-                
+                    $var1 = $reg[0];
+                    $var2 = "$nombrePlugin" . "_" . "$var1";
+
+
                     $fuente .= '     <div class="form-group"> ' . "\n";
                     $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '");?></label> ' . "\n";
                     // $fuente .= '     <div class="col-sm-10"> ' . "\n";
@@ -1164,9 +1154,9 @@ function contenido_vista($vista, $nombrePlugin) {
             $fuente .= ' </div> ' . "\n";
             return $fuente;
             break;
-                                          
+
         case 'buscar_form.php':
-            $fuente  = '<h2>' . "\n\n";
+            $fuente = '<h2>' . "\n\n";
             $fuente .= '<span class="glyphicon glyphicon-search"></span>' . "\n\n";
             $fuente .= '<?php _t("Buscar"); ?> ' . "\n\n";
             $fuente .= '</h2> ' . "\n\n";
@@ -1178,9 +1168,9 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1";                      
-                    
+                    $var1 = $reg[0];
+                    $var2 = "$nombrePlugin" . "_" . "$var1";
+
                     $fuente .= '     <div class="form-group"> ' . "\n";
                     $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '");?></label> ' . "\n";
                     // $fuente .= '     <div class="col-sm-10"> ' . "\n";
@@ -1196,40 +1186,40 @@ function contenido_vista($vista, $nombrePlugin) {
             //$fuente .= '     </div> ' . "\n";
             //$fuente .= '   </div> ' . "\n";
             $fuente .= ' </form> ' . "\n";
-            
+
             return $fuente;
-            break;   
-            
+            break;
+
         case 'tr.php':
             $fuente = ' <?php  ' . "\n";
             $fuente .= '    echo \' <tr>' . "\n";
             $fuente .= '    <td>\'.$i.\'</td> ' . "\n";
-            
+
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                 $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1";    
-                
+                    $var1 = $reg[0];
+                    $var2 = "$nombrePlugin" . "_" . "$var1";
+
                     $fuente .= ' <td>\'.$' . $var2 . '.\'</td> ' . "\n";
                 }
 
                 $i++;
             }
-            $fuente .=' <td>
-<a href=\'.$_SERVER[\'PHP_SELF\'].\'?p=' . $nombrePlugin . '&c=ver&'.$nombrePlugin.'_id=\'.$'.$nombrePlugin.'_id.\'>Ver</a> |  
-<a href=\'.$_SERVER[\'PHP_SELF\'].\'?p=' . $nombrePlugin . '&c=editar&'.$nombrePlugin.'_id=\'.$'.$nombrePlugin.'_id.\'>Editar</a>  
+            $fuente .= ' <td>
+<a href=\'.$_SERVER[\'PHP_SELF\'].\'?p=' . $nombrePlugin . '&c=ver&' . $nombrePlugin . '_id=\'.$' . $nombrePlugin . '_id.\'>Ver</a> |  
+<a href=\'.$_SERVER[\'PHP_SELF\'].\'?p=' . $nombrePlugin . '&c=editar&' . $nombrePlugin . '_id=\'.$' . $nombrePlugin . '_id.\'>Editar</a>  
                       
                 </td></tr>\';  ';
 
             return $fuente;
             break;
-            
-            
+
+
 
         case 'tabs.php':
-            $fuente  = '<div>' . "\n\n";
+            $fuente = '<div>' . "\n\n";
             $fuente .= '  <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active">        
                             <a href="#inicio" aria-controls="inicio" role="tab" data-toggle="tab">
@@ -1256,9 +1246,9 @@ function contenido_vista($vista, $nombrePlugin) {
                     </div>' . "\n\n";
             return $fuente;
             break;
-            
-            
-            
+
+
+
         case 'tr_anadir.php':
             $fuente = '
             <form method="post" action="index.php" >
@@ -1270,13 +1260,13 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1";                      
+                    $var1 = $reg[0];
+                    $var2 = "$nombrePlugin" . "_" . "$var1";
                     $fuente .= ' <td><input class="form-control" type="text" name="' . $var2 . '" value="" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?>"></td> ' . "\n";
                 }
                 $i++;
             }
-            $fuente .='<td><input class="btn btn-primary" type="submit" value="<?php _t("Registrar"); ?>" ></td>        
+            $fuente .= '<td><input class="btn btn-primary" type="submit" value="<?php _t("Registrar"); ?>" ></td>        
     </tr>
 </form> ';
             return $fuente;
@@ -1294,14 +1284,14 @@ function contenido_vista($vista, $nombrePlugin) {
             <input type="hidden" name="p" value="' . $nombrePlugin . '">
             <input type="hidden" name="c" value="editar">    
             <input type="hidden" name="a" value="editar">    
-            <input type="hidden" name="'.$nombrePlugin.'_id" value="<?php echo $'.$nombrePlugin.'_id; ?>">    
+            <input type="hidden" name="' . $nombrePlugin . '_id" value="<?php echo $' . $nombrePlugin . '_id; ?>">    
             <tr>';
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1";                      
+                    $var1 = $reg[0];
+                    $var2 = "$nombrePlugin" . "_" . "$var1";
                     $fuente .= ' <td><input class="form-control" type="text" name="' . $var2 . '" value="<?php echo $' . $var2 . '; ?>" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?>"></td> ' . "\n";
                 }
                 $i++;
@@ -1326,8 +1316,8 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1";                      
+                    $var1 = $reg[0];
+                    $var2 = "$nombrePlugin" . "_" . "$var1";
                     $fuente .= ' <td><input class="form-control" type="text" name="' . $var2 . '" value="" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?>"></td> ' . "\n";
                 }
                 $i++;
@@ -1344,66 +1334,62 @@ function contenido_vista($vista, $nombrePlugin) {
 
         case 'ver.php':
             $fuente = '<h1> ' . "\n";
-            $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";            
+            $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
             $fuente = '<?php _t("Detalles"); ?> ' . "\n";
             $fuente = '</h1> ' . "\n";
 
             $fuente .= '     <form class="form-horizontal" method="" action=""> ' . "\n";
             $fuente .= '     <input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
             $fuente .= '     <input type="hidden" name="c" value="editar"> ' . "\n";
-            $fuente .= '     <input type="hidden" name="'.$nombrePlugin.'_id" value="<?php echo $'.$nombrePlugin.'_id; ?>"> ' . "\n";
+            $fuente .= '     <input type="hidden" name="' . $nombrePlugin . '_id" value="<?php echo $' . $nombrePlugin . '_id; ?>"> ' . "\n";
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
                     //*******************
-                $nombre = $reg['Field'];
-                $tipo = $reg['Type'];
-                $nul = $reg['Null'];
-                $clave = $reg['Key'];
-                $defecto = $reg['Default'];
-                $extra = $reg['Extra'];                
-                $tabla_nombre = "$nombrePlugin"."_"."$nombre";                 
-                $tipo_campo = tipo_campo($tipo);                                                                
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1";                                 
-                switch ($tipo_campo) {
-                    case 'texto':                        
-                        $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, '<?php echo $' . $var2 . '; ?>', 'disabled'); 
-                        break;  
-                    case 'numerico':                        
-                        $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin); 
-                        break;                         
-                    case 'areaDeTexto':
-                        $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin, '<?php echo $' . $var2 . '; ?>', 'disabled' );
-                        break;                    
-                    case 'buleano':                        
-                        $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, $selecionado=false, 'disabled');
-                        break;                  
+                    $nombre = $reg['Field'];
+                    $tipo = $reg['Type'];
+                    $nul = $reg['Null'];
+                    $clave = $reg['Key'];
+                    $defecto = $reg['Default'];
+                    $extra = $reg['Extra'];
+                    $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
+                    $tipo_campo = tipo_campo($tipo);
+                    $var1 = $reg[0];
+                    $var2 = "$nombrePlugin" . "_" . "$var1";
+                    switch ($tipo_campo) {
+                        case 'texto':
+                            $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, '<?php echo $' . $var2 . '; ?>', 'disabled');
+                            break;
+                        case 'numerico':
+                            $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
+                            break;
+                        case 'areaDeTexto':
+                            $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin, '<?php echo $' . $var2 . '; ?>', 'disabled');
+                            break;
+                        case 'buleano':
+                            $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, $selecionado = false, 'disabled');
+                            break;
 
-                    default:
-                        break;
-                }   
-                //********************************
-                    
-                    
-                /*    
-                    
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1";                      
-                    $fuente .= ' <div class="form-group"> ' . "\n";
-                    $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '"); ?></label> ' . "\n";
-                    $fuente .= '     <div class="col-sm-10"> ' . "\n";
-                    $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?>" value="<?php echo $' . $var2 . '; ?>" disabled=""> ' . "\n";
-                    $fuente .= '     </div> ' . "\n";
-                    $fuente .= '   </div> ' . "\n";
-                    $fuente .= '  ' . "\n\n";
-                    
-                */    
-                    
-                    
-                    
-                    
+                        default:
+                            break;
+                    }
+                    //********************************
+
+
+                    /*
+
+                      $var1 = $reg[0];
+                      $var2 = "$nombrePlugin"."_"."$var1";
+                      $fuente .= ' <div class="form-group"> ' . "\n";
+                      $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '"); ?></label> ' . "\n";
+                      $fuente .= '     <div class="col-sm-10"> ' . "\n";
+                      $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?>" value="<?php echo $' . $var2 . '; ?>" disabled=""> ' . "\n";
+                      $fuente .= '     </div> ' . "\n";
+                      $fuente .= '   </div> ' . "\n";
+                      $fuente .= '  ' . "\n\n";
+
+                     */
                 }
                 $i++;
             }
@@ -1436,21 +1422,21 @@ function contenido_reg($controlador, $nombrePlugin) {
             $fuente = ' <?php ' . "\n";
             $i = 0;
             foreach ($resultados as $reg) {
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1";                                     
+                $var1 = $reg[0];
+                $var2 = "$nombrePlugin" . "_" . "$var1";
                 $fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_GET[\'' . $var2 . '\']); ' . "\n";
                 $i++;
             }
             return $fuente;
-            break;            
-            
+            break;
+
         case 'post.php':
             $fuente = ' <?php ' . "\n";
             $i = 0;
             foreach ($resultados as $reg) {
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1";      
-                                                    
+                $var1 = $reg[0];
+                $var2 = "$nombrePlugin" . "_" . "$var1";
+
                 $fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_POST[\'' . $var2 . '\']); ' . "\n";
                 $i++;
             }
@@ -1460,9 +1446,9 @@ function contenido_reg($controlador, $nombrePlugin) {
             $fuente = ' <?php ' . "\n";
             $i = 0;
             foreach ($resultados as $reg) {
-                
-                
-                                    
+
+
+
                 $nombre = $reg['Field'];
                 $tipo = $reg['Type'];
                 $nul = $reg['Null'];
@@ -1470,38 +1456,38 @@ function contenido_reg($controlador, $nombrePlugin) {
                 $defecto = $reg['Default'];
                 $extra = $reg['Extra'];
 
-                
-                $tabla_nombre = "$nombrePlugin"."_"."$nombre"; 
-                
+
+                $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
+
                 $tipo_campo = tipo_campo($tipo);
 
-                
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1";                                
-                
-                $fuente .= '  $' . $var2 . ' = $'.$nombrePlugin.'[\'' . $var1 . '\']; ' . "\n";
-                
-                if($tipo_campo=='buleano'){
-                    
-                    
-                    
-                    $fuente .= ' $'.$var2.'_0 = "";  ';
-                    $fuente .= ' $'.$var2.'_1 = "";  ';
-                    
-                    $fuente .= '    if($'.$var2.'==0){
-      $'.$var2.'_0 = " checked "; 
-      $'.$var2.'_1 = ""; 
+
+                $var1 = $reg[0];
+                $var2 = "$nombrePlugin" . "_" . "$var1";
+
+                $fuente .= '  $' . $var2 . ' = $' . $nombrePlugin . '[\'' . $var1 . '\']; ' . "\n";
+
+                if ($tipo_campo == 'buleano') {
+
+
+
+                    $fuente .= ' $' . $var2 . '_0 = "";  ';
+                    $fuente .= ' $' . $var2 . '_1 = "";  ';
+
+                    $fuente .= '    if($' . $var2 . '==0){
+      $' . $var2 . '_0 = " checked "; 
+      $' . $var2 . '_1 = ""; 
   }else {
-      $'.$var2.'_0 = ""; 
-      $'.$var2.'_1 = "checked";       
-  }  ' . "\n"; 
+      $' . $var2 . '_0 = ""; 
+      $' . $var2 . '_1 = "checked";       
+  }  ' . "\n";
                 }
-                
-                
-                
-                
-                
-                
+
+
+
+
+
+
                 $i++;
             }
 
@@ -1511,37 +1497,37 @@ function contenido_reg($controlador, $nombrePlugin) {
             $fuente = ' <?php ' . "\n";
             $i = 0;
             foreach ($resultados as $reg) {
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1";                      
+                $var1 = $reg[0];
+                $var2 = "$nombrePlugin" . "_" . "$var1";
                 $fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_REQUEST[\'' . $var2 . '\']); ' . "\n";
                 $i++;
             }
             return $fuente;
             break;
-            
+
         case 'var.php':
             $fuente = ' <?php ' . "\n";
             $i = 0;
             foreach ($resultados as $reg) {
-                $var1 = $reg[0];                
-                $var2 = "$nombrePlugin"."_"."$var1";                                     
-                
-               // $fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_GET[\'' . $var2 . '\']); ' . "\n";
-                $fuente .= '  $html = str_replace(\'%'.$nombrePlugin.'_'.$var1.'%\',       $datos[\''.$nombrePlugin.'\'][\''.$var1.'\'], $html); ' . "\n";
-                
+                $var1 = $reg[0];
+                $var2 = "$nombrePlugin" . "_" . "$var1";
+
+                // $fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_GET[\'' . $var2 . '\']); ' . "\n";
+                $fuente .= '  $html = str_replace(\'%' . $nombrePlugin . '_' . $var1 . '%\',       $datos[\'' . $nombrePlugin . '\'][\'' . $var1 . '\'], $html); ' . "\n";
+
                 $i++;
             }
-            
-            
-           
-            
-            
-            
-            
+
+
+
+
+
+
+
             return $fuente;
-            break;            
-            
-            
+            break;
+
+
         default:
             $fuente = "";
             return $fuente;
@@ -1551,7 +1537,7 @@ function contenido_reg($controlador, $nombrePlugin) {
 
 function contenido_plugin($pagina, $nombrePlugin) {
     global $path_plugins, $dbh;
-   
+
     include "./modelos/v_crea_plug.php";
     $total_resultados = count($resultados);
 
@@ -1560,7 +1546,7 @@ function contenido_plugin($pagina, $nombrePlugin) {
         case 'funciones.php':
 
             $fuente = '<?php ';
-            $fuente .='/**
+            $fuente .= '/**
  * si deseas agregar alguna funcion haslo en las extenciones
  */
 ';
@@ -1570,20 +1556,20 @@ function contenido_plugin($pagina, $nombrePlugin) {
     $sql = mysql_query(
             "SELECT DISTINCT $campo FROM _menu order by $campo   ", $conexion) 
             or die("Error:" . mysql_error());
-    while ($'.$nombrePlugin.' = mysql_fetch_array($sql)) {
+    while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
 
         echo "<option ";
-        if ($selecionado == $'.$nombrePlugin.'[$campo]) {
+        if ($selecionado == $' . $nombrePlugin . '[$campo]) {
             echo " selected ";
         } else {
             echo "";
         }
-        if ($excluir == $'.$nombrePlugin.'[$campo]) {
+        if ($excluir == $' . $nombrePlugin . '[$campo]) {
             echo " disabled ";
         } else {
             echo "";
         }
-        echo "value=\"$'.$nombrePlugin.'[$campo]\">$'.$nombrePlugin.'[$campo]</option> \n";
+        echo "value=\"$' . $nombrePlugin . '[$campo]\">$' . $nombrePlugin . '[$campo]</option> \n";
     }
 }
 
@@ -1591,18 +1577,18 @@ function ' . $nombrePlugin . '_add($selecionado="",$excluir=""){
 global $conexion; 
 $sql=mysql_query(
         "SELECT * FROM ' . $nombrePlugin . '  ",$conexion) or die ("Error:".mysql_error());
-while ($'.$nombrePlugin.' = mysql_fetch_array($sql)) {
+while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
     
    echo "<option "; 
-   if($selecionado==$'.$nombrePlugin.'[0]) {echo " selected "; } else {echo ""; }
-   if($excluir==$'.$nombrePlugin.'[0]) {echo " disabled "; } else {echo ""; }
-   echo "value=\"$'.$nombrePlugin.'[0]\">$'.$nombrePlugin.'[0]</option>";
+   if($selecionado==$' . $nombrePlugin . '[0]) {echo " selected "; } else {echo ""; }
+   if($excluir==$' . $nombrePlugin . '[0]) {echo " disabled "; } else {echo ""; }
+   echo "value=\"$' . $nombrePlugin . '[0]\">$' . $nombrePlugin . '[0]</option>";
 } 
 }
 
 ';
 
-            $fuente .='/**
+            $fuente .= '/**
  * si deseas agregar alguna funcion haslo en las extenciones
  */
 ';
@@ -1646,7 +1632,7 @@ $bd_usuario = "' . $usuario . '";
 $bd_clave = "' . $clave . '";';
             return $fuente;
             break;
-        
+
         case 'conec.php':
             $fuente = '<?php	
 $dbh = new PDO("mysql:host=$servidor; dbname=$bdatos",   $usuario, $clave);
@@ -1665,7 +1651,7 @@ mysql_select_db("$bdatos", $conexion) or die("Problemas conexion en local");
             $fuente = '<?php 
 $config_nombre_web          = "Mi sitio web";
 $config_idioma_por_defecto  = "es"; 
-$config_total_items_por_pagina = 25; 
+$cfg_limite_items_en_tablas = 25; 
 ';
             return $fuente;
             break;
@@ -1971,7 +1957,7 @@ function traduccion_registra_traduccion($id_contenido, $idioma, $traduccion) {
 return 0;
 }';
             return $fuente;
-            break;       
+            break;
         case 'contenido.php':
             $fuente = '<?php
 
@@ -2010,7 +1996,7 @@ function contenido_registra($frase,$contexto="") {
    
 return 0;
 }';
-            return $fuente;                                                            
+            return $fuente;
         case 'menu.php':
             $fuente = '<?php
 function _menu_top(){
@@ -2077,7 +2063,7 @@ function _menu_sidebar($p){
 
 
 ';
-            return $fuente;                        
+            return $fuente;
         case 'formularios.php':
             $fuente = '<?php
 
@@ -2637,8 +2623,8 @@ body {
 ';
             return $fuente;
             break;
-        
-        
+
+
         case 'carrusel.php':
             $fuente = '
        
@@ -2873,6 +2859,15 @@ body {
                     </ul>
                 </li>
             </ul>
+            
+            <form method="post" action="gestion/z_login.php" class="navbar-form navbar-right">
+                <input type="text" name="username" id="username" class="form-control" placeholder="Login" autofocus>
+                <input type="password" name="password" id="password" class="form-control" placeholder="Clave">
+                <button type="submit" class="btn btn-danger">Entrar</button>
+            </form>
+          
+
+
         </div>
     </div>
 </nav>
@@ -2887,16 +2882,8 @@ body {
             $fuente = '';
             return $fuente;
             break;
-
-
-        
-        
     }
 }
-
-
-
-
 
 function registrar_pagina_en_bd($pagina) {
     global $dbh;
@@ -2927,7 +2914,7 @@ function registrar_permiso_pagina_grupo($grupo, $pagina, $permiso) {
  */
 function registra_item_al_menu($plugin, $ubicacion, $padre, $label) {
     global $dbh;
-    
+
     $sql = "INSERT INTO _menu (ubicacion, padre,label,url,orden) VALUES (:ubicacion, :padre,:label,:url,:orden)";
     $stmt = $dbh->prepare($sql);
     $stmt->execute(array(
@@ -2952,7 +2939,7 @@ function magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvcg) {
 
     switch ($mvcg) {
         case 'controlador':
-            $c = ['index.php', 'ver.php', 'crear.php', 'editar.php', 'borrar.php', 'buscar.php'];            
+            $c = ['index.php', 'ver.php', 'crear.php', 'editar.php', 'borrar.php', 'buscar.php'];
             $i = 0;
             while ($i < count($c)) {
                 $path = "$path_plugins/$nombrePlugin/controlador";
@@ -2963,7 +2950,7 @@ function magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvcg) {
             }
             break;
         case 'modelos':
-            $c = ['index.php', 'ver.php', 'crear.php', 'editar.php', 'borrar.php', 'buscar.php'];            
+            $c = ['index.php', 'ver.php', 'crear.php', 'editar.php', 'borrar.php', 'buscar.php'];
             $i = 0;
             while ($i < count($c)) {
                 $path = "$path_plugins/$nombrePlugin/modelos";
@@ -2974,12 +2961,12 @@ function magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvcg) {
             }
             break;
         case 'reg':
-            $c = ['get.php', 'post.php', 'reg.php', 'request.php','var.php'];            
+            $c = ['get.php', 'post.php', 'reg.php', 'request.php', 'var.php'];
             $i = 0;
             while ($i < count($c)) {
                 $path = "$path_plugins/$nombrePlugin/reg";
                 // este va a ser el contedido que vamos a escribir en el documento
-                $contenido = contenido_reg($c[$i], $nombrePlugin);                
+                $contenido = contenido_reg($c[$i], $nombrePlugin);
                 crear_fichero($path, "$c[$i]", $contenido);
                 $i++;
             }
@@ -3023,7 +3010,7 @@ function magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvcg) {
                 '.gitignore',
                 'version',
                 'menu'
-            ];                
+            ];
             $total = count($c);
             $i = 0;
             while ($i < $total) {
@@ -3075,18 +3062,18 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
                 case 'admin':
                     $ficheros = [
                         'bd.php'
-/*                        'conec.php',
-                        'coneccion.php',
-                        'configuracion.php',
-                        'funciones.php',
-                        'index.php',
-                        'menu.php',
-                        'modelo.css',
-                        'permisos.php',
-                        'traductor.php',
-                        'contenido.php',
-                        'formularios.php'*/
-                    ];                   
+                            /*                        'conec.php',
+                              'coneccion.php',
+                              'configuracion.php',
+                              'funciones.php',
+                              'index.php',
+                              'menu.php',
+                              'modelo.css',
+                              'permisos.php',
+                              'traductor.php',
+                              'contenido.php',
+                              'formularios.php' */
+                    ];
                     $j = 0;
                     while ($j < count($ficheros)) {
                         crear_fichero("$path_web/admin", $ficheros[$j], contenido_admin($ficheros[$j]));
@@ -3136,7 +3123,7 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
     }
 
     // con esto creo el index de la parte publica del proyecto
-    
+
     $ficheros_publicos = [
         'carrusel.css',
         'estilo.css',
@@ -3144,9 +3131,8 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
         'detalles.php',
         'index.php',
         'nav_superior.php'
-        
     ];
-    
+
 
     $j = 0;
     while ($j < count($ficheros_publicos)) {

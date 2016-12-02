@@ -303,7 +303,20 @@ if (isset($_REQUEST['tabla'])) {
                            include "./request/demo.php";
                            include "./vista/demo.php";
                             break;
-
+// KumbiaPHP         
+                        case "kumbia_plugins_lista":
+                            include "./modelos/plugins_lista.php";
+                            include "./vista/kumbia_plugins_lista.php";
+                            break;
+                        
+// KumbiaPHP         
+                        case "crear_bd":
+                            include "./modelos/crear_bd.php";
+                            include "./vista/crear_bd.php";
+                            break;
+                        
+                        
+                        
 
 
                         default :
@@ -311,6 +324,9 @@ if (isset($_REQUEST['tabla'])) {
                             include "./vista/index.php";
                             break;
                     }
+                    
+                    
+                    
                     ?>        
 
 

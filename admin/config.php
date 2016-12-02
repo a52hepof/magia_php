@@ -1,7 +1,7 @@
 <?php
 
-$path_web = "/var/www/html/magia_blog/public_html";
-$path_plugins = "/var/www/html/magia_blog/public_html/gestion";
+$path_web = "/var/www/html/trabajo";
+$path_plugins = "/var/www/html/trabajo/gestion";
 $path_plugins_controlador = "path_plugins_controlador";
 $path_plugins_modelos = "";
 $path_plugins_vista = "";
