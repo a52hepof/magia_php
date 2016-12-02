@@ -550,7 +550,7 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= '     $' . $nombrePlugin . '_id 		= mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);   ' . "\n";
 
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
-            $fuente .= '     include "./' . $nombrePlugin . '/reg/ver.php"; ' . "\n";
+            $fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/vista/txt.php"; ' . "\n";
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
@@ -1460,6 +1460,7 @@ echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
             $fuente .= '     </div> ' . "\n";
             $fuente .= '   </div>     ' . "\n";
             $fuente .= ' </form> ' . "\n";
+            $fuente .= ' <a href="index.php?p='.$nombrePlugin.'&c=txt&' . $nombrePlugin . '_id=<?php echo $' . $nombrePlugin . '_id; ?>">Formato texto</a> ' . "\n";
             return $fuente;
             break;
         
@@ -1484,7 +1485,7 @@ echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
 
 include "./'.$nombrePlugin.'/reg/var.php";
 
-echo "<pre>$html</pre>";
+echo "<h1>Variables disponibles</h1><pre>$html</pre>";
 ?>';
 
             return $fuente;
