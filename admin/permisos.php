@@ -13,13 +13,5 @@ function permisos_tiene_permiso($pagina, $accion, $grupo) {
 ?>
 
 
-0   0000    ----
-1   0001    ver     1
-2   0010    crear
-3   0100    editar
-4   1000    borrar
-5   1111    v c e b     
-
-
 
 
