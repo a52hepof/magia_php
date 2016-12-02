@@ -550,7 +550,7 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= '     $' . $nombrePlugin . '_id 		= mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);   ' . "\n";
 
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
-            $fuente .= '     include "./' . $nombrePlugin . '/reg/var.php"; ' . "\n";
+            $fuente .= '     include "./' . $nombrePlugin . '/reg/ver.php"; ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/vista/txt.php"; ' . "\n";
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
@@ -1468,7 +1468,7 @@ echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
             
             
         case 'txt.php':
-            $fuente = ' ' . "\n";            
+            $fuente = ' <?php $html = "' . "\n";            
             $i = 0;
             $usar_id = -1; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
@@ -1480,7 +1480,12 @@ echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
                 }
                 $i++;
             }
+            $fuente .='";
 
+include "./'.$nombrePlugin.'/reg/var.php";
+
+echo "<pre>$html</pre>";
+?>';
 
             return $fuente;
             break;
