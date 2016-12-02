@@ -39,7 +39,19 @@ function largo_del_campo($campo) {
  * @return string
  */
 function tipo_campo($tipo) {
-    // int(11)     
+    if (strpos($tipo, 'varchar') !== FALSE) {
+        return "texto";
+    }
+    if (strpos($tipo, 'date') !== FALSE) {
+        return "fecha";
+    }
+    if (strpos($tipo, 'time') !== FALSE) {
+        return "hora";
+    }
+        if (strpos($tipo, 'text') !== FALSE) {
+        return "areaDeTexto";
+    }
+        // int(11)     
     // si en tipo encuentro la cadena int es un numerico     
     if (strpos($tipo, 'int') !== FALSE) {
         if (largo_del_campo($tipo) > 1) {
@@ -48,32 +60,11 @@ function tipo_campo($tipo) {
             return "buleano";
         }
     }
-    if (strpos($tipo, 'varchar') !== FALSE) {
-        return "texto";
-    }
-    if (strpos($tipo, 'text') !== FALSE) {
-        return "areaDeTexto";
-    }
-    if (strpos($tipo, 'date') !== FALSE) {
-        return "fecha";
-    }
-    if (strpos($tipo, 'time') !== FALSE) {
-        return "hora";
-    }
-    return "text";
+    return "texto";
 }
 
-/**
- * Genera el campo texto  de un formulario 
- * @param type $nombre
- * @param type $id
- * @param type $placeholder
- * @param type $label
- * @param type $contexto
- * @param type $valor
- * @param type $extras
- * @return string
- */
+
+
 function campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
 
     $html = ' <div class="form-group"> ' . "\n";
@@ -92,17 +83,45 @@ function campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor 
     return $html;
 }
 
-/**
- * Genera el area de texto del formulario
- * @param type $nombre
- * @param type $id
- * @param type $placeholder
- * @param type $label
- * @param type $contexto
- * @param type $valor
- * @param type $extras
- * @return string
- */
+
+function campo_html_fecha($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
+
+    $html = ' <div class="form-group"> ' . "\n";
+    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
+    $html .= '     <div class="col-sm-10"> ' . "\n";
+    $html .= '       <input type="facha" '
+            . 'class="form-control" '
+            . 'name="' . $nombre . '" '
+            . 'id="' . $id . '" '
+            . 'placeholder="<?php _t("' . ucfirst($placeholder) . '"); ?>" '
+            . 'value="' . $valor . '" '
+            . ' ' . $extras . ' > ' . "\n";
+    $html .= '     </div> ' . "\n";
+    $html .= '   </div> ' . "\n\n\n";
+
+    return $html;
+}
+
+function campo_html_hora($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
+
+    $html = ' <div class="form-group"> ' . "\n";
+    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
+    $html .= '     <div class="col-sm-10"> ' . "\n";
+    $html .= '       <input type="time" '
+            . 'class="form-control" '
+            . 'name="' . $nombre . '" '
+            . 'id="' . $id . '" '
+            . 'placeholder="<?php _t("' . ucfirst($placeholder) . '"); ?>" '
+            . 'value="' . $valor . '" '
+            . ' ' . $extras . ' > ' . "\n";
+    $html .= '     </div> ' . "\n";
+    $html .= '   </div> ' . "\n\n\n";
+
+    return $html;
+}
+
+
+
 function campo_html_areaDeTexto($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
     $fuente = ' <div class="form-group"> ' . "\n";
     $fuente .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
@@ -114,16 +133,25 @@ function campo_html_areaDeTexto($nombre, $id, $placeholder, $label, $contexto, $
     return $fuente;
 }
 
-/**
- * Si el campo en la base de datos es un buleano, crea un campo tipo radio
- * @param type $nombre
- * @param type $id
- * @param type $label
- * @param type $contexto
- * @param type $selecionado
- * @param type $extras
- * @return string
- */
+function campo_html_numerico($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
+
+    $html = ' <div class="form-group"> ' . "\n";
+    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
+    $html .= '     <div class="col-sm-10"> ' . "\n";
+    $html .= '       <input type="number" '
+            . 'class="form-control" '
+            . 'name="' . $nombre . '" '
+            . 'id="' . $id . '" '
+            . 'placeholder="<?php _t("' . ucfirst($placeholder) . '"); ?>" '
+            . 'value="' . $valor . '" '
+            . ' ' . $extras . ' > ' . "\n";
+    $html .= '     </div> ' . "\n";
+    $html .= '   </div> ' . "\n\n\n";
+
+    return $html;
+}
+
+
 function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado = "", $extras = "") {
 
     $seleccionado_0 = ($selecionado == false) ? " checked " : " ";
@@ -151,17 +179,7 @@ function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado = "", 
     return $fuente;
 }
 
-/**
- * Me genera un select
- * @param type $nombre
- * @param type $id
- * @param type $placeholder
- * @param type $label
- * @param type $contexto
- * @param type $valor
- * @param type $extras
- * @return string
- */
+
 function campo_html_opciones($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
 
     $fuente = ' <div class="form-group"> ' . "\n";
@@ -179,15 +197,7 @@ function campo_html_opciones($nombre, $id, $placeholder, $label, $contexto, $val
     return $fuente;
 }
 
-/**
- * 
- * @global type $path_web
- * @param type $path_plugins
- * @param type $ubicacion
- * @param type $nombrePlugin
- * @param type $padre
- * @param type $label
- */
+
 function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) {
     global $path_web;
     // verifico si el nombre existe
@@ -904,6 +914,9 @@ function contenido_vista($vista, $nombrePlugin) {
                     switch ($tipo_campo) {
                         case 'texto':
                             $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
+                            break;
+                        case 'fecha':
+                            $fuente .= campo_html_fecha($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
                             break;
                         case 'numerico':
                             $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
