@@ -86,16 +86,25 @@ function campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor 
 
 function campo_html_fecha($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
 
-    $html = ' <div class="form-group"> ' . "\n";
+    $html = '   <script>
+            $( function() {
+              $( "#' . $id . '" ).datepicker();
+            } );
+            </script>' . "\n";
+    
+    $html .= ' <div class="form-group"> ' . "\n";
     $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
-    $html .= '     <div class="col-sm-10"> ' . "\n";
-    $html .= '       <input type="facha" '
+    $html .= '     <div class="col-sm-3"> ' . "\n";
+    $html .= '     <div class="input-group"> ' . "\n";
+    $html .= '       <input type="text" '
             . 'class="form-control" '
             . 'name="' . $nombre . '" '
             . 'id="' . $id . '" '
-            . 'placeholder="<?php _t("' . ucfirst($placeholder) . '"); ?>" '
+            . 'placeholder="<?php _t("mm/dd/aaaa"); ?>" '
             . 'value="' . $valor . '" '
             . ' ' . $extras . ' > ' . "\n";
+    $html .= '     <div class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></div> ' . "\n";
+    $html .= '     </div> ' . "\n";
     $html .= '     </div> ' . "\n";
     $html .= '   </div> ' . "\n\n\n";
 
@@ -156,6 +165,24 @@ function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado = "", 
 
     $seleccionado_0 = ($selecionado == false) ? " checked " : " ";
     $seleccionado_1 = ($selecionado == true) ? " checked " : " ";
+    
+    // con esto veo cual es el nombre de la tabla y segun eso le asigno un valor 
+    // label al radio
+    switch ($label) {
+        case 'sexo':
+            $activo = 'Hombre'; 
+            $bloqueado = 'Mujer'; 
+            break;
+        case 'estatus':
+            $activo = 'Activo'; 
+            $bloqueado = 'Bloqueado'; 
+            break;
+
+        default:
+            $activo = 'Activo'; 
+            $bloqueado = 'Bloqueado';             
+            break;
+    }
 
     $fuente = ' <div class="form-group"> ' . "\n";
     $fuente .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
@@ -163,14 +190,14 @@ function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado = "", 
     $fuente .= '     <div class="radio">' . "\n";
     $fuente .= '        <label>' . "\n";
     $fuente .= '            <input ' . $extras . ' type="radio" name="' . $nombre . '" value="1" <?php echo "$' . $nombre . '_1"; ?>  >' . "\n";
-    $fuente .= '            <?php _t("Activo"); ?> ' . "\n";
+    $fuente .= '            <?php _t("'.$activo.'"); ?> ' . "\n";
     $fuente .= '        </label>' . "\n";
     $fuente .= '     </div>' . "\n";
 
     $fuente .= '     <div class="radio">' . "\n";
     $fuente .= '        <label>' . "\n";
     $fuente .= '            <input ' . $extras . ' type="radio" name="' . $nombre . '" value="0"  <?php echo "$' . $nombre . '_0"; ?>  >' . "\n";
-    $fuente .= '            <?php _t("Bloqueado"); ?>  ' . "\n";
+    $fuente .= '            <?php _t("'.$bloqueado.'"); ?>  ' . "\n";
     $fuente .= '        </label>' . "\n";
     $fuente .= '     </div>' . "\n";
     $fuente .= '   </div> ' . "\n";
@@ -976,18 +1003,23 @@ function contenido_vista($vista, $nombrePlugin) {
                     //
                     $tipo_campo = tipo_campo($tipo);
                     //                                                
-                    $var1 = $reg[0];
+                    $var1 = $reg[0]; // nombre delcampo 
                     $var2 = "$nombrePlugin" . "_" . "$var1";
+                    
+                    $valor ='<?php echo ""; ?>'; 
                     //                
                     switch ($tipo_campo) {
                         case 'texto':
-                            $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, '<?php echo $' . $var2 . '; ?>');
+                            $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, $valor);
+                            break;
+                        case 'fecha':
+                            $fuente .= campo_html_fecha($var2, $var2, $reg[0], $reg[0], $nombrePlugin, $valor);
                             break;
                         case 'numerico':
-                            $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
+                            $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, $valor);
                             break;
                         case 'areaDeTexto':
-                            $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin, '<?php echo $' . $var2 . '; ?>');
+                            $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin, $valor);
                             break;
                         case 'buleano':
                             $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, $selecionado = false);
@@ -1395,16 +1427,6 @@ echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
 
             
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
         case 'ver.php':
             $fuente = '<h1> ' . "\n";
             $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
@@ -1432,16 +1454,19 @@ echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
                     $var2 = "$nombrePlugin" . "_" . "$var1";
                     switch ($tipo_campo) {
                         case 'texto':
-                            $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, '<?php echo $' . $var2 . '; ?>', 'disabled');
+                            $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
+                            break;
+                        case 'fecha':
+                            $fuente .= campo_html_fecha($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
                             break;
                         case 'numerico':
                             $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
                             break;
                         case 'areaDeTexto':
-                            $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin, '<?php echo $' . $var2 . '; ?>', 'disabled');
+                            $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin);
                             break;
                         case 'buleano':
-                            $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, $selecionado = false, 'disabled');
+                            $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, $selecionado = false);
                             break;
 
                         default:
@@ -1489,34 +1514,21 @@ echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
                 if ($i > $usar_id) {
                     $var1 = $reg[0];
 
-            $fuente .= "$nombrePlugin"."_".$var1." : "."%$nombrePlugin"."_"."$var1"."%\n";        
+                    $fuente .= "$nombrePlugin"."_".$var1." : "."%$nombrePlugin"."_"."$var1"."%\n";        
 
                 }
                 $i++;
             }
             $fuente .='";
 
-include "./'.$nombrePlugin.'/reg/var.php";
+                include "./'.$nombrePlugin.'/reg/var.php";
 
-echo "<h1>Variables disponibles</h1><pre>$html</pre>";
-?>';
+                echo "<h1>Variables disponibles</h1><pre>$html</pre>";
+                ?>';
 
             return $fuente;
             break;
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
+   
         default:
             $fuente = "";
             return $fuente;
@@ -1535,10 +1547,19 @@ function contenido_reg($controlador, $nombrePlugin) {
         case 'get.php':
             $fuente = ' <?php ' . "\n";
             $i = 0;
+            $usar_id = 'false'; // usa el id inicial de la tabla?
             foreach ($resultados as $reg) {
                 $var1 = $reg[0];
                 $var2 = "$nombrePlugin" . "_" . "$var1";
-                $fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_GET[\'' . $var2 . '\']); ' . "\n";
+                // con esto verifico si deseo usar el id de la tabla o no
+                if($usar_id && $i!='0'){
+                    
+                    $fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_GET[\'' . $var2 . '\']); ' . "\n";
+                } else {
+                    $fuente .= '  //$' . $var2 . ' = mysql_real_escape_string($_GET[\'' . $var2 . '\']); ' . "\n";
+                }
+                
+                
                 $i++;
             }
             return $fuente;
@@ -1547,11 +1568,19 @@ function contenido_reg($controlador, $nombrePlugin) {
         case 'post.php':
             $fuente = ' <?php ' . "\n";
             $i = 0;
+            $usar_id = 'false'; // usa el id inicial de la tabla?
             foreach ($resultados as $reg) {
                 $var1 = $reg[0];
                 $var2 = "$nombrePlugin" . "_" . "$var1";
-
-                $fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_POST[\'' . $var2 . '\']); ' . "\n";
+                // con esto verifico si deseo usar el id de la tabla o no
+                if($usar_id && $i!='0'){
+                    
+                    $fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_POST[\'' . $var2 . '\']); ' . "\n";
+                } else {
+                    $fuente .= '  //$' . $var2 . ' = mysql_real_escape_string($_POST[\'' . $var2 . '\']); ' . "\n";
+                }
+                
+                
                 $i++;
             }
             return $fuente;
@@ -1913,6 +1942,11 @@ incluir_funciones();
     <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="starter-template.css" rel="stylesheet">
     <link href="modelo.css" rel="stylesheet" type="text/css"/>
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
   </head>
   <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
