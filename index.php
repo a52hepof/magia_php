@@ -43,7 +43,8 @@ if (isset($_REQUEST['tabla'])) {
     <body>
         <div class="container">
             
-           
+
+            
             
             <?php
             include "./vista/header.php";
