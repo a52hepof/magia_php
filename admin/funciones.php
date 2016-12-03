@@ -216,7 +216,7 @@ function campo_html_opciones($nombre, $id, $label, $tabla, $extras = "") {
     $fuente .= '     <label for="' . $nombre . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
     $fuente .= '     <div class="col-sm-10"> ' . "\n";
     $fuente .= '        <select class="form-control" name="' . $nombre . '" >' . "\n";
-    $fuente .= '        <?php //'.$tabla.'_add(); ?>' . "\n";
+    $fuente .= '        <?php //'.$tabla.'_add($'.$nombre.'); ?>' . "\n";
     $fuente .= '        </select>' . "\n";
     $fuente .= '     </div> ' . "\n";
     $fuente .= '   </div> ' . "\n\n\n";
@@ -1017,17 +1017,33 @@ function contenido_vista($vista, $nombrePlugin) {
                     $var1 = $reg[0]; // nombre delcampo 
                     $var2 = "$nombrePlugin" . "_" . "$var1";
                     
-                    $valor ='<?php echo ""; ?>'; 
+                    $valor ='<?php echo $' . $var2 . '; ?>'; 
                     //                
                     switch ($tipo_campo) {
                         case 'texto':
-                            $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, $valor);
+                        case 'numerico':
+                            
+                            if(bdd_tiene_id_al_inicio($nombre)){
+                                
+                              //  $tabla = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre, );
+                                
+                                $fuente .= campo_html_opciones($var2, $var2, $reg[0], $nombrePlugin, $valor);
+                                //function campo_html_opciones($nombre, $id, $label, $tabla, $extras = "") {
+                                
+                            }else{
+                                $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, $valor);
+                                
+                            }   
+
+
+
+
+
+
+                            //$fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, $valor);
                             break;
                         case 'fecha':
-                            $fuente .= campo_html_fecha($var2, $var2, $reg[0], $reg[0], $nombrePlugin, $valor);
-                            break;
-                        case 'numerico':
-                            $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, $valor);
+                            $fuente .= campo_html_fecha($var2, $var2, $reg[0], $reg[0], $nombrePlugin, $valor);                            
                             break;
                         case 'areaDeTexto':
                             $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin, $valor);
@@ -1463,21 +1479,37 @@ echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
                     $tipo_campo = tipo_campo($tipo);
                     $var1 = $reg[0];
                     $var2 = "$nombrePlugin" . "_" . "$var1";
+                    
+                    $valor ='<?php echo $' . $var2 . '; ?>'; 
+                    
+                    
                     switch ($tipo_campo) {
                         case 'texto':
-                            $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
+                        case 'numerico':
+                            
+                            if(bdd_tiene_id_al_inicio($nombre)){
+                                
+                              //  $tabla = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre, );
+                                
+                                $fuente .= campo_html_opciones($var2, $var2, $reg[0], $nombrePlugin, $valor, 'disabled');
+                                
+                            }else{
+                                $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, $valor,  'disabled');
+                                
+                            }    
+
+
+
+                                //$fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, $valor, 'disabled');
                             break;
                         case 'fecha':
-                            $fuente .= campo_html_fecha($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
-                            break;
-                        case 'numerico':
-                            $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
+                            $fuente .= campo_html_fecha($var2, $var2, $reg[0], $reg[0], $nombrePlugin, $valor, 'disabled');
                             break;
                         case 'areaDeTexto':
-                            $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin);
+                            $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin, $valor, 'disabled');
                             break;
                         case 'buleano':
-                            $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, $selecionado = false);
+                            $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, $selecionado = false, 'disabled');
                             break;
 
                         default:
