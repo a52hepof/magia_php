@@ -1,28 +1,9 @@
 <?php
 
-// quiero obtener 
 /**
- * datos de coneccion a la bdd
- * Nombre de la bdd
- * Nombre de una tabla
- * 
- * 
- *  
- * 
- * Si le paso un nombre que me quite el id de ese nombre 
- *      xxxx(id_contacto)
- *      : contacto
- * 
- * 
- * Si le paso un nombre, que me entregue el nombre de una tabla lo mas parecido
- * ejemplo
- *      xxxx(contaco)
- *     tabla [contactos]
- * 
- * 
- * 
- * 
- * 
+ * Verifica si el nombre de un campo tiene 'id_' al inicio
+ * @param type $nombre
+ * @return boolean
  */
 function bdd_tiene_id_al_inicio($nombre) {
     // verifico si tiene 'id_' al inicio cualquier palabra
@@ -34,6 +15,11 @@ function bdd_tiene_id_al_inicio($nombre) {
     }
 }
 
+/**
+ * Devuelve el nombre de un campo sin el 'id_' del inicio
+ * @param type $nombre
+ * @return type
+ */
 function bdd_quita_id_inicio($nombre) {
     // devuelve la posicion donde encuentra 'id_'
     // asi me aseguro que la tabla empieze bien en 'id_'
@@ -47,40 +33,35 @@ function bdd_quita_id_inicio($nombre) {
         return $nombre;
     }
 }
+
 /**
- * Buscamos una palabra parecida entre una lista
+ * Buscamos una tabla parecida entre una lista dada
  * @param type $nombre alque buscamos un igual o parecido
  * @param type $lista lista de nombres que deseamos comparar
  * @return type devuelve el valor mas parecido
  */
-Function bdd_busca_tabla_con_nombre_igual_o_parecido($nombre, $lista) { 
-    
+Function bdd_busca_tabla_con_nombre_igual_o_parecido($tabla, $lista) {
+
     $r = $lista[0];
     $dif = 99999999999; // la diferencia es muy grande al inico
     // devuelve la palabra con menos diferencia
-    
+
     $i = 0;
     while ($i < count($lista)) {
-        
-         $comparacion = levenshtein(strtolower($nombre), strtolower($lista[$i]));
+
+        $comparacion = levenshtein(strtolower($tabla), strtolower($lista[$i]));
 
         if ($comparacion < $dif) {
-             $r = $lista[$i];
+            $r = $lista[$i];
             $dif = $comparacion;
-            echo "$dif $nombre $lista[$i]<br>";
-
         }
-        
+
         $i++;
     }
-    
+
     return $r;
 }
 
 
 
-$lista = array("r", "ro", "robinsd","robinfd","contactenos",'robincoell');
-
-echo "<hr>"; 
-echo bdd_busca_tabla_con_nombre_igual_o_parecido('robin', $lista);
 ?>
