@@ -1,7 +1,5 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
 
 // para crear la tabla 
 function gestion_bd_crear_tabla() {
@@ -92,6 +90,11 @@ Function bdd_busca_tabla_con_nombre_igual_o_parecido($tabla, $lista) {
     return $r;
 }
 
+function bdd_lista_tablas_bdd(){
+    $l = array("contactos","reservas","casas","empresas");
+    
+    return $l;
+}
 
 ?>
 

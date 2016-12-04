@@ -103,7 +103,7 @@ function campo_html_fecha($nombre, $id, $placeholder, $label, $contexto, $valor 
             . 'class="form-control" '
             . 'name="' . $nombre . '" '
             . 'id="' . $id . '" '
-            . 'placeholder="<?php _t("mm/dd/aaaa"); ?>" '
+            . 'placeholder="<?php _t("aaaa-mm-dd"); ?>" '
             . 'value="' . $valor . '" '
             . ' ' . $extras . ' > ' . "\n";
     $html .= '     <div class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></div> ' . "\n";
@@ -210,13 +210,31 @@ function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado = "", 
 }
 
 
-function campo_html_opciones($nombre, $id, $label, $tabla, $extras = "") {
-
+function campo_html_opciones($nombre, $id, $label, $tabla, $extras = "") {    
+    // si el nombre del campo tiene 'id_' debemos buscar la tabla relacinada para ponerle un select con 
+    // la tabla relacionada
+    
+    // verifico si tiene 'id_' al inicio 
+    if(bdd_tiene_id_al_inicio($label)){
+        // quito el 'id_' del inicio 
+        $nombre_sin_id = bdd_quita_id_inicio($label);
+        
+        $lista = bdd_lista_tablas_bdd();
+        
+        $select = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre_sin_id, $lista);
+        
+    }else{
+        $select = "$nombre";
+    }
+    
+    
+    
+    
     $fuente = ' <div class="form-group"> ' . "\n";
     $fuente .= '     <label for="' . $nombre . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
     $fuente .= '     <div class="col-sm-10"> ' . "\n";
     $fuente .= '        <select class="form-control" name="' . $nombre . '" '.$extras.'>' . "\n";
-    $fuente .= '        <?php //'.$tabla.'_add($'.$nombre.'); ?>' . "\n";
+    $fuente .= '        <?php '.$select.'_add($'.$nombre.'); ?>' . "\n";
     $fuente .= '        </select>' . "\n";
     $fuente .= '     </div> ' . "\n";
     $fuente .= '   </div> ' . "\n\n\n";
@@ -241,7 +259,10 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
 
         $t = count($mvc); // cuenta las carpetas
         crear_carpeta("$path_plugins", "$nombrePlugin");
-        crear_fichero("$path_web/extenciones/funciones", "$nombrePlugin.php", "<?php //funciones extendidas de $nombrePlugin");
+        
+        $contenido = contenido_extenciones_funciones($nombrePlugin);
+        
+        crear_fichero("$path_web/extenciones/funciones", "$nombrePlugin.php",$contenido);
 
 
 
@@ -1758,56 +1779,12 @@ function contenido_plugin($pagina, $nombrePlugin) {
     switch ($pagina) {
         case 'funciones.php':
 
-            $fuente = '<?php ';
-            $fuente .= '/**
- * si deseas agregar alguna funcion haslo en las extenciones
- */
-';
-
-            $fuente .= 'function ' . $nombrePlugin . '_campo_add($campo, $label, $selecionado = "", $excluir = "") {
-    global $conexion;
-    $sql = mysql_query(
-            "SELECT DISTINCT $campo FROM _menu order by $campo   ", $conexion) 
-            or die("Error:" . mysql_error());
-    while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
-
-        echo "<option ";
-        if ($selecionado == $' . $nombrePlugin . '[$campo]) {
-            echo " selected ";
-        } else {
-            echo "";
-        }
-        if ($excluir == $' . $nombrePlugin . '[$campo]) {
-            echo " disabled ";
-        } else {
-            echo "";
-        }
-        echo "value=\"$' . $nombrePlugin . '[$campo]\">$' . $nombrePlugin . '[$campo]</option> \n";
-    }
-}
-
-function ' . $nombrePlugin . '_add($selecionado="",$excluir=""){  
-global $conexion; 
-$sql=mysql_query(
-        "SELECT * FROM ' . $nombrePlugin . '  ",$conexion) or die ("Error:".mysql_error());
-while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
-    
-   echo "<option "; 
-   if($selecionado==$' . $nombrePlugin . '[0]) {echo " selected "; } else {echo ""; }
-   if($excluir==$' . $nombrePlugin . '[0]) {echo " disabled "; } else {echo ""; }
-   echo "value=\"$' . $nombrePlugin . '[0]\">$' . $nombrePlugin . '[0]</option>";
-} 
-}
-
-';
-
-            $fuente .= '/**
- * si deseas agregar alguna funcion haslo en las extenciones
- */
-';
-
-            return $fuente;
+            //return $fuente;
             break;
+        
+        
+        
+        
         case 'readme.txt':
             $fuente = "Plugin: $nombrePlugin ";
             return $fuente;
@@ -1868,7 +1845,7 @@ $cfg_limite_items_en_tablas = 25;
 ';
             return $fuente;
             break;
-        case 'funciones.php':
+        case '-------funciones.php':
             $fuente = '<?php 
 
 function _campo($tabla, $id, $campo) {
@@ -2390,6 +2367,52 @@ function _formulario_checkbox($tabla, $campo, $selecionar = "", $desactivar = ""
 ';
             return $fuente;
     }
+}
+
+function contenido_extenciones_funciones($nombrePlugin) {
+
+            $fuente = '<?php ';
+            $fuente .= 'function ' . $nombrePlugin . '_campo_add($campo, $label, $selecionado = "", $excluir = "") {
+    global $conexion;
+    $sql = mysql_query(
+            "SELECT DISTINCT $campo FROM _menu order by $campo   ", $conexion) 
+            or die("Error:" . mysql_error());
+    while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
+
+        echo "<option ";
+        if ($selecionado == $' . $nombrePlugin . '[$campo]) {
+            echo " selected ";
+        } else {
+            echo "";
+        }
+        if ($excluir == $' . $nombrePlugin . '[$campo]) {
+            echo " disabled ";
+        } else {
+            echo "";
+        }
+        echo "value=\"$' . $nombrePlugin . '[$campo]\">$' . $nombrePlugin . '[$campo]</option> \n";
+    }
+}
+
+function ' . $nombrePlugin . '_add($selecionado="",$excluir=""){  
+global $conexion; 
+$sql=mysql_query(
+        "SELECT * FROM ' . $nombrePlugin . '  ",$conexion) or die ("Error:".mysql_error());
+while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
+    
+   echo "<option "; 
+   if($selecionado==$' . $nombrePlugin . '[0]) {echo " selected "; } else {echo ""; }
+   if($excluir==$' . $nombrePlugin . '[0]) {echo " disabled "; } else {echo ""; }
+   echo "value=\"$' . $nombrePlugin . '[0]\">$' . $nombrePlugin . '[0]</option>";
+} 
+}
+
+';
+
+            return $fuente;    
+ 
+
+
 }
 
 function contenido_config($pagina) {
