@@ -215,7 +215,7 @@ function campo_html_opciones($nombre, $id, $label, $tabla, $extras = "") {
     $fuente = ' <div class="form-group"> ' . "\n";
     $fuente .= '     <label for="' . $nombre . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
     $fuente .= '     <div class="col-sm-10"> ' . "\n";
-    $fuente .= '        <select class="form-control" name="' . $nombre . '" >' . "\n";
+    $fuente .= '        <select class="form-control" name="' . $nombre . '" '.$extras.'>' . "\n";
     $fuente .= '        <?php //'.$tabla.'_add($'.$nombre.'); ?>' . "\n";
     $fuente .= '        </select>' . "\n";
     $fuente .= '     </div> ' . "\n";
@@ -1491,8 +1491,10 @@ echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
                                 
                               //  $tabla = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre, );
                                 
-                                $fuente .= campo_html_opciones($var2, $var2, $reg[0], $nombrePlugin, $valor, 'disabled');
-                                
+                                $fuente .= campo_html_opciones($var2, $var2, $reg[0], $nombrePlugin, 'disabled');
+                                //         campo_html_opciones($nombre, $id, $label, $tabla, $extras = "") {
+                                    
+                            
                             }else{
                                 $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, $valor,  'disabled');
                                 
