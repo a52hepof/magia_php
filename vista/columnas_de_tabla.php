@@ -8,15 +8,18 @@
  <?php
             $i = 1;
             foreach ($resultado as $reg => $value) {
-                echo "<pre>"; 
-                var_dump($resultado);
-                echo "</pre>"; 
-                echo "Campo: $value[Field]<br>"; 
+             //   echo "<pre>"; 
+                //var_dump($resultado);
+             //   echo "</pre>"; 
+                echo "Campo: <b>$value[Field]</b><br>"; 
                 echo "Tipo: $value[Type]<br>"; 
                 echo "Null: $value[Null]<br>"; 
                 echo "Key: $value[Key]<br>"; 
                 echo "Defecto: $value[Default]<br>"; 
                 echo "Extra: $value[Extra]<br>"; 
+                
+                echo "<hr>";
+                
 
                 $i++;
             }

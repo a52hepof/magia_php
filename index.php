@@ -278,10 +278,10 @@ if (isset($_REQUEST['tabla'])) {
                             include "./modelos/plugins_lista.php";
                             include "./vista/plugins_lista.php";
                             break;
-// plugins_lista         
-                        case "detalles_tabla":
-                            include "./modelos/detalles_tabla.php";
-                            include "./vista/detalles_tabla.php";
+// detalles_tabla         
+                        case "columnas_de_tabla":
+                            include "./modelos/columnas_de_tabla.php";
+                            include "./vista/columnas_de_tabla.php";
                             break;
 // crear_proyecto         
                         case "crear_proyecto":

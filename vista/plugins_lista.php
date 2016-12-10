@@ -154,7 +154,7 @@ $p = (isset($_GET['p']))? "$_GET[p]" : "plugins_lista";
                         <td>.</td>
                         <td>.</td>
                         <td>.</td>
-                        <td>Creado</td>                
+                        <td><a href="index.php?p=columnas_de_tabla&tabla=' . $reg[0] . '">Detalles</a></td>                
                     </tr>';
                 } else {
                     echo '<tr>        
