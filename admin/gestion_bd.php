@@ -62,11 +62,11 @@ function bdd_quita_id_inicio($nombre) {
     }
 }
 
-/**
- * Buscamos una tabla parecida entre una lista dada
- * @param type $nombre alque buscamos un igual o parecido
- * @param type $lista lista de nombres que deseamos comparar
- * @return type devuelve el valor mas parecido
+function bdd_quita_guiones($nombre) {     
+    return str_replace('_', " ", $nombre);
+}
+/*
+ * 
  */
 Function bdd_busca_tabla_con_nombre_igual_o_parecido($tabla, $lista) {
 
@@ -91,9 +91,22 @@ Function bdd_busca_tabla_con_nombre_igual_o_parecido($tabla, $lista) {
 }
 
 function bdd_lista_tablas_bdd(){
-    $l = array("contactos","reservas","casas","empresas");
+    global $dbh;
+    include "./modelos/lista_tablas.php";
+    
+    //$l = array("contactos","reservas","casas","empresas");
+    
+    $l = array("Robinson","Coello");
+    
+    
+    foreach ($resultado as $reg) {
+        array_push($l, $reg[0]);
+        
+    }
     
     return $l;
+    
+    
 }
 
 ?>

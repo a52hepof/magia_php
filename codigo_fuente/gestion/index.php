@@ -49,7 +49,9 @@ $c = (isset($_REQUEST['c']))? $_REQUEST['c']  : "index" ;
 
     </head>
 
-    <body>
+    <?php // <body id="empresas_index"> ?>
+    <body id="<?php echo "$p"."_"."$c"; ?>">
+        
 
 <?php
 include "home/vista/nav_sup.php";

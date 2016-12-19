@@ -1,6 +1,9 @@
 
 
 <?php
+echo "<pre>"; 
+echo var_dump(bdd_lista_tablas_bdd());
+echo "</pre>"; 
 /*
  * 
  * 

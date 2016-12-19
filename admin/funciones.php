@@ -63,13 +63,13 @@ function tipo_campo($tipo) {
 function campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
 
     $html = ' <div class="form-group"> ' . "\n";
-    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_id_inicio($label)) . '"); ?></label> ' . "\n";
+    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($label))) . '"); ?></label> ' . "\n";
     $html .= '     <div class="col-sm-10"> ' . "\n";
     $html .= '       <input type="text" '
             . 'class="form-control" '
             . 'name="' . $nombre . '" '
             . 'id="' . $id . '" '
-            . 'placeholder="<?php _t("' . ucfirst(bdd_quita_id_inicio($placeholder)) . '"); ?>" '
+            . 'placeholder="<?php _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($placeholder))) . '"); ?>" '
             . 'value="' . $valor . '" '
             . ' ' . $extras . ' > ' . "\n";
     $html .= '     </div> ' . "\n";
@@ -91,7 +91,7 @@ function campo_html_fecha($nombre, $id, $placeholder, $label, $contexto, $valor 
             </script>' . "\n";
     
     $html .= ' <div class="form-group"> ' . "\n";
-    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_id_inicio($label)) . '"); ?></label> ' . "\n";
+    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($label))) . '"); ?></label> ' . "\n";
     $html .= '     <div class="col-sm-3"> ' . "\n";
     $html .= '     <div class="input-group"> ' . "\n";
     $html .= '       <input type="text" '
@@ -112,7 +112,7 @@ function campo_html_fecha($nombre, $id, $placeholder, $label, $contexto, $valor 
 function campo_html_hora($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
 
     $html = ' <div class="form-group"> ' . "\n";
-    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_id_inicio($label)) . '"); ?></label> ' . "\n";
+    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($label))) . '"); ?></label> ' . "\n";
     $html .= '     <div class="col-sm-10"> ' . "\n";
     $html .= '       <input type="time" '
             . 'class="form-control" '
@@ -131,7 +131,7 @@ function campo_html_hora($nombre, $id, $placeholder, $label, $contexto, $valor =
 
 function campo_html_areaDeTexto($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
     $fuente = ' <div class="form-group"> ' . "\n";
-    $fuente .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_id_inicio($label)) . '"); ?></label> ' . "\n";
+    $fuente .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($label))) . '"); ?></label> ' . "\n";
     $fuente .= '     <div class="col-sm-10"> ' . "\n";
     $fuente .= '       <textarea ' . $extras . ' class="form-control" name="' . $nombre . '" id="' . $id . '" placeholder="<?php _t("' . ucfirst($placeholder) . '"); ?>">' . $valor . '</textarea> ' . "\n";
     $fuente .= '     </div> ' . "\n";
@@ -143,7 +143,7 @@ function campo_html_areaDeTexto($nombre, $id, $placeholder, $label, $contexto, $
 function campo_html_numerico($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
 
     $html = ' <div class="form-group"> ' . "\n";
-    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_tiene_id_al_inicio($label)) . '"); ?></label> ' . "\n";
+    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_guiones(bdd_tiene_id_al_inicio($label))) . '"); ?></label> ' . "\n";
     $html .= '     <div class="col-sm-10"> ' . "\n";
     $html .= '       <input type="number" '
             . 'class="form-control" '
@@ -159,7 +159,7 @@ function campo_html_numerico($nombre, $id, $placeholder, $label, $contexto, $val
 }
 
 
-function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado = "", $extras = "") {
+function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado = false, $extras = "") {
 
     $seleccionado_0 = ($selecionado == false) ? " checked " : " ";
     $seleccionado_1 = ($selecionado == true) ? " checked " : " ";
@@ -183,7 +183,7 @@ function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado = "", 
     }
 
     $fuente = ' <div class="form-group"> ' . "\n";
-    $fuente .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
+    $fuente .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_guiones($label)) . '"); ?></label> ' . "\n";
     $fuente .= '     <div class="col-sm-10"> ' . "\n";
     $fuente .= '     <div class="radio">' . "\n";
     $fuente .= '        <label>' . "\n";
@@ -226,7 +226,7 @@ function campo_html_opciones($nombre, $id, $label, $tabla, $extras = "") {
     
     
     $fuente = ' <div class="form-group"> ' . "\n";
-    $fuente .= '     <label for="' . $nombre . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_id_inicio($label)) . '"); ?></label> ' . "\n";
+    $fuente .= '     <label for="' . $nombre . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($label))) . '"); ?></label> ' . "\n";
     $fuente .= '     <div class="col-sm-10"> ' . "\n";
     $fuente .= '        <select class="form-control" name="' . $nombre . '" '.$extras.'>' . "\n";
     $fuente .= '        <?php '.$select.'_add($'.$nombre.'); ?>' . "\n";
@@ -536,6 +536,8 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina, $_usuarios_grupo)) { ' . "\n";
             $fuente .= ' if(isset($_REQUEST[\'a\'])==\'editar\'){ ' . "\n";
+            
+            $fuente .= ' $' . $nombrePlugin . '_id = mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);      ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/reg/post.php";  ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/editar.php";  ' . "\n\n";
 
@@ -741,7 +743,7 @@ function contenido_modelos($modelos, $nombrePlugin) {
 
         case 'index.php':
             $fuente = '<?php ' . "\n";
-            $fuente .= '$comando = "SELECT * FROM ' . $nombrePlugin . ' ORDER BY id  "; ' . "\n";
+            $fuente .= '$comando = "SELECT * FROM ' . $nombrePlugin . ' ORDER BY id DESC  "; ' . "\n";
             $fuente .= '$sql=mysql_query("$comando Limit $inicia, $cfg_limite_items_en_tablas ",$conexion) ' . "\n";
             $fuente .= 'or die ("Error: en el fichero:" .__FILE__ .\' linea: \'. __LINE__ .\'  \'.mysql_error());	  ' . "\n";
             $fuente .= '// esto es para la paginacion	  ' . "\n";
@@ -973,7 +975,7 @@ function contenido_vista($vista, $nombrePlugin) {
                             $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin);
                             break;
                         case 'buleano':
-                            $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, $selecionado = false);
+                            $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, false);
                             break;
 
                         default:
@@ -1114,7 +1116,7 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                    $fuente .= ' <th><?php echo _t("' . ucfirst(bdd_quita_id_inicio($reg[0])) . '"); ?></th> ' . "\n";
+                    $fuente .= ' <th><?php echo _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '"); ?></th> ' . "\n";
                 }
                 $i++;
             }
