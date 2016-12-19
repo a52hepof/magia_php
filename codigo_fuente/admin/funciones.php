@@ -15,14 +15,10 @@ function _incluir_funciones(){
     $funciones = _listar_directorios_ruta();
     foreach ($funciones as $valor) {
         
-        $f = "./$valor/funciones.php"; 
+        $f = "../extenciones/funciones/$valor.php"; 
         
         if(file_exists($f)){
-            include $f; 
-        }
-        else {
-            $sms = "El plugin $valor no existe";  
-            return $sms ;
+            include "../extenciones/funciones/$valor.php"; 
         }
         
     }

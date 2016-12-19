@@ -1,1 +1,1 @@
-<?php  $servidor = "localhost"; $bdatos = "eventos"; $usuario = "root"; $clave = "root";
+<?php  $servidor = "localhost"; $bdatos = "magia_php"; $usuario = "root"; $clave = "root";

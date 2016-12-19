@@ -34,9 +34,10 @@ function gestion_bd_crear_tabla() {
  */
 function bdd_tiene_id_al_inicio($nombre) {
     // verifico si tiene 'id_' al inicio cualquier palabra
-    $nombre = strtolower($nombre);
+    $n = strtolower($nombre);
 
-    if (strpos($nombre, 'i') == '0' && strpos($nombre, 'd') == '1' && strpos($nombre, '_') == '2') {
+   // if (strpos($nombre, 'i') == '0' && strpos($nombre, 'd') == '1' && strpos($nombre, '_') == '2') {
+    if ($n[0] == 'i' && $n[1] == 'd' && $n[2] == '_') {
         return TRUE;
     } else {
         return FALSE;
@@ -56,7 +57,6 @@ function bdd_quita_id_inicio($nombre) {
     if (bdd_tiene_id_al_inicio($nombre)) {
         // empieza por id_
         return substr($nombre, 3); // empieza en 3 hasta 999 de largo
-        // echo strpos($nombre,'id_') ;
     } else {
         return $nombre;
     }

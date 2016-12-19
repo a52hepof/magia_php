@@ -41,8 +41,11 @@ $c = (isset($_REQUEST['c']))? $_REQUEST['c']  : "index" ;
         <link rel="stylesheet" href="home/vista/gestion.css" >
         <link rel="stylesheet" href="estilo.css"/>
         
-        
-
+        <?php 
+        // con esto incluimos los scripts si existe        
+        $scripts = "./$p/scripts/$c.php";        
+        (file_exists("$scripts"))? include "$scripts" :""        
+        ?>
 
     </head>
 

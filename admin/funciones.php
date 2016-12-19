@@ -33,11 +33,6 @@ function largo_del_campo($campo) {
     return $resultado;
 }
 
-/**
- * Regrese al tipo de campo de una tabla
- * @param type $tipo
- * @return string
- */
 function tipo_campo($tipo) {
     if (strpos($tipo, 'varchar') !== FALSE) {
         return "texto";
@@ -68,13 +63,13 @@ function tipo_campo($tipo) {
 function campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
 
     $html = ' <div class="form-group"> ' . "\n";
-    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
+    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_id_inicio($label)) . '"); ?></label> ' . "\n";
     $html .= '     <div class="col-sm-10"> ' . "\n";
     $html .= '       <input type="text" '
             . 'class="form-control" '
             . 'name="' . $nombre . '" '
             . 'id="' . $id . '" '
-            . 'placeholder="<?php _t("' . ucfirst($placeholder) . '"); ?>" '
+            . 'placeholder="<?php _t("' . ucfirst(bdd_quita_id_inicio($placeholder)) . '"); ?>" '
             . 'value="' . $valor . '" '
             . ' ' . $extras . ' > ' . "\n";
     $html .= '     </div> ' . "\n";
@@ -96,7 +91,7 @@ function campo_html_fecha($nombre, $id, $placeholder, $label, $contexto, $valor 
             </script>' . "\n";
     
     $html .= ' <div class="form-group"> ' . "\n";
-    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
+    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_id_inicio($label)) . '"); ?></label> ' . "\n";
     $html .= '     <div class="col-sm-3"> ' . "\n";
     $html .= '     <div class="input-group"> ' . "\n";
     $html .= '       <input type="text" '
@@ -117,7 +112,7 @@ function campo_html_fecha($nombre, $id, $placeholder, $label, $contexto, $valor 
 function campo_html_hora($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
 
     $html = ' <div class="form-group"> ' . "\n";
-    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
+    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_id_inicio($label)) . '"); ?></label> ' . "\n";
     $html .= '     <div class="col-sm-10"> ' . "\n";
     $html .= '       <input type="time" '
             . 'class="form-control" '
@@ -136,7 +131,7 @@ function campo_html_hora($nombre, $id, $placeholder, $label, $contexto, $valor =
 
 function campo_html_areaDeTexto($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
     $fuente = ' <div class="form-group"> ' . "\n";
-    $fuente .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
+    $fuente .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_id_inicio($label)) . '"); ?></label> ' . "\n";
     $fuente .= '     <div class="col-sm-10"> ' . "\n";
     $fuente .= '       <textarea ' . $extras . ' class="form-control" name="' . $nombre . '" id="' . $id . '" placeholder="<?php _t("' . ucfirst($placeholder) . '"); ?>">' . $valor . '</textarea> ' . "\n";
     $fuente .= '     </div> ' . "\n";
@@ -148,13 +143,13 @@ function campo_html_areaDeTexto($nombre, $id, $placeholder, $label, $contexto, $
 function campo_html_numerico($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
 
     $html = ' <div class="form-group"> ' . "\n";
-    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
+    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_tiene_id_al_inicio($label)) . '"); ?></label> ' . "\n";
     $html .= '     <div class="col-sm-10"> ' . "\n";
     $html .= '       <input type="number" '
             . 'class="form-control" '
             . 'name="' . $nombre . '" '
             . 'id="' . $id . '" '
-            . 'placeholder="<?php _t("' . ucfirst($placeholder) . '"); ?>" '
+            . 'placeholder="<?php _t("' . ucfirst(bdd_tiene_id_al_inicio($placeholder)) . '"); ?>" '
             . 'value="' . $valor . '" '
             . ' ' . $extras . ' > ' . "\n";
     $html .= '     </div> ' . "\n";
@@ -231,7 +226,7 @@ function campo_html_opciones($nombre, $id, $label, $tabla, $extras = "") {
     
     
     $fuente = ' <div class="form-group"> ' . "\n";
-    $fuente .= '     <label for="' . $nombre . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($label) . '"); ?></label> ' . "\n";
+    $fuente .= '     <label for="' . $nombre . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_id_inicio($label)) . '"); ?></label> ' . "\n";
     $fuente .= '     <div class="col-sm-10"> ' . "\n";
     $fuente .= '        <select class="form-control" name="' . $nombre . '" '.$extras.'>' . "\n";
     $fuente .= '        <?php '.$select.'_add($'.$nombre.'); ?>' . "\n";
@@ -255,9 +250,10 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
         echo "<h3>1020 Dentro de plugin crear: <br>$path_plugins</h3>";
 
 
-        $mvc = ['controlador', 'modelos', 'reg', 'vista', 'raiz'];
+        $mvc = ['controlador', 'modelos', 'scripts',  'reg', 'vista', 'raiz'];
 
         $t = count($mvc); // cuenta las carpetas
+        
         crear_carpeta("$path_plugins", "$nombrePlugin");
         
         $contenido = contenido_extenciones_funciones($nombrePlugin);
@@ -616,13 +612,6 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' } ' . "\n";
             return $fuente;
             break;
-        
-        
-        
-        
-        
-        
-
         default:
             $fuente = "";
             return $fuente;
@@ -808,7 +797,7 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                    $fuente .= '<th><?php _t("' . ucfirst($reg[0]) . '"); ?></th> ' . "\n";
+                    $fuente .= '<th><?php _t("' . ucfirst(bdd_quita_id_inicio($reg[0])) . '"); ?></th> ' . "\n";
                 }
                 $i++;
             }
@@ -1125,7 +1114,7 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                    $fuente .= ' <th><?php echo _t("' . ucfirst($reg[0]) . '"); ?></th> ' . "\n";
+                    $fuente .= ' <th><?php echo _t("' . ucfirst(bdd_quita_id_inicio($reg[0])) . '"); ?></th> ' . "\n";
                 }
                 $i++;
             }
@@ -1196,7 +1185,7 @@ echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
 
                     $fuente .= '
                     <div class="form-group">
-                      <label for="' . ucfirst($reg[0]) . '"><?php _t("' . ucfirst($reg[0]) . '"); ?></label>
+                      <label for="' . ucfirst($reg[0]) . '"><?php _t("' . ucfirst(bdd_quita_id_inicio($reg[0])) . '"); ?></label>
                       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?>">
                     </div>
                      ';
@@ -1278,7 +1267,7 @@ echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
 
 
                     $fuente .= '     <div class="form-group"> ' . "\n";
-                    $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '");?></label> ' . "\n";
+                    $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_id_inicio($reg[0])) . '");?></label> ' . "\n";
                     // $fuente .= '     <div class="col-sm-10"> ' . "\n";
                     $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?> "> ' . "\n";
                     // $fuente .= '     </div> ' . "\n";
@@ -1313,7 +1302,7 @@ echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
                     $var2 = "$nombrePlugin" . "_" . "$var1";
 
                     $fuente .= '     <div class="form-group"> ' . "\n";
-                    $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '");?></label> ' . "\n";
+                    $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_id_inicio($reg[0])) . '");?></label> ' . "\n";
                     // $fuente .= '     <div class="col-sm-10"> ' . "\n";
                     $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($var1) . '"); ?> "> ' . "\n";
                     // $fuente .= '     </div> ' . "\n";
@@ -1595,6 +1584,48 @@ echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
             return $fuente;
             break;
    
+        default:
+            $fuente = "";
+            return $fuente;
+            break;
+    }
+}
+
+function contenido_scripts($scripts, $nombrePlugin) {
+    global $path_plugins, $dbh;
+    include "./modelos/v_crea_plug.php";
+    $total_resultados = count($resultados);
+
+
+    switch ($scripts) {
+
+        case 'borrar.php':
+            $fuente = '';
+            return $fuente;
+            break;
+        
+        
+        case 'buscar.php':
+            $fuente = '';
+            return $fuente;
+            break;
+        
+        case 'crear.php':
+            $fuente = '';
+            return $fuente;
+            break;
+        
+        case 'editar.php':
+            $fuente = '';
+            return $fuente;
+            break;
+        
+        
+        case 'ver.php':
+            $fuente = '';
+            return $fuente;
+            break;
+               
         default:
             $fuente = "";
             return $fuente;
@@ -3148,11 +3179,6 @@ function registrar_permiso_pagina_grupo($grupo, $pagina, $permiso) {
     );
 }
 
-/**
- * 
- * @global type $dbh
- * @param type $nombre_carpeta
- */
 function registra_item_al_menu($plugin, $ubicacion, $padre, $label) {
     global $dbh;
 
@@ -3168,13 +3194,6 @@ function registra_item_al_menu($plugin, $ubicacion, $padre, $label) {
     );
 }
 
-/**
- * Esta funcion es la que crea los diferentes ficheros dentro de : Modelos, vista, controlador, reg, del plugin
- * @global type $path_magia_plugins
- * @global type $dbh
- * @param type $nombrePlugin
- * @param type $mvcg
- */
 function magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvcg) {
     global $path_plugins, $dbh, $icon_fichero_copiar;
 
@@ -3211,7 +3230,20 @@ function magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvcg) {
                 crear_fichero($path, "$c[$i]", $contenido);
                 $i++;
             }
-            break;
+            break;            
+        case 'scripts':
+            //estas son las paginas  a crear
+            $c = ['borrar.php', 'buscar.php','crear.php','editar.php','ver.php'];
+            $total = count($c);
+            $i = 0;
+            while ($i < $total) {
+                $path = "$path_plugins/$nombrePlugin/scripts";
+                // este va a ser el contedido que vamos a escribir en el documento
+                $contenido = contenido_scripts($c[$i], $nombrePlugin);
+                crear_fichero($path, "$c[$i]", $contenido);
+                $i++;
+            }
+            break;                                                
         case 'vista':
             //estas son las paginas  a crear
             $c = [
@@ -3266,7 +3298,6 @@ function magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvcg) {
             }
 
             break;
-
         default :
             break;
     }
@@ -3305,7 +3336,7 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
                 case 'admin':
                     $ficheros = [
                         'bd.php'
-                            /*                        'conec.php',
+                            /*'conec.php',
                               'coneccion.php',
                               'configuracion.php',
                               'funciones.php',
