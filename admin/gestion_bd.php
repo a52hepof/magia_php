@@ -109,5 +109,6 @@ function bdd_lista_tablas_bdd(){
     
 }
 
+
 ?>
 

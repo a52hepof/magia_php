@@ -1,11 +1,14 @@
 <?php
 session_start("magia_php") ;
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 include "z_verificar.php";
 include "../admin/bd.php";
 include "../admin/configuracion.php";
 include "../admin/coneccion.php";
 include "../admin/conec.php";
 include "../admin/funciones.php";
+include "../admin/getbootstrap.php";
 include "../admin/permisos.php";
 include "../admin/traductor.php";
 include "../admin/contenido.php";

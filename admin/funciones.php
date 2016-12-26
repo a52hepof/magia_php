@@ -40,6 +40,12 @@ function tipo_campo($tipo) {
     if (strpos($tipo, 'date') !== FALSE) {
         return "fecha";
     }
+    if (strpos($tipo, 'timestamp') !== FALSE) {
+        return "fecha";
+    }
+    if (strpos($tipo, 'enum') !== FALSE) {
+        return "opciones";
+    }
     if (strpos($tipo, 'time') !== FALSE) {
         return "hora";
     }
@@ -466,7 +472,7 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina, $_usuarios_grupo)) { ' . "\n";
 
-
+/*
 
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
@@ -479,10 +485,11 @@ function contenido_controlador($controlador, $nombrePlugin) {
                 }
                 $i++;
             }
-
+*/
 
 
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/buscar.php"; ' . "\n";
+            $fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/vista/buscar.php"; ' . "\n";
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina,$_usuarios_usuario); ' . "\n";
@@ -927,7 +934,7 @@ function contenido_vista($vista, $nombrePlugin) {
             break;
         case 'crear.php':
             $fuente = '<h2>' . "\n\n";
-            $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
+            $fuente .= '<span class="<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
             $fuente .= '<?php _t("Nuevo ' . $nombrePlugin . '"); ?></h2> ' . "\n\n";
             $fuente .= '</h2> ' . "\n\n";
             $fuente .= '<form class="form-horizontal" action="index.php" method="post"> ' . "\n";
@@ -1001,7 +1008,7 @@ function contenido_vista($vista, $nombrePlugin) {
 
         case 'editar.php':
             $fuente = '<h2>' . "\n\n";
-            $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
+            $fuente .= '<span class="<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
             $fuente .= '<?php _t("Editar ' . $nombrePlugin . '"); ?></h2> ' . "\n\n";
             $fuente .= '</h2> ' . "\n\n";
             $fuente .= '     <form class="form-horizontal" method="post" action="index.php"> ' . "\n";
@@ -1104,7 +1111,7 @@ function contenido_vista($vista, $nombrePlugin) {
 
             $fuente = '<?php include "tabs.php"; ?>' . "\n";
             $fuente .= '<h2> ' . "\n";
-            $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
+            $fuente .= '<span class="<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
             $fuente .= '<?php echo _t("Lista de ' . $nombrePlugin . '"); ?> <a type="button" class="btn btn-primary navbar-btn" href="?p=' . $nombrePlugin . '&c=crear"> <?php _t("Nueva"); ?></a>' . "\n";
             $fuente .= '</h2>' . "\n";
 
@@ -1468,7 +1475,7 @@ echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
             
         case 'ver.php':
             $fuente = '<h1> ' . "\n";
-            $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
+            $fuente .= '<span class="<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
             $fuente = '<?php _t("Detalles"); ?> ' . "\n";
             $fuente = '</h1> ' . "\n";
 
