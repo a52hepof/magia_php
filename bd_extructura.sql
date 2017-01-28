@@ -61,11 +61,11 @@ INSERT INTO `_grupos` (`id`, `grupo`) VALUES
 
 CREATE TABLE IF NOT EXISTS `_idiomas` (
 `id` int(11) NOT NULL,
-  `idioma` varchar(2) COLLATE utf8_bin DEFAULT NULL,
+  `idioma` varchar(7) COLLATE utf8_bin DEFAULT NULL,
   `nombre` varchar(45) COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- --------------------------------------------------------
+
 
 --
 -- Table structure for table `_menu`
@@ -146,6 +146,7 @@ INSERT INTO `_usuarios` (`id`, `grupo`, `nombres`, `usuario`, `clave`, `estatus`
 --
 -- Indexes for dumped tables
 --
+
 
 --
 -- Indexes for table `_contenido`
