@@ -38,9 +38,9 @@ $username = "root";
 $password = ""; 
 ```
 
-```
 
 ## Ahora configura el archivo 
+
 ``` ./admin/config.php ```
 
 Replaza ``` miweb ``` por el nombre de tu sitio : ´´´http://localhost/miweb´´´ de forma que quede así:
