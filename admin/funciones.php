@@ -2488,6 +2488,30 @@ function _formulario_checkbox($tabla, $campo, $selecionar = "", $desactivar = ""
 function contenido_extenciones_funciones($nombrePlugin) {
 
             $fuente = '<?php ';
+            
+            
+            
+            
+            $fuente .= 'function ' . $nombrePlugin . '_campo($campo, $id) {
+    global $conexion;
+    $sql = mysql_query(
+            "SELECT $campo FROM ' . $nombrePlugin . ' WHERE id = $id   ", $conexion) or die("Error: ' . $nombrePlugin . '_campo()" . mysql_error());
+    $reg = mysql_fetch_array($sql); 
+    
+    if($reg[$campo]){
+        return $reg[$campo];
+    } else {
+        return false;
+    }
+}';
+            
+         
+            
+            
+            
+            
+            
+            
             $fuente .= 'function ' . $nombrePlugin . '_campo_add($campo, $label, $selecionado = "", $excluir = "") {
     global $conexion;
     $sql = mysql_query(

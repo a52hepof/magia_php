@@ -1,1 +1,1 @@
-<?php  $path_web = "/var/www/html/facturas3"; $path_plugins = "/var/www/html/facturas3/gestion"; $path_plugins_controlador = "path_plugins_controlador"; $path_plugins_modelos = ""; $path_plugins_vista = ""; $path_plugins_reg = "";
+<?php  $path_web = "/var/www/html/eventos2"; $path_plugins = "/var/www/html/eventos2/gestion"; $path_plugins_controlador = "path_plugins_controlador"; $path_plugins_modelos = ""; $path_plugins_vista = ""; $path_plugins_reg = "";
