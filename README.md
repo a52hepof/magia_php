@@ -33,7 +33,7 @@ La primer cosa que debes hacer es configurar el fichero bd.php con los datos de 
 ```
 <?php  
 $hostname = "localhost"; 
-$dbname = "gestionInmoweb"; 
+$dbname = "mi_base_de_datos"; 
 $username = "root"; 
 $password = ""; 
 ```
