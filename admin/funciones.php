@@ -1376,9 +1376,14 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
+                
+                
                 if ($i > $usar_id) {
                     $var1 = $reg[0];
                     $var2 = "$nombrePlugin" . "_" . "$var1";
+                    
+                    // si el campo tiene _id_ lo quito 
+                    $var2 = (strpos($var2, '_id_')) ? str_replace('_id', '', $var2) : $var2;  // eventos_sala    
 
                     $fuente .= ' <td>\'.$' . $var2 . '.\'</td> ' . "\n";
                 }
@@ -1812,10 +1817,12 @@ function contenido_reg($controlador, $nombrePlugin) {
                 $var2 = "$nombrePlugin" . "_" . "$var1";
 
                 $fuente .= '  $' . $var2 . ' = $' . $nombrePlugin . '[\'' . $var1 . '\']; ' . "\n";
-
+                
+                
+               // $fuente .= ' //******** Campo formateado******************************* ' . "\n";
+                
+                //*************************************
                 if ($tipo_campo == 'buleano') {
-
-
 
                     $fuente .= ' $' . $var2 . '_0 = "";  ';
                     $fuente .= ' $' . $var2 . '_1 = "";  ';
@@ -1828,6 +1835,23 @@ function contenido_reg($controlador, $nombrePlugin) {
       $' . $var2 . '_1 = "checked";       
   }  ' . "\n";
                 }
+                //**************************************                                 
+                //$eventos_sala = salas_campo('nombre', $eventos_id_sala);   
+                
+                $campo = $var2; // eventos_id_sala                
+                $campo_sin_id   = str_replace('_id', '', $campo) ; // eventos_sala                
+                $var1_sin_id    = str_replace('id_', '', $var1) ; // eventos_sala                
+                $posible_nombre = $var1_sin_id.'s_campo' ; // $eventos_sala                                               
+                // buscamos si en ese campo existe '_id_' , si existe queire decir que la info pertenere a otra tabla                
+                $hay_id = strpos($campo, '_id_');                
+                if($hay_id){
+                                 //$eventos_sala = salas_campo('nombre', $eventos_id_sala);   
+                    $fuente .= "  $$campo_sin_id = $posible_nombre('$var1_sin_id', $$campo);  \n" ; 
+                }
+                
+                
+                
+                
 
 
 
