@@ -28,7 +28,7 @@ cd Magia_php
 
 
 
-## Configuración
+## 1 Configuración
 La primer cosa que debes hacer es configurar el fichero bd.php con los datos de tu base de datos:
 ```
 <?php  
@@ -39,11 +39,11 @@ $password = "";
 ```
 
 
-## Ahora configura el archivo 
+## 2 Ahora configura el archivo 
 
 ``` ./admin/config.php ```
 
-Replaza ``` miweb ``` por el nombre de tu sitio : ´´´http://localhost/miweb´´´ de forma que quede así:
+Replaza ``` miweb ``` por el nombre de tu sitio : ``` http://localhost/miweb ```  de forma que quede así:
 
 ```
 <?php
@@ -56,4 +56,74 @@ $path_plugins_vista = "";
 $path_plugins_reg = "";
 
 ```
+
+## 3 Copiar las tablas
+Son tablas que va a crear Magia_php en tu base de datos, esto es necesario para su buen funcionamiento, para ello  
+
+[![Entra en http://localhost/magia_php/index.php](http://localhost/magia_php/index.php)](http://localhost/magia_php/index.php)
+
+y click en el item tres de la lista (Copiar base.sql (grupos, idiomas, paginas, permisos, usuarios)
+
+
+## 4 Crear el proyecto
+
+Ahora vamos a crear todos los ficheros de nuestro proyecto, para ello asegurate de haber dado los permisos de  escritura a la 
+carpeta donde vas a crearlo
+
+Para ello ejecuta esto: 
+```
+sudo chmod 777 -R * /var/www/html/miweb
+```
+Una vez hecho esto: 
+[![Entra en http://localhost/magia_php/index.php](http://localhost/magia_php/index.php)](http://localhost/magia_php/index.php)
+
+y click en el item 4 de la lista (Crear proyecto)
+
+Esto te creara varias carpetas y ficheros una vez terminado, vuelve a ejecutar 
+
+```
+sudo chmod 777 -R * /var/www/html/miweb
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
