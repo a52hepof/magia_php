@@ -51,3 +51,19 @@ $password = "";
 ?>
 
 ```
+
+## Ahora configura el archivo ´´´ ./admin/config.php ´´´
+Replaza ´´´ miweb ´´´ por el nombre de tu sitio : ´´´http://localhost/miweb´´´ de forma que quede así:
+
+´´´
+<?php
+
+$path_web = "/var/www/html/miweb";
+$path_plugins = "/var/www/html/miweb/gestion";
+$path_plugins_controlador = "path_plugins_controlador";
+$path_plugins_modelos = "";
+$path_plugins_vista = "";
+$path_plugins_reg = "";
+
+´´´
+
