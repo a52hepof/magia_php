@@ -38,24 +38,14 @@ $username = "root";
 $password = ""; 
 ```
 
-## Configuration
-
-First edit the file bd.php:
-
-```
-<?php  
-$hostname = "localhost"; 
-$dbname = "gestionInmoweb"; 
-$username = "root"; 
-$password = ""; 
-?>
-
 ```
 
-## Ahora configura el archivo ´´´ ./admin/config.php ´´´
-Replaza ´´´ miweb ´´´ por el nombre de tu sitio : ´´´http://localhost/miweb´´´ de forma que quede así:
+## Ahora configura el archivo 
+``` ./admin/config.php ```
 
-´´´
+Replaza ``` miweb ``` por el nombre de tu sitio : ´´´http://localhost/miweb´´´ de forma que quede así:
+
+```
 <?php
 
 $path_web = "/var/www/html/miweb";
@@ -65,5 +55,5 @@ $path_plugins_modelos = "";
 $path_plugins_vista = "";
 $path_plugins_reg = "";
 
-´´´
+```
 
