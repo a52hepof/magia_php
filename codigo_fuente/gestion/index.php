@@ -22,7 +22,6 @@ $aqui_pagina = "";
 $p = (isset($_REQUEST['p']))? $_REQUEST['p']  : "home" ;
 $c = (isset($_REQUEST['c']))? $_REQUEST['c']  : "index" ;
 
-
 ?>
 
 <!DOCTYPE html>

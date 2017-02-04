@@ -64,8 +64,6 @@ function tipo_campo($tipo) {
     return "texto";
 }
 
-
-
 function campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
 
     $html = ' <div class="form-group"> ' . "\n";
@@ -83,10 +81,6 @@ function campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor 
 
     return $html;
 }
-
-
-
-
 
 function campo_html_fecha($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
 
@@ -133,8 +127,6 @@ function campo_html_hora($nombre, $id, $placeholder, $label, $contexto, $valor =
     return $html;
 }
 
-
-
 function campo_html_areaDeTexto($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
     $fuente = ' <div class="form-group"> ' . "\n";
     $fuente .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($label))) . '"); ?></label> ' . "\n";
@@ -163,7 +155,6 @@ function campo_html_numerico($nombre, $id, $placeholder, $label, $contexto, $val
 
     return $html;
 }
-
 
 function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado = false, $extras = "") {
 
@@ -210,7 +201,6 @@ function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado = fals
     return $fuente;
 }
 
-
 function campo_html_opciones($nombre, $id, $label, $tabla, $extras = "") {    
     // si el nombre del campo tiene 'id_' debemos buscar la tabla relacinada para ponerle un select con 
     // la tabla relacionada
@@ -244,7 +234,6 @@ function campo_html_opciones($nombre, $id, $label, $tabla, $extras = "") {
     return $fuente;
 }
 
-
 function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) {
     global $path_web;
     // verifico si el nombre existe
@@ -258,17 +247,10 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
 
         $mvc = ['controlador', 'modelos', 'scripts',  'reg', 'vista', 'raiz'];
 
-        $t = count($mvc); // cuenta las carpetas
-        
-        crear_carpeta("$path_plugins", "$nombrePlugin");
-        
-        $contenido = contenido_extenciones_funciones($nombrePlugin);
-        
+        $t = count($mvc); // cuenta las carpetas        
+        crear_carpeta("$path_plugins", "$nombrePlugin");                        
+        $contenido = contenido_extenciones_funciones($nombrePlugin);        
         crear_fichero("$path_web/extenciones/funciones", "$nombrePlugin.php",$contenido);
-
-
-
-
 
 // si la carpeta existe, registro el nombre del plugin en la base de datos como una pagina
         registrar_pagina_en_bd($nombrePlugin);
@@ -291,6 +273,7 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
         while ($i < $t) {
             if ($mvc[$i] != 'raiz') { // la ultima no la creo (raiz)
                 crear_carpeta("$path_plugins/$nombrePlugin", $mvc[$i]);
+                crear_carpeta("$path_plugins/$nombrePlugin/$mvc[$i]", 'publico');
             }
             // dentro de cada carpeta creo los ficheros que cada carpeta debe contenir
             magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvc[$i]);
@@ -299,10 +282,6 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
     }
 }
 
-/**
- * 
- * @global type $dbh
- */
 function menu_add_plugin() {
     global $dbh;
     $sql = "SELECT padre,label FROM _menu where padre like '' group by padre  order by label ";
@@ -3394,7 +3373,14 @@ function magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvcg) {
 
     switch ($mvcg) {
         case 'controlador':
-            $c = ['index.php', 'data.php', 'ver.php', 'txt.php','crear.php', 'editar.php', 'borrar.php', 'buscar.php'];
+            $c = ['index.php', 
+                'data.php', 
+                'ver.php', 
+                'txt.php',
+                'crear.php', 
+                'editar.php', 
+                'borrar.php', 
+                'buscar.php'];
             $i = 0;
             while ($i < count($c)) {
                 $path = "$path_plugins/$nombrePlugin/controlador";
