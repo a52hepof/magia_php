@@ -1,4 +1,5 @@
 <?php
+$magia_php_version = "0.0.7";
 
 $icon_ok = '<span class="glyphicon glyphicon-ok"></span>';
 $icon_error = '<span class="glyphicon glyphicon-remove"></span>';
