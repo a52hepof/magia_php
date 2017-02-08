@@ -83,15 +83,20 @@ Una vez hecho esto:
 
 y click en el item 4 de la lista (Crear proyecto)
 
-Esto te creara varias carpetas y ficheros una vez terminado, vuelve a ejecutar 
+Esto te creara varias carpetas y ficheros,  una vez terminado volvemos a ejecutar 
 
 ```
 sudo chmod 777 -R * /var/www/html/miweb
 ```
+Muy importante este paso ya que no podremos crear los plugins en el paso 5 si no tenemos los derechos de escritura.
 
-## 4 Crear plugins
+## 5 Crear plugins
 
-Ahora entra al punto 5) para crear los plugins 
+Ahora debemos ir creando los ficheros para cada tabla
+
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/fbQWQs_5wnY" frameborder="0" allowfullscreen></iframe>
 
 
 
