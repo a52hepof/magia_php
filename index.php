@@ -1,7 +1,7 @@
 <?php
 // para mostrar los errores
 error_reporting(E_ALL);
-ini_set('display_errors', '1');     
+ini_set('display_errors', '1');
 include "./admin/bd.php";
 include "./admin/config.php";
 include "./admin/conec.php";
@@ -11,6 +11,12 @@ include "./admin/gestion_bd.php";
 include "./admin/permisos.php";
 ?>
 <?php
+if (isset($_REQUEST['ubicacion'])) {
+    $ubicacion = $_REQUEST['ubicacion'];
+} else {
+    $ubicacion = "top";
+}
+//--------------------------
 if (isset($_REQUEST['a'])) {
     $a = $_REQUEST['a'];
 } else {
@@ -42,10 +48,10 @@ if (isset($_REQUEST['tabla'])) {
 
     <body>
         <div class="container">
-            
 
-            
-            
+
+
+
             <?php
             include "./vista/header.php";
             ?>
@@ -62,65 +68,26 @@ if (isset($_REQUEST['tabla'])) {
 
             <div class="row">
                 <div class="col-lg-3">
-                    
-                    <H2>Config menu</H2>                    
-<form class="form-horizontal" method="get" action="?">
-    <input  type="hidden" name="p" value="plugins_lista">
 
-    <div class="form-group">
-        <label for="exampleInputName2">Ubicación</label>
-        <select class="form-control" name="ubicacion">
-            <option value="top" <?php if ($ubicacion == 'top') {echo " selected"; } ?>>Menu Superior</option>        
-            <option value="sidebar" <?php if ($ubicacion == 'sidebar') {echo " selected";} ?>>Menu Lateral</option>        
-        </select>
-    </div>
+                    <?php 
+                    if($p == 'plugins_lista'){
+                        include "./vista/izq_menu.php";
+                    }
+                    ?>
 
 
-    <div class="form-group">
-        <label for="padre">Menu Padre</label>
-        <select class="form-control" name="padre">
-            <option value="gestion">Gestion</option>
-            <option value="admin">Admininistracion</option>
-            <option value="mantenimiento">Mantenimiento</option>
-            <option value="config">Configuracion</option>
-            <option value="sistema">Sistema</option>
-            <?php
-            $i = 1;
-            foreach ($resultado as $reg) {
-                echo '<option value="' . $reg[0] . '"';
-                if ($padre == $reg[0]) {
-                    echo " selected";
-                }
-                echo '>' . $reg[0] . ' </option>';
-
-                $i++;
-            }
-            ?>
-        </select>
-    </div>
-
-
-    <button type="submit" class="btn btn-default">Config Menu</button>
-</form>
-
-Fatal error : Error no detectada: Llamada a función no definida mysql_connect () en H: \ root \ home \ neotecnology-001 \ www \ miniventas \ magia_php \ admin \ coneccion.php: 2 Seguimiento de la pila: # 0 H: \ root \ home \ neotecnology-001 \ www \ miniventas \ magia_php \ index.php (8): include () {# 1} principal tirado H: \ root \ home \ neotecnology-001 \ www \ miniventas \ magia_php \ admin \ coneccion.php en línea 2
-
-                    
-                    
                     <?php
                     if (isset($tabla)) {
                         include "./vista/menu.php";
                     }
-                    
-                    if($p =='maqueta' ){
-                       include "./vista/maqueta_izq.php"; 
+
+                    if ($p == 'maqueta') {
+                        include "./vista/maqueta_izq.php";
                     }
-                    
-                     if($p=='index'){
-                       include "./vista/izq.php"; 
+
+                    if ($p == 'index') {
+                        include "./vista/izq.php";
                     }
-                    
-                    
                     ?>                  
 
                 </div>
@@ -299,7 +266,7 @@ Fatal error : Error no detectada: Llamada a función no definida mysql_connect (
 
 
 // configBd         
-                        case "configBd":                            
+                        case "configBd":
                             include "./vista/configBd.php";
                             break;
 
@@ -328,39 +295,39 @@ Fatal error : Error no detectada: Llamada a función no definida mysql_connect (
                             break;
 // crear_proyecto         
                         case "crear_proyecto":
-                           include "./modelos/crear_proyecto.php";
-                           include "./vista/crear_proyecto.php";
+                            include "./modelos/crear_proyecto.php";
+                            include "./vista/crear_proyecto.php";
                             break;
 // copiar_bd         
                         case "copiar_bd":
                             include "./modelos/copiar_bd.php";
-                          //  include "./vista/copiar_bd.php";
+                            //  include "./vista/copiar_bd.php";
                             break;
-                        
-                        
+
+
 //    maqueta                      
-                        case "maqueta":                            
+                        case "maqueta":
                             include "./vista/maqueta.php";
                             break;
 //    maqueta                      
-                        case "demo":                            
-                           include "./request/demo.php";
-                           include "./vista/demo.php";
+                        case "demo":
+                            include "./request/demo.php";
+                            include "./vista/demo.php";
                             break;
 // KumbiaPHP         
                         case "kumbia_plugins_lista":
                             include "./modelos/plugins_lista.php";
                             include "./vista/kumbia_plugins_lista.php";
                             break;
-                        
+
 // KumbiaPHP         
                         case "crear_bd":
                             include "./modelos/crear_bd.php";
                             include "./vista/crear_bd.php";
                             break;
-                        
-                        
-                        
+
+
+
 
 
                         default :
@@ -368,14 +335,11 @@ Fatal error : Error no detectada: Llamada a función no definida mysql_connect (
                             include "./vista/index.php";
                             break;
                     }
-                    
-                    
-                    
                     ?>        
 
 
                 </div>
-                
+
 
             </div>
 

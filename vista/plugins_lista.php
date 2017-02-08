@@ -128,6 +128,8 @@ $p = (isset($_GET['p'])) ? "$_GET[p]" : "plugins_lista";
     </table>
 </div>
 
+<?php 
+/*
 <h2>Lista de tablas</h2>
 <p>Lista de tablas en la base de datos <b><?php echo "$bdatos"; ?></b>: 
     <a href="index.php?p=plugins_lista" title="Update">
@@ -143,3 +145,5 @@ $p = (isset($_GET['p'])) ? "$_GET[p]" : "plugins_lista";
     }
     ?> 
 </ol>
+*/
+?>

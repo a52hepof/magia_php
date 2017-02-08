@@ -4,46 +4,47 @@
 * Sistem to help you in the form creation
 * Sistema para ayudar en la creación de formularios 
 
-### instalación
+Magia_php te ayuda a crear tu sitio web, pero no forma  parte de el, debes tener dos sitios uno magia_php y el otro la web que deseas crear
+
+1) http://localhost/magia_php/ 
+2) http://localhost/miweb
+
+### Instalación de Magia_php
 Ve a la raíz de tu sitio web
 
 `
 cd ~/public_html
 `
 
-Alli has una copia del Magia_php
+Alli has una copia del Magia_php 
 
 
 `
 git clone https://github.com/robincoello/Magia_php.git
 `
 
-Entra en la carpeta
-
-`
-cd Magia_php
-
-`
+Esto te cargara la última versión de Magia_php, ahora empecemos la configuración:
 
 
+## 1 Configuración de la base de datos
+La primer cosa que debes hacer es configurar el fichero `./admin/bd.php` para la coneccón a la base de datos, (la de tu web)
 
-
-## 1 Configuración
-La primer cosa que debes hacer es configurar el fichero bd.php con los datos de tu base de datos:
 ```
 <?php  
 $hostname = "localhost"; 
 $dbname = "mi_base_de_datos"; 
 $username = "root"; 
-$password = ""; 
+$password = "mi_clave"; 
 ```
 
 
-## 2 Ahora configura el archivo 
+## 2 Configuración de las rutas
+
+Estas son las rutas donde estan tu web,  para ello edita el fichero
 
 ``` ./admin/config.php ```
 
-Replaza ``` miweb ``` por el nombre de tu sitio : ``` http://localhost/miweb ```  de forma que quede así:
+de forma que quede así
 
 ```
 <?php
@@ -58,11 +59,14 @@ $path_plugins_reg = "";
 ```
 
 ## 3 Copiar las tablas
-Son tablas que va a crear Magia_php en tu base de datos, esto es necesario para su buen funcionamiento, para ello  
 
-[![Entra en http://localhost/magia_php/index.php](http://localhost/magia_php/index.php)](http://localhost/magia_php/index.php)
+Son tablas que va a crear Magia_php en tu base de datos, esto es necesario para su buen funcionamiento, para ello, entra en:
+
+[![http://localhost/magia_php/index.php](http://localhost/magia_php/index.php)](http://localhost/magia_php/index.php)
 
 y click en el item tres de la lista (Copiar base.sql (grupos, idiomas, paginas, permisos, usuarios)
+
+Esto copiara las tablas que magia_php necesita para trabajar
 
 
 ## 4 Crear el proyecto
@@ -85,10 +89,9 @@ Esto te creara varias carpetas y ficheros una vez terminado, vuelve a ejecutar
 sudo chmod 777 -R * /var/www/html/miweb
 ```
 
+## 4 Crear plugins
 
-
-
-
+Ahora entra al punto 5) para crear los plugins 
 
 
 
