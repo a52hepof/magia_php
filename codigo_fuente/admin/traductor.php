@@ -1,61 +1,92 @@
 <?php
-
-function _traducir($f, $ccontexto="", $idioma="") {
-    echo $f;
-}
-
-function _t($frase, $contexto="", $idioma="") {
-global $config_idioma_por_defecto; 
-   $idioma = (!$idioma)? $config_idioma_por_defecto : $idioma ;
-   
-   if(!$contexto){
-       $contexto = "";
-   }
-
-$id_contenido = contenido_id_frase_segun_frase_contexto($frase, $contexto); 
-
-
-if(!$id_contenido){
-    contenido_registra($frase, $contexto);
-$id_contenido = contenido_id_frase_segun_frase_contexto($frase, $contexto); 
-}
+function _t($frase, $contexto = "", $idioma = "") {
+    global $conexion, $cfg_idioma;
+    if (!$idioma) {
+        $idioma = $cfg_idioma;
+    }
+    $frase = _tr($frase, $contexto);
     
-
-// sacamos la traduccion 
-
-$frase_traducida = traduccion_segun_id_contenido_idioma($id_contenido, $idioma);
-
-// si no hay traduccion registramos la traduccicon 
-
-if(!$frase_traducida){
-    $traduccion = "$frase"; 
-    
-    traduccion_registra_traduccion($id_contenido, $idioma, $traduccion);
-    $frase_traducida = traduccion_segun_id_contenido_idioma($id_contenido, $idioma);
-}
-    
-    echo $frase_traducida;
+    echo "$frase";
 }
 
-
-// si existe devuelve la traduccion sino devuelve falso
-function traduccion_segun_id_contenido_idioma($id_contenido,$idioma) {
+function _tr($frase, $contexto = "", $idioma = '') {
     global $conexion;
-   $sql=mysql_query("SELECT traduccion FROM _traducciones WHERE contenido_id = '$id_contenido' AND idioma = '$idioma' ",$conexion) 
-       or die ("Error:".mysql_error());   
-   $reg = mysql_fetch_array($sql);
-   
-    $total = mysql_num_rows($sql);
-    if($total > 0){
-        return $reg[0] ;
-    }else{
+    global $conexion, $cfg_idioma;
+    if (!$idioma) {
+        $idioma = $cfg_idioma;
+    }
+
+
+    /*
+     * Busco si la frase esta registrada en la base de datos
+     * Si no esta la registro
+     * Busco si tiene una traduccion 
+     * 
+     * 
+     */
+
+
+    if (!contenido_existe_frase_en_contenido($frase, $contexto = "")) {
+
+        contenido_registrar_frase($frase, $contexto = "");
+    }
+
+
+    if (!traductor_buscar_traduccion($frase, $idioma)) {
+
+        if($idioma == 'es_ES'){
+            traductor_registrar_traduccion($frase, $idioma, $frase);
+        }else{
+            traductor_registrar_traduccion($frase, $idioma, '---');
+        }
+    }
+
+
+
+     return traductor_buscar_traduccion($frase, $idioma);
+
+
+    return $frase;
+}
+
+function traductor_buscar_traduccion($frase, $idioma) {
+    global $conexion;
+
+    $frase = sql_pone_barra_invertida($frase);
+
+    $comando = "SELECT traduccion FROM _traducciones WHERE frase = '$frase' AND idioma = '$idioma'  ";
+    $sql = mysql_query("$comando  ", $conexion) or die("Problemas traductor_buscar_traduccion: " . mysql_error());
+    $reg = mysql_fetch_array($sql);
+
+    if ($reg[0]) {
+        return $reg['traduccion'];
+    } else {
         return FALSE;
-    } 
-    
+    }
 }
-function traduccion_registra_traduccion($id_contenido, $idioma, $traduccion) {
+
+//***********************************************************
+function traductor_registrar_traduccion($frase, $idioma, $traduccion) {
     global $conexion;
-   $sql=mysql_query("INSERT INTO _traducciones (contenido_id, idioma, traduccion) VALUES ('$id_contenido','$idioma','$traduccion') ",$conexion) 
-   or die ("Error:".mysql_error());     
-return 0;
+
+    $frase = sql_pone_barra_invertida($frase);
+    $traduccion = sql_pone_barra_invertida($traduccion);
+
+
+    $sql = mysql_query(""
+            . "INSERT INTO _traducciones "
+            . "(frase, idioma, traduccion) "
+            . "VALUES ('$frase','$idioma','$traduccion')  ", $conexion) or die("Error" . mysql_error());
+}
+
+//***********************************************************
+function traductor_actualiza_traduccion($id_frase, $idioma, $traduccion) {
+    global $conexion;
+
+    $frase = sql_pone_barra_invertida($frase);
+    $traduccion = sql_pone_barra_invertida($traduccion);
+
+
+
+    $sql = mysql_query("UPDATE traducciones SET traduccion = '$traduccion' WHERE id_frase = $id_frase AND idioma = '$idioma'  ", $conexion) or die(" traductor_actualiza_traduccion() " . mysql_error());
 }

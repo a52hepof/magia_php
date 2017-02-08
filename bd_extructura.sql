@@ -150,6 +150,9 @@ CREATE TABLE `_permisos` (
 
 -- --------------------------------------------------------
 
+
+-- --------------------------------------------------------
+
 --
 -- Table structure for table `_traducciones`
 --
@@ -160,6 +163,49 @@ CREATE TABLE `_traducciones` (
   `idioma` varchar(7) COLLATE utf8_bin DEFAULT NULL,
   `traduccion` varchar(250) COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `_traducciones`
+--
+
+INSERT INTO `_traducciones` (`id`, `frase`, `idioma`, `traduccion`) VALUES
+(1, 'Cambiar clave', 'es_ES', 'Cambiar clave'),
+(2, 'Logout', 'es_ES', 'Logout'),
+(3, 'Inicio', 'es_ES', 'Inicio'),
+(4, 'home', 'es_ES', 'home'),
+(5, 'index', 'es_ES', 'index'),
+(6, '_contenido', 'es_ES', '_contenido'),
+(7, 'Lista', 'es_ES', 'Lista'),
+(8, 'Buscar', 'es_ES', 'Buscar'),
+(9, 'Frase', 'es_ES', 'Frase'),
+(10, 'Contexto', 'es_ES', 'Contexto'),
+(11, 'Lista de _contenido', 'es_ES', 'Lista de _contenido'),
+(12, 'Nueva', 'es_ES', 'Nueva'),
+(13, 'Accion', 'es_ES', 'Accion');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `_traducciones`
+--
+ALTER TABLE `_traducciones`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `frase` (`frase`,`idioma`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `_traducciones`
+--
+ALTER TABLE `_traducciones`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 -- --------------------------------------------------------
 
