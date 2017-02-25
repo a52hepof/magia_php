@@ -1,4 +1,4 @@
-<?php
+ro<?php
 $magia_php_version = "0.0.7";
 
 $icon_ok = '<span class="glyphicon glyphicon-ok"></span>';
@@ -260,9 +260,9 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
         registra_item_al_menu($nombrePlugin, $ubicacion, $padre, $label);
 
 // ahora registro el permiso del root en 1111
-        registrar_permiso_pagina_grupo('administradores', "$nombrePlugin", '1110');
-        registrar_permiso_pagina_grupo('invitados', "$nombrePlugin", '1000');
         registrar_permiso_pagina_grupo('root', "$nombrePlugin", '1111');
+        registrar_permiso_pagina_grupo('administradores', "$nombrePlugin", '1110');
+        registrar_permiso_pagina_grupo('invitados', "$nombrePlugin", '1000');        
         registrar_permiso_pagina_grupo('usuarios', "$nombrePlugin", '1110');
 
         // registro el permiso de invitados, 

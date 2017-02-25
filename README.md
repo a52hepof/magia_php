@@ -94,22 +94,19 @@ Muy importante este paso ya que no podremos crear los plugins en el paso 5 si no
 
 Ahora debemos ir creando los ficheros para cada tabla
 
+https://www.youtube.com/embed/fbQWQs_5wnY
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/fbQWQs_5wnY" frameborder="0" allowfullscreen></iframe>
+Por defecto Magia_php crea 4 tipos de usuarios
+* root > 1111 
+* administradores > 1110
+* usuarios > 1110
+* invitados > 1000
 
-
-
-
-
-
-
-
-
-
-
-
-
+## Permisos 
+Los permisos estan basados en 4 acciones: Ver, Crear, Editar, Borrar (VCEB) y a cada 
+accion se le da dos valores: 0|1 , si el valor esta en 1, el usuario puede realizar 
+esta acción, si esta en 0, no puede realizarla.
 
 
 
