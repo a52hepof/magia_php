@@ -16,34 +16,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Database: `eventos2`
---
 
--- --------------------------------------------------------
-
-
-
-
---
--- Table structure for table `empresas`
---
-
-CREATE TABLE `empresas` (
-  `id` int(11) NOT NULL,
-  `empresa` varchar(50) COLLATE utf8_bin NOT NULL,
-  `estatus` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `empresas`
---
-
-INSERT INTO `empresas` (`id`, `empresa`, `estatus`) VALUES
-(1, 'Casa de la cultura Ecuatoriana', 1),
-(2, 'Casa Pichincha', 1),
-(3, 'Casa de guayaquil', 1),
-(4, 'Casa', 0);
 
 -- --------------------------------------------------------
 --
@@ -60,9 +33,6 @@ CREATE TABLE `_contenido` (
 -- Dumping data for table `_contenido`
 --
 
-INSERT INTO `_contenido` (`id`, `frase`, `contexto`) VALUES
-(4, 'Inicio', NULL),
-(5, 'Casa', '');
 
 -- --------------------------------------------------------
 
@@ -150,9 +120,6 @@ CREATE TABLE `_permisos` (
 
 -- --------------------------------------------------------
 
-
--- --------------------------------------------------------
-
 --
 -- Table structure for table `_traducciones`
 --
@@ -164,49 +131,6 @@ CREATE TABLE `_traducciones` (
   `traduccion` varchar(250) COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
---
--- Dumping data for table `_traducciones`
---
-
-INSERT INTO `_traducciones` (`id`, `frase`, `idioma`, `traduccion`) VALUES
-(1, 'Cambiar clave', 'es_ES', 'Cambiar clave'),
-(2, 'Logout', 'es_ES', 'Logout'),
-(3, 'Inicio', 'es_ES', 'Inicio'),
-(4, 'home', 'es_ES', 'home'),
-(5, 'index', 'es_ES', 'index'),
-(6, '_contenido', 'es_ES', '_contenido'),
-(7, 'Lista', 'es_ES', 'Lista'),
-(8, 'Buscar', 'es_ES', 'Buscar'),
-(9, 'Frase', 'es_ES', 'Frase'),
-(10, 'Contexto', 'es_ES', 'Contexto'),
-(11, 'Lista de _contenido', 'es_ES', 'Lista de _contenido'),
-(12, 'Nueva', 'es_ES', 'Nueva'),
-(13, 'Accion', 'es_ES', 'Accion');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `_traducciones`
---
-ALTER TABLE `_traducciones`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `frase` (`frase`,`idioma`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `_traducciones`
---
-ALTER TABLE `_traducciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
 -- --------------------------------------------------------
 
 --
@@ -215,7 +139,7 @@ ALTER TABLE `_traducciones`
 
 CREATE TABLE `_usuarios` (
   `id` int(11) NOT NULL,
-  `id_empresa` int(11) NOT NULL,
+  
   `grupo` varchar(50) COLLATE utf8_bin NOT NULL,
   `usuario` varchar(50) COLLATE utf8_bin NOT NULL,
   `clave` varchar(50) COLLATE utf8_bin NOT NULL,
@@ -226,12 +150,12 @@ CREATE TABLE `_usuarios` (
 -- Dumping data for table `_usuarios`
 --
 
-INSERT INTO `_usuarios` (`id`, `id_empresa`, `grupo`, `usuario`, `clave`, `estatus`) VALUES
-(1, 1, 'root', 'root', 'root', 1),
-(2, 1, 'administradores', 'admin', 'admin', 1),
-(3, 1, 'usuarios', 'usuario', 'usuario', 1),
-(4, 1, 'invitados', 'invitado', 'invitado', 1),
-(7, 1, 'administradores', 'root', 'root', 0);
+INSERT INTO `_usuarios` (`id`,`grupo`, `usuario`, `clave`, `estatus`) VALUES
+(1,  'root', 'root', 'root', 1),
+(2,  'administradores', 'admin', 'admin', 1),
+(3,  'usuarios', 'usuario', 'usuario', 1),
+(4,  'invitados', 'invitado', 'invitado', 1),
+(7,  'administradores', 'root', 'root', 0);
 
 --
 -- Indexes for dumped tables
@@ -239,11 +163,7 @@ INSERT INTO `_usuarios` (`id`, `id_empresa`, `grupo`, `usuario`, `clave`, `estat
 
 
 
---
--- Indexes for table `empresas`
---
-ALTER TABLE `empresas`
-  ADD PRIMARY KEY (`id`);
+
 
 --
 -- Indexes for table `_contenido`
@@ -301,19 +221,11 @@ ALTER TABLE `_traducciones`
 -- Indexes for table `_usuarios`
 --
 ALTER TABLE `_usuarios`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id_empresa` (`id_empresa`,`grupo`,`usuario`),
+  ADD PRIMARY KEY (`id`),  
   ADD KEY `grupo` (`grupo`);
 
 --
 -- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `empresas`
---
-ALTER TABLE `empresas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 --
 -- AUTO_INCREMENT for table `_contenido`
@@ -372,8 +284,7 @@ ALTER TABLE `_traducciones`
 --
 -- Constraints for table `_usuarios`
 --
-ALTER TABLE `_usuarios`
-  ADD CONSTRAINT `_usuarios_ibfk_1` FOREIGN KEY (`id_empresa`) REFERENCES `empresas` (`id`),
+ALTER TABLE `_usuarios`  
   ADD CONSTRAINT `_usuarios_ibfk_2` FOREIGN KEY (`grupo`) REFERENCES `_grupos` (`grupo`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
