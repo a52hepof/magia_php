@@ -157,10 +157,11 @@ function campo_html_numerico($nombre, $id, $placeholder, $label, $contexto, $val
     return $html;
 }
 
-function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado = false, $extras = "") {
+function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado = false, $extras = "", $pagina=false) {
 
     $seleccionado_0 = ($selecionado == false) ? " checked " : " ";
     $seleccionado_1 = ($selecionado == true) ? " checked " : " ";
+   
     
     // con esto veo cual es el nombre de la tabla y segun eso le asigno un valor 
     // label al radio
@@ -185,14 +186,28 @@ function campo_html_buleano($nombre, $id, $label, $contexto, $selecionado = fals
     $fuente .= '     <div class="col-sm-10"> ' . "\n";
     $fuente .= '     <div class="radio">' . "\n";
     $fuente .= '        <label>' . "\n";
-    $fuente .= '            <input ' . $extras . ' type="radio" name="' . $nombre . '" value="1" <?php echo "$' . $nombre . '_1"; ?>  >' . "\n";
+    if($pagina=="crear"){
+    $fuente .= '            <input ' . $extras . ' type="radio" name="' . $nombre . '" value="1" >' . "\n";                    
+    }else{
+    $fuente .= '            <input ' . $extras . ' type="radio" name="' . $nombre . '" value="1" <?php echo "$' . $nombre . '_1"; ?>  >' . "\n";                        
+    }
+    
+    
     $fuente .= '            <?php _t("'.$activo.'"); ?> ' . "\n";
     $fuente .= '        </label>' . "\n";
     $fuente .= '     </div>' . "\n";
 
     $fuente .= '     <div class="radio">' . "\n";
     $fuente .= '        <label>' . "\n";
+           
+    if($pagina=="crear"){
+    $fuente .= '            <input ' . $extras . ' type="radio" name="' . $nombre . '" value="0"  checked >' . "\n";
+    }else{
     $fuente .= '            <input ' . $extras . ' type="radio" name="' . $nombre . '" value="0"  <?php echo "$' . $nombre . '_0"; ?>  >' . "\n";
+    }
+    
+    
+    
     $fuente .= '            <?php _t("'.$bloqueado.'"); ?>  ' . "\n";
     $fuente .= '        </label>' . "\n";
     $fuente .= '     </div>' . "\n";
@@ -985,7 +1000,7 @@ function contenido_vista($vista, $nombrePlugin) {
                             $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin);
                             break;
                         case 'buleano':
-                            $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, false);
+                            $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, false, false, 'crear');
                             break;
 
                         default:
