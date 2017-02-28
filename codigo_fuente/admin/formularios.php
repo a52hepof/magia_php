@@ -1,6 +1,6 @@
 <?php
-function formularios_campo_escondido($nombre,$valor){    
-    echo '<input type="hidden" name="'.$nombre.'" value="'.$valor.'">'; 
+function formularios_campo_escondido($nombre,$id,$valor){    
+    echo '<input type="hidden" name="'.$nombre.'" id="'.$id.'" value="'.$valor.'">'; 
 }
 
 
@@ -10,6 +10,10 @@ function formularios_campo($tipo, $nombre, $id, $valor="", $clase="", $placehold
     switch ($tipo) {
         case 'text':
         case 'texto':
+            formularios_campo_texto($nombre, $id, $valor, $clase, $placeholder,$desactivado);
+            break;
+        case 'number':
+        case 'numero':
             formularios_campo_texto($nombre, $id, $valor, $clase, $placeholder,$desactivado);
             break;
         case 'date':
@@ -35,26 +39,26 @@ function formularios_campo($tipo, $nombre, $id, $valor="", $clase="", $placehold
 
 function formularios_campo_texto( $nombre, $id, $valor="", $clase="", $placeholder="", $desactivado=false)  {    
     
-    $desactivado    = ($desactivado=='si')? " disabled " : "";
+    $desactivado    = ($desactivado)? " disabled " : "";
     $clase          = ($clase)? " form-control " : "";
     
     echo "<input 
             type=\"text\" 
             class=\"$clase\" 
             name=\"$nombre\" 
-            id=\"$nombre\" 
+            id=\"$id\" 
             placeholder=\"$placeholder\" 
             value=\"$valor\" $desactivado > ";
 }
 function formularios_campo_areaDeTexto( $nombre, $id, $valor="", $clase="", $placeholder="", $desactivado=false)  {    
     
-    $desactivado    = ($desactivado=='si')? " disabled " : "";
+    $desactivado    = ($desactivado)? " disabled " : "";
     $clase          = ($clase)? " form-control " : "";
     
     echo "<textarea             
             class=\"$clase\" 
             name=\"$nombre\" 
-            id=\"$nombre\" 
+            id=\"$id\" 
             placeholder=\"$placeholder\" $desactivado>$valor</textarea> ";
 }
 
@@ -63,7 +67,7 @@ function formularios_campo_areaDeTexto( $nombre, $id, $valor="", $clase="", $pla
 function formularios_opciones( $nombre, $id, $valor="", $clase="form-control", $placeholder="", $desactivado=false) {
 
     $i = 0;
-    echo "<select class=\"$clase\">";
+    echo "<select class=\"$clase\" name=\"$nombre\" id=\"$id\">";
     while ($i < count($valor)) {
 
         echo "<option ";
