@@ -798,7 +798,8 @@ function contenido_vista($vista, $nombrePlugin) {
             $fuente = '<?php include "tabs.php"; ?>' . "\n\n";
             $fuente .= '<h2> ' . "\n\n";
             $fuente .= '<span class="glyphicon glyphicon-search"></span> ' . "\n\n";
-            $fuente .= '<?php _t("Resultados de su busqueda en "); ?></h2>' . "\n\n";
+            $fuente .= '<?php _t("Resultados de su busqueda en "); ?>' . "\n\n";
+            $fuente .= '</h2>' . "\n\n";
             $fuente .= '
 <table class="table table-striped">
     <thead>
@@ -1120,7 +1121,8 @@ function contenido_vista($vista, $nombrePlugin) {
             $fuente .= '
 <table class="table table-striped">
     <thead>
-        <tr> <td>#</td>' . "\n\n";
+        <tr> 
+        <th>#</th>' . "\n\n";
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
@@ -1498,10 +1500,10 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
             
             
         case 'ver.php':
-            $fuente = '<h1> ' . "\n";
+            $fuente  = '<h1> ' . "\n";
             $fuente .= '<span class="<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
-            $fuente = '<?php _t("Detalles"); ?> ' . "\n";
-            $fuente = '</h1> ' . "\n";
+            $fuente .= '<?php _t("Detalles"); ?> ' . "\n";
+            $fuente .= '</h1> ' . "\n";
 
             $fuente .= '     <form class="form-horizontal" method="" action=""> ' . "\n";
             $fuente .= '     <input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
