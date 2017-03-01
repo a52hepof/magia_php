@@ -1815,33 +1815,57 @@ function contenido_scripts($scripts, $nombrePlugin) {
 
         case 'borrar.php':
             $fuente = '';
+            $fuente .= '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
             return $fuente;
             break;
         
         
         case 'buscar.php':
             $fuente = '';
+            $fuente  .= '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
             return $fuente;
             break;
         
         case 'crear.php':
             $fuente = '';
+            $fuente .= '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
             return $fuente;
             break;
         
         case 'editar.php':
             $fuente = '';
+            $fuente .= '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
             return $fuente;
             break;
         
         
         case 'ver.php':
             $fuente = '';
+            $fuente .= '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
             return $fuente;
             break;
                
         default:
             $fuente = "";
+            $fuente .= '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
             return $fuente;
             break;
     }
@@ -1859,7 +1883,12 @@ function contenido_reg($controlador, $nombrePlugin) {
         
         
         case 'data.php':
-            $fuente = " <$nombrePlugin> " . "\n";
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
+            
+            $fuente .= " <$nombrePlugin> " . "\n";
             $i = 0;
             $usar_id = 'true'; // usa el id inicial de la tabla?
             foreach ($resultados as $reg) {
@@ -1879,7 +1908,11 @@ function contenido_reg($controlador, $nombrePlugin) {
             break;
         
         case 'get.php':
-            $fuente = ' <?php ' . "\n";
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";   
+            $fuente .= '  ' . "\n";
             $i = 0;
             $usar_id = 'false'; // usa el id inicial de la tabla?
             foreach ($resultados as $reg) {
@@ -1899,7 +1932,11 @@ function contenido_reg($controlador, $nombrePlugin) {
             return $fuente;
             break;            
         case 'post.php':
-            $fuente = ' <?php ' . "\n";
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/' . "\n";   
+            $fuente .= '  ' . "\n";
             $i = 0;
             $usar_id = 'false'; // usa el id inicial de la tabla?
             foreach ($resultados as $reg) {
@@ -1919,7 +1956,11 @@ function contenido_reg($controlador, $nombrePlugin) {
             return $fuente;
             break;
         case 'reg.php':
-            $fuente = ' <?php ' . "\n";
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";   
+            $fuente .= '' . "\n";
             $i = 0;
             foreach ($resultados as $reg) {
 
@@ -1989,7 +2030,11 @@ function contenido_reg($controlador, $nombrePlugin) {
             return $fuente;
             break;
         case 'request.php':
-            $fuente = ' <?php ' . "\n";
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/' . "\n";   
+            $fuente .= '  ' . "\n";
             $i = 0;
             foreach ($resultados as $reg) {
                 $var1 = $reg[0];
@@ -2001,7 +2046,11 @@ function contenido_reg($controlador, $nombrePlugin) {
             break;
 
         case 'var.php':
-            $fuente = ' <?php ' . "\n";
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";   
+            $fuente .= '  ' . "\n";
             $i = 0;            
             $fuente .= ' $datos= [
             "'.$nombrePlugin.'"=>[';            
@@ -2029,6 +2078,10 @@ function contenido_reg($controlador, $nombrePlugin) {
 
         default:
             $fuente = "";
+            $fuente .= '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
             return $fuente;
             break;
     }
@@ -2043,15 +2096,13 @@ function contenido_plugin($pagina, $nombrePlugin) {
 
     switch ($pagina) {
         case 'funciones.php':
-
             //return $fuente;
-            break;
-        
-        
-        
+            break;                        
         
         case 'readme.txt':
-            $fuente = "Plugin: $nombrePlugin ";
+            $fuente  = "Plugin: $nombrePlugin ";            
+            $fuente .= 'magia_version: '. magia_version() .' ' . "\n";
+            
             return $fuente;
             break;
         case 'COPYING':
@@ -2063,11 +2114,18 @@ function contenido_plugin($pagina, $nombrePlugin) {
             return $fuente;
             break;
         case 'version':
-            $fuente = "0.01 ";
+            $fuente  = "";                        
+            $fuente .= 'magia_version: '. magia_version() .' ' . "\n";
+            
             return $fuente;
             break;
         case 'menu':
-            $fuente = "<ul><li>Menu</li></ul>";
+            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
+            $fuente .= "<ul><li>Menu</li></ul>";
             return $fuente;
             break;
         default :
@@ -2080,7 +2138,11 @@ function contenido_admin($pagina) {
     global $servidor, $bdatos, $usuario, $clave;
     switch ($pagina) {
         case 'bd.php':
-            $fuente = '<?php  
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";   
+            $fuente .= '  
 $bd_servidor = "' . $servidor . '"; 
 $bd_bdatos = "' . $bdatos . '"; 
 $bd_usuario = "' . $usuario . '"; 
@@ -2089,13 +2151,21 @@ $bd_clave = "' . $clave . '";';
             break;
 
         case 'conec.php':
-            $fuente = '<?php	
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/' . "\n";   
+            $fuente .= '	
 $dbh = new PDO("mysql:host=$servidor; dbname=$bdatos",   $usuario, $clave);
 ';
             return $fuente;
             break;
         case 'coneccion.php':
-            $fuente = '<?php
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/' . "\n";   
+            $fuente .= '
 $conexion = mysql_connect("$servidor", "$usuario", "$clave") or die("Problemas en la conexion");
 mysql_select_db("$bdatos", $conexion) or die("Problemas conexion en local");
 
@@ -2103,7 +2173,11 @@ mysql_select_db("$bdatos", $conexion) or die("Problemas conexion en local");
             return $fuente;
             break;
         case 'configuracion.php':
-            $fuente = '<?php 
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/' . "\n";   
+            $fuente .= ' 
 $config_nombre_web          = "Mi sitio web";
 $config_idioma_por_defecto  = "es"; 
 $cfg_limite_items_en_tablas = 25; 
@@ -2111,7 +2185,11 @@ $cfg_limite_items_en_tablas = 25;
             return $fuente;
             break;
         case '-------funciones.php':
-            $fuente = '<?php 
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";   
+            $fuente .= ' 
 
 function _campo($tabla, $id, $campo) {
     global $conexion;
@@ -2203,7 +2281,11 @@ function _estatus($estatus) {
             return $fuente;
             break;
         case 'index.php':
-            $fuente = '<?php 
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";   
+            $fuente .= ' 
 include "bd.php";
 include "conec.php";
 include "coneccion.php";
@@ -2284,7 +2366,8 @@ incluir_funciones();
             return $fuente;
             break;
         case 'modelo.css':
-            $fuente = 'body {
+            $fuente = '# magia_version: '. magia_version() .' ' . "\n";            
+            $fuente .= 'body {
   padding-top: 50px;
 }
 .starter-template {
@@ -2294,7 +2377,11 @@ incluir_funciones();
             return $fuente;
             break;
         case 'permisos.php':
-            $fuente = '<?php 
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";   
+            $fuente .= ' 
 function permisos_obtiene_permiso($p,$g){
     global $conexion;
 $sql=mysql_query( 
@@ -2355,7 +2442,11 @@ function permisos_sin_permiso($accion, $pagina, $_usuarios_usuario){
             return $fuente;
             break;
         case 'traductor.php':
-            $fuente = '<?php
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/' . "\n";   
+            $fuente .= '
 
 function _traducir($f, $ccontexto="", $idioma="") {
     echo $f;
@@ -2419,7 +2510,11 @@ return 0;
             return $fuente;
             break;
         case 'contenido.php':
-            $fuente = '<?php
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/' . "\n";   
+            $fuente .= '
 
 // si existe devuelve la traduccion sino devuelve falso
 function contenido_id_frase_segun_frase_contexto($frase,$contexto="") {
@@ -2458,7 +2553,11 @@ return 0;
 }';
             return $fuente;
         case 'menu.php':
-            $fuente = '<?php
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";   
+            $fuente .= '
 function _menu_top(){
     global $conexion;
     $sql = mysql_query(
@@ -2525,9 +2624,11 @@ function _menu_sidebar($p){
 ';
             return $fuente;
         case 'formularios.php':
-            $fuente = '<?php
-
-
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/' . "\n";   
+            $fuente .= '
 function formularios_campo_escondido($nombre,$valor){    
     echo \'<input type="hidden" name="\'.$nombre.\'" value="\'.$valor.\'">\'; 
 }
@@ -2641,12 +2742,11 @@ function contenido_extenciones_funciones($nombrePlugin) {
         $lista_campos = bdd_lista_campos_segun_tabla($nombrePlugin);
         $campo_parecido = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre_sin_id, $lista_campos);
     
-    
-            $fuente = '<?php ';
-            
-            
-            
-            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/' . "\n";   
+            $fuente .= ' ';                                    
             $fuente .= 'function ' . $nombrePlugin . '_campo($campo, $id) {
     global $conexion;
     $sql = mysql_query(
@@ -2761,8 +2861,10 @@ function contenido_config($pagina) {
 
 function contenido_gestion($pagina) {
     switch ($pagina) {
-        case 'estilo.css':
-            $fuente = '/*-------------------------
+        case 'estilo.css':            
+            $fuente = '/** magia_version: '. magia_version() .'*/ ' . "\n";
+            
+            $fuente .= '/*-------------------------
     Simple reset
 --------------------------*/
 
@@ -2893,7 +2995,11 @@ function contenido_gestion($pagina) {
             return $fuente;
             break;
         case 'index.php':
-            $fuente = '<?php
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/' . "\n";   
+            $fuente .= '
 session_start("inmoweb_username") ;
 include "z_verificar.php";
 include "../admin/bd.php";
@@ -3028,7 +3134,11 @@ include "home/vista/footer.php";
 function contenido_publica($pagina) {
     switch ($pagina) {
         case 'carrusel.css':
-            $fuente = '/* GLOBAL STYLES
+            
+            $fuente = ' /*  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' */ ' . "\n";   
+            $fuente .= '/* GLOBAL STYLES
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
 
@@ -3168,7 +3278,11 @@ body {
 
 
         case 'carrusel.php':
-            $fuente = '
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";   
+            $fuente .= '
 <!-- Carousel 
 ================================================== -->
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -3232,12 +3346,19 @@ body {
             return $fuente;
             break;
         case 'detalles.php':
-            $fuente = 'DEtalles';
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
+            $fuente .= '';
             return $fuente;
             break;
         case 'index.php':
-            $fuente = '
-<?php
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";   
+            $fuente .= '
 //session_start("magia_php") ;
 //error_reporting(E_ALL);
 //ini_set("display_errors", 1);
@@ -3434,7 +3555,11 @@ $c = (isset($_REQUEST["c"])) ? $_REQUEST["c"] : "index";
             return $fuente;
             break;
         case 'nav_superior.php':
-            $fuente = '<nav class="navbar navbar-inverse navbar-static-top">
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
+            $fuente .= '<nav class="navbar navbar-inverse navbar-static-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -3478,12 +3603,19 @@ $c = (isset($_REQUEST["c"])) ? $_REQUEST["c"] : "index";
 ';
             return $fuente;
             break;
-        case 'estilo.css':
-            $fuente = '/*Aca puedes escribir tu propia hoja css*/';
+        case 'estilo.css':            
+            $fuente = ' /*  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' */ ?>' . "\n";   
+            $fuente .= '/*Aca puedes escribir tu propia hoja css*/';
             return $fuente;
             break;
         case 'otro.php':
-            $fuente = '';
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
+            $fuente .= '';
             return $fuente;
             break;
     }
