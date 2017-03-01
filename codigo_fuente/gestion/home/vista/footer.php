@@ -9,6 +9,9 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../includes/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
 
+    <footer>
+    Magia_php version: <?php echo magia_version(); ?>
+    </footer>
 <?php 
 /*
     <!-- Bootstrap core JavaScript

@@ -16,4 +16,8 @@
         _menu_sidebar($p);
         ?>                        
     </ul>         
+
+    <footer>
+    Magia_php version: <?php echo magia_version(); ?>
+    </footer>
 </div> 							

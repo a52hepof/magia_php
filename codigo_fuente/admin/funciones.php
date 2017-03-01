@@ -1,5 +1,9 @@
 <?php
 
+function magia_version(){
+    return "0.0.7";
+}
+
 function _campo($tabla, $id, $campo) {
     global $conexion;
     $sql = mysql_query(
