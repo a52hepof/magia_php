@@ -1,5 +1,5 @@
 <?php
-$magia_php_version = "0.0.7";
+$magia_php_version = "0.0.8";
 
 function magia_version(){
     global $magia_php_version; 

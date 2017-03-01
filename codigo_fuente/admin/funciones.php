@@ -1,7 +1,7 @@
 <?php
 
 function magia_version(){
-    return "0.0.7";
+    return "0.0.8";
 }
 
 function _campo($tabla, $id, $campo) {
@@ -13,37 +13,15 @@ function _campo($tabla, $id, $campo) {
 }
 
 function _incluir_funciones() {
-       
-    $ruta = "../extenciones/funciones";
+    $ruta = "../extenciones/funciones/";
 
-    $directorio = opendir($ruta); //ruta actual
-        
-    while ($archivo = readdir($directorio)) { //obtenemos un archivo y luego otro sucesivamente
-        if (is_file($archivo)) {//verificamos si es o no un directorio
-            //echo "[" . $archivo . "]<br />"; //de ser un directorio lo envolvemos entre corchetes    
-            include "$ruta/$archivo";
-         
-        } 
-    }
-    
-    
-  
-/*
-    $ruta = "../extenciones/funciones";
-
-    $funciones = _listar_directorios_ruta($ruta);
-    foreach ($funciones as $fichero) {
-
-        $f = "$ruta/$fichero.php";
-
-        if (file_exists($f)) {
-            include "$ruta/$fichero.php";
-        }
-    }
-  */  
-    
-}
-
+    $directorio = scandir($ruta); //ruta actual
+    $i = 2; // empiezo en el segundo fichero  
+    while ($i < count($directorio)){
+            include ($ruta.$directorio[$i]);
+        $i++; 
+    }                   
+}       
 function _listar_directorios_ruta($ruta = "./") {
     // abrir un directorio y listarlo recursivo 
     if (is_dir($ruta)) {
