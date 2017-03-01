@@ -2366,7 +2366,8 @@ incluir_funciones();
             return $fuente;
             break;
         case 'modelo.css':
-            $fuente = '# magia_version: '. magia_version() .' ' . "\n";            
+            $fuente = '/* magia_version: '. magia_version() .' ' . "\n";            
+            $fuente = '*/ ' . "\n";            
             $fuente .= 'body {
   padding-top: 50px;
 }
