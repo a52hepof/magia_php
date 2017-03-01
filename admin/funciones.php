@@ -1963,9 +1963,6 @@ function contenido_reg($controlador, $nombrePlugin) {
             $fuente .= '' . "\n";
             $i = 0;
             foreach ($resultados as $reg) {
-
-
-
                 $nombre = $reg['Field'];
                 $tipo = $reg['Type'];
                 $nul = $reg['Null'];
@@ -2204,23 +2201,20 @@ function _campo($tabla, $id, $campo) {
 
 
 
-function _incluir_funciones(){
-    
-    $funciones = _listar_directorios_ruta();
-    foreach ($funciones as $valor) {
-        
-        $f = "./$valor/funciones.php"; 
-        
-        if(file_exists($f)){
-            include $f; 
-        }
-        else {
-            $sms = "El plugin $valor no existe";  
-            return $sms ;
+function _incluir_funciones(){    
+    $ruta = "../extenciones/funciones/";
+    $directorio = scandir($ruta); //ruta actual
+    $i = 2; // empiezo en el segundo fichero  
+    while ($i < count($directorio)){
+        if(1==1){
+            include ($ruta.$directorio[$i]);
+            //echo "$i   ".$ruta.$directorio[$i] . "\n"; 
         }
         
-    }
+        $i++; 
+    }                   
 }
+
 function _listar_directorios_ruta($ruta="./"){ 
    // abrir un directorio y listarlo recursivo 
    if (is_dir($ruta)) { 
