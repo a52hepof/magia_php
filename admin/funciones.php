@@ -2202,15 +2202,13 @@ function _campo($tabla, $id, $campo) {
 
 
 function _incluir_funciones(){    
+       
     $ruta = "../extenciones/funciones/";
+
     $directorio = scandir($ruta); //ruta actual
     $i = 2; // empiezo en el segundo fichero  
     while ($i < count($directorio)){
-        if(1==1){
             include ($ruta.$directorio[$i]);
-            //echo "$i   ".$ruta.$directorio[$i] . "\n"; 
-        }
-        
         $i++; 
     }                   
 }
