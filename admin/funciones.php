@@ -2096,21 +2096,24 @@ function contenido_plugin($pagina, $nombrePlugin) {
 
     switch ($pagina) {
         case 'funciones.php':
-            //return $fuente;
+            $fuente  = "Plugin: $nombrePlugin \n";            
+            $fuente .= 'magia_version: '. magia_version() .' ' . "\n";
             break;                        
         
         case 'readme.txt':
-            $fuente  = "Plugin: $nombrePlugin ";            
+            $fuente  = "Plugin: $nombrePlugin \n";            
             $fuente .= 'magia_version: '. magia_version() .' ' . "\n";
             
             return $fuente;
             break;
         case 'COPYING':
-            $fuente = "Aca escriba el texto de la licencia del plugin: $nombrePlugin ";
+            $fuente  = 'magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= "Aca escriba el texto de la licencia del plugin: $nombrePlugin ";
             return $fuente;
             break;
         case '.gitignore':
-            $fuente = "poner las exepciones para el github ";
+            $fuente = 'magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= "poner las exepciones para el github ";
             return $fuente;
             break;
         case 'version':
