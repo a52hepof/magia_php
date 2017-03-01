@@ -1,4 +1,4 @@
-ro<?php
+<?php
 $magia_php_version = "0.0.7";
 
 $icon_ok = '<span class="glyphicon glyphicon-ok"></span>';
@@ -1755,21 +1755,7 @@ function contenido_reg($controlador, $nombrePlugin) {
                 $i++;
             }
             return $fuente;
-            break;
-
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+            break;            
         case 'post.php':
             $fuente = ' <?php ' . "\n";
             $i = 0;
@@ -2508,6 +2494,12 @@ function _formulario_checkbox($tabla, $campo, $selecionar = "", $desactivar = ""
 
 function contenido_extenciones_funciones($nombrePlugin) {
 
+    
+        $nombre_sin_id = bdd_quita_id_inicio($nombrePlugin);        
+        $lista_campos = bdd_lista_campos_segun_tabla($nombrePlugin);
+        $campo_parecido = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre_sin_id, $lista_campos);
+    
+    
             $fuente = '<?php ';
             
             
@@ -2518,6 +2510,8 @@ function contenido_extenciones_funciones($nombrePlugin) {
     $sql = mysql_query(
             "SELECT $campo FROM ' . $nombrePlugin . ' WHERE id = $id   ", $conexion) or die("Error: ' . $nombrePlugin . '_campo()" . mysql_error());
     $reg = mysql_fetch_array($sql); 
+    
+    
     
     if($reg[$campo]){
         return $reg[$campo];
@@ -2539,6 +2533,7 @@ function contenido_extenciones_funciones($nombrePlugin) {
             "SELECT DISTINCT $campo FROM _menu order by $campo   ", $conexion) 
             or die("Error:" . mysql_error());
     while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
+        //include "../gestion/' . $nombrePlugin . '/reg/reg.php"; 
 
         echo "<option ";
         if ($selecionado == $' . $nombrePlugin . '[$campo]) {
@@ -2561,10 +2556,13 @@ $sql=mysql_query(
         "SELECT * FROM ' . $nombrePlugin . '  ",$conexion) or die ("Error:".mysql_error());
 while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
     
+        include "../gestion/' . $nombrePlugin . '/reg/reg.php"; 
+    
    echo "<option "; 
    if($selecionado==$' . $nombrePlugin . '[0]) {echo " selected "; } else {echo ""; }
    if($excluir==$' . $nombrePlugin . '[0]) {echo " disabled "; } else {echo ""; }
-   echo "value=\"$' . $nombrePlugin . '[0]\">$' . $nombrePlugin . '[0]</option>";
+   //echo "value=\"$' . $nombrePlugin . '[0]\">$' . $nombrePlugin . '[0]</option>";
+   echo "value=\"$' . $nombrePlugin . '[0]\">$' . $nombrePlugin . '_'.$campo_parecido.'</option>";
 } 
 }
 

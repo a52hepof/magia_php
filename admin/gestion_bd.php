@@ -68,6 +68,7 @@ function bdd_quita_guiones($nombre) {
 /*
  * 
  */
+
 Function bdd_busca_tabla_con_nombre_igual_o_parecido($tabla, $lista) {
 
     $r = $lista[0];
@@ -81,6 +82,33 @@ Function bdd_busca_tabla_con_nombre_igual_o_parecido($tabla, $lista) {
 
         if ($comparacion < $dif) {
             $r = $lista[$i];
+            $dif = $comparacion;
+        }
+
+        $i++;
+    }
+
+    return $r;
+}
+/**
+ * Busca un campo parecido o igual entre la lista que se le envia
+ * @param type $campo
+ * @param type $lista_campos
+ * @return type
+ */
+Function bdd_campo_con_nombre_igual_o_parecido($campo, $lista_campos) {
+
+    $r = $lista[0];
+    $dif = 99999999999; // la diferencia es muy grande al inico
+    // devuelve la palabra con menos diferencia
+
+    $i = 0;
+    while ($i < count($lista)) {
+
+        $comparacion = levenshtein(strtolower($campo), strtolower($lista_campos[$i]));
+
+        if ($comparacion < $dif) {
+            $r = $lista_campos[$i];
             $dif = $comparacion;
         }
 
@@ -108,7 +136,27 @@ function bdd_lista_tablas_bdd(){
     
     
 }
+function bdd_lista_campos_segun_tabla($tabla){
+    global $dbh;
+    include "./modelos/columnas_de_tabla.php";
+    
+    //$l = array("contactos","reservas","casas","empresas");
+    
+    $l = array("Robinson","Coello");
+    
+    
+    foreach ($resultado as $reg) {
+        array_push($l, $reg[0]);
+        
+    }
+    
+    return $l;
+    
+    
+}
 
 
 ?>
+
+
 
