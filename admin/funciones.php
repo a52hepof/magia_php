@@ -1,6 +1,13 @@
 <?php
 $magia_php_version = "0.0.7";
 
+function magia_version(){
+    global $magia_php_version; 
+    return  $magia_php_version;
+}
+
+
+
 $icon_ok = '<span class="glyphicon glyphicon-ok"></span>';
 $icon_error = '<span class="glyphicon glyphicon-remove"></span>';
 $icon_carpeta_cerrada = '<span class="glyphicon glyphicon-folder-close"></span>';
@@ -451,7 +458,10 @@ function contenido_controlador($controlador, $nombrePlugin) {
     switch ($controlador) {
 
         case 'borrar.php':
-            $fuente = ' <?php ' . "\n";
+            $fuente = ' <?php ' . "\n";            
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";
             $fuente .= ' $accion = "borrar"; ' . "\n";
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             $fuente .= ' if (permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo)) { ' . "\n";
@@ -466,6 +476,9 @@ function contenido_controlador($controlador, $nombrePlugin) {
 
         case 'buscar.php':
             $fuente = ' <?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";
             $fuente .= ' $accion = "buscar"; ' . "\n";
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina, $_usuarios_grupo)) { ' . "\n";
@@ -499,6 +512,9 @@ function contenido_controlador($controlador, $nombrePlugin) {
 
         case 'crear.php':
             $fuente = ' <?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";
             $fuente .= ' $accion = "crear"; ' . "\n";
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             // $fuente .= ' //include \'header.php\';  '."\n";
@@ -537,6 +553,10 @@ function contenido_controlador($controlador, $nombrePlugin) {
 
         case 'editar.php':
             $fuente = ' <?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";
+            
             $fuente .= ' $accion = "editar"; ' . "\n";
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina, $_usuarios_grupo)) { ' . "\n";
@@ -563,11 +583,11 @@ function contenido_controlador($controlador, $nombrePlugin) {
             return $fuente;
 
             break;
-
-
-
         case 'index.php':
             $fuente = ' <?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";            
             $fuente .= ' $accion = "ver"; ' . "\n";
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";            
@@ -581,9 +601,11 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
             return $fuente;
-
         case 'data.php':
             $fuente = ' <?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";
             $fuente .= ' $accion = "ver"; ' . "\n";
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             //     $fuente .= ' include \'header.php\';  '."\n";
@@ -602,6 +624,9 @@ function contenido_controlador($controlador, $nombrePlugin) {
             break;
         case 'ver.php':
             $fuente = ' <?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";
             $fuente .= ' $accion = "ver"; ' . "\n";
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             //     $fuente .= ' include \'header.php\';  '."\n";
@@ -617,11 +642,12 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
             return $fuente;
-            break;
-        
-
+            break;        
         case 'txt.php':
             $fuente = ' <?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";
             $fuente .= ' $accion = "ver"; ' . "\n";
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             //     $fuente .= ' include \'header.php\';  '."\n";
@@ -639,7 +665,10 @@ function contenido_controlador($controlador, $nombrePlugin) {
             return $fuente;
             break;
         default:
-            $fuente = "";
+            $fuente = 
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";
             return $fuente;
             break;
     }
@@ -655,6 +684,9 @@ function contenido_modelos($modelos, $nombrePlugin) {
     switch ($modelos) {
         case 'borrar.php':
             $fuente = ' <?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";
             $fuente .= ' $sql=mysql_query(" ' . "\n";
             $fuente .= ' DELETE FROM  ' . "\n";
             $fuente .= ' ' . $nombrePlugin . '  ' . "\n";
@@ -667,6 +699,9 @@ function contenido_modelos($modelos, $nombrePlugin) {
 
         case 'buscar.php':
             $fuente = ' <?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";
             $fuente .= ' $sql=mysql_query( ' . "\n";
             $fuente .= '         "SELECT *  ' . "\n";
             $fuente .= ' FROM ' . $nombrePlugin . '  ' . "\n";
@@ -701,6 +736,9 @@ function contenido_modelos($modelos, $nombrePlugin) {
 
         case 'crear.php':
             $fuente = ' <?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";
             $fuente .= ' $sql = "INSERT INTO ' . $nombrePlugin . ' ( ' . "\n";
 
             $i = 0;
@@ -748,6 +786,9 @@ function contenido_modelos($modelos, $nombrePlugin) {
 
         case 'editar.php':
             $fuente = ' <?php  ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";
             $fuente .= ' $sql=mysql_query(" UPDATE ' . $nombrePlugin . ' SET  ' . "\n";
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
@@ -767,6 +808,9 @@ function contenido_modelos($modelos, $nombrePlugin) {
 
         case 'index.php':
             $fuente = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";
             $fuente .= '$comando = "SELECT * FROM ' . $nombrePlugin . ' ORDER BY id DESC  "; ' . "\n";
             $fuente .= '$sql=mysql_query("$comando Limit $inicia, $cfg_limite_items_en_tablas ",$conexion) ' . "\n";
             $fuente .= 'or die ("Error: en el fichero:" .__FILE__ .\' linea: \'. __LINE__ .\'  \'.mysql_error());	  ' . "\n";
@@ -780,6 +824,9 @@ function contenido_modelos($modelos, $nombrePlugin) {
 
         case 'ver.php':
             $fuente = ' <?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";
             $fuente .= '$sql=mysql_query( ' . "\n";
             $fuente .= ' "SELECT * FROM ' . $nombrePlugin . ' WHERE id = \'$' . $nombrePlugin . '_id\' ORDER BY id DESC   ",$conexion) 	  ' . "\n";
             $fuente .= ' or die ("Error: en el fichero:" .__FILE__ .\' linea: \'. __LINE__ .\' / \'.mysql_error());	' . "\n";
@@ -788,7 +835,10 @@ function contenido_modelos($modelos, $nombrePlugin) {
             break;
 
         default:
-            $fuente = "";
+            $fuente = 
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";    
             return $fuente;
             break;
     }
@@ -802,7 +852,12 @@ function contenido_vista($vista, $nombrePlugin) {
 
     switch ($vista) {
         case 'borrar.php':
-            $fuente = '<h2><?php _t("Atencion"); ?></h2>
+            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";            
+            $fuente .= '<h2><?php _t("Atencion"); ?></h2>
                 <p><?php _t("Ud esta a por borrar definiticamente este registro, desea hacerlo?"); ?></p>
                 <a class="btn btn-danger" href="index.php?p=' . $nombrePlugin . '&c=borrar&' . $nombrePlugin . '_id=<?php echo $' . $nombrePlugin . '_id; ?>"><?php _t("Si,borrar"); ?></a>';
 
@@ -810,7 +865,12 @@ function contenido_vista($vista, $nombrePlugin) {
             break;
 
         case 'buscar.php':
-            $fuente = '<?php include "tabs.php"; ?>' . "\n\n";
+            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
+            $fuente .= '<?php include "tabs.php"; ?>' . "\n\n";
             $fuente .= '<h2> ' . "\n\n";
             $fuente .= '<span class="glyphicon glyphicon-search"></span> ' . "\n\n";
             $fuente .= '<?php _t("Resultados de su busqueda en "); ?>' . "\n\n";
@@ -872,7 +932,12 @@ function contenido_vista($vista, $nombrePlugin) {
             break;
 
         case 'xxxxcrear.php':
-            $f = '<h2><?php _t("Nuevo ' . $nombrePlugin . '"); ?></h2> ' . "\n\n";
+            
+            $f  = '<?php ' . "\n";
+            $f .= ' /**  ' . "\n";
+            $f .= ' magia_version: '. magia_version() .' ' . "\n";
+            $f .= ' **/ ?>' . "\n";   
+            $f .= '<h2><?php _t("Nuevo ' . $nombrePlugin . '"); ?></h2> ' . "\n\n";
             $f .= '<form class="form-horizontal" action="index.php" method="post"> ' . "\n";
             $f .= '<input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
             $f .= '<input type="hidden" name="c" value="crear"> ' . "\n";
@@ -951,7 +1016,12 @@ function contenido_vista($vista, $nombrePlugin) {
             return $f;
             break;
         case 'crear.php':
-            $fuente = '<h2>' . "\n\n";
+            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
+            $fuente .= '<h2>' . "\n\n";
             $fuente .= '<span class="<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
             $fuente .= '<?php _t("Nuevo ' . $nombrePlugin . '"); ?></h2> ' . "\n\n";
             $fuente .= '</h2> ' . "\n\n";
@@ -1025,7 +1095,12 @@ function contenido_vista($vista, $nombrePlugin) {
             break;
 
         case 'editar.php':
-            $fuente = '<h2>' . "\n\n";
+            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
+            $fuente .= '<h2>' . "\n\n";
             $fuente .= '<span class="<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
             $fuente .= '<?php _t("Editar ' . $nombrePlugin . '"); ?></h2> ' . "\n\n";
             $fuente .= '</h2> ' . "\n\n";
@@ -1126,8 +1201,12 @@ function contenido_vista($vista, $nombrePlugin) {
             break;
 
         case 'index.php':
-
-            $fuente = '<?php include "tabs.php"; ?>' . "\n";
+            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
+            $fuente .= '<?php include "tabs.php"; ?>' . "\n";
             $fuente .= '<h2> ' . "\n";
             $fuente .= '<span class="<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
             $fuente .= '<?php echo _t("Lista de ' . $nombrePlugin . '"); ?> <a type="button" class="btn btn-primary navbar-btn" href="?p=' . $nombrePlugin . '&c=crear"> <?php _t("Nueva"); ?></a>' . "\n";
@@ -1197,8 +1276,12 @@ echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
             break;
 
         case 'menu.php':
-
-            $fuente = '<h1><?php _t("Buscar"); ?></h1>
+            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
+            $fuente .= '<h1><?php _t("Buscar"); ?></h1>
 
 <form method="get" action="index.php">
     <input  type="hidden" name="p" value="' . $nombrePlugin . '">
@@ -1236,7 +1319,12 @@ echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
             break;
 
         case 'paginador.php':
-            $fuente = '<?php
+            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";   
+            $fuente .= '
 
 function paginacion($p, $c, $inicia = 0, $pagina_actual) {
     global $conexion, $cfg_limite_items_en_tablas, $inicia;
@@ -1275,7 +1363,12 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
             return $fuente;
 
         case 'pdf.php':
-            $fuente = ' ' . "\n";
+            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
+            $fuente .= ' ' . "\n";
 
             $i = 0;
             $usar_id = -1; // 0 no usa, -1 si usa el primer campo de la tabla(id)
@@ -1297,7 +1390,12 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
             
 
         case 'sidebar.php':
-            $fuente = '﻿ <div class="col-sm-3 col-md-2 sidebar"> ' . "\n\n";
+            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
+            $fuente .= '<div class="col-sm-3 col-md-2 sidebar"> ' . "\n\n";
             $fuente .= '<h2><?php _t("Buscar"); ?></h2> ' . "\n\n";
             $fuente .= '<form class="" action="index.php" method="get"> ' . "\n";
             $fuente .= '<input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
@@ -1331,7 +1429,12 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
             break;
 
         case 'buscar_form.php':
-            $fuente = '<h2>' . "\n\n";
+            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
+            $fuente .= '<h2>' . "\n\n";
             $fuente .= '<span class="glyphicon glyphicon-search"></span>' . "\n\n";
             $fuente .= '<?php _t("Buscar"); ?> ' . "\n\n";
             $fuente .= '</h2> ' . "\n\n";
@@ -1366,7 +1469,12 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
             break;
 
         case 'tr.php':
-            $fuente = ' <?php  ' . "\n";
+            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/' . "\n";   
+            $fuente .= '   ' . "\n";
             $fuente .= '    echo \' <tr>' . "\n";
             $fuente .= '    <td>\'.$i.\'</td> ' . "\n";
 
@@ -1399,7 +1507,12 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
 
 
         case 'tabs.php':
-            $fuente = '<div>' . "\n\n";
+            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
+            $fuente .= '<div>' . "\n\n";
             $fuente .= '  <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active">        
                             <a href="#inicio" aria-controls="inicio" role="tab" data-toggle="tab">
@@ -1430,7 +1543,12 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
 
 
         case 'tr_anadir.php':
-            $fuente = '
+            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
+            $fuente .= '
             <form method="post" action="index.php" >
                 <input type="hidden" name="p" value="' . $nombrePlugin . '">
                 <input type="hidden" name="c" value="crear">    
@@ -1453,8 +1571,12 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
             break;
 
         case 'tr_editar.php':
-
-            $fuente = ' <?php  ' . "\n";
+            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";   
+            $fuente .= '   ' . "\n";
             $fuente .= '$borrar = (permisos_tiene_permiso("borrar", "' . $nombrePlugin . '", $_usuarios_grupo))?\'<a class="btn btn-danger" href="index.php?p=' . $nombrePlugin . '&c=borrar&a=borrar&id=\'.$id.\'">Borrar</a>\':\'\'; ?>
 ';
 
@@ -1487,7 +1609,12 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
             break;
 
         case 'tr_buscar.php':
-            $fuente = '<form method="get" action="index.php" >
+            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
+            $fuente .= '<form method="get" action="index.php" >
                 <input type="hidden" name="p" value="' . $nombrePlugin . '">
                 <input type="hidden" name="c" value="buscar">       
                 <tr>';
@@ -1515,7 +1642,12 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
             
             
         case 'ver.php':
-            $fuente  = '<h1> ' . "\n";
+            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
+            $fuente .= '<h1> ' . "\n";
             $fuente .= '<span class="<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
             $fuente .= '<?php _t("Detalles"); ?> ' . "\n";
             $fuente .= '</h1> ' . "\n";
@@ -1612,29 +1744,35 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
             
             
         case 'data.php':
-            $fuente = "<$nombrePlugin>" . "\n";            
+            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
+            $fuente .= "&#60;$nombrePlugin&#60;" . "\n";            
             $i = 0;
             $usar_id = -1; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                    $var1 = $reg[0];
-
-                    
-                    
-                    $fuente .=  "<$nombrePlugin"."_".$var1.">"."<?php echo $$nombrePlugin"."_"."$var1"."; ?></$nombrePlugin"."_".$var1."> \n";   
+                    $var1 = $reg[0];                                       
+                    $fuente .=  "&#60;$nombrePlugin"."_".$var1."&#62;"."<?php echo $$nombrePlugin"."_"."$var1"."; ?>&#60;/$nombrePlugin"."_".$var1."&#62; \n";   
 
                 }
                 $i++;
             }
             
-            $fuente .= "</$nombrePlugin>";
+            $fuente .= "&#60;/$nombrePlugin&#62;";
 
             return $fuente;
             break;
             
             
         case 'txt.php':
-            $fuente = ' <?php $html = "' . "\n";            
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ' . "\n";   
+            $fuente .= ' $html = "' . "\n";            
             $i = 0;
             $usar_id = -1; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
@@ -1657,7 +1795,11 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
             break;
    
         default:
-            $fuente = "";
+            $fuente  = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: '. magia_version() .' ' . "\n";
+            $fuente .= ' **/ ?>' . "\n";   
+            $fuente .= "";
             return $fuente;
             break;
     }
