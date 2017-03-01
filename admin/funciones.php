@@ -2560,7 +2560,7 @@ while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
     
    echo "<option "; 
    if($selecionado==$' . $nombrePlugin . '[0]) {echo " selected "; } else {echo ""; }
-   if($excluir==$' . $nombrePlugin . '[0]) {echo " disabled "; } else {echo ""; }
+   if($excluir==$' . $nombrePlugin . '[0] || !$'.$nombrePlugin.'_estatus ) {echo " disabled "; } else {echo ""; }
    //echo "value=\"$' . $nombrePlugin . '[0]\">$' . $nombrePlugin . '[0]</option>";
    echo "value=\"$' . $nombrePlugin . '[0]\">$' . $nombrePlugin . '_'.$campo_parecido.'</option>";
 } 
