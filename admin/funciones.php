@@ -1,13 +1,13 @@
 <?php
-$magia_php_version = "0.0.8";
+include "codigo_fuente/admin/funciones.php"; 
 
+/* Le pongo en el codigo fuente
 function magia_version(){
     global $magia_php_version; 
     return  $magia_php_version;
 }
-
-
-
+ * 
+ */
 $icon_ok = '<span class="glyphicon glyphicon-ok"></span>';
 $icon_error = '<span class="glyphicon glyphicon-remove"></span>';
 $icon_carpeta_cerrada = '<span class="glyphicon glyphicon-folder-close"></span>';
