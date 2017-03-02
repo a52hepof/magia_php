@@ -16,14 +16,14 @@ Ve a la raíz de tu sitio web
 cd ~/public_html
 `
 
-Alli has una copia del Magia_php 
+Alli has una copia del magia_php 
 
 
 `
-git clone https://github.com/robincoello/Magia_php.git
+git clone https://github.com/robincoello/magia_php.git
 `
 
-Esto te cargara la última versión de Magia_php, ahora empecemos la configuración:
+Esto te cargara la última versión de magia_php, ahora empecemos la configuración:
 
 
 ## 1 Configuración de la base de datos
