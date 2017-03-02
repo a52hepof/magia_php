@@ -1,8 +1,25 @@
 <?php
+/**
+ * Nos da la versión actual de Magia_PHP
+ * @return string Valor de 3 numeros separados por puntos ejemplo: 0.8.1
+ * @example path description
+ * <pre><code>
+ function magia_version(){
+    return "0.0.8";
+}
+ * </code></pre>
+ */
 function magia_version(){
     return "0.0.8";
 }
-
+/**
+ * Nos da el valor segun $tabla, $id, $campo
+ * @global type $conexion
+ * @param type $tabla Tabla de la cual se desea la información
+ * @param type $id Identificador de registro
+ * @param type $campo Nombre del campo del registro
+ * @return type Resultado obtenido
+ */
 function _campo($tabla, $id, $campo) {
     global $conexion;
     $sql = mysql_query(
@@ -10,10 +27,11 @@ function _campo($tabla, $id, $campo) {
     $reg = mysql_fetch_array($sql);
     return $reg[$campo];
 }
-
+/**
+ * Incluye las funciones creadas para cada tabla
+ */
 function _incluir_funciones() {
     $ruta = "../extenciones/funciones/";
-
     $directorio = scandir($ruta); //ruta actual
     $i = 2; // empiezo en el segundo fichero  
     while ($i < count($directorio)){
@@ -21,6 +39,11 @@ function _incluir_funciones() {
         $i++; 
     }                   
 }       
+/**
+ * 
+ * @param type $ruta
+ * @return type
+ */
 function _listar_directorios_ruta($ruta = "./") {
     // abrir un directorio y listarlo recursivo 
     if (is_dir($ruta)) {
@@ -48,7 +71,11 @@ function _listar_directorios_ruta($ruta = "./") {
     }
     return $c;
 }
-
+/**
+ * Entrega una lista de ficheros que tiene una capeta
+ * @param type $ruta de la carpeta
+ * @return type Devuelve un array() con los ficheros contenidos en la carpeta
+ */
 function _listar_ficheros_de_carpeta($ruta = '.') {
     $directorio = opendir($ruta); //ruta actual
     
@@ -63,7 +90,10 @@ function _listar_ficheros_de_carpeta($ruta = '.') {
     
     return $r;
 }
-
+/**
+ * Genera el menu para el sistema
+ * @param type $selecionado
+ */
 function _magia_menu($selecionado) {
     $menu_items = _listar_directorios_ruta();
     $menu_total_items = count(_listar_directorios_ruta());
@@ -83,11 +113,15 @@ function _magia_menu($selecionado) {
         $i++;
     }
 }
-
+/**
+ * Estatus Activo / Bloquado
+ * @param type $estatus
+ * @return type
+ */
 function _estatus($estatus) {
     if ($estatus == 0) {
-        return _t("Activo", "formularios");
+        return _t("Activo");
     } else {
-        return _t("Bloqueado", "formularios");
+        return _t("Bloqueado");
     }
 }

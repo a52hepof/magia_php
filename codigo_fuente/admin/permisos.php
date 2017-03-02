@@ -1,4 +1,11 @@
 <?php 
+/**
+ * 
+ * @global type $conexion
+ * @param type $p
+ * @param type $g
+ * @return type
+ */
 function permisos_obtiene_permiso($p,$g){
     global $conexion;
 $sql=mysql_query( 
@@ -8,12 +15,15 @@ $sql=mysql_query(
 }
 
 
-
+/**
+ * 
+ * @param string $accion
+ * @param type $pagina
+ * @param type $grupo
+ * @return boolean
+ */
 function permisos_tiene_permiso($accion, $pagina, $grupo){  
-
 if($accion=='buscar'){$accion = 'ver';}
-
-
     $p = permisos_obtiene_permiso($pagina,$grupo);    
     $ver     = $p[0];
     $crear   = $p[1];
@@ -41,13 +51,14 @@ if($accion=='buscar'){$accion = 'ver';}
         default: // por defecto enviamos falso
             return false;    
             break;
-    }
-    
-    
-    
-    
+    }                
 }
-
+/**
+ * 
+ * @param type $accion
+ * @param type $pagina
+ * @param type $u_login
+ */
 function permisos_sin_permiso($accion, $pagina, $u_login){
     
     echo "Estimado $u_login, ud no puede realizar la accion [$accion] en la pagina [$pagina]"; 

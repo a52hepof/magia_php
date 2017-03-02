@@ -51,10 +51,15 @@ if (isset($_REQUEST['tabla'])) {
             ?>
 
             <?php
+            /**
+             * 
+             */
             if ($a == 'configBd') {
                 include "./request/updateDb.php";
             }
-
+/**
+ * 
+ */
             if ($a == 'config') {
                 include "./request/config.php";
             }

@@ -1,4 +1,7 @@
 <?php
+/**
+ * 
+ */
 $pagina = "home";
 $accion = "ver";
 //$id_contacto 			= mysql_real_escape_string($_GET['id_contacto']);

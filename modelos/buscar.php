@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * 
+ */
 $busqueda = mysql_real_escape_string($_GET['busqueda']);
 
 $sql = "SHOW FULL TABLES";

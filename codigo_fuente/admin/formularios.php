@@ -1,12 +1,25 @@
 <?php
+/**
+ * Entrega un campo tipo escondido (hidden) para los formularios
+ * @param type $nombre Nombre del campo
+ * @param type $id Identificador
+ * @param type $valor Valor del campo
+ */
 function formularios_campo_escondido($nombre,$id,$valor){    
     echo '<input type="hidden" name="'.$nombre.'" id="'.$id.'" value="'.$valor.'">'; 
 }
 
-
-function formularios_campo($tipo, $nombre, $id, $valor="", $clase="", $placeholder="", $desactivado=FALSE){    
-    
-    
+/**
+ * 
+ * @param type $tipo
+ * @param type $nombre
+ * @param type $id
+ * @param type $valor
+ * @param type $clase
+ * @param type $placeholder
+ * @param type $desactivado
+ */
+function formularios_campo($tipo, $nombre, $id, $valor="", $clase="", $placeholder="", $desactivado=FALSE){            
     switch ($tipo) {
         case 'text':
         case 'texto':
@@ -36,7 +49,15 @@ function formularios_campo($tipo, $nombre, $id, $valor="", $clase="", $placehold
             break;
     }
 }
-
+/**
+ * 
+ * @param type $nombre
+ * @param type $id
+ * @param type $valor
+ * @param type $clase
+ * @param type $placeholder
+ * @param type $desactivado
+ */
 function formularios_campo_texto( $nombre, $id, $valor="", $clase="", $placeholder="", $desactivado=false)  {    
     
     $desactivado    = ($desactivado)? " disabled " : "";
@@ -50,6 +71,15 @@ function formularios_campo_texto( $nombre, $id, $valor="", $clase="", $placehold
             placeholder=\"$placeholder\" 
             value=\"$valor\" $desactivado > ";
 }
+/**
+ * 
+ * @param type $nombre
+ * @param type $id
+ * @param type $valor
+ * @param type $clase
+ * @param type $placeholder
+ * @param type $desactivado
+ */
 function formularios_campo_areaDeTexto( $nombre, $id, $valor="", $clase="", $placeholder="", $desactivado=false)  {    
     
     $desactivado    = ($desactivado)? " disabled " : "";
@@ -63,7 +93,15 @@ function formularios_campo_areaDeTexto( $nombre, $id, $valor="", $clase="", $pla
 }
 
 
-
+/**
+ * 
+ * @param type $nombre
+ * @param type $id
+ * @param type $valor
+ * @param type $clase
+ * @param type $placeholder
+ * @param type $desactivado
+ */
 function formularios_opciones( $nombre, $id, $valor="", $clase="form-control", $placeholder="", $desactivado=false) {
 
     $i = 0;
@@ -86,7 +124,14 @@ function formularios_opciones( $nombre, $id, $valor="", $clase="form-control", $
     }
     echo "</select>"; 
 }
-
+/**
+ * 
+ * @global type $conexion
+ * @param type $tabla
+ * @param type $campo
+ * @param type $selecionado
+ * @param type $excluir
+ */
 function _formulario_radio($tabla, $campo, $selecionado = "", $excluir = "") {
     global $conexion;
     $sql = mysql_query(
@@ -107,7 +152,15 @@ function _formulario_radio($tabla, $campo, $selecionado = "", $excluir = "") {
         echo "type=\"radio\" name=\"$campo\" id=\"$reg[0]\" value=\"$reg[0]\" ><label for=\"$reg[0]\">$reg[0]</label> \n";
     }
 }
-
+/**
+ * 
+ * @global type $conexion
+ * @param type $tabla
+ * @param type $campo
+ * @param type $selecionar
+ * @param type $desactivar
+ * @param type $excluir
+ */
 function _formulario_checkbox($tabla, $campo, $selecionar = "", $desactivar = "",$excluir="") {
     global $conexion;
     $sql = mysql_query(

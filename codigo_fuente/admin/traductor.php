@@ -1,4 +1,12 @@
 <?php
+/**
+ * 
+ * @global type $conexion
+ * @global type $cfg_idioma
+ * @param type $frase
+ * @param type $contexto
+ * @param type $idioma
+ */
 function _t($frase, $contexto = "", $idioma = "") {
     global $conexion, $cfg_idioma;
     if (!$idioma) {
@@ -8,7 +16,16 @@ function _t($frase, $contexto = "", $idioma = "") {
     
     echo "$frase";
 }
-
+/**
+ * 
+ * @global type $conexion
+ * @global type $conexion
+ * @global type $cfg_idioma
+ * @param type $frase
+ * @param type $contexto
+ * @param type $idioma
+ * @return type
+ */
 function _tr($frase, $contexto = "", $idioma = '') {
     global $conexion;
     global $conexion, $cfg_idioma;
@@ -48,7 +65,13 @@ function _tr($frase, $contexto = "", $idioma = '') {
 
     return $frase;
 }
-
+/**
+ * 
+ * @global type $conexion
+ * @param type $frase
+ * @param type $idioma
+ * @return boolean
+ */
 function traductor_buscar_traduccion($frase, $idioma) {
     global $conexion;
 
@@ -65,7 +88,13 @@ function traductor_buscar_traduccion($frase, $idioma) {
     }
 }
 
-//***********************************************************
+/**
+ * 
+ * @global type $conexion
+ * @param type $frase
+ * @param type $idioma
+ * @param type $traduccion
+ */
 function traductor_registrar_traduccion($frase, $idioma, $traduccion) {
     global $conexion;
 
@@ -79,7 +108,13 @@ function traductor_registrar_traduccion($frase, $idioma, $traduccion) {
             . "VALUES ('$frase','$idioma','$traduccion')  ", $conexion) or die("Error" . mysql_error());
 }
 
-//***********************************************************
+/**
+ * 
+ * @global type $conexion
+ * @param type $id_frase
+ * @param type $idioma
+ * @param type $traduccion
+ */
 function traductor_actualiza_traduccion($id_frase, $idioma, $traduccion) {
     global $conexion;
 

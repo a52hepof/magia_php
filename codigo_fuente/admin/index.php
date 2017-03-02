@@ -1,4 +1,4 @@
-<?php 
+<?php /*
 $u_grupo = "admin";
 include "bd.php";
 include "conec.php";

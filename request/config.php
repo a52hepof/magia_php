@@ -2,10 +2,6 @@
 $raiz = $_REQUEST['path_web']; 
 $gestion = $_REQUEST['path_web'] ."/gestion"; 
 
-
-
-
-
 $fp = fopen('admin/config.php', 'w');
 $c = '<?php ' ; 
 $c .= ' $path_web = "'.$raiz.'";';

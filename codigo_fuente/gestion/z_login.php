@@ -1,4 +1,5 @@
 <?php
+
 session_start("magia_php");
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
@@ -6,7 +7,9 @@ include "../admin/bd.php";
 include "../admin/coneccion.php";
 
 
-
+/**
+ * 
+ */
 if ($_POST['username']) {
 
     $username = mysql_real_escape_string($_REQUEST['username']);
@@ -50,5 +53,5 @@ if ($_POST['username']) {
     }
 }
 
-echo "<hR>llego al gin<hr>"; 
-?> 	
+echo "<hR>llego al gin<hr>";
+?>

@@ -1,4 +1,7 @@
 <?php
+/**
+ * 
+ */
 $fp = fopen('admin/bd.php', 'w');
 $c = '<?php '; 
 $c .= ' $servidor = "'.$_GET['servidor'].'";';

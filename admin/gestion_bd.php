@@ -1,7 +1,12 @@
 <?php
 
-
-// para crear la tabla 
+/**
+ * 
+ * @global type $servidor
+ * @global type $bdatos
+ * @global type $usuario
+ * @global type $clave
+ */
 function gestion_bd_crear_tabla() {
     global $servidor, $bdatos, $usuario, $clave;
 // Create connection
@@ -24,9 +29,6 @@ function gestion_bd_crear_tabla() {
     $conn->close();
 }
 
-
-
-
 /**
  * Verifica si el nombre de un campo tiene 'id_' al inicio
  * @param type $nombre
@@ -36,7 +38,7 @@ function bdd_tiene_id_al_inicio($nombre) {
     // verifico si tiene 'id_' al inicio cualquier palabra
     $n = strtolower($nombre);
 
-   // if (strpos($nombre, 'i') == '0' && strpos($nombre, 'd') == '1' && strpos($nombre, '_') == '2') {
+    // if (strpos($nombre, 'i') == '0' && strpos($nombre, 'd') == '1' && strpos($nombre, '_') == '2') {
     if ($n[0] == 'i' && $n[1] == 'd' && $n[2] == '_') {
         return TRUE;
     } else {
@@ -62,13 +64,21 @@ function bdd_quita_id_inicio($nombre) {
     }
 }
 
-function bdd_quita_guiones($nombre) {     
+/**
+ * Quita los guiones bajos "_" de un texto 
+ * @param type $nombre
+ * @return type
+ */
+function bdd_quita_guiones($nombre) {
     return str_replace('_', " ", $nombre);
 }
-/*
- * 
- */
 
+/**
+ * Busca nombre de tabla igual o parecido al dado
+ * @param type $tabla Nombre de tabla que buscamos parecidos
+ * @param type $lista Lista de nombres disponibles
+ * @return type
+ */
 Function bdd_busca_tabla_con_nombre_igual_o_parecido($tabla, $lista) {
 
     $r = $lista[0];
@@ -90,10 +100,11 @@ Function bdd_busca_tabla_con_nombre_igual_o_parecido($tabla, $lista) {
 
     return $r;
 }
+
 /**
- * Busca un campo parecido o igual entre la lista que se le envia
- * @param type $campo
- * @param type $lista_campos
+ * Busca un campo igual o parecido entre la lista que se le envia
+ * @param type $campo Al que se busca parecido
+ * @param type $lista_campos Lista de campos para la comparación
  * @return type
  */
 Function bdd_campo_con_nombre_igual_o_parecido($campo, $lista_campos) {
@@ -118,45 +129,45 @@ Function bdd_campo_con_nombre_igual_o_parecido($campo, $lista_campos) {
     return $r;
 }
 
-function bdd_lista_tablas_bdd(){
+/**
+ * Lista de tablas de la base de datos
+ * @global type $dbh Conección
+ * @return string Array() devuelto con la lista de tablas
+ */
+function bdd_lista_tablas_bdd() {
     global $dbh;
     include "./modelos/lista_tablas.php";
-    
+
     //$l = array("contactos","reservas","casas","empresas");
-    
-    $l = array("Robinson","Coello");
-    
-    
+
+    $l = array("Robinson", "Coello");
+
+
     foreach ($resultado as $reg) {
         array_push($l, $reg[0]);
-        
     }
-    
+
     return $l;
-    
-    
 }
-function bdd_lista_campos_segun_tabla($tabla){
+/**
+ * Lista de campos de una tabla
+ * @global type $dbh Coneccion 
+ * @param type $tabla De donde se sacara la lista
+ * @return string Array() con la lista de campos de la $tabla
+ */
+function bdd_lista_campos_segun_tabla($tabla) {
     global $dbh;
     include "./modelos/columnas_de_tabla.php";
-    
+
     //$l = array("contactos","reservas","casas","empresas");
-    
-    $l = array("Robinson","Coello");
-    
-    
+
+    $l = array("Robinson", "Coello");
+
+
     foreach ($resultado as $reg) {
         array_push($l, $reg[0]);
-        
     }
-    
+
     return $l;
-    
-    
 }
-
-
 ?>
-
-
-

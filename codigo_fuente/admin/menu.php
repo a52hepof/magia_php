@@ -1,4 +1,8 @@
 <?php
+/**
+ * 
+ * @global type $conexion
+ */
 function _menu_top(){
     global $conexion;
     $sql = mysql_query(
@@ -27,6 +31,12 @@ function _menu_top(){
         </li>'; 
     }        
 }
+/**
+ * 
+ * @global type $conexion
+ * @param type $padre
+ * @param type $ubicacion
+ */
 function _menu_items_segun_padre_ubicacion($padre, $ubicacion){
     global $conexion;
     $sql = mysql_query(
@@ -43,8 +53,11 @@ function _menu_items_segun_padre_ubicacion($padre, $ubicacion){
     
     
 }
-
-//------------------------------------------------------
+/**
+ * 
+ * @global type $conexion
+ * @param type $p
+ */
 function _menu_sidebar($p){
     global $conexion;
     $sql = mysql_query(
@@ -66,7 +79,12 @@ function _menu_sidebar($p){
     }        
 }
 
-
+/**
+ * 
+ * @global type $conexion
+ * @param type $label
+ * @return type
+ */
 function _menu_icono_segun_pagina($label){
     global $conexion;
     $sql = mysql_query(

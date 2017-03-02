@@ -45,8 +45,4 @@ function paginacion($plugin, $controlador, $total_items, $pagina=0){
                 return $html;
     
 }
-
-
-
-
 ?>
