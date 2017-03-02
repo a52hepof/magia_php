@@ -3,13 +3,11 @@
 Magia PHP es un sistema que nos genera las páginas php y html necesarias para la gestión de la información que tengamos en una base de datos MYSQL, nos ayuda a crear los formularios necesarios para ver, crear, editar y borrar (VCED) facilmente los items de esa base de datos creando un sitio web que lo puedes usar en tu intranet o internet.
 
 [![Join the chat at https://gitter.im/robincoello/Magia_php](https://badges.gitter.im/robincoello/Magia_php.svg)](https://gitter.im/robincoello/Magia_php?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-* Sistem to help you in the form creation
-* Sistema para ayudar en la creación de formularios 
 
 Magia_php te ayuda a crear tu sitio web, pero no forma  parte de el, debes tener dos sitios uno magia_php y el otro la web que deseas crear
 
-1) http://localhost/magia_php/ 
-2) http://localhost/miweb
+* http://localhost/magia_php/ 
+* http://localhost/miweb
 
 ### Instalación de Magia_php
 Ve a la raíz de tu sitio web
