@@ -1,0 +1,50 @@
+incluir("funciones.lat")
+
+limpiar()
+escribir(_t("Bienvenido a la consola de Magia_php/lat"))
+escribir("*********************************************")
+definir_rutas()
+web = configurar_base_datos()
+
+escribir("Estamos listos para crear su sitio web")
+escribir("Procedemos [s/n]")
+r = leer()
+    
+    
+mientras (r != 's' || r != 'n') 
+    escribir("Procedemos ????? [s/n]")
+    
+    r = leer()
+    si(r=="") r = 'x' fin
+fin    
+
+
+
+
+
+
+si r == 's'
+    escribir('Listo su web ha sido creada con exito')
+    escribir('entre en http://localhost/' . web)
+    escribir("Login: root")
+    escribir("Clave: root")
+    escribir('Aplaste una tecla para continuar ...')
+sino
+    escribir('Instalacion no realizara')
+    escribir('Aplaste una tecla para continuar ...')
+fin
+
+leer()
+
+
+
+
+
+
+
+
+
+
+
+
+

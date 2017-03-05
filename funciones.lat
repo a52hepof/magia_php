@@ -1,0 +1,86 @@
+funcion _t(f)
+    retorno f
+fin
+
+
+
+funcion configurar_base_datos()     
+    escribir("2) Configurar la base de datos")
+    escribir("******************************")     
+    escribir("Ahora va a configurar la base de datos de la siguente manera: ")    
+    escribir("Servidor: ")
+    escribir("Base de datos: ")
+    escribir("Usuario: ")
+    escribir("clave: ")   
+    
+    escribir("Cual es el nombre del servidor? [localhost]: ")
+    s = leer()    
+    si(s=="") s = 'localhost' fin   
+    
+    
+    escribir("Cual es el nombre de la base de datos?: ")
+    b = leer()      
+    mientras (b == "") 
+        escribir("Cual es el nombre de la base de datos?: ")    
+        b =leer()
+    fin
+    
+    
+            
+    escribir("Cual es el usuario para la coneccion? [root]: ")
+    u = leer()    
+        si(u =="") u= 'root' fin
+    
+        
+    escribir("Cual es la clave de (".u.") [ ]: ")
+    c = leer()   
+        si(c == "") c = "" fin
+    
+    
+    
+fin
+//
+funcion definir_rutas()
+    escribir("1 Definir la ruta del sitio web")
+    escribir("Cual es la ruta donde se creara el sitio web?")   
+    escribir("Se parece a esto:")   
+    escribir("/var/www/html/[miweb]")
+    r = leer()
+    
+    mientras(!r)
+        escribir("Cual es la ruta donde se creara el sitio web?")  
+        escribir("Se parece a esto:")   
+        escribir("/var/www/html/[miweb]")
+        r = leer()
+    fin
+    retorno r
+    
+fin
+
+funcion copiar_base_datos()
+    menu()
+    escribir("2) Copiar en base datos tablas Magia_php")  
+    escribir("Vamos a copiar las tablas necesarias para que magia_php funcione")      
+    escribir("******************************")        
+fin
+
+funcion crear_proyecto()
+    menu()
+    escribir("4) Crear el proyecto")
+    escribir("******************************")        
+fin
+
+funcion crear_plugin()
+    menu()
+    escribir("-> 5) Crear el plugin")    
+    escribir("******************************")        
+fin
+
+funcion menu()
+    escribir("[1] Configurar la base de datos")
+    escribir("[1] Definir la ruta del sitio web")
+    escribir("[3] Copiar en base datos tablas Magia_php")
+    escribir("[4] Crear el proyecto")
+    escribir("[5] Crear el plugin")               
+    escribir("")               
+fin

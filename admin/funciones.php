@@ -1604,7 +1604,7 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
                     $var2 = "$nombrePlugin" . "_" . "$var1";
 
                     // si el campo tiene _id_ lo quito 
-                    $var2 = (strpos($var2, '_id_')) ? str_replace('_id', '', $var2) : $var2;  // eventos_sala    
+                   // $var2 = (strpos($var2, '_id_')) ? str_replace('_id', '', $var2) : $var2;  // eventos_sala    
 
                     $fuente .= ' <td>\'.$' . $var2 . '.\'</td> ' . "\n";
                 }
@@ -2124,7 +2124,7 @@ function contenido_reg($controlador, $nombrePlugin) {
                 $hay_id = strpos($campo, '_id_');
                 if ($hay_id) {
                     //$eventos_sala = salas_campo('nombre', $eventos_id_sala);   
-                    $fuente .= "  $$campo_sin_id = $posible_nombre('$var1_sin_id', $$campo);  \n";
+                   // $fuente .= "  $$campo_sin_id = $posible_nombre('$var1_sin_id', $$campo);  \n";
                 }
 
                 $i++;
