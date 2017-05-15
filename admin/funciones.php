@@ -1178,7 +1178,7 @@ function contenido_vista($vista, $nombrePlugin) {
                                 if($nombre == 'clave'){
                             //  $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
                               //$fuente .= campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "");
-                                $fuente .= campo_html_texto($nombre, $nombre, $nombre, $nombre, $contexto, '<?php echo genera_clave(); ?>', $extras = "");
+                                $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, '<?php echo genera_clave(); ?>', $extras = "");
                                 
                                 } else{
                                     $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
