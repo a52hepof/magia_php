@@ -61,7 +61,7 @@ function _menu_items_segun_padre_ubicacion($padre, $ubicacion){
 function _menu_sidebar($p){
     global $conexion;
     $sql = mysql_query(
-            "SELECT distinct(padre), label, url, icono  FROM _menu WHERE ubicacion = 'sidebar' ORDER BY orden ", $conexion) or die("Error:" . mysql_error());
+            "SELECT distinct(padre), label, url, icono, orden  FROM _menu WHERE ubicacion = 'sidebar' ORDER BY orden ", $conexion) or die("Error:" . mysql_error());
         
     while ($reg = mysql_fetch_array($sql)) {
         

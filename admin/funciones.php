@@ -651,9 +651,8 @@ function contenido_controlador($controlador, $nombrePlugin) {
              * 
              */
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/crear.php";  ' . "\n";
-
-            $fuente .= ' include "./' . $nombrePlugin . '/modelos/index.php";  ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/vista/index.php";  ' . "\n";
+        //    $fuente .= ' include "./' . $nombrePlugin . '/modelos/index.php";  ' . "\n";
+        //    $fuente .= ' include "./' . $nombrePlugin . '/vista/index.php";  ' . "\n";
             $fuente .= ' }else{ ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/vista/crear.php";  ' . "\n";
             $fuente .= ' }          ' . "\n";
@@ -1172,13 +1171,23 @@ function contenido_vista($vista, $nombrePlugin) {
                         case 'numerico':
 
                             if (bdd_tiene_id_al_inicio($nombre)) {
-
                                 //  $tabla = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre, );
-
                                 $fuente .= campo_html_opciones($var2, $var2, $reg[0], $nombrePlugin, $extras);
                             } else {
-                                $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
+                                
+                                if($nombre == 'clave'){
+                            //  $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
+                              //$fuente .= campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "");
+                                $fuente .= campo_html_texto($nombre, $nombre, $nombre, $nombre, $contexto, '<?php echo genera_clave(); ?>', $extras = "");
+                                
+                                } else{
+                                    $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
+                            
+                                }
                             }
+                            
+                            
+                                                        
 
                             break;
                         case 'fecha':
@@ -2961,7 +2970,7 @@ function contenido_config($pagina) {
 function contenido_gestion($pagina) {
     switch ($pagina) {
         case 'estilo.css':
-            $fuente = '/** magia_version: ' . magia_version() . '*/ ' . "\n";
+            $fuente = '';
 
             $fuente .= '/*-------------------------
     Simple reset
@@ -3380,7 +3389,7 @@ body {
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
-            $fuente .= ' **/ ' . "\n";
+            $fuente .= ' **/ ?> ' . "\n";
             $fuente .= '
 <!-- Carousel 
 ================================================== -->

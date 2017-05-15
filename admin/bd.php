@@ -1,8 +1,1 @@
-<?php
-/**
- * Configuracion de la base de datos
- */
-$servidor = "localhost";
-$bdatos = "magia_blog";
-$usuario = "root";
-$clave = "root";
+<?php  $servidor = "localhost"; $bdatos = "audio"; $usuario = "root"; $clave = "root";

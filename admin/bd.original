@@ -3,6 +3,6 @@
  * Modelo de bd.php
  */
 $servidor = "localhost"; 
-$bdatos = "mibasedatos"; 
+$bdatos = "goffinet"; 
 $usuario = "root"; 
-$clave = "micalve"; 
+$clave = "root"; 
