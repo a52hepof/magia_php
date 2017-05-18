@@ -1,1 +1,0 @@
-<?php  $servidor = "localhost"; $bdatos = "audio"; $usuario = "root"; $clave = "root";

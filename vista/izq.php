@@ -1,3 +1,0 @@
-<hr>
-Menu inicial
-<hr>

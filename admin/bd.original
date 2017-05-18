@@ -1,8 +1,0 @@
-<?php  
-/**
- * Modelo de bd.php
- */
-$servidor = "localhost"; 
-$bdatos = "goffinet"; 
-$usuario = "root"; 
-$clave = "root"; 
