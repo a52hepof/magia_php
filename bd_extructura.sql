@@ -89,7 +89,7 @@ CREATE TABLE `_menu` (
   `label` varchar(50) COLLATE utf8_bin NOT NULL,
   `url` varchar(50) COLLATE utf8_bin NOT NULL,
   `icono` varchar(50) COLLATE utf8_bin NOT NULL,
-  `orden` int(11) NOT NULL
+    `orden` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------

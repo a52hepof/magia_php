@@ -35,6 +35,8 @@
         die("Olvido el nombre del menu");
     }
 
+    
+    
     if (file_exists($path_plugins . '/' . $nombrePlugin)) {
         echo "El plugin <b>$path_plugins/$nombrePlugin</b>  YA existe";
         muestra_errores(__FiLE__, __FUNCTION__, __LINE__);

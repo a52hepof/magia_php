@@ -2,7 +2,7 @@
 $cf = [
     [
         'nombre' => 'id',
-        'tipo' => 'info',
+        'tipo' => 'texto',
         'valor' => '20',
         'opciones' => ''
     ],
@@ -54,6 +54,7 @@ $cf = [
 
 <?php
 $nombre_campo = $_REQUEST['campo'];
+
 $valor_del_campo = "robincoello@hotmail.com";
 $placeholder = "Escriba aca la clave";
 $opciones = ['Opcion 1 ', 'Opcion 2', 'Opcion 3']

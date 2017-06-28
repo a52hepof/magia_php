@@ -357,7 +357,9 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
 
     if ($nombrePlugin) {
 
-        echo "<h3>1020 Dentro de plugin crear: <br>$path_plugins</h3>";
+      //  echo "<h3>1020 Dentro de plugin crear: <br>$path_plugins</h3>";
+        echo "<h3>Plugin: <br>$nombrePlugin</h3>";
+        echo "<h3>Ruta: <br>$path_plugins</h3>";
 
 
         $mvc = ['controlador', 'modelos', 'scripts', 'reg', 'vista', 'raiz'];
@@ -373,18 +375,43 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
 // tambien registro el item en el menu    
         registra_item_al_menu($nombrePlugin, $ubicacion, $padre, $label);
 
+        
+        
+        
+        
+        
 // ahora registro el permiso del root en 1111
         registrar_permiso_pagina_grupo('root', "$nombrePlugin", '1111');
         registrar_permiso_pagina_grupo('administradores', "$nombrePlugin", '1110');
         registrar_permiso_pagina_grupo('invitados', "$nombrePlugin", '1000');
         registrar_permiso_pagina_grupo('usuarios', "$nombrePlugin", '1110');
+        
+        /*
+        //registrar_extructura_magia($vceb, $tabla, $campo, $tipo, $tabla_campo_relacionado, $opciones, $label, $nombre, $identidicador, $marca_agua, $valor, $clase, $obligatorio, $solo_lectura, $desactivado, $activo)
+        registrar_extructura_magia(
+                'ver', 
+                $nombrePlugin, 
+                $campo, 
+                $tipo, 
+                $tabla_campo_relacionado, 
+                $opciones, 
+                $label, 
+                $nombre, $identidicador, $marca_agua, 
+                $valor, $clase, $obligatorio, $solo_lectura, 
+                $desactivado, 
+                1);
+        */
+        
+        
+        
+        
 
         // registro el permiso de invitados, 
         // ahora hago una repeticion creando a cada vuelta las carpetas dentro del plugin
         $i = 0; // pongo 1 para no crear elfichero raiz
         while ($i < $t) {
             if ($mvc[$i] != 'raiz') { // la ultima no la creo (raiz)
-                crear_carpeta("$path_plugins/$nombrePlugin", $mvc[$i]);
+                crear_carpeta("$path_plugins/$nombrePlugin",$mvc[$i]);
                 crear_carpeta("$path_plugins/$nombrePlugin/$mvc[$i]", 'publico');
             }
             // dentro de cada carpeta creo los ficheros que cada carpeta debe contenir
@@ -1428,7 +1455,7 @@ function contenido_vista($vista, $nombrePlugin) {
 
 <?php  
 //echo paginacion($p, $c, isset($_REQUEST[\'pag\'])); 
-echo paginacion($p, $c, $total_items, isset($_REQUEST[\'pag\']));
+echo paginacion($p, $c, $total_items, $pag);
 ?>
     
 
@@ -3863,17 +3890,45 @@ function registrar_permiso_pagina_grupo($grupo, $pagina, $permiso) {
             )
     );
 }
+function registrar_extructura_magia($vceb  ,  $tabla  ,  $campo  ,  $tipo  ,  $tabla_campo_relacionado  ,  $opciones  ,  $label  ,  $nombre  ,  $identidicador  ,  $marca_agua  ,  $valor  ,  $clase  ,  $obligatorio  ,  $solo_lectura  ,  $desactivado  ,  $activo) {
+    global $dbh;
+        $sql = "INSERT INTO _magia ( 
+        vceb  ,  tabla  ,  campo  ,  tipo  ,  tabla_campo_relacionado  ,  opciones  ,  label  ,  nombre  ,  identidicador  ,  marca_agua  ,  valor  ,  clase  ,  obligatorio  ,  solo_lectura  ,  desactivado  ,  activo  ) VALUES ( 
+        :vceb  ,  :tabla  ,  :campo  ,  :tipo  ,  :tabla_campo_relacionado  ,  :opciones  ,  :label  ,  :nombre  ,  :identidicador  ,  :marca_agua  ,  :valor  ,  :clase  ,  :obligatorio  ,  :solo_lectura  ,  :desactivado  ,  :activo    )";  
+        $stmt = $dbh->prepare($sql); 
+        $stmt->execute(array( 
+        ":vceb"=>"$_magia_vceb"  ,  
+            ":tabla"=>"$_magia_tabla"  ,  
+            ":campo"=>"$_magia_campo"  ,  
+            ":tipo"=>"$_magia_tipo"  ,  
+            ":tabla_campo_relacionado"=>"$_magia_tabla_campo_relacionado"  ,  
+            ":opciones"=>"$_magia_opciones"  ,  
+            ":label"=>"$_magia_label"  ,  
+            ":nombre"=>"$_magia_nombre"  ,  
+            ":identidicador"=>"$_magia_identidicador"  ,  
+            ":marca_agua"=>"$_magia_marca_agua"  ,  
+            ":valor"=>"$_magia_valor"  ,  
+            ":clase"=>"$_magia_clase"  ,  
+            ":obligatorio"=>"$_magia_obligatorio"  ,  
+            ":solo_lectura"=>"$_magia_solo_lectura"  ,  
+            ":desactivado"=>"$_magia_desactivado"  ,  
+            ":activo"=>"$_magia_activo"              ) 
+        ); 
+}
 
 function registra_item_al_menu($plugin, $ubicacion, $padre, $label) {
     global $dbh;
-
-    $sql = "INSERT INTO _menu (ubicacion, padre,label,url,orden) VALUES (:ubicacion, :padre,:label,:url,:orden)";
+    echo "<p>$plugin $ubicacion $padre $label</p>";
+    echo "<hr>";
+    $sql = "INSERT INTO _menu (id,ubicacion, padre,label,url,icono,orden) VALUES (:id, :ubicacion, :padre,:label,:url,:icono,:orden)";
     $stmt = $dbh->prepare($sql);
     $stmt->execute(array(
+        ":id" => null,
         ":ubicacion" => "$ubicacion",
         ":padre" => "$padre",
         ":label" => "$label",
         ":url" => "?p=$plugin&c=index",
+        ":icono" => "folder",
         ":orden" => 0
             )
     );

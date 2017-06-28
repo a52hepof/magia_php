@@ -49,3 +49,13 @@
 
     <button type="submit" class="btn btn-default">Config Menu</button>
 </form>
+
+<ul>
+    <li><a href="?p=config&tabla=_contenido">config</a></li>
+    <li><a href="?p=columnas_de_tabla&tabla=_contenido">columnas_de_tabla</a></li>
+    <li><a href="?p=demo">demo</a></li>
+    <li><a href="?p=detalles_tabla&tabla=_contenido">detalles_tabla</a></li>
+    <li><a href="?p=maqueta&tabla=_contenido">maqueta</a></li>
+    <li><a href="?p=maqueta_izq&tabla=_contenido">maqueta_izq</a></li>
+    
+</ul>

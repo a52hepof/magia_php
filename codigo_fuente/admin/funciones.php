@@ -1,17 +1,19 @@
 <?php
+
 /**
  * Nos da la versión actual de Magia_PHP
  * @return string Valor de 3 numeros separados por puntos ejemplo: 0.8.1
  * @example path description
  * <pre><code>
- function magia_version(){
-    return "0.0.8";
-}
+  function magia_version(){
+  return "0.0.8";
+  }
  * </code></pre>
  */
-function magia_version(){
+function magia_version() {
     return "0.0.8";
 }
+
 /**
  * Nos da el valor segun $tabla, $id, $campo
  * @global type $conexion
@@ -27,6 +29,7 @@ function _campo($tabla, $id, $campo) {
     $reg = mysql_fetch_array($sql);
     return $reg[$campo];
 }
+
 /**
  * Incluye las funciones creadas para cada tabla
  */
@@ -34,11 +37,12 @@ function _incluir_funciones() {
     $ruta = "../extenciones/funciones/";
     $directorio = scandir($ruta); //ruta actual
     $i = 2; // empiezo en el segundo fichero  
-    while ($i < count($directorio)){
-            include ($ruta.$directorio[$i]);
-        $i++; 
-    }                   
-}       
+    while ($i < count($directorio)) {
+        include ($ruta . $directorio[$i]);
+        $i++;
+    }
+}
+
 /**
  * 
  * @param type $ruta
@@ -71,6 +75,7 @@ function _listar_directorios_ruta($ruta = "./") {
     }
     return $c;
 }
+
 /**
  * Entrega una lista de ficheros que tiene una capeta
  * @param type $ruta de la carpeta
@@ -78,18 +83,19 @@ function _listar_directorios_ruta($ruta = "./") {
  */
 function _listar_ficheros_de_carpeta($ruta = '.') {
     $directorio = opendir($ruta); //ruta actual
-    
-    $ficheros = [] ;
-    
+
+    $ficheros = [];
+
     while ($archivo = readdir($directorio)) { //obtenemos un archivo y luego otro sucesivamente
         if (is_dir($archivo)) {//verificamos si es o no un directorio
             //echo "[" . $archivo . "]<br />"; //de ser un directorio lo envolvemos entre corchetes            
-            $r = array_push($ficheros, $archivo);            
-        } 
+            $r = array_push($ficheros, $archivo);
+        }
     }
-    
+
     return $r;
 }
+
 /**
  * Genera el menu para el sistema
  * @param type $selecionado
@@ -113,6 +119,7 @@ function _magia_menu($selecionado) {
         $i++;
     }
 }
+
 /**
  * Estatus Activo / Bloquado
  * @param type $estatus
@@ -126,24 +133,36 @@ function _estatus($estatus) {
     }
 }
 
-function genera_clave(){
+function genera_clave() {
     //Se define una cadena de caractares. Te recomiendo que uses esta.
     $cadena = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
     //Obtenemos la longitud de la cadena de caracteres
-    $longitudCadena=strlen($cadena);
-     
+    $longitudCadena = strlen($cadena);
+
     //Se define la variable que va a contener la contraseña
     $pass = "";
     //Se define la longitud de la contraseña, en mi caso 10, pero puedes poner la longitud que quieras
-    $longitudPass=10;
-     
+    $longitudPass = 10;
+
     //Creamos la contraseña
-    for($i=1 ; $i<=$longitudPass ; $i++){
+    for ($i = 1; $i <= $longitudPass; $i++) {
         //Definimos numero aleatorio entre 0 y la longitud de la cadena de caracteres-1
-        $pos=rand(0,$longitudCadena-1);
-     
+        $pos = rand(0, $longitudCadena - 1);
+
         //Vamos formando la contraseña en cada iteraccion del bucle, añadiendo a la cadena $pass la letra correspondiente a la posicion $pos en la cadena de caracteres definida.
-        $pass .= substr($cadena,$pos,1);
+        $pass .= substr($cadena, $pos, 1);
     }
     return $pass;
+}
+
+/**
+ * Regresa la clave codificada
+ */
+function codifica_clave($clave) {
+    //http://php.net/manual/es/function.password-hash.php
+    $opciones = [
+        'cost' => 12,
+    ];
+
+    return password_hash($clave, PASSWORD_BCRYPT, $opciones);
 }

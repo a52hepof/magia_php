@@ -66,20 +66,16 @@ $p = (isset($_GET['p'])) ? "$_GET[p]" : "plugins_lista";
 
 
 
-
-
-
 <h2>Contenido de tu base de datos [<?php echo "$bdatos"; ?>]
     <a href="index.php?p=plugins_lista" title="Update">
         <span class="glyphicon glyphicon-refresh"></span>
     </a>
 </h2>
 
-<p>Configuracion del menu</p>
 
 
 
-
+<hr>
 
 
 
@@ -95,6 +91,7 @@ $p = (isset($_GET['p'])) ? "$_GET[p]" : "plugins_lista";
                 <th> Accion</th>
             </tr>
         </thead>
+        
         <tbody>
             <?php
             $i = 1;
@@ -105,7 +102,7 @@ $p = (isset($_GET['p'])) ? "$_GET[p]" : "plugins_lista";
                 if (
                         file_exists($path_plugins . '/' . $reg[0])
                 ) {
-                    echo '<form method="get" action=""> <tr>        
+                    echo '<tr>        
                         <td>' . $i . '</td>
                         <td><b>' . $reg[0] . '</b><br>' . $path_plugins . '/' . $reg[0] . '</td>
                         <td>.</td>
@@ -115,21 +112,19 @@ $p = (isset($_GET['p'])) ? "$_GET[p]" : "plugins_lista";
                     </tr>';
                 } else {
                     echo '<tr>        
-                            <td>' . $i . '</td>                            
+                          
+             
+<td>' . $i . '</td>                            
                             <td><b>' . $reg[0] . '</b><br>' . $path_plugins . '/' . $reg[0] . '</td>
                             
                             <td></td>
                             <td></td>
-                            <td>
-                            
-                            
+                            <td></td>
 
-
-                            </td>
-
-<td>                                       
-                                <a href="index.php?p=plugins_crear&nombrePlugin=' . $reg[0] . '&ubicacion=' . $ubicacion . '&padre=' . $padre . '&label=' . $reg[0] . '">Crear plugin</a></td>
-                        </tr></form>';
+<td>
+<a href="index.php?p=plugins_crear&nombrePlugin=' . $reg[0] . '&ubicacion=' . $ubicacion . '&padre=' . $padre . '&label=' . $reg[0] . '">Crear plugin</a>
+    </td>
+                        </tr>';
                 }
                 $i++;
             }
@@ -138,9 +133,8 @@ $p = (isset($_GET['p'])) ? "$_GET[p]" : "plugins_lista";
     </table>
 </div>
 
-<form method="get" action="">
-    <input name="ok" type="submit">
-</form>
+
+
 
 <?php
 /*
