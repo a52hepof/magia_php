@@ -22,6 +22,8 @@ $aqui_pagina = "";
 
 $p = (isset($_REQUEST['p'])) ? $_REQUEST['p'] : "home";
 $c = (isset($_REQUEST['c'])) ? $_REQUEST['c'] : "index";
+// para las paginaciones de todas las paginas
+$pag = (isset($_REQUEST['pag'])) ? $_REQUEST['pag'] : 0;
 ?>
 
 <!DOCTYPE html>

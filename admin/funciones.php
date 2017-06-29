@@ -623,25 +623,9 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' $accion = "buscar"; ' . "\n";
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina, $_usuarios_grupo)) { ' . "\n";
-
-            /*
-
-              $i = 0;
-              $usar_id = 0; // 0 no usa, -1 si usa
-              foreach ($resultados as $reg) {
-              if ($i > $usar_id) {
-              $var1 = $reg[0];
-              $var2 = "$nombrePlugin" . "_" . "$var1";
-              $fuente .= ' $' . $var2 . ' = mysql_real_escape_string($_REQUEST[\'' . $var2 . '\']);' . "\n";
-              $fuente .= ($i < $total_resultados - 1) ? " " : "";
-              }
-              $i++;
-              }
-             */
-
-
+            $fuente .= '       $inicia = (isset($_REQUEST[\'pag\']) && $_REQUEST[\'pag\'] != 0 ) ? $_REQUEST[\'pag\'] * $cfg_limite_items_en_tablas : 0;  ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/buscar.php"; ' . "\n";
-            $fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
+            //$fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/vista/buscar.php"; ' . "\n";
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina,$_usuarios_usuario); ' . "\n";
@@ -671,6 +655,29 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
+            $fuente .= '
+            if($debug_mode){
+                echo "<h3>Debug mode (".__FILE__." )</h3>";
+
+                $variables = array(
+                    "\$accion"=>"$accion",
+                    "\$pagina"=>"$pagina",
+                    "\$_usuarios_grupo"=>"$_usuarios_grupo",
+                    "permisos_tiene_permiso(\$accion, \$pagina, \$_usuarios_grupo)"=>permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo),
+                    "\$_REQUEST[\'a\']"=>"$_REQUEST[a]",
+                    "\$_REQUEST[\'a\']"=>"$_REQUEST[a]"        
+                );
+                echo "<table border>";
+                echo "<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>";
+                foreach ($variables as $key => $value) {
+                    echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
+                }
+                echo "</table>";
+            }';
+
+
+
+
 
 
             return $fuente;
@@ -704,6 +711,31 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' } else { ' . "\n";
             $fuente .= ' permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
+            
+            
+            
+            $fuente .= '
+            if($debug_mode){
+                echo "<h3>Debug mode (".__FILE__." )</h3>";
+
+                $variables = array(
+                    "\$accion"=>"$accion",
+                    "\$pagina"=>"$pagina",
+                    "\$_usuarios_grupo"=>"$_usuarios_grupo",
+                    "permisos_tiene_permiso(\$accion, \$pagina, \$_usuarios_grupo)"=>permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo),
+                    "\$_REQUEST[\'a\']"=>"$_REQUEST[a]",
+                    "\$_REQUEST[\'a\']"=>"$_REQUEST[a]",       
+                    "$'.$nombrePlugin.'_id"=>"$'.$nombrePlugin.'_id"        
+                );
+                echo "<table border>";
+                echo "<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>";
+                foreach ($variables as $key => $value) {
+                    echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
+                }
+                echo "</table>";
+            }';
+
+            
 
             return $fuente;
 
@@ -725,7 +757,38 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
+            
+            
+            
+            
+            $fuente .= '
+            if($debug_mode){
+                echo "<h3>Debug mode (".__FILE__." )</h3>";
+
+                $variables = array(
+                    "\$accion"=>"$accion",
+                    "\$pagina"=>"$pagina",
+                    "\$_usuarios_grupo"=>"$_usuarios_grupo",
+                    "permisos_tiene_permiso(\$accion, \$pagina, \$_usuarios_grupo)"=>permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo),
+                    "\$cfg_limite_items_en_tablas"=>"$cfg_limite_items_en_tablas",
+                    "\$inicia"=>"$inicia",
+                    "\$_REQUEST[\'pag\']"=>"$_REQUEST[pag]",
+                    "\$_REQUEST[\'a\']"=>"$_REQUEST[a]"
+                       
+                );
+                echo "<table border>";
+                echo "<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>";
+                foreach ($variables as $key => $value) {
+                    echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
+                }
+                echo "</table>";
+            }';
+            
+            
+            
+            
             return $fuente;
+            
         case 'data.php':
             $fuente = ' <?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
@@ -745,6 +808,32 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
+            
+            $fuente .= '
+            if($debug_mode){
+                echo "<h3>Debug mode (".__FILE__." )</h3>";
+
+                $variables = array(
+                    "\$accion"=>"$accion",
+                    "\$pagina"=>"$pagina",
+                    "\$_usuarios_grupo"=>"$_usuarios_grupo",
+                    "permisos_tiene_permiso(\$accion, \$pagina, \$_usuarios_grupo)"=>permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo),
+                    "\$'.$nombrePlugin.'_id"=>"$'.$nombrePlugin.'_id",
+                    "\$inicia"=>"$inicia"
+                    
+                    
+                       
+                );
+                echo "<table border>";
+                echo "<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>";
+                foreach ($variables as $key => $value) {
+                    echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
+                }
+                echo "</table>";
+            }';            
+            
+            
+            
             return $fuente;
             break;
         case 'var.php':
@@ -770,6 +859,28 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
+            
+            
+            $fuente .= '
+            if($debug_mode){
+                echo "<h3>Debug mode (".__FILE__." )</h3>";
+
+                $variables = array(
+                    "\$accion"=>"$accion",
+                    "\$pagina"=>"$pagina",
+                    "\$_usuarios_grupo"=>"$_usuarios_grupo",
+                    "permisos_tiene_permiso(\$accion, \$pagina, \$_usuarios_grupo)"=>permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo)
+                       
+                );
+                echo "<table border>";
+                echo "<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>";
+                foreach ($variables as $key => $value) {
+                    echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
+                }
+                echo "</table>";
+            }';    
+
+            
             return $fuente;
             break;
         
@@ -780,19 +891,39 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/ ' . "\n";
             $fuente .= ' $accion = "ver"; ' . "\n";
-            $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
-            //     $fuente .= ' include \'header.php\';  '."\n";
-            //     $fuente .= ' include "./'.$nombrePlugin.'/funciones.php"; '."\n";
+            $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";            
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";
-
             $fuente .= '     $' . $nombrePlugin . '_id 		= mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);   ' . "\n";
-
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/vista/ver.php"; ' . "\n";
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
+            
+            
+            $fuente .= '
+            if($debug_mode){
+                echo "<h3>Debug mode (".__FILE__." )</h3>";
+
+                $variables = array(
+                    "\$accion"=>"$accion",
+                    "\$pagina"=>"$pagina",
+                    "\$_usuarios_grupo"=>"$_usuarios_grupo",
+                    "permisos_tiene_permiso(\$accion, \$pagina, \$_usuarios_grupo)"=>permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo),
+                    "\$'.$nombrePlugin.'_id"=>"$'.$nombrePlugin.'_id"                                           
+                );
+                echo "<table border>";
+                echo "<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>";
+                foreach ($variables as $key => $value) {
+                    echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
+                }
+                echo "</table>";
+            }';    
+
+
+
+            
             return $fuente;
             break;        
         case 'txt.php':
@@ -889,7 +1020,30 @@ function contenido_modelos($modelos, $nombrePlugin) {
 
             $fuente .= ' ORDER BY id DESC    ' . "\n";
             $fuente .= ' ",$conexion) or die ("Error:".mysql_error());  ' . "\n";
-            //$fuente .=  ' $reg = mysql_fetch_array($sql);	  '."\n";          
+            
+            
+            
+            $fuente .= '
+
+            if($debug_mode){
+                echo "<h3>Debug mode (".__FILE__." )</h3>";
+
+                $variables = array(
+                    "\$sql"=>"$sql"
+                );
+
+                echo "<table border>";
+                echo "<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>";       
+                foreach ($variables as $key => $value) {
+                    echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
+                }    
+                echo "</table>";
+
+            }';
+
+
+
+            
             return $fuente;
             break;
 
@@ -939,7 +1093,34 @@ function contenido_modelos($modelos, $nombrePlugin) {
             }
             $fuente .= '             ) ' . "\n";
             $fuente .= ' ); ' . "\n";
-            $fuente .= ' $mensaje = "Realizado con exito"; ' . "\n";
+            
+            
+$fuente .= '
+
+if($debug_mode){
+    echo "<h3>Debug mode (".__FILE__." )</h3>";
+    
+    $variables = array(
+        "\$sql"=>"$sql"
+    );
+        
+    echo "<table border>";
+    echo "<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>";       
+    foreach ($variables as $key => $value) {
+        echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
+    }    
+    echo "</table>";
+
+}';
+            
+            
+            
+            
+            
+            
+            
+            
+            
             return $fuente;
             break;
 
@@ -962,6 +1143,40 @@ function contenido_modelos($modelos, $nombrePlugin) {
                 $i++;
             }
             $fuente .= ' WHERE id = \'$' . $nombrePlugin . '_id\' ",$conexion) or die ("Error: ".mysql_error());   ' . "\n";
+           
+            
+            $fuente .= '
+
+            if($debug_mode){
+                echo "<h3>Debug mode (".__FILE__." )</h3>";
+
+                $variables = array(
+                    "\$sql"=>"$sql",
+                    "\$'.$nombrePlugin.'_id"=>"$'.$nombrePlugin.'_id"
+                );
+
+                echo "<table border>";
+                echo "<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>";       
+                foreach ($variables as $key => $value) {
+                    echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
+                }    
+                echo "</table>";
+
+            }';
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             return $fuente;
             break;
 
@@ -976,7 +1191,26 @@ function contenido_modelos($modelos, $nombrePlugin) {
             $fuente .= '// esto es para la paginacion	  ' . "\n";
             $fuente .= '$total_items = mysql_num_rows(mysql_query("$comando ",$conexion));	  ' . "\n";
 
+            $fuente .= '
 
+            if($debug_mode){
+                echo "<h3>Debug mode (".__FILE__." )</h3>";
+
+                $variables = array(
+                    "\$sql"=>"$sql",
+                    "\$comando"=>"$comando",
+                    "\$total_items"=>"$total_items"
+                    
+                );
+
+                echo "<table border>";
+                echo "<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>";       
+                foreach ($variables as $key => $value) {
+                    echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
+                }    
+                echo "</table>";
+
+            }';
 
             return $fuente;
             break;
@@ -990,6 +1224,29 @@ function contenido_modelos($modelos, $nombrePlugin) {
             $fuente .= ' "SELECT * FROM ' . $nombrePlugin . ' WHERE id = \'$' . $nombrePlugin . '_id\' ORDER BY id DESC   ",$conexion) 	  ' . "\n";
             $fuente .= ' or die ("Error: en el fichero:" .__FILE__ .\' linea: \'. __LINE__ .\' / \'.mysql_error());	' . "\n";
             $fuente .= ' $' . $nombrePlugin . ' = mysql_fetch_array($sql);	  ' . "\n";
+            
+            $fuente .= '
+
+            if($debug_mode){
+                echo "<h3>Debug mode (".__FILE__." )</h3>";
+
+                $variables = array(
+                    "\$sql"=>"$sql",
+                    "\$'.$nombrePlugin.'_id"=>"$'.$nombrePlugin.'_id"
+                    
+                    
+                );
+
+                echo "<table border>";
+                echo "<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>";       
+                foreach ($variables as $key => $value) {
+                    echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
+                }    
+                echo "</table>";
+
+            }';
+
+            
             return $fuente;
             break;
 
@@ -1005,6 +1262,28 @@ function contenido_modelos($modelos, $nombrePlugin) {
             $fuente .= ' "SELECT * FROM ' . $nombrePlugin . ' WHERE id = \'$' . $nombrePlugin . '_id\' ORDER BY id DESC   ",$conexion) 	  ' . "\n";
             $fuente .= ' or die ("Error: en el fichero:" .__FILE__ .\' linea: \'. __LINE__ .\' / \'.mysql_error());	' . "\n";
             $fuente .= ' $' . $nombrePlugin . ' = mysql_fetch_array($sql);	  ' . "\n";
+
+            $fuente .= '
+
+            if($debug_mode){
+                echo "<h3>Debug mode (".__FILE__." )</h3>";
+
+                $variables = array(
+                    "\$sql"=>"$sql",
+                    "\$'.$nombrePlugin.'_id"=>"$'.$nombrePlugin.'_id"
+                    
+                    
+                );
+
+                echo "<table border>";
+                echo "<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>";       
+                foreach ($variables as $key => $value) {
+                    echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
+                }    
+                echo "</table>";
+
+            }';            
+            
             return $fuente;
             break;
 
@@ -1455,7 +1734,7 @@ function contenido_vista($vista, $nombrePlugin) {
 
 <?php  
 //echo paginacion($p, $c, isset($_REQUEST[\'pag\'])); 
-echo paginacion($p, $c, $total_items, $pag);
+echo paginacion_master($p, $c, $total_items, $pag);
 ?>
     
 
@@ -2150,8 +2429,8 @@ function contenido_reg($controlador, $nombrePlugin) {
                 $var2 = "$nombrePlugin" . "_" . "$var1";
                 // con esto verifico si deseo usar el id de la tabla o no
                 if ($usar_id && $i != '0') {
-
-                    $fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_GET[\'' . $var2 . '\']); ' . "\n";
+                    $fuente .= '    $'.$var2.' = ($_GET[\''.$var2.'\'])?mysql_real_escape_string($_GET[\''.$var2.'\']):null;   ' . "\n";
+                    //$fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_GET[\'' . $var2 . '\']); ' . "\n";
                 } else {
                     $fuente .= '  //$' . $var2 . ' = mysql_real_escape_string($_GET[\'' . $var2 . '\']); ' . "\n";
                 }
@@ -2159,6 +2438,19 @@ function contenido_reg($controlador, $nombrePlugin) {
 
                 $i++;
             }
+            
+            $fuente .= '
+                if ($debug_mode) {
+                    echo "<h3>Debug mode (" . __FILE__ . " )</h3>";    
+                    echo "<table border>";
+                    echo "<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>";
+                    foreach ($_POST as $key => $value) {
+                        echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
+                    }
+                    echo "</table>";
+                }';
+
+            
             return $fuente;
             break;
         case 'post.php':
@@ -2174,8 +2466,10 @@ function contenido_reg($controlador, $nombrePlugin) {
                 $var2 = "$nombrePlugin" . "_" . "$var1";
                 // con esto verifico si deseo usar el id de la tabla o no
                 if ($usar_id && $i != '0') {
-
-                    $fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_POST[\'' . $var2 . '\']); ' . "\n";
+                    
+                    $fuente .= '    $'.$var2.' = ($_POST[\''.$var2.'\'])?mysql_real_escape_string($_POST[\''.$var2.'\']):null;   ' . "\n";
+                    
+//                    $fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_POST[\'' . $var2 . '\']); ' . "\n";
                 } else {
                     $fuente .= '  //$' . $var2 . ' = mysql_real_escape_string($_POST[\'' . $var2 . '\']); ' . "\n";
                 }
@@ -2183,6 +2477,20 @@ function contenido_reg($controlador, $nombrePlugin) {
 
                 $i++;
             }
+            
+            $fuente .= '
+                if ($debug_mode) {
+                    echo "<h3>Debug mode (" . __FILE__ . " )</h3>";    
+                    echo "<table border>";
+                    echo "<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>";
+                    foreach ($_GET as $key => $value) {
+                        echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
+                    }
+                    echo "</table>";
+                }'; 
+            
+            
+            
             return $fuente;
             break;
         case 'reg.php':
@@ -2261,9 +2569,24 @@ function contenido_reg($controlador, $nombrePlugin) {
             foreach ($resultados as $reg) {
                 $var1 = $reg[0];
                 $var2 = "$nombrePlugin" . "_" . "$var1";
-                $fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_REQUEST[\'' . $var2 . '\']); ' . "\n";
+                
+                 $fuente .= '    $'.$var2.' = ($_REQUEST[\''.$var2.'\'])?mysql_real_escape_string($_REQUEST[\''.$var2.'\']):null;   ' . "\n";
+                
+                
+                //$fuente .= '  $' . $var2 . ' = mysql_real_escape_string($_REQUEST[\'' . $var2 . '\']); ' . "\n";
                 $i++;
             }
+            $fuente .= '
+                if ($debug_mode) {
+                    echo "<h3>Debug mode (" . __FILE__ . " )</h3>";    
+                    echo "<table border>";
+                    echo "<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>";
+                    foreach ($_REQUEST as $key => $value) {
+                        echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
+                    }
+                    echo "</table>";
+                }'; 
+            
             return $fuente;
             break;
 
