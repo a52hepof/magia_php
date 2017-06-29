@@ -374,6 +374,8 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
 
 // tambien registro el item en el menu    
         registra_item_al_menu($nombrePlugin, $ubicacion, $padre, $label);
+// registro los campos visibles
+        registra_campos_visibles($nombrePlugin,'linea 377');
 
         
         
@@ -1683,32 +1685,42 @@ function contenido_vista($vista, $nombrePlugin) {
             $fuente .= '</h2>' . "\n";
 
             $fuente .= '
-<table class="table table-striped">
-    <thead>
+<table class="table table-striped">';
+            /*
+    $fuentexxxxxx = '<thead>
         <tr> 
         <th>#</th>' . "\n\n";
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                    $fuente .= ' <th><?php echo _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '"); ?></th> ' . "\n";
+                    $fuentexxxxxx .= ' <th><?php echo _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '"); ?></th> ' . "\n";
                 }
                 $i++;
             }
-            $fuente .= ' <th><?php echo _t("Accion"); ?></th> ' . "\n";
-            $fuente .= ' </tr>
-    </thead>
-    <tbody>
+            $fuentexxxxxx .= ' <th><?php echo _t("Accion"); ?></th> ' . "\n";
+            $fuentexxxxxx .= ' </tr>
+    </thead>';
+*/
+            
+            
+            
+            
+            $fuente.= '<?php '.$nombrePlugin.'_thead(); ?>';
+            
+            
+            
+            $fuente .= '<tbody>
     
  <?php
    if(permisos_tiene_permiso("ver", "' . $nombrePlugin . '", $_usuarios_grupo)){
              //   include "./' . $nombrePlugin . '/vista/tr_buscar.php";
                 
             }
-   ?>
+   ?>';
    
-
-        <?php
+/*
+       $fuente .= '<?php
         $i=1;
         while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
             include "./' . $nombrePlugin . '/reg/reg.php"; 
@@ -1720,15 +1732,42 @@ function contenido_vista($vista, $nombrePlugin) {
                 }      
             $i++;    
         }
-        ?>
-    </tbody>
+        ?>';
+       
+  */     
+       
+           $fuente .='<?php
+        $i = 1;
+        while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
+            
+            //include "./' . $nombrePlugin . '/reg/reg.php";
+            
+            $campo_disponibles = ' . $nombrePlugin . '_campos_disponibles();
+            
+            echo "<tr>";
+            foreach ($campo_disponibles as $campo) {
+
+                if (in_array($campo, ' . $nombrePlugin . '_campos_a_mostrar())) {
+                    
+                    echo "<td>$' . $nombrePlugin . '[$campo]</td> ";
+                    
+                }
+            }
+            echo "</tr>";
+
+            $i++;
+        }
+        ?>'; 
+            
+       
+    $fuente .='</tbody>
      <?php
    if(permisos_tiene_permiso("crear", "' . $nombrePlugin . '", $_usuarios_grupo)){
              //   include "./' . $nombrePlugin . '/vista/tr_anadir.php";
                 
             }
    ?>
-    
+    <?php '.$nombrePlugin.'_tfoot(); ?>
     
 </table> 
 
@@ -3302,16 +3341,8 @@ function contenido_extenciones_funciones($nombrePlugin) {
     } else {
         return false;
     }
-}';
-
-
-
-
-
-
-
-
-    $fuente .= 'function ' . $nombrePlugin . '_campo_add($campo, $label, $selecionado = "", $excluir = "") {
+}
+function ' . $nombrePlugin . '_campo_add($campo, $label, $selecionado = "", $excluir = "") {
     global $conexion;
     $sql = mysql_query(
             "SELECT DISTINCT $campo FROM _menu order by $campo   ", $conexion) 
@@ -3350,9 +3381,7 @@ while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
 } 
 }
 
-';    
-    
-    $fuente .= 'function ' . $nombrePlugin . '_numero_actual() {
+function '.$nombrePlugin.'_numero_actual() {
     global $conexion;
     $sql = mysql_query(
             "SELECT MAX(id) FROM ' . $nombrePlugin . '   ", $conexion) or die("Error: ' . $nombrePlugin . '_campo()" . mysql_error());
@@ -3363,7 +3392,65 @@ while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
     } else {
         return false;
     }
-}';
+}
+
+
+function '.$nombrePlugin.'_campos_disponibles(){
+     global $conexion;
+    $data = array();
+     $sql = mysql_query( "SHOW COLUMNS FROM '.$nombrePlugin.'  ", $conexion) or die("Error: '.$nombrePlugin.'_campos_disponibles()" . mysql_error());
+    
+    while ($reg = mysql_fetch_array($sql)) {
+        $data[$reg[0]] = $reg[0];
+    }
+    
+    return $data;
+}
+/**
+ * Son los campos que se debe mostrar en la tabla del index
+ * @global type $conexion
+ * @return type
+ */
+function '.$nombrePlugin.'_campos_a_mostrar(){
+     global $conexion;
+    $data = array();
+     $sql = mysql_query( "SELECT valor FROM _opciones WHERE opcion = \'thead_'.$nombrePlugin.'\' ", $conexion) or die("Error: '.$nombrePlugin.'_campos_a_mostrar()" . mysql_error());
+    
+    $reg = mysql_fetch_array($sql);
+    
+    return json_decode($reg[0],true);
+}
+
+function '.$nombrePlugin.'_thead(){
+    
+    $campo_disponibles = '.$nombrePlugin.'_campos_disponibles();
+   
+    $'.$nombrePlugin.'_campos_a_mostrar = '.$nombrePlugin.'_campos_a_mostrar();
+    
+    
+    echo "
+     <thead>
+        <tr> ";
+    foreach ($campo_disponibles as $value) {
+        
+        if(in_array($value, $'.$nombrePlugin.'_campos_a_mostrar)){
+            echo "<th>"._tr($value)."</th> "; 
+        }
+        
+    }
+             
+    echo "    </tr>
+    </thead>"; 
+}
+/**
+ * 
+ */
+function '.$nombrePlugin.'_tfoot(){    
+   '.$nombrePlugin.'_thead();
+}
+
+
+';
     
     
     
@@ -4253,6 +4340,21 @@ function registra_item_al_menu($plugin, $ubicacion, $padre, $label) {
         ":url" => "?p=$plugin&c=index",
         ":icono" => "folder",
         ":orden" => 0
+            )
+    );
+}
+function registra_campos_visibles($nombrePlugin,$valor) {
+    global $dbh;
+    echo "<p>Registro en opciones</p>";
+    echo "<hr>";
+    
+    $opcion = "thead_".$nombrePlugin;
+    
+    $sql = "INSERT INTO _opciones (opcion,valor) VALUES (:opcion,:valor)";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array(
+        ":opcion" => "$opcion",
+        ":valor" => "$valor"
             )
     );
 }
