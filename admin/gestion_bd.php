@@ -7,7 +7,7 @@
  * @global type $usuario
  * @global type $clave
  */
-function gestion_bd_crear_tabla() {
+function gestion_bd_crear_tabla($base_datos) {
     global $servidor, $bdatos, $usuario, $clave;
 // Create connection
     $conn = new mysqli($servidor, $usuario, $clave, $bdatos);
@@ -16,7 +16,7 @@ function gestion_bd_crear_tabla() {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = explode(";", file_get_contents('bd_extructura.sql'));
+    $sql = explode(";", file_get_contents("$base_datos.sql"));
 
     foreach ($sql as $query) {
 
@@ -159,15 +159,13 @@ function bdd_lista_campos_segun_tabla($tabla) {
     global $dbh;
     include "./modelos/columnas_de_tabla.php";
 
-    //$l = array("contactos","reservas","casas","empresas");
+    $data = array();
 
-    $l = array("Robinson", "Coello");
+    foreach ($resultado as $key => $value) {
 
-
-    foreach ($resultado as $reg) {
-        array_push($l, $reg[0]);
+        $data[$value['Field']] = $value['Field'];
     }
 
-    return $l;
+    return $data;
 }
 ?>

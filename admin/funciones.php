@@ -375,7 +375,10 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
 // tambien registro el item en el menu    
         registra_item_al_menu($nombrePlugin, $ubicacion, $padre, $label);
 // registro los campos visibles
-        registra_campos_visibles($nombrePlugin,'linea 377');
+        
+        $json_campos_segun_tabla = json_encode(bdd_lista_campos_segun_tabla($nombrePlugin));
+        
+        registra_campos_visibles($nombrePlugin, $json_campos_segun_tabla);
 
         
         
@@ -1680,8 +1683,8 @@ function contenido_vista($vista, $nombrePlugin) {
             $fuente .= ' **/ ?>' . "\n";
             $fuente .= '<?php include "tabs.php"; ?>' . "\n";
             $fuente .= '<h2> ' . "\n";
-            $fuente .= '<span class="<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
-            $fuente .= '<?php echo _t("Lista de ' . $nombrePlugin . '"); ?> <a type="button" class="btn btn-primary navbar-btn" href="?p=' . $nombrePlugin . '&c=crear"> <?php _t("Nueva"); ?></a>' . "\n";
+            $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
+            $fuente .= '<?php echo _t("' . $nombrePlugin . '"); ?> <a type="button" class="btn btn-primary navbar-btn" href="?p=' . $nombrePlugin . '&c=crear"> <?php _t("Nueva"); ?></a>' . "\n";
             $fuente .= '</h2>' . "\n";
 
             $fuente .= '
@@ -3380,7 +3383,7 @@ while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
    echo "value=\"$' . $nombrePlugin . '[0]\">$' . $nombrePlugin . '_' . $campo_parecido . '</option>";
 } 
 }
-
+/**/
 function '.$nombrePlugin.'_numero_actual() {
     global $conexion;
     $sql = mysql_query(
@@ -4338,7 +4341,7 @@ function registra_item_al_menu($plugin, $ubicacion, $padre, $label) {
         ":padre" => "$padre",
         ":label" => "$label",
         ":url" => "?p=$plugin&c=index",
-        ":icono" => "folder",
+        ":icono" => "folder-close",
         ":orden" => 0
             )
     );

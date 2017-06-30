@@ -117,10 +117,11 @@ $p = (isset($_GET['p'])) ? "$_GET[p]" : "plugins_lista";
 <td>' . $i . '</td>                            
                             <td><b>' . $reg[0] . '</b><br>' . $path_plugins . '/' . $reg[0] . '</td>
                             
-                            <td></td>
-                            <td></td>
-                            <td></td>
-
+                            <td>'.$ubicacion.'</td>
+                            <td>'.$padre.'</td>
+                            <td>'.$reg[0].'</td>
+                            
+                            
 <td>
 <a href="index.php?p=plugins_crear&nombrePlugin=' . $reg[0] . '&ubicacion=' . $ubicacion . '&padre=' . $padre . '&label=' . $reg[0] . '">Crear plugin</a>
     </td>

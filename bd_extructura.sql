@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
+-- version 4.6.6
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 29, 2017 at 05:04 PM
--- Server version: 10.1.19-MariaDB
--- PHP Version: 5.6.28
+-- Generation Time: Jun 29, 2017 at 11:13 PM
+-- Server version: 5.7.17
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -16,9 +16,12 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
-
+--
+-- Database: `fact_simple`
+--
 
 -- --------------------------------------------------------
+
 --
 -- Table structure for table `_contenido`
 --
@@ -28,11 +31,6 @@ CREATE TABLE `_contenido` (
   `frase` varchar(250) COLLATE utf8_bin NOT NULL,
   `contexto` varchar(45) COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `_contenido`
---
-
 
 -- --------------------------------------------------------
 
@@ -89,8 +87,20 @@ CREATE TABLE `_menu` (
   `label` varchar(50) COLLATE utf8_bin NOT NULL,
   `url` varchar(50) COLLATE utf8_bin NOT NULL,
   `icono` varchar(50) COLLATE utf8_bin NOT NULL,
-    `orden` int(11) DEFAULT NULL
+  `orden` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `_opciones`
+--
+
+CREATE TABLE `_opciones` (
+  `id` int(11) NOT NULL,
+  `opcion` varchar(50) NOT NULL,
+  `valor` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -102,8 +112,6 @@ CREATE TABLE `_paginas` (
   `id` int(11) NOT NULL,
   `pagina` varchar(50) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
 
 -- --------------------------------------------------------
 
@@ -139,7 +147,6 @@ CREATE TABLE `_traducciones` (
 
 CREATE TABLE `_usuarios` (
   `id` int(11) NOT NULL,
-  
   `grupo` varchar(50) COLLATE utf8_bin NOT NULL,
   `usuario` varchar(50) COLLATE utf8_bin NOT NULL,
   `clave` varchar(50) COLLATE utf8_bin NOT NULL,
@@ -150,20 +157,16 @@ CREATE TABLE `_usuarios` (
 -- Dumping data for table `_usuarios`
 --
 
-INSERT INTO `_usuarios` (`id`,`grupo`, `usuario`, `clave`, `estatus`) VALUES
-(1,  'root', 'root', 'root', 1),
-(2,  'administradores', 'admin', 'admin', 1),
-(3,  'usuarios', 'usuario', 'usuario', 1),
-(4,  'invitados', 'invitado', 'invitado', 1),
-(7,  'administradores', 'root', 'root', 0);
+INSERT INTO `_usuarios` (`id`, `grupo`, `usuario`, `clave`, `estatus`) VALUES
+(1, 'root', 'root', 'root', 1),
+(2, 'administradores', 'admin', 'admin', 1),
+(3, 'usuarios', 'usuario', 'usuario', 1),
+(4, 'invitados', 'invitado', 'invitado', 1),
+(7, 'administradores', 'root', 'root', 0);
 
 --
 -- Indexes for dumped tables
 --
-
-
-
-
 
 --
 -- Indexes for table `_contenido`
@@ -194,6 +197,13 @@ ALTER TABLE `_menu`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `_opciones`
+--
+ALTER TABLE `_opciones`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `opcion` (`opcion`);
+
+--
 -- Indexes for table `_paginas`
 --
 ALTER TABLE `_paginas`
@@ -221,12 +231,13 @@ ALTER TABLE `_traducciones`
 -- Indexes for table `_usuarios`
 --
 ALTER TABLE `_usuarios`
-  ADD PRIMARY KEY (`id`),  
+  ADD PRIMARY KEY (`id`),
   ADD KEY `grupo` (`grupo`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
 --
 -- AUTO_INCREMENT for table `_contenido`
 --
@@ -248,6 +259,11 @@ ALTER TABLE `_idiomas`
 ALTER TABLE `_menu`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 --
+-- AUTO_INCREMENT for table `_opciones`
+--
+ALTER TABLE `_opciones`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `_paginas`
 --
 ALTER TABLE `_paginas`
@@ -268,6 +284,10 @@ ALTER TABLE `_traducciones`
 ALTER TABLE `_usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
+-- Constraints for dumped tables
+--
+
+--
 -- Constraints for table `_permisos`
 --
 ALTER TABLE `_permisos`
@@ -284,7 +304,7 @@ ALTER TABLE `_traducciones`
 --
 -- Constraints for table `_usuarios`
 --
-ALTER TABLE `_usuarios`  
+ALTER TABLE `_usuarios`
   ADD CONSTRAINT `_usuarios_ibfk_2` FOREIGN KEY (`grupo`) REFERENCES `_grupos` (`grupo`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

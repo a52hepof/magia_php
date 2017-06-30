@@ -1,1 +1,1 @@
-<?php  $path_web = "/var/www/html/fact_simple"; $path_plugins = "/var/www/html/fact_simple/gestion"; $path_plugins_controlador = "path_plugins_controlador"; $path_plugins_modelos = ""; $path_plugins_vista = ""; $path_plugins_reg = "";
+<?php  $path_web = "/var/www/html/factu_simple"; $path_plugins = "/var/www/html/factu_simple/gestion"; $path_plugins_controlador = "path_plugins_controlador"; $path_plugins_modelos = ""; $path_plugins_vista = ""; $path_plugins_reg = "";
