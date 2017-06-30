@@ -45,6 +45,16 @@ $pag = (isset($_REQUEST['pag'])) ? $_REQUEST['pag'] : 0;
         <link rel="stylesheet" href="home/vista/gestion.css" >
         <link rel="stylesheet" href="estilo.css"/>
 
+
+
+
+        <link href="../includes/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet" type="text/css"/>        
+        <script src="../includes/jquery-ui-1.12.1/external/jquery/jquery.js" type="text/javascript"></script>
+        <script src="../includes/jquery-ui-1.12.1/jquery-ui.js" type="text/javascript"></script>
+
+
+
+
         <?php
         // con esto incluimos los scripts si existe        
         $scripts = "./$p/scripts/$c.php";
@@ -91,9 +101,9 @@ $pag = (isset($_REQUEST['pag'])) ? $_REQUEST['pag'] : 0;
             </div>  <!-- /2 -->
         </div>	<!-- /1 -->
 
-<?php
-include "home/vista/footer.php";
-?>
+        <?php
+        include "home/vista/footer.php";
+        ?>
 
 
         <!-- Bootstrap core JavaScript
