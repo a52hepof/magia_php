@@ -654,6 +654,11 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/crear.php";  ' . "\n";
         //    $fuente .= ' include "./' . $nombrePlugin . '/modelos/index.php";  ' . "\n";
         //    $fuente .= ' include "./' . $nombrePlugin . '/vista/index.php";  ' . "\n";
+            
+            $fuente .= ' echo \'<meta http-equiv="refresh" content="0; url=index.php?p=\'.$p.\'&c=index">\';  ';
+            
+            
+            
             $fuente .= ' }else{ ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/vista/crear.php";  ' . "\n";
             $fuente .= ' }          ' . "\n";
@@ -1484,8 +1489,8 @@ function contenido_vista($vista, $nombrePlugin) {
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/ ?>' . "\n";
             $fuente .= '<h2>' . "\n\n";
-            $fuente .= '<span class="<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
-            $fuente .= '<?php _t("Nuevo ' . $nombrePlugin . '"); ?></h2> ' . "\n\n";
+            $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
+            $fuente .= '<?php _t("Nuevo"); ?></h2> ' . "\n\n";
             $fuente .= '</h2> ' . "\n\n";
             $fuente .= '<form class="form-horizontal" action="index.php" method="post"> ' . "\n";
             $fuente .= '<input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
@@ -1571,8 +1576,8 @@ function contenido_vista($vista, $nombrePlugin) {
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/ ?>' . "\n";
             $fuente .= '<h2>' . "\n\n";
-            $fuente .= '<span class="<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
-            $fuente .= '<?php _t("Editar ' . $nombrePlugin . '"); ?></h2> ' . "\n\n";
+            $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
+            $fuente .= '<?php _t("Editar"); ?></h2> ' . "\n\n";
             $fuente .= '</h2> ' . "\n\n";
             $fuente .= '     <form class="form-horizontal" method="post" action="index.php"> ' . "\n";
             $fuente .= '     <input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
@@ -1684,7 +1689,10 @@ function contenido_vista($vista, $nombrePlugin) {
             $fuente .= '<?php include "tabs.php"; ?>' . "\n";
             $fuente .= '<h2> ' . "\n";
             $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
-            $fuente .= '<?php echo _t("' . $nombrePlugin . '"); ?> <a type="button" class="btn btn-primary navbar-btn" href="?p=' . $nombrePlugin . '&c=crear"> <?php _t("Nueva"); ?></a>' . "\n";
+            $fuente .= '<?php echo _t("' . $nombrePlugin . '"); ?> ' . "\n";
+            $fuente .= '<a type="button" class="btn btn-primary navbar-btn" href="?p=' . $nombrePlugin . '&c=crear"> ' . "\n";
+            $fuente .= ' <?php _t("Nuevo"); ?> ' . "\n";
+            $fuente .= '</a>' . "\n";
             $fuente .= '</h2>' . "\n";
 
             $fuente .= '
@@ -1740,49 +1748,37 @@ function contenido_vista($vista, $nombrePlugin) {
   */     
        
            $fuente .='<?php
-        $i = 1;
-        while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
-            
-            //include "./' . $nombrePlugin . '/reg/reg.php";
-            
-            $campo_disponibles = ' . $nombrePlugin . '_campos_disponibles();
-            
-            echo "<tr>";
-            foreach ($campo_disponibles as $campo) {
+                $i = 1; // cuenta lineas
+                while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
 
-                if (in_array($campo, ' . $nombrePlugin . '_campos_a_mostrar())) {
-                    
-                    echo "<td>$' . $nombrePlugin . '[$campo]</td> ";
-                    
+                    include "./' . $nombrePlugin . '/reg/reg.php";
+
+                    $campo_disponibles = ' . $nombrePlugin . '_campos_disponibles();
+
+                    echo "<tr>";
+                    include "./' . $nombrePlugin . '/vista/tr.php";            
+                    echo "</tr>";
+
+                    $i++;
                 }
-            }
-            echo "</tr>";
-
-            $i++;
-        }
-        ?>'; 
+                ?>'; 
             
        
-    $fuente .='</tbody>
-     <?php
-   if(permisos_tiene_permiso("crear", "' . $nombrePlugin . '", $_usuarios_grupo)){
-             //   include "./' . $nombrePlugin . '/vista/tr_anadir.php";
-                
-            }
-   ?>
-    <?php '.$nombrePlugin.'_tfoot(); ?>
-    
-</table> 
+            $fuente .='</tbody>
+                    <?php
+                  if(permisos_tiene_permiso("crear", "' . $nombrePlugin . '", $_usuarios_grupo)){
+                            //   include "./' . $nombrePlugin . '/vista/tr_anadir.php";
 
-<?php  
-//echo paginacion($p, $c, isset($_REQUEST[\'pag\'])); 
-echo paginacion_master($p, $c, $total_items, $pag);
-?>
-    
+                           }
+                  ?>
+                   <?php '.$nombrePlugin.'_tfoot(); ?>
 
+               </table> 
 
-
-';
+               <?php  
+               //echo paginacion($p, $c, isset($_REQUEST[\'pag\'])); 
+               echo paginacion_master($p, $c, $total_items, $pag);
+               ?>';
 
             return $fuente;
             break;
@@ -1987,9 +1983,15 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/' . "\n";
             $fuente .= '   ' . "\n";
-            $fuente .= '    echo \' <tr>' . "\n";
-            $fuente .= '    <td>\'.$i.\'</td> ' . "\n";
-
+            $fuente .= ' echo \'<td>\' . $i . \'</td> \';  ' . "\n";
+            
+            $fuente .= ' foreach ($campo_disponibles as $campo) {
+                            if (in_array($campo, ' . $nombrePlugin . '_campos_a_mostrar())) {
+                                echo "<td>$' . $nombrePlugin . '[$campo]</td> ";
+                            }
+                        }  ' . "\n";                        
+            
+/*
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
@@ -2007,11 +2009,13 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
 
                 $i++;
             }
-            $fuente .= ' <td>
-<a href=\'.$_SERVER[\'PHP_SELF\'].\'?p=' . $nombrePlugin . '&c=ver&' . $nombrePlugin . '_id=\'.$' . $nombrePlugin . '_id.\'>Ver</a> |  
-<a href=\'.$_SERVER[\'PHP_SELF\'].\'?p=' . $nombrePlugin . '&c=editar&' . $nombrePlugin . '_id=\'.$' . $nombrePlugin . '_id.\'>Editar</a>  
+ * 
+ */
+            $fuente .= ' echo \'<td>
+<a href=\'.$_SERVER[\'PHP_SELF\'].\'?p=' . $nombrePlugin . '&c=ver&' . $nombrePlugin . '_id=\'.$' . $nombrePlugin . '_id.\'>\'._tr("Ver").\'</a> |  
+<a href=\'.$_SERVER[\'PHP_SELF\'].\'?p=' . $nombrePlugin . '&c=editar&' . $nombrePlugin . '_id=\'.$' . $nombrePlugin . '_id.\'>\'._tr("Editar").\'</a>  
                       
-                </td></tr>\';  ';
+                </td>\';  ';
 
             return $fuente;
             break;
@@ -2204,7 +2208,7 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/ ?>' . "\n";
             $fuente .= '<h1> ' . "\n";
-            $fuente .= '<span class="<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
+            $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
             $fuente .= '<?php _t("Detalles"); ?> ' . "\n";
             $fuente .= '</h1> ' . "\n";
 
@@ -3417,31 +3421,26 @@ function '.$nombrePlugin.'_campos_disponibles(){
 function '.$nombrePlugin.'_campos_a_mostrar(){
      global $conexion;
     $data = array();
-     $sql = mysql_query( "SELECT valor FROM _opciones WHERE opcion = \'thead_'.$nombrePlugin.'\' ", $conexion) or die("Error: '.$nombrePlugin.'_campos_a_mostrar()" . mysql_error());
+     $sql = mysql_query( "SELECT valor FROM _opciones WHERE opcion = \''.$nombrePlugin.'_thead\' ", $conexion) or die("Error: '.$nombrePlugin.'_campos_a_mostrar()" . mysql_error());
     
     $reg = mysql_fetch_array($sql);
     
     return json_decode($reg[0],true);
 }
 
-function '.$nombrePlugin.'_thead(){
-    
-    $campo_disponibles = '.$nombrePlugin.'_campos_disponibles();
-   
-    $'.$nombrePlugin.'_campos_a_mostrar = '.$nombrePlugin.'_campos_a_mostrar();
-    
-    
+function '.$nombrePlugin.'_thead(){    
+    $campo_disponibles = '.$nombrePlugin.'_campos_disponibles();   
+    $'.$nombrePlugin.'_campos_a_mostrar = '.$nombrePlugin.'_campos_a_mostrar();        
     echo "
      <thead>
         <tr> ";
-    foreach ($campo_disponibles as $value) {
-        
+    echo "<th>"._tr("#")."</th> "; // numero de linea
+    foreach ($campo_disponibles as $value) {        
         if(in_array($value, $'.$nombrePlugin.'_campos_a_mostrar)){
             echo "<th>"._tr($value)."</th> "; 
-        }
-        
+        }        
     }
-             
+    echo "<th>"._tr("Acción")."</th> "; // accion             
     echo "    </tr>
     </thead>"; 
 }
@@ -4351,7 +4350,7 @@ function registra_campos_visibles($nombrePlugin,$valor) {
     echo "<p>Registro en opciones</p>";
     echo "<hr>";
     
-    $opcion = "thead_".$nombrePlugin;
+    $opcion = $nombrePlugin."_thead";
     
     $sql = "INSERT INTO _opciones (opcion,valor) VALUES (:opcion,:valor)";
     $stmt = $dbh->prepare($sql);

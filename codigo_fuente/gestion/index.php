@@ -48,11 +48,7 @@ $pag = (isset($_REQUEST['pag'])) ? $_REQUEST['pag'] : 0;
 
 
 
-        <link href="../includes/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet" type="text/css"/>        
-        <script src="../includes/jquery-ui-1.12.1/external/jquery/jquery.js" type="text/javascript"></script>
-        <script src="../includes/jquery-ui-1.12.1/jquery-ui.js" type="text/javascript"></script>
-
-
+        
 
 
         <?php
