@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 
  * @global type $conexion
@@ -10,7 +11,7 @@ function contenido_existe_frase_en_contenido($frase, $contexto = "") {
     global $conexion;
 
     $frase = sql_pone_barra_invertida($frase);
-    
+
     $contexto = sql_pone_barra_invertida($contexto);
 
     if (!$contexto) {
@@ -27,6 +28,7 @@ function contenido_existe_frase_en_contenido($frase, $contexto = "") {
         return FALSE;
     }
 }
+
 /**
  * 
  * @global type $conexion
@@ -37,7 +39,7 @@ function contenido_existe_frase_en_contenido($frase, $contexto = "") {
 function contenido_buscar_frase($frase, $contexto = "") {
     global $conexion;
 
-    $frase = sql_pone_barra_invertida($frase);    
+    $frase = sql_pone_barra_invertida($frase);
     $contexto = sql_pone_barra_invertida($contexto);
 
     if (!$contexto) {
@@ -56,6 +58,7 @@ function contenido_buscar_frase($frase, $contexto = "") {
         return FALSE;
     }
 }
+
 /**
  * 
  * @global type $conexion
@@ -64,9 +67,9 @@ function contenido_buscar_frase($frase, $contexto = "") {
  */
 function contenido_registrar_frase($frase, $contexto = "") {
     global $conexion;
-    
-    $frase      = sql_pone_barra_invertida($frase);    
-    $contexto   = sql_pone_barra_invertida($contexto);    
+
+    $frase = sql_pone_barra_invertida($frase);
+    $contexto = sql_pone_barra_invertida($contexto);
 
     if ($contexto) {
         $comando = "INSERT INTO _contenido (frase,contexto) VALUES ('$frase','$contexto') ";

@@ -8,13 +8,16 @@
  * @param type $idioma
  */
 function _t($frase, $contexto = "", $idioma = "") {
-    global $conexion, $cfg_idioma;
-    if (!$idioma) {
-        $idioma = $cfg_idioma;
-    }
+    global $conexion, $_usuarios_idioma, $cfg_idioma;
+    
+    // si el cliente no tiene definido idioma 
+    $idioma = ($_usuarios_idioma)? $_usuarios_idioma : $cfg_idioma; 
+    
+
     $frase = _tr($frase, $contexto);
     
-    echo "$frase";
+   echo "$frase";
+  //  echo "--";
 }
 /**
  * 
@@ -27,11 +30,11 @@ function _t($frase, $contexto = "", $idioma = "") {
  * @return type
  */
 function _tr($frase, $contexto = "", $idioma = '') {
-    global $conexion;
-    global $conexion, $cfg_idioma;
-    if (!$idioma) {
-        $idioma = $cfg_idioma;
-    }
+    
+    global $conexion, $_usuarios_idioma, $cfg_idioma;
+    
+    // si el cliente no tiene definido idioma 
+    $idioma = ($_usuarios_idioma)? $_usuarios_idioma : $cfg_idioma; 
 
 
     /*
@@ -63,7 +66,8 @@ function _tr($frase, $contexto = "", $idioma = '') {
      return traductor_buscar_traduccion($frase, $idioma);
 
 
-    return $frase;
+    //return $frase;
+    return "-";
 }
 /**
  * 

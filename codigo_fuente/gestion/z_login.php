@@ -1,15 +1,8 @@
 <?php
-
 session_start("magia_php");
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
 include "../admin/bd.php";
 include "../admin/coneccion.php";
 
-
-/**
- * 
- */
 if ($_POST['username']) {
 
     $username = mysql_real_escape_string($_REQUEST['username']);
@@ -25,10 +18,6 @@ if ($_POST['username']) {
         echo "Forget your pass";
     }
 
-
-
-
-
     if ($username) {
         $query = mysql_query("SELECT usuario,clave "
                 . "FROM _usuarios "
@@ -42,7 +31,7 @@ if ($_POST['username']) {
 
         $reg = mysql_fetch_array($query);
 
-        if ($reg['clave'] == $password) {
+        if (password_verify($password,$reg['clave'])) {
             header("Location: index.php");
             echo "login ok";
             $_SESSION["s_username"] = $reg['usuario'];
@@ -55,3 +44,4 @@ if ($_POST['username']) {
 
 echo "<hR>llego al gin<hr>";
 ?>
+

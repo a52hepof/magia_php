@@ -16,7 +16,7 @@
 
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Inicio</a></li>
+                <li class="active"><a href="#"><?php _t('Inicio'); ?></a></li>
 
 
 
@@ -31,30 +31,66 @@
                        role="button" 
                        aria-haspopup="true" 
                        aria-expanded="false">
+                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span> 
+                        <?php echo _t("Idiomas"); ?>
+                        <span class="caret"></span>
+                    </a>
+                        
+                        
+                    <ul class="dropdown-menu">
+                    <?php 
+                    foreach (_idiomas_array() as $key => $iso) {
+                        echo '<li>
+                            <a href="index.php?p=cambiar_idioma&c=cambiar_idioma&idioma='.$iso.'&a=cambiar_idioma">
+                                <span class="glyphicon glyphicon-comment" aria-hidden="true"></span> 
+                                    '. _idiomas_segun_iso($iso).'
+                            </a>
+                        </li>'; 
+                    }
+                    ?>    
+                    </ul>
+                    
+                    
+                </li>
+
+
+                
+                
+                
+                <li class="dropdown">
+                    <a href="#" 
+                       class="dropdown-toggle" 
+                       data-toggle="dropdown" 
+                       role="button" 
+                       aria-haspopup="true" 
+                       aria-expanded="false">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 
-                        Robinson coello 
+                        <?php echo $_usuarios_usuario; ?>
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li class="dropdown-header">Nav header</li>
-                        <li><a href="#">Separated link</a></li>
+
+
                         <li>
-                            <a href="z_logout.php">
-                                <span class="glyphicon glyphicon-off" aria-hidden="true"></span> 
-                                Logout
-                            </a></li>
+                            <a href="index.php?p=_usuarios&c=cambiar_clave">
+                                <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 
+                                    <?php echo _t('Cambiar clave'); ?>
+                            </a>
+                        </li>
+
+                        
 
 
-
-                        <li><a href="index.php?p=users&c=cambiar_clave"><?php echo _t('Cambiar clave'); ?></a></li>
-
-                        <li><a href="z_logout.php"><?php echo _t('Logout'); ?></a></li>
-
+                        <li>
+                            
+                        <a href="z_logout.php">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span> 
+                                <?php echo _t('Logout'); ?></a>
+                        </li>
 
                     </ul>
+                    
+                    
+                    
                 </li>
 
 

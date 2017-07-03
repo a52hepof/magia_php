@@ -1,7 +1,7 @@
 <?php
 /**
  * 
-
+ */
 $pagina = "home";
 $accion = "ver";
 //$id_contacto 			= mysql_real_escape_string($_GET['id_contacto']);
@@ -11,7 +11,3 @@ if (permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo) == true) {
 } else {
     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); 
 }
- * 
- */
-    include "home/modelo/index.php";
-    include "home/vista/index.php";
