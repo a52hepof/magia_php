@@ -11,13 +11,13 @@
             <select name="base_datos">
                 <option >Copiar Base datos ejemplo</option>
                 <option value="bd_modelo_facturas">Facturas</option>
-                <option value="bd_eventos">Eventos(categorias, eventos, lugares)</option>
+                <option value="bd_modelo_eventos">Eventos(categorias, eventos, lugares)</option>
             </select>
             <input type="submit" value="ok">
         </form></li>    
-    <li>chmod -R7 777 <?php echo "$path_web"; ?></a></li>    
+    <li>chmod -R 777 <?php echo "$path_web"; ?></a></li>    
     <li><a href="index.php?p=crear_proyecto">Crear proyecto</a></li>    
-    <li>chmod -R7 777 <?php echo "$path_web"; ?></a></li>  
+    <li>chmod -R 777 <?php echo "$path_web"; ?></a></li>  
     <li>Crear plugin de <b>_opciones</b> primero</li>            
     <li><a href="index.php?p=plugins_lista">Crear plugin</a></li>            
 </ol>
