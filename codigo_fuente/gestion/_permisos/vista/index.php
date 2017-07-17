@@ -12,9 +12,19 @@
 
 <?php 
 mensaje("atencion","Si no esta seguro, no modifique nada porfavor"); 
-
-
 ?>
+
+
+<form action="index.php" method="get">
+    <input type="hidden" name="p" value="_permisos">
+    <input type="hidden" name="c" value="buscar">
+    <input type="hidden" name="donde" value="grupo">
+    <select name="busqueda">
+        <?php _grupos_add(); ?>
+    </select>
+    <input class="btn btn-default" type="submit" value="<?php _t("Cambiar de grupo"); ?>">
+</form>
+
 
 
 
@@ -54,11 +64,18 @@ while ($_permisos = mysql_fetch_array($sql)) {
     </tbody>
         <?php
         if (permisos_tiene_permiso("crear", "_permisos", $_usuarios_grupo)) {
-            //   include "./_permisos/vista/tr_anadir.php";
+               include "./_permisos/vista/tr_anadir.php";
         }
         ?>
 
+        <tr> 
+            <th>#</th>
 
+            <th><?php echo _t("Grupo"); ?></th> 
+            <th><?php echo _t("Pagina"); ?></th> 
+            <th><?php echo _t("Permiso"); ?></th> 
+            <th><?php echo _t("Accion"); ?></th> 
+        </tr>
 </table> 
 <?php
 echo paginacion_master($p, $c, $total_items, $pag);

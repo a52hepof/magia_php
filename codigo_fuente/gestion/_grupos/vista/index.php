@@ -28,12 +28,20 @@
 
         <?php
         if (permisos_tiene_permiso("ver", "_grupos", $_usuarios_grupo)) {
-            //   include "./_grupos/vista/tr_buscar.php";
+               include "./_grupos/vista/tr_buscar.php";
         }
         ?>
 
 
 <?php
+    echo "<pre>";
+
+        var_dump(mysql_fetch_array($sql));
+    echo "</pre>";    
+
+
+
+
 $i = 1;
 while ($_grupos = mysql_fetch_array($sql)) {
     include "./_grupos/reg/reg.php";
@@ -49,7 +57,7 @@ while ($_grupos = mysql_fetch_array($sql)) {
     </tbody>
         <?php
         if (permisos_tiene_permiso("crear", "_grupos", $_usuarios_grupo)) {
-            //   include "./_grupos/vista/tr_anadir.php";
+               include "./_grupos/vista/tr_anadir.php";
         }
         ?>
 

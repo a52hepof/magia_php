@@ -4,9 +4,9 @@
  **/ ?>
 <h2>
 
-<span class="<?php echo _menu_icono_segun_pagina($p); ?>"></span> 
+<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> 
 
-<?php _t("Nuevo logs"); ?></h2> 
+<?php _t("Nuevo"); ?></h2> 
 
 </h2> 
 
@@ -40,6 +40,30 @@
 
 
  <div class="form-group"> 
+     <label for="logs_grupo" class="col-sm-2 control-label"><?php _t("Grupo"); ?></label> 
+     <div class="col-sm-10"> 
+       <input type="text" class="form-control" name="logs_grupo" id="logs_grupo" placeholder="<?php _t("Grupo"); ?>" value=""   > 
+     </div> 
+   </div> 
+
+
+ <div class="form-group"> 
+     <label for="logs_ip" class="col-sm-2 control-label"><?php _t("Ip"); ?></label> 
+     <div class="col-sm-10"> 
+       <input type="text" class="form-control" name="logs_ip" id="logs_ip" placeholder="<?php _t("Ip"); ?>" value=""   > 
+     </div> 
+   </div> 
+
+
+ <div class="form-group"> 
+     <label for="logs_mac" class="col-sm-2 control-label"><?php _t("Mac"); ?></label> 
+     <div class="col-sm-10"> 
+       <input type="text" class="form-control" name="logs_mac" id="logs_mac" placeholder="<?php _t("Mac"); ?>" value=""   > 
+     </div> 
+   </div> 
+
+
+ <div class="form-group"> 
      <label for="logs_p" class="col-sm-2 control-label"><?php _t("P"); ?></label> 
      <div class="col-sm-10"> 
        <input type="text" class="form-control" name="logs_p" id="logs_p" placeholder="<?php _t("P"); ?>" value=""   > 
@@ -64,11 +88,9 @@
 
 
  <div class="form-group"> 
-     <label for="logs_id_pedido" class="col-sm-2 control-label"><?php _t("Pedido"); ?></label> 
+     <label for="logs_comando" class="col-sm-2 control-label"><?php _t("Comando"); ?></label> 
      <div class="col-sm-10"> 
-        <select class="form-control" name="logs_id_pedido" >
-        <?php pedidos_add($logs_id_pedido); ?>
-        </select>
+       <textarea  class="form-control" name="logs_comando" id="logs_comando" placeholder="<?php _t("Comando"); ?>"></textarea> 
      </div> 
    </div> 
 
@@ -77,6 +99,14 @@
      <label for="logs_argumento" class="col-sm-2 control-label"><?php _t("Argumento"); ?></label> 
      <div class="col-sm-10"> 
        <textarea  class="form-control" name="logs_argumento" id="logs_argumento" placeholder="<?php _t("Argumento"); ?>"></textarea> 
+     </div> 
+   </div> 
+
+
+ <div class="form-group"> 
+     <label for="logs_sospechoso" class="col-sm-2 control-label"><?php _t("Sospechoso"); ?></label> 
+     <div class="col-sm-10"> 
+       <textarea  class="form-control" name="logs_sospechoso" id="logs_sospechoso" placeholder="<?php _t("Sospechoso"); ?>"></textarea> 
      </div> 
    </div> 
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 
  * @global type $conexion
@@ -9,16 +10,17 @@
  */
 function _t($frase, $contexto = "", $idioma = "") {
     global $conexion, $_usuarios_idioma, $cfg_idioma;
-    
-    // si el cliente no tiene definido idioma 
-    $idioma = ($_usuarios_idioma)? $_usuarios_idioma : $cfg_idioma; 
-    
+
+    // si el contacto no tiene definido idioma 
+    $idioma = ($_usuarios_idioma) ? $_usuarios_idioma : $cfg_idioma;
+
 
     $frase = _tr($frase, $contexto);
-    
-   echo "$frase";
-  //  echo "--";
+
+    echo "$frase";
+    // echo "--";
 }
+
 /**
  * 
  * @global type $conexion
@@ -30,11 +32,11 @@ function _t($frase, $contexto = "", $idioma = "") {
  * @return type
  */
 function _tr($frase, $contexto = "", $idioma = '') {
-    
+
     global $conexion, $_usuarios_idioma, $cfg_idioma;
-    
-    // si el cliente no tiene definido idioma 
-    $idioma = ($_usuarios_idioma)? $_usuarios_idioma : $cfg_idioma; 
+
+    // si el contacto no tiene definido idioma 
+    $idioma = ($_usuarios_idioma) ? $_usuarios_idioma : $cfg_idioma;
 
 
     /*
@@ -54,21 +56,18 @@ function _tr($frase, $contexto = "", $idioma = '') {
 
     if (!traductor_buscar_traduccion($frase, $idioma)) {
 
-        if($idioma == 'es_ES'){
+        if ($idioma == 'es_ES') {
             traductor_registrar_traduccion($frase, $idioma, $frase);
-        }else{
+        } else {
             traductor_registrar_traduccion($frase, $idioma, '---');
         }
     }
 
 
 
-     return traductor_buscar_traduccion($frase, $idioma);
-
-
-    //return $frase;
-    return "-";
+    return traductor_buscar_traduccion($frase, $idioma);
 }
+
 /**
  * 
  * @global type $conexion

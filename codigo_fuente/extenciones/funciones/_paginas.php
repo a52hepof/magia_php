@@ -50,11 +50,18 @@ function _paginas_add($selecionado = "", $excluir = "") {
         include "../gestion/_paginas/reg/reg.php";
 
         echo "<option ";
+        // mando solo un elemento selecionado
         if ($selecionado == $_paginas['pagina']) {
             echo " selected ";
         } else {
             echo "";
         }
+        // mando un array de paginas a excluir
+        if(in_array($_paginas[pagina], $excluir)){
+            echo " disabled ";
+        }
+                
+        
         if ($excluir == $_paginas['pagina']) {
             echo " disabled ";
         } else {

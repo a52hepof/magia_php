@@ -27,7 +27,7 @@ $ref = ($_REQUEST['ref'])?mysql_real_escape_string($_REQUEST['ref']):null;
 ///***********************************************************************
 $email = ($_REQUEST['email'])?mysql_real_escape_string($_REQUEST['email']):null;
 $empresa = ($_REQUEST['empresa'])?mysql_real_escape_string($_REQUEST['empresa']):null;
-$cliente = ($_REQUEST['cliente'])?mysql_real_escape_string($_REQUEST['cliente']):null;
+$contacto = ($_REQUEST['contacto'])?mysql_real_escape_string($_REQUEST['contacto']):null;
 //*************************************************************************
 $payant = ($_REQUEST['payant'])?mysql_real_escape_string($_REQUEST['payant']):null;
 $remake = ($_REQUEST['remake'])?mysql_real_escape_string($_REQUEST['remake']):null;

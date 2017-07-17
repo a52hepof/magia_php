@@ -1,7 +1,5 @@
 <?php
 
-define('EL', 'System code is incorrect (Licence error)');
-
 /**
  * Nos da la versión actual de Magia_PHP
  * @return string Valor de 3 numeros separados por puntos ejemplo: 0.8.1
@@ -178,8 +176,42 @@ function codifica_clave($clave) {
     return password_hash($clave, PASSWORD_BCRYPT, $opciones);
 }
 
-function vardump($codigo) {
-    echo "<pre><code>";
-    echo var_dump($codigo);
-    echo "</pre></code>";
+function vardump($codigo, $notas = "") {
+    global $config_debug;
+
+
+    $i = 1;
+
+    if ($config_debug) {
+
+        foreach ($notas as $value) {
+
+            switch ($i) {
+                case 1:
+                    echo "<h$i>$value</h$i>";
+                    break;
+                case 2:
+                    echo "<p style=\"color:red;\">$value</p>";
+                    break;
+
+
+                default:
+                    echo "<p>$value</p>";
+                    break;
+            }
+
+
+
+
+            $i++;
+        }
+        echo "<pre><code>";
+        echo var_dump($codigo);
+        echo "</pre></code>";
+    }
+}
+
+function logo() {
+    global $config_logo;
+    echo '<a href="index.php" class="thumbnail"><img src="../imagenes/' . $config_logo . '" alt=""></a>';
 }

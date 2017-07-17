@@ -18,11 +18,15 @@
         <tr> 
 <th><?php _t("Fecha"); ?></th> 
 <th><?php _t("Usuario"); ?></th> 
+<th><?php _t("Grupo"); ?></th> 
+<th><?php _t("Ip"); ?></th> 
+<th><?php _t("Mac"); ?></th> 
 <th><?php _t("P"); ?></th> 
 <th><?php _t("C"); ?></th> 
 <th><?php _t("A"); ?></th> 
-<th><?php _t("Pedido"); ?></th> 
+<th><?php _t("Comando"); ?></th> 
 <th><?php _t("Argumento"); ?></th> 
+<th><?php _t("Sospechoso"); ?></th> 
  <th><?php _t("Accion"); ?></th> 
  </tr>
     </thead>

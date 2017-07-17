@@ -9,6 +9,7 @@
      include "./_traducciones/modelos/ver.php"; 
      include "./_traducciones/reg/reg.php"; 
      include "./_traducciones/vista/ver.php"; 
+     logs_historico($p, $c, $_traducciones_id);
  } else { 
      permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); 
  } 

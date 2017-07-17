@@ -21,10 +21,10 @@
 
 
     <div class="form-group"> 
-        <label for="t_usuarios_usuario" class="col-sm-2 control-label"><?php _t("Clientes sin usuario"); ?></label> 
+        <label for="t_usuarios_usuario" class="col-sm-2 control-label"><?php _t("Contactos sin usuario"); ?></label> 
         <div class="col-sm-10"> 
             <select class="form-control" name="t_usuarios_usuario" >
-                <?php clientes_sin_usuario_add(); ?>
+                <?php contacto_sin_usuario_add(); ?>
             </select>
         </div> 
     </div> 

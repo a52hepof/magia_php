@@ -26,6 +26,24 @@
 
 
      <div class="form-group"> 
+     <label for="logs_grupo" class="col-sm-2 control-label"><?php _t("Grupo");?></label> 
+       <input type="text" class="form-control" name="logs_grupo" id="logs_grupo" placeholder="<?php _t("Grupo"); ?> "> 
+   </div> 
+
+
+     <div class="form-group"> 
+     <label for="logs_ip" class="col-sm-2 control-label"><?php _t("Ip");?></label> 
+       <input type="text" class="form-control" name="logs_ip" id="logs_ip" placeholder="<?php _t("Ip"); ?> "> 
+   </div> 
+
+
+     <div class="form-group"> 
+     <label for="logs_mac" class="col-sm-2 control-label"><?php _t("Mac");?></label> 
+       <input type="text" class="form-control" name="logs_mac" id="logs_mac" placeholder="<?php _t("Mac"); ?> "> 
+   </div> 
+
+
+     <div class="form-group"> 
      <label for="logs_p" class="col-sm-2 control-label"><?php _t("P");?></label> 
        <input type="text" class="form-control" name="logs_p" id="logs_p" placeholder="<?php _t("P"); ?> "> 
    </div> 
@@ -44,14 +62,20 @@
 
 
      <div class="form-group"> 
-     <label for="logs_id_pedido" class="col-sm-2 control-label"><?php _t("Pedido");?></label> 
-       <input type="text" class="form-control" name="logs_id_pedido" id="logs_id_pedido" placeholder="<?php _t("Id_pedido"); ?> "> 
+     <label for="logs_comando" class="col-sm-2 control-label"><?php _t("Comando");?></label> 
+       <input type="text" class="form-control" name="logs_comando" id="logs_comando" placeholder="<?php _t("Comando"); ?> "> 
    </div> 
 
 
      <div class="form-group"> 
      <label for="logs_argumento" class="col-sm-2 control-label"><?php _t("Argumento");?></label> 
        <input type="text" class="form-control" name="logs_argumento" id="logs_argumento" placeholder="<?php _t("Argumento"); ?> "> 
+   </div> 
+
+
+     <div class="form-group"> 
+     <label for="logs_sospechoso" class="col-sm-2 control-label"><?php _t("Sospechoso");?></label> 
+       <input type="text" class="form-control" name="logs_sospechoso" id="logs_sospechoso" placeholder="<?php _t("Sospechoso"); ?> "> 
    </div> 
 
 

@@ -3,32 +3,32 @@
  magia_version: 0.0.8 
  **/ 
 
-  $clientes_id = $clientes['id']; 
-  $clientes_idioma = $clientes['idioma']; 
-  $clientes_tipo_documento = $clientes['tipo_documento']; 
-  $clientes_ruc_prefijo = $clientes['ruc_prefijo']; 
-  $clientes_numero_documento = $clientes['numero_documento']; 
-  $clientes_empresa = $clientes['empresa']; 
-  $clientes_cliente = $clientes['cliente']; 
-  $clientes_saludo = $clientes['saludo']; 
-  $clientes_direccion = $clientes['direccion']; 
-  $clientes_cpostal = $clientes['cpostal']; 
-  $clientes_ciudad = $clientes['ciudad']; 
-  $clientes_provincia = $clientes['provincia']; 
-  $clientes_pais = $clientes['pais']; 
-  $clientes_tel = $clientes['tel']; 
-  $clientes_fax = $clientes['fax']; 
-  $clientes_email = $clientes['email']; 
-  $clientes_notas = $clientes['notas']; 
-  $clientes_tipo = $clientes['tipo']; 
-  $clientes_fecha_registro = $clientes['fecha_registro']; 
-  $clientes_es_cliente = $clientes['es_cliente']; 
-  $clientes_estrellas = $clientes['estrellas']; 
-  $clientes_estatus = $clientes['estatus']; 
- $clientes_estatus_0 = "";   $clientes_estatus_1 = "";      if($clientes_estatus==0){
-      $clientes_estatus_0 = " checked "; 
-      $clientes_estatus_1 = ""; 
+  $contactos_id = $contactos['id']; 
+  $contactos_idioma = $contactos['idioma']; 
+  $contactos_tipo_documento = $contactos['tipo_documento']; 
+  $contactos_ruc_prefijo = $contactos['ruc_prefijo']; 
+  $contactos_numero_documento = $contactos['numero_documento']; 
+  $contactos_empresa = $contactos['empresa']; 
+  $contactos_contacto = $contactos['contacto']; 
+  $contactos_saludo = $contactos['saludo']; 
+  $contactos_direccion = $contactos['direccion']; 
+  $contactos_cpostal = $contactos['cpostal']; 
+  $contactos_ciudad = $contactos['ciudad']; 
+  $contactos_provincia = $contactos['provincia']; 
+  $contactos_pais = $contactos['pais']; 
+  $contactos_tel = $contactos['tel']; 
+  $contactos_fax = $contactos['fax']; 
+  $contactos_email = $contactos['email']; 
+  $contactos_notas = $contactos['notas']; 
+  $contactos_tipo = $contactos['tipo']; 
+  $contactos_fecha_registro = $contactos['fecha_registro']; 
+  $contactos_es_contacto = $contactos['es_contacto']; 
+  $contactos_estrellas = $contactos['estrellas']; 
+  $contactos_estatus = $contactos['estatus']; 
+ $contactos_estatus_0 = "";   $contactos_estatus_1 = "";      if($contactos_estatus==0){
+      $contactos_estatus_0 = " checked "; 
+      $contactos_estatus_1 = ""; 
   }else {
-      $clientes_estatus_0 = ""; 
-      $clientes_estatus_1 = "checked";       
+      $contactos_estatus_0 = ""; 
+      $contactos_estatus_1 = "checked";       
   }  

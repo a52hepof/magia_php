@@ -25,7 +25,7 @@
 
         <?php
         if (permisos_tiene_permiso("ver", "_idiomas", $_usuarios_grupo)) {
-            //   include "./_idiomas/vista/tr_buscar.php";
+               include "./_idiomas/vista/tr_buscar.php";
         }
         ?>
 
@@ -46,10 +46,19 @@ while ($_idiomas = mysql_fetch_array($sql)) {
     </tbody>
         <?php
         if (permisos_tiene_permiso("crear", "_idiomas", $_usuarios_grupo)) {
-            //   include "./_idiomas/vista/tr_anadir.php";
+               include "./_idiomas/vista/tr_anadir.php";
         }
         ?>
+ <tr> 
+            <th>#</th>
 
+            <th><?php echo _t("Idioma"); ?></th> 
+            <th><?php echo _t("Nombre"); ?></th> 
+            <th><?php echo _t("Traducido"); ?></th> 
+            <th><?php echo _t("% Traducción"); ?></th> 
+            <th><?php echo _t("Activo"); ?></th> 
+            <th><?php echo _t("Accion"); ?></th> 
+        </tr>
 
 </table> 
 

@@ -36,7 +36,7 @@ CREATE TABLE `balanza` (
   `iva` decimal(11,2) NOT NULL,
   `fecha` date NOT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `cliente_email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `contacto_email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `factura` int(11) DEFAULT NULL,
   `banco` int(11) DEFAULT NULL,
   `anulada` int(11) DEFAULT NULL,
@@ -3019,7 +3019,7 @@ CREATE TABLE `facturas` (
   `id` int(11) NOT NULL,
   `id_presupuesto` int(11) DEFAULT NULL,
   `id_notac` int(11) DEFAULT NULL,
-  `cliente_email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contacto_email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `sub_total` decimal(9,2) NOT NULL,
   `iva` decimal(9,2) NOT NULL DEFAULT '0.00',
@@ -3059,7 +3059,7 @@ CREATE TABLE `notac` (
 CREATE TABLE `notacs` (
   `id` int(11) NOT NULL,
   `id_factura` int(11) NOT NULL,
-  `cliente_email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `contacto_email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `sub_total` decimal(9,2) NOT NULL,
   `iva` decimal(9,2) NOT NULL,
@@ -3360,7 +3360,7 @@ CREATE TABLE `presupuesto` (
 
 CREATE TABLE `presupuestos` (
   `id` int(11) NOT NULL,
-  `cliente_email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contacto_email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'sistema',
   `sub_total` decimal(9,2) NOT NULL DEFAULT '0.00',
   `iva` decimal(9,2) NOT NULL DEFAULT '0.00',
@@ -3383,7 +3383,7 @@ ALTER TABLE `balanza`
 -- Indexes for table `contactos`
 --
 ALTER TABLE `contactos`
-  ADD UNIQUE KEY `id_cliente` (`id`),
+  ADD UNIQUE KEY `id_contacto` (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
 --

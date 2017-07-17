@@ -1,63 +1,47 @@
-<?php 
- /**  
- magia_version: 0.0.8 
- **/ ?>
+<?php /**
+  magia_version: 0.0.8
+ * */ ?>
 <?php include "tabs.php"; ?>
 <h2> 
-<span class="<?php echo _menu_icono_segun_pagina($p); ?>"></span> 
+    <span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> 
 
-<?php echo _t("Lista de logs"); ?> <a type="button" class="btn btn-primary navbar-btn" href="?p=logs&c=crear"> <?php _t("Nueva"); ?></a>
+    <?php echo _t("logs"); ?> 
+    <a type="button" class="btn btn-primary navbar-btn" href="?p=logs&c=crear"> 
+        <?php _t("Nuevo"); ?> 
+    </a>
 </h2>
 
-<table class="table table-striped">
-    <thead>
-        <tr> 
-        <th>#</th>
-
- <th><?php echo _t("Fecha"); ?></th> 
- <th><?php echo _t("Usuario"); ?></th> 
- <th><?php echo _t("P"); ?></th> 
- <th><?php echo _t("C"); ?></th> 
- <th><?php echo _t("A"); ?></th> 
- <th><?php echo _t("Pedido"); ?></th> 
- <th><?php echo _t("Argumento"); ?></th> 
- <th><?php echo _t("Accion"); ?></th> 
- </tr>
-    </thead>
-    <tbody>
-    
- <?php
-   if(permisos_tiene_permiso("ver", "logs", $_usuarios_grupo)){
-             //   include "./logs/vista/tr_buscar.php";
-                
-            }
-   ?>
-   
+<table class="table table-striped"><?php logs_thead(); ?><tbody>
 
         <?php
-        $i=1;
+        if (permisos_tiene_permiso("ver", "logs", $_usuarios_grupo)) {
+            include "./logs/vista/tr_buscar.php";
+        }
+        ?><?php
+        $i = 1; // cuenta lineas
         while ($logs = mysql_fetch_array($sql)) {
-            include "./logs/reg/reg.php"; 
-                if(permisos_tiene_permiso("editar", "logs", $_usuarios_grupo)){
-                    include "./logs/vista/tr.php";
-                   // include "./logs/vista/tr_editar.php";
-                }else{
-                    include "./logs/vista/tr.php";
-                }      
-            $i++;    
+
+            include "./logs/reg/reg.php";
+
+            $campo_disponibles = logs_campos_disponibles();
+
+            echo "<tr>";
+            include "./logs/vista/tr.php";
+            echo "</tr>";
+
+            $i++;
+        }
+        ?></tbody>
+        <?php
+        if (permisos_tiene_permiso("crear", "logs", $_usuarios_grupo)) {
+            //include "./logs/vista/tr_anadir.php";
         }
         ?>
-    </tbody>
-     <?php
-   if(permisos_tiene_permiso("crear", "logs", $_usuarios_grupo)){
-             //   include "./logs/vista/tr_anadir.php";
-                
-            }
-   ?>
-    
-    
+    <?php logs_tfoot(); ?>
+
 </table> 
 
 <?php
+//echo paginacion($p, $c, isset($_REQUEST['pag'])); 
 echo paginacion_master($p, $c, $total_items, $pag);
 ?>

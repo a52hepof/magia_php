@@ -6,8 +6,12 @@
   $logs_id = $logs['id']; 
   $logs_fecha = $logs['fecha']; 
   $logs_usuario = $logs['usuario']; 
+  $logs_grupo = $logs['grupo']; 
+  $logs_ip = $logs['ip']; 
+  $logs_mac = $logs['mac']; 
   $logs_p = $logs['p']; 
   $logs_c = $logs['c']; 
   $logs_a = $logs['a']; 
-  $logs_id_pedido = $logs['id_pedido']; 
+  $logs_comando = $logs['comando']; 
   $logs_argumento = $logs['argumento']; 
+  $logs_sospechoso = $logs['sospechoso']; 

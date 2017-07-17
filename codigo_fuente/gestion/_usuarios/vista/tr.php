@@ -15,8 +15,8 @@ echo ' <tr>
     <td>' . $i . '</td> 
  
 
- <td>' . clientes_campo_segun_email('empresa', $t_usuarios_usuario) . '</td> 
- <td>' . clientes_campo_segun_email('cliente', $t_usuarios_usuario) . '</td> 
+ <td>' . contactos_campo_segun_email('empresa', $t_usuarios_usuario) . '</td> 
+ <td>' . contactos_campo_segun_email('contacto', $t_usuarios_usuario) . '</td> 
  
  <td>' . $t_usuarios_usuario . '</td> 
 <td>' . $t_usuarios_grupo . '</td>  

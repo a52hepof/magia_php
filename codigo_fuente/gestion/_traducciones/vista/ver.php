@@ -10,6 +10,15 @@
     <input type="hidden" name="p" value="_traducciones"> 
     <input type="hidden" name="c" value="editar"> 
     <input type="hidden" name="_traducciones_id" value="<?php echo $_traducciones_id; ?>"> 
+    
+    
+    <div class="form-group"> 
+        <label for="_traducciones_id" class="col-sm-2 control-label"><?php _t("Id"); ?></label> 
+        <div class="col-sm-10"> 
+            <p><?php echo $_traducciones_id; ?></p>
+        </div> 
+    </div> 
+    
     <div class="form-group"> 
         <label for="_traducciones_frase" class="col-sm-2 control-label"><?php _t("Frase"); ?></label> 
         <div class="col-sm-10"> 

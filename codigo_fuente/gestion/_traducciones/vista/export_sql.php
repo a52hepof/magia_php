@@ -33,7 +33,7 @@ Exportar <a href="index.php?p=_traducciones&c=export_sql">sql</a>
         $i = 1;
         while ($_traducciones = mysql_fetch_array($sql)) {
             include "./_traducciones/reg/reg.php";
-            echo "(null, '$_traducciones_frase', 'en_GB', '$_traducciones_frase'),\n";
+            echo "(null, '$_traducciones_frase', 'en_GB', '------'),\n";
             $i++;
         }
         echo ";"; 

@@ -27,7 +27,7 @@
     
  <?php
    if(permisos_tiene_permiso("ver", "_menu", $_usuarios_grupo)){
-             //   include "./_menu/vista/tr_buscar.php";
+                include "./_menu/vista/tr_buscar.php";
                 
             }
    ?>
@@ -49,7 +49,7 @@
     </tbody>
      <?php
    if(permisos_tiene_permiso("crear", "_menu", $_usuarios_grupo)){
-             //   include "./_menu/vista/tr_anadir.php";
+                include "./_menu/vista/tr_anadir.php";
                 
             }
    ?>

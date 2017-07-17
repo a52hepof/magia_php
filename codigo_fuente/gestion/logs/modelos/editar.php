@@ -3,11 +3,33 @@
  magia_version: 0.0.8 
  **/ 
  $sql=mysql_query(" UPDATE logs SET  
- fecha = '$logs_fecha'  
- ,  usuario = '$logs_usuario'  
+ usuario = '$logs_usuario'  
+ ,  grupo = '$logs_grupo'  
+ ,  ip = '$logs_ip'  
+ ,  mac = '$logs_mac'  
  ,  p = '$logs_p'  
  ,  c = '$logs_c'  
  ,  a = '$logs_a'  
- ,  id_pedido = '$logs_id_pedido'  
+ ,  comando = '$logs_comando'  
  ,  argumento = '$logs_argumento'  
- WHERE id = '$logs_id' ",$conexion) or die ("Error: ".mysql_error());   
+ ,  sospechoso = '$logs_sospechoso'  
+ WHERE id = '$logs_id' 
+ ",$conexion) or error(__DIR__, __FILE__, __LINE__);   
+
+
+            if($config_debug){
+                echo "<h3>Debug mode (".__FILE__." )</h3>";
+
+                $variables = array(
+                    "\$sql"=>"$sql",
+                    "\$logs_id"=>"$logs_id"
+                );
+
+                echo "<table border>";
+                echo "<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>";       
+                foreach ($variables as $key => $value) {
+                    echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
+                }    
+                echo "</table>";
+
+            }

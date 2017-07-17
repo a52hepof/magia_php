@@ -5,10 +5,10 @@ switch ($_SERVER['SERVER_NAME']) {
     case "192.168.1.26":
         $bd_servidor = "localhost";
         $bd_bdatos = "audio";
-        $bd_usuario = "root";
-        $bd_clave = "root";
-//        error_reporting(E_ALL);
-//        ini_set('display_errors', 1);
+        $bd_usuario = "audio";
+        $bd_clave = "audio";
+       // error_reporting(E_ALL);
+       // ini_set('display_errors', 1);
         break;
     case "http://audio.facturas.be":
     case "audio.facturas.be":

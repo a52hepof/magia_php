@@ -20,7 +20,7 @@
      <label for="_menu" class="col-sm-2 control-label"><?php _t("Frase"); ?></label> 
      <div class="col-sm-10"> 
         <select class="form-control" name="_menu" <?php echo $_traducciones_frase; ?>>
-        <?php _menu_add($_menu); ?>
+        <?php _contenido_add($_traducciones_frase); ?>
         </select>
      </div> 
    </div> 

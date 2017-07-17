@@ -9,13 +9,7 @@ function _menu_top() {
     $sql = mysql_query(
             "SELECT distinct(padre) FROM _menu WHERE ubicacion = 'top'  ", $conexion) or die("Error:" . mysql_error());
 
-    while ($reg = mysql_fetch_array($sql)) {
-        
-        
-        
-        
-        
-        
+    while ($reg = mysql_fetch_array($sql)) {                
         
         echo '<li class="dropdown">
           <a href="#" 
@@ -24,7 +18,7 @@ function _menu_top() {
           role="button" 
           aria-haspopup="true" 
           aria-expanded="false">
-          ' . ucfirst($reg['padre']) . ' 
+          ' . _tr(ucfirst($reg['padre'])) . ' 
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
             ';
@@ -56,7 +50,7 @@ function _menu_items_segun_padre_ubicacion($padre, $ubicacion) {
 
         if(permisos_tiene_permiso('ver', $reg['label'],$_usuarios_grupo )){
         echo '
-            <li><a href="' . $reg['url'] . '"> <span class="glyphicon glyphicon-' . $icono . '" aria-hidden="true"></span> ' . ucfirst($reg['label']) . '</a></li>
+            <li><a href="' . $reg['url'] . '"> <span class="glyphicon glyphicon-' . $icono . '" aria-hidden="true"></span> ' . _tr(ucfirst($reg['label'])) . '</a></li>
           
         ';
         }
@@ -85,7 +79,7 @@ function _menu_sidebar($p) {
         echo '>
                     <a href="' . $reg['url'] . '">
                         <span class="glyphicon glyphicon-' . $icono . '"></span> 
-                ' . ucfirst($reg['label']) . '
+                ' . _tr(ucfirst($reg['label'])) . '
                     </a>
                 </li>';
     }

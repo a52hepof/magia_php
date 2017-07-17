@@ -17,6 +17,6 @@ if (isset($_SESSION['s_username'])) {
     include "_usuarios/reg/reg.php";     
     
 } else {
-    header("Location: zz_login.php");
+    header("Location: z_index.php");
     exit("<hr>");
 }

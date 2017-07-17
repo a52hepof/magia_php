@@ -9,6 +9,7 @@
      include "./_paginas/modelos/ver.php"; 
      include "./_paginas/reg/reg.php"; 
      include "./_paginas/vista/ver.php"; 
+     logs_historico($p, $c, $_paginas_id);
  } else { 
      permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); 
  } 

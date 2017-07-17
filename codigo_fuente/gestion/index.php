@@ -2,10 +2,11 @@
 session_start("magia_php");
 include "z_verificar.php";
 include "../admin/bd.php";
+include "../admin/errores.php";
+include "../admin/funciones.php";
 include "../admin/configuracion.php";
 include "../admin/coneccion.php";
 include "../admin/conec.php";
-include "../admin/funciones.php";
 include "../admin/funciones_sql.php";
 include "../admin/getbootstrap.php";
 include "../admin/permisos.php";
@@ -15,16 +16,17 @@ include "../admin/formularios.php";
 include "../admin/menu.php";
 include "../admin/mensajes.php";
 include "../admin/paginacion.php";
+///require '../includes/PHPMailer-5.2.23/PHPMailerAutoload.php';
 _incluir_funciones();
 $aqui_seccion = "";
 $aqui_pagina = "";
-$_usuarios_idioma = clientes_campo_segun_email('idioma', $_usuarios_usuario);
+$_usuarios_idioma = contactos_campo_segun_email('idioma', $_usuarios_usuario);
 
 $p = (isset($_REQUEST['p'])) ? $_REQUEST['p'] : "home";
 $c = (isset($_REQUEST['c'])) ? $_REQUEST['c'] : "index";
 // para las paginaciones de todas las paginas
 $pag = (isset($_REQUEST['pag'])) ? $_REQUEST['pag'] : 0;
-x();
+
 ?>
 
 <!DOCTYPE html>
@@ -47,8 +49,8 @@ x();
         <link rel="stylesheet" href="estilo.css"/>
 
         <?php
-        // con esto incluimos los scripts si existe                
-        (file_exists("./$p/scripts/$c.php")) ? include "$scripts" : "";
+        $scripts = "./$p/scripts/$c.php";                  
+        (file_exists($scripts)) ? include "$scripts" : "";
         ?>
 
     </head>
@@ -58,7 +60,7 @@ x();
 
         <?php
         if ($_usuarios_grupo == 'centros') {
-            include "home/vista/nav_sup_clientes.php";
+            include "home/vista/nav_sup_contactos.php";
         } else {
             include "home/vista/nav_sup.php";
         }
@@ -77,21 +79,17 @@ x();
                         <li class="active">
                             <span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> 
                             <a href="<?php echo "index.php?p=$p"; ?>">
-<?php _t("$p"); ?>
+                                <?php _t("$p"); ?>
                             </a>
                         </li>
                         <li><a href="#"><?php _t("$c"); ?></a></li>
                     </ol>    
 
 
-
-
-
-<?php
-include "home/vista/sidebar.php";
-
-include './' . $p . '/controlador/' . $c . '.php';
-?>
+                    <?php
+                    include "home/vista/sidebar.php";
+                    include './' . $p . '/controlador/' . $c . '.php';                    
+                    ?>
 
                 </div>	  <!-- /3 --> 
             </div>  <!-- /2 -->
@@ -99,6 +97,8 @@ include './' . $p . '/controlador/' . $c . '.php';
 
                     <?php
                     include "home/vista/footer.php";
+                    // cerramos la coneccion 
+                  //  mysql_close($conexion);
                     ?>
 
 

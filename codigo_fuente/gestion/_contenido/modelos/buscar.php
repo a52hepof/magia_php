@@ -6,7 +6,7 @@
          "SELECT *  
  FROM _contenido  
  WHERE  
- frase like '%$_contenido_frase%'    
- AND  contexto like '%$_contenido_contexto%'    
+ frase like '%$b%' OR contexto like '%$b%'   
+
  ORDER BY id DESC    
  ",$conexion) or die ("Error:".mysql_error());  

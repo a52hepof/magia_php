@@ -1,7 +1,7 @@
 <?php /**
   magia_version: 0.0.8
  * */ ?>
-<?php //include "tabs.php";  ?>
+<?php //include "tabs.php";   ?>
 
 <h2> 
     <span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> 
@@ -9,11 +9,11 @@
     <?php echo _t("Lista de _contenido"); ?> <a type="button" class="btn btn-primary navbar-btn" href="?p=_contenido&c=crear"> <?php _t("Nueva"); ?></a>
 </h2>
 
-<a href="?p=_contenido"><?php _t('Index');?></a> | 
-<a href="?p=_contenido&c=correccion"><?php _t('Correcciones');?></a> | 
-<a href="?p=_contenido&c=atraducir"><?php _t('No traducidas');?></a>
-<?php 
-include "form_buscar.php"; 
+<a href="?p=_contenido"><?php _t('Index'); ?></a> | 
+<a href="?p=_contenido&c=correccion"><?php _t('Correcciones'); ?></a> | 
+<a href="?p=_contenido&c=atraducir"><?php _t('No traducidas'); ?></a>
+<?php
+include "form_buscar.php";
 ?>
 
 <table class="table table-striped">
@@ -21,9 +21,9 @@ include "form_buscar.php";
         <tr> 
             <th>#</th>
 
+            <th><?php echo _t("Id"); ?></th> 
             <th><?php echo _t("Frase"); ?></th> 
             <th><?php echo _t("Contexto"); ?></th> 
-            <th><?php echo _t("Idiomas"); ?></th> 
             <th><?php echo _t("Accion"); ?></th> 
         </tr>
     </thead>
@@ -54,6 +54,14 @@ include "form_buscar.php";
         //   include "./_contenido/vista/tr_anadir.php";
     }
     ?>
+    <tr> 
+        <th>#</th>
+
+        <th><?php echo _t("Id"); ?></th> 
+        <th><?php echo _t("Frase"); ?></th> 
+        <th><?php echo _t("Contexto"); ?></th> 
+        <th><?php echo _t("Accion"); ?></th> 
+    </tr>
 
 
 </table> 

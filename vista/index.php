@@ -11,6 +11,7 @@
             <select name="base_datos">
                 <option >Copiar Base datos ejemplo</option>
                 <option value="bd_modelo_facturas">Facturas</option>
+                <option value="bd_eventos">Eventos(categorias, eventos, lugares)</option>
             </select>
             <input type="submit" value="ok">
         </form></li>    

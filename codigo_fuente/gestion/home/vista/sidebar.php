@@ -1,8 +1,10 @@
 <div class="col-sm-3 col-md-2 sidebar">
 
-    <a href="index.php" class="thumbnail">
-        <img src="../imagenes/labo.png" alt="">
-    </a>
+    
+        <?php 
+        logo();
+        ?>
+    
 
 
     <ul class="nav nav-sidebar">

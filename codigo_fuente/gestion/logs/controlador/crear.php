@@ -1,24 +1,37 @@
-<?php
-mensaje('info', 'logs, se crean automaticamante, no se puede crear');
-/**
-  magia_version: 0.0.8
+ <?php 
+ /**  
+ magia_version: 0.0.8 
+ **/ 
+ $accion = "crear"; 
+ $pagina = "logs"; 
+ if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { 
+ if(isset($_REQUEST['a'])=='crear'){ 
+ include "./logs/reg/post.php";  
+ include "./logs/modelos/crear.php";  
+ if(!$config_debug){  
+ echo '<meta http-equiv="refresh" content="0; url=index.php?p='.$p.'&c=index">';   } 
+ }else{ 
+ include "./logs/vista/crear.php";  
+ }          
+ } else { 
+     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); 
+ } 
 
+            if($config_debug){
+                echo "<h3>Debug mode (".__FILE__." )</h3>";
 
-        include "./logs/reg/request.php";
-        include "./logs/modelos/crear.php";
-        
-        
-$accion = "crear";
-$pagina = "logs";
-if (permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo)) {
-    if (isset($_REQUEST['a']) == 'crear') {
-        include "./logs/reg/post.php";
-        include "./logs/modelos/crear.php";
-    } else {
-        include "./logs/vista/crear.php";
-    }
-} else {
-    permisos_sin_permiso($accion, $pagina, $_usuarios_usuario);
-} 
-         * 
-         */
+                $variables = array(
+                    "\$accion"=>"$accion",
+                    "\$pagina"=>"$pagina",
+                    "\$_usuarios_grupo"=>"$_usuarios_grupo",
+                    "permisos_tiene_permiso(\$accion, \$pagina, \$_usuarios_grupo)"=>permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo),
+                    "\$_REQUEST['a']"=>"$_REQUEST[a]",
+                    "\$_REQUEST['a']"=>"$_REQUEST[a]"        
+                );
+                echo "<table border>";
+                echo "<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>";
+                foreach ($variables as $key => $value) {
+                    echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
+                }
+                echo "</table>";
+            }

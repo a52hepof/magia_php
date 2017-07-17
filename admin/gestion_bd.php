@@ -149,6 +149,7 @@ function bdd_lista_tablas_bdd() {
 
     return $l;
 }
+
 /**
  * Lista de campos de una tabla
  * @global type $dbh Coneccion 
@@ -157,7 +158,14 @@ function bdd_lista_tablas_bdd() {
  */
 function bdd_lista_campos_segun_tabla($tabla) {
     global $dbh;
-    include "./modelos/columnas_de_tabla.php";
+    $sql = "SHOW COLUMNS FROM $tabla";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array(
+        ":tabla" => "$tabla"
+            )
+    );
+    $resultado = $stmt->fetchAll();
+
 
     $data = array();
 

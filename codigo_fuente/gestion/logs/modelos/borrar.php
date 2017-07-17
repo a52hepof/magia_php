@@ -6,6 +6,6 @@
  DELETE FROM  
  logs  
  WHERE id = '$logs_id' 
- ",$conexion) or die ("Error ".mysql_error()); 
+ ",$conexion) or error(__DIR__, __FILE__, __LINE__); 
   
  $mensaje = "Realizado"; 

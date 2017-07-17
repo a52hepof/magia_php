@@ -90,14 +90,18 @@ function _idiomas_numero_actual() {
         return false;
     }
 }
-
+/**
+ * entrega los idiomas activos
+ * @global type $conexion
+ * @return array
+ */
 function _idiomas_array() {
     global $conexion;
 
     $g = array();
 
     $sql = mysql_query(
-            "SELECT * FROM _idiomas WHERE activo ='1' ORDER BY orden ", $conexion) or die("Error: _grupos_array()" . mysql_error());
+            "SELECT idioma FROM _idiomas WHERE activo ='1' ORDER BY orden ", $conexion) or die("Error: _grupos_array()" . mysql_error());
 
     while ($reg = mysql_fetch_array($sql)) {
 
