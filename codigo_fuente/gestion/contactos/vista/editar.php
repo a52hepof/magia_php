@@ -9,7 +9,6 @@
 
 </h2> 
 
-<?php echo (pedidos_segun_email($contactos_email)) ? mensaje('info', 'Si un contacto ya tiene pedidos registrados, no se puede cambiar de email') : ""; ?>
 
 <form class="form-horizontal" method="post" action="index.php"> 
     <input type="hidden" name="p" value="contactos"> 
@@ -204,8 +203,7 @@
                 name="contactos_email" 
                 id="contactos_email" 
                 placeholder="<?php _t("Email"); ?>" 
-                value="<?php echo $contactos_email; ?>"  
-                <?php echo (pedidos_segun_email($contactos_email)) ? " readonly " : ""; ?>
+                value="<?php echo $contactos_email; ?>"                  
                 required=""
                 > 
         </div> 
@@ -270,19 +268,8 @@
 
 
 
-
-<?php 
-    if(permisos_tiene_permiso('borrar', 'contactos', $_usuarios_grupo) && !pedidos_segun_email($contactos_email) ){
-?>   
 <h2><?php _t("Atención"); ?></h2>
 <p><?php _t("Ud esta va a borrar definitivamente este registro, desea hacerlo?"); ?></p>
 <a class="btn btn-danger" href="index.php?p=contactos&c=borrar&contactos_email=<?php echo $contactos_email; ?>">
     <?php _t("Si,borrar"); ?>
 </a>
-<?php } ?>
-
-<?php 
-if(pedidos_segun_email($contactos_email)){
-    mensaje('info', 'Si un contacto tiene pedidos registrados, no se puede borrarlo');
-}
-?>
