@@ -1,7 +1,7 @@
 <?php /**
   magia_version: 0.0.8
  * */ ?>
-<?php //include "tabs.php"; ?>
+<?php //include "tabs.php";  ?>
 <h2> 
     <span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> 
 
@@ -28,38 +28,30 @@
 
         <?php
         if (permisos_tiene_permiso("ver", "_grupos", $_usuarios_grupo)) {
-               include "./_grupos/vista/tr_buscar.php";
+            include "./_grupos/vista/tr_buscar.php";
         }
         ?>
 
 
-<?php
-    echo "<pre>";
-
-        var_dump(mysql_fetch_array($sql));
-    echo "</pre>";    
-
-
-
-
-$i = 1;
-while ($_grupos = mysql_fetch_array($sql)) {
-    include "./_grupos/reg/reg.php";
-    if (permisos_tiene_permiso("editar", "_grupos", $_usuarios_grupo)) {
-        include "./_grupos/vista/tr.php";
-        // include "./_grupos/vista/tr_editar.php";
-    } else {
-        include "./_grupos/vista/tr.php";
-    }
-    $i++;
-}
-?>
-    </tbody>
         <?php
-        if (permisos_tiene_permiso("crear", "_grupos", $_usuarios_grupo)) {
-               include "./_grupos/vista/tr_anadir.php";
+        $i = 1;
+        while ($_grupos = mysql_fetch_array($sql)) {
+            include "./_grupos/reg/reg.php";
+            if (permisos_tiene_permiso("editar", "_grupos", $_usuarios_grupo)) {
+                include "./_grupos/vista/tr.php";
+                // include "./_grupos/vista/tr_editar.php";
+            } else {
+                include "./_grupos/vista/tr.php";
+            }
+            $i++;
         }
         ?>
+    </tbody>
+    <?php
+    if (permisos_tiene_permiso("crear", "_grupos", $_usuarios_grupo)) {
+        include "./_grupos/vista/tr_anadir.php";
+    }
+    ?>
 
 
 </table> 

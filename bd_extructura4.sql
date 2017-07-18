@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 18, 2017 at 08:52 AM
+-- Generation Time: Jul 17, 2017 at 09:19 PM
 -- Server version: 5.7.17
 -- PHP Version: 5.6.30
 
@@ -17,8 +17,31 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `robin`
+-- Database: `audio`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `actualizaciones`
+--
+
+CREATE TABLE `actualizaciones` (
+  `id` int(11) NOT NULL,
+  `codigo` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `requiere` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `descripcion` text COLLATE utf8_unicode_ci NOT NULL,
+  `ejecutar` text COLLATE utf8_unicode_ci NOT NULL,
+  `estatus` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `actualizaciones`
+--
+
+INSERT INTO `actualizaciones` (`id`, `codigo`, `requiere`, `nombre`, `descripcion`, `ejecutar`, `estatus`) VALUES
+(3, 'demo', 'demo', 'demo', 'demo', 'demo', 1);
 
 -- --------------------------------------------------------
 
@@ -33,6 +56,17 @@ CREATE TABLE `cambio_claves` (
   `fecha_solicitud` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `codigo_usado` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `cambio_claves`
+--
+
+INSERT INTO `cambio_claves` (`id`, `usuario`, `codigo`, `fecha_solicitud`, `codigo_usado`) VALUES
+(18, 'robincoello@hotmail.com', '6vW7IYoUT4', '2017-07-10 15:48:12', 1),
+(19, 'pato@facturas.be', 'vAcfVCrah7', '2017-07-10 23:03:41', 0),
+(20, 'andres@latinos.be', 'uIPSYZMc9f', '2017-07-10 23:05:03', 0),
+(21, 'andres@latinos.be', 'ktoRBhK0Sv', '2017-07-10 23:15:16', 0),
+(22, 'pato@facturas.be', 'MnfgmLux81', '2017-07-11 14:05:41', 0);
 
 -- --------------------------------------------------------
 
@@ -70,7 +104,11 @@ CREATE TABLE `contactos` (
 --
 
 INSERT INTO `contactos` (`id`, `idioma`, `tipo_documento`, `ruc_prefijo`, `numero_documento`, `empresa`, `contacto`, `saludo`, `direccion`, `cpostal`, `ciudad`, `provincia`, `pais`, `tel`, `fax`, `email`, `notas`, `tipo`, `fecha_registro`, `es_contacto`, `estrellas`, `estatus`) VALUES
-(34, 'es_ES', 'Pasaporte', 'BE', '1020304050', 'Facturas.be', 'Robinson Coello S.', 'Mr.', 'Av de codigo 1970', '1020', 'Bruxelles', '', 'Belgique', '+32474624707', '', 'robincoello@hotmail.com', 'Nada que decir', 0, '2017-06-21 08:50:22', '', 1, 1);
+(34, 'es_ES', '', 'BE', '0.2.3.6.5.4', 'ZFacturas.be', 'Robinson Coello S.', 'Mr.', 'Av de la rambla 25', '1020', 'Bruxelles', '', 'Belgique', '+32474624707', '', 'robincoello@hotmail.com', '', 0, '2017-06-21 08:50:22', '', 1, 1),
+(1104, 'es_ES', 'null', 'BE', '', '', '', 'M.', '', '', '', 'null', 'Belgique', '', 'null', 'roencosa@gmail.com', '', 0, '2017-07-12 11:46:35', '', 1, 1),
+(1105, 'en_GB', '', '', '', 'Factu', 'roencosa', '', '', '', '', '', 'Belgique', '', '', 'roencosa@facturas.be', '', 0, '2017-07-12 12:07:45', '', 1, 1),
+(1106, 'en_GB', '', '', '', '', '', '', '', '', '', '', 'Belgique', '', '', 'des@mas.com', '', 0, '2017-07-12 12:08:33', NULL, 1, 0),
+(1107, 'en_GB', 'null', 'BE', '', 'Andres SPRL', 'Andres Peralta', 'M.', '', '', '', 'null', 'Belgique', '', 'null', 'andres@andres.com', '', 0, '2017-07-15 20:40:37', '', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -92,6 +130,96 @@ CREATE TABLE `logs` (
   `argumento` text COLLATE utf8_unicode_ci NOT NULL,
   `sospechoso` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `logs`
+--
+
+INSERT INTO `logs` (`id`, `fecha`, `usuario`, `grupo`, `ip`, `mac`, `p`, `c`, `a`, `comando`, `argumento`, `sospechoso`) VALUES
+(16, '2017-07-12 13:47:00', 'robincoello@hotmail.com', 'root', '::1', '', '_menu', '', 'editar', '{\"p\":\"_menu\",\"c\":\"editar\",\"a\":\"editar\",\"_menu_id\":\"63\",\"_menu_ubicacion\":\"sidebar\",\"_menu_padre\":\"gestion\",\"_menu_label\":\"Pedidos\",\"_menu_url\":\"?p=pedidos\",\"_menu_icono\":\"shopping-cart\",\"_menu_orden\":\"10\"}', '63', ''),
+(17, '2017-07-12 13:58:15', 'robincoello@hotmail.com', 'root', '::1', '', '_menu', '', 'editar', '{\"p\":\"_menu\",\"c\":\"editar\",\"a\":\"editar\",\"_menu_id\":\"63\",\"_menu_ubicacion\":\"sidebar\",\"_menu_padre\":\"gestion\",\"_menu_label\":\"Pedidos\",\"_menu_url\":\"?p=pedidos\",\"_menu_icono\":\"shopping-cart\",\"_menu_orden\":\"10\"}', '63', ''),
+(18, '2017-07-12 13:59:05', 'robincoello@hotmail.com', 'root', '::1', '', '_grupos', '', 'editar', '{\"p\":\"_grupos\",\"c\":\"editar\",\"a\":\"editar\",\"_grupos_id\":\"30\",\"_grupos_grupo\":\"123456\"}', '', ''),
+(19, '2017-07-12 13:59:44', 'robincoello@hotmail.com', 'root', '::1', '', '_grupos', '', 'editar', '{\"p\":\"_grupos\",\"c\":\"editar\",\"a\":\"editar\",\"_grupos_id\":\"30\",\"_grupos_grupo\":\"123456\"}', '30', ''),
+(20, '2017-07-12 14:00:18', 'robincoello@hotmail.com', 'root', '::1', '', '_grupos', '', 'editar', '{\"p\":\"_grupos\",\"c\":\"editar\",\"a\":\"editar\",\"_grupos_id\":\"30\",\"_grupos_grupo\":\"320251254\"}', '30', ''),
+(21, '2017-07-12 14:01:15', 'robincoello@hotmail.com', 'root', '::1', '', '_idiomas', '', 'editar', '{\"p\":\"_idiomas\",\"c\":\"editar\",\"a\":\"editar\",\"_idiomas_id\":\"9\",\"_idiomas_idioma\":\"aa_bb\",\"_idiomas_nombre\":\"aaaabb\"}', '{\"p\":\"_idiomas\",\"c\":\"editar\",\"a\":\"editar\",\"_idiomas_id\":\"9\",\"_idiomas_idioma\":\"aa_bb\",\"_idiomas_nombre\":\"aaaabb\"}', ''),
+(22, '2017-07-12 14:01:58', 'robincoello@hotmail.com', 'root', '::1', '', '_idiomas', '', 'editar', '{\"p\":\"_idiomas\",\"c\":\"editar\",\"a\":\"editar\",\"_idiomas_id\":\"9\",\"_idiomas_idioma\":\"aa_bb\",\"_idiomas_nombre\":\"aaaabb\"}', '9', ''),
+(23, '2017-07-12 14:04:02', 'robincoello@hotmail.com', 'root', '::1', '', '_idiomas', '', 'editar', '{\"p\":\"_idiomas\",\"c\":\"editar\",\"a\":\"editar\",\"_idiomas_id\":\"9\",\"_idiomas_idioma\":\"aa_bb\",\"_idiomas_nombre\":\"aaaabb\"}', '9', ''),
+(24, '2017-07-12 14:10:05', 'robincoello@hotmail.com', 'root', '::1', '', '_idiomas', '', 'editar', '{\"p\":\"_idiomas\",\"c\":\"editar\",\"a\":\"editar\",\"_idiomas_id\":\"8\",\"_idiomas_idioma\":\"de_DE\",\"_idiomas_nombre\":\"Alem\\u00e1n\"}', '8', ''),
+(25, '2017-07-12 14:18:27', 'robincoello@hotmail.com', 'root', '::1', '', '_idiomas', '', 'editar', '{\"p\":\"_idiomas\",\"c\":\"editar\",\"a\":\"editar\",\"_idiomas_id\":\"9\",\"_idiomas_idioma\":\"aa_bb\",\"_idiomas_nombre\":\"aaaabbc\"}', '9', ''),
+(26, '2017-07-12 14:18:52', 'robincoello@hotmail.com', 'root', '::1', '', '_idiomas', '', 'editar', '{\"p\":\"_idiomas\",\"c\":\"editar\",\"a\":\"editar\",\"_idiomas_id\":\"1\",\"_idiomas_idioma\":\"es_ES\",\"_idiomas_nombre\":\"Espa\\u00f1ol\"}', '1', ''),
+(27, '2017-07-12 14:23:27', 'robincoello@hotmail.com', 'root', '::1', '', '_grupos', '', 'borrar', '{\"p\":\"_grupos\",\"c\":\"borrar\",\"_grupos_id\":\"30\"}', '30', ''),
+(28, '2017-07-12 14:23:59', 'robincoello@hotmail.com', 'root', '::1', '', '_grupos', '', 'borrar', '{\"p\":\"_grupos\",\"c\":\"borrar\",\"_grupos_id\":\"29\"}', '29', ''),
+(29, '2017-07-12 14:24:03', 'robincoello@hotmail.com', 'root', '::1', '', '_grupos', '', 'borrar', '{\"p\":\"_grupos\",\"c\":\"borrar\",\"_grupos_id\":\"28\"}', '28', ''),
+(30, '2017-07-12 14:24:07', 'robincoello@hotmail.com', 'root', '::1', '', '_grupos', '', 'borrar', '{\"p\":\"_grupos\",\"c\":\"borrar\",\"_grupos_id\":\"27\"}', '27', ''),
+(31, '2017-07-12 14:24:11', 'robincoello@hotmail.com', 'root', '::1', '', '_grupos', '', 'borrar', '{\"p\":\"_grupos\",\"c\":\"borrar\",\"_grupos_id\":\"26\"}', '26', ''),
+(32, '2017-07-12 14:24:15', 'robincoello@hotmail.com', 'root', '::1', '', '_grupos', '', 'borrar', '{\"p\":\"_grupos\",\"c\":\"borrar\",\"_grupos_id\":\"25\"}', '25', ''),
+(33, '2017-07-12 14:24:19', 'robincoello@hotmail.com', 'root', '::1', '', '_grupos', '', 'borrar', '{\"p\":\"_grupos\",\"c\":\"borrar\",\"_grupos_id\":\"24\"}', '24', ''),
+(34, '2017-07-12 14:24:23', 'robincoello@hotmail.com', 'root', '::1', '', '_grupos', '', 'borrar', '{\"p\":\"_grupos\",\"c\":\"borrar\",\"_grupos_id\":\"23\"}', '23', ''),
+(35, '2017-07-12 14:24:27', 'robincoello@hotmail.com', 'root', '::1', '', '_grupos', '', 'borrar', '{\"p\":\"_grupos\",\"c\":\"borrar\",\"_grupos_id\":\"22\"}', '22', ''),
+(36, '2017-07-12 14:24:32', 'robincoello@hotmail.com', 'root', '::1', '', '_grupos', '', 'borrar', '{\"p\":\"_grupos\",\"c\":\"borrar\",\"_grupos_id\":\"19\"}', '19', ''),
+(37, '2017-07-12 14:24:36', 'robincoello@hotmail.com', 'root', '::1', '', '_grupos', '', 'borrar', '{\"p\":\"_grupos\",\"c\":\"borrar\",\"_grupos_id\":\"15\"}', '15', ''),
+(38, '2017-07-12 14:25:04', 'robincoello@hotmail.com', 'root', '::1', '', '_grupos', '', 'editar', '{\"p\":\"_grupos\",\"c\":\"editar\",\"a\":\"editar\",\"_grupos_id\":\"14\",\"_grupos_grupo\":\"gerente\"}', '14', ''),
+(39, '2017-07-12 14:26:17', 'roencosa@facturas.be', 'gerente', '::1', '', '_grupos', 'controlador', 'crear', '{\"p\":\"_grupos\",\"c\":\"crear\",\"a\":\"crear\",\"_grupos_grupo\":\"20\"}', '', ''),
+(40, '2017-07-12 14:27:11', 'roencosa@facturas.be', 'gerente', '::1', '', '_idiomas', '', 'editar', '{\"p\":\"_idiomas\",\"c\":\"editar\",\"a\":\"editar\",\"_idiomas_id\":\"9\",\"_idiomas_idioma\":\"aa_bb\",\"_idiomas_nombre\":\"aaaabbcs\"}', '9', ''),
+(41, '2017-07-12 14:27:23', 'roencosa@facturas.be', 'gerente', '::1', '', '_idiomas', '', 'editar', '{\"p\":\"_idiomas\",\"c\":\"editar\",\"a\":\"editar\",\"_idiomas_id\":\"3\",\"_idiomas_idioma\":\"fr_BE\",\"_idiomas_nombre\":\"Fran\\u00e7ais (Belgique)\"}', '3', ''),
+(42, '2017-07-12 14:34:55', 'robincoello@hotmail.com', 'root', '::1', '', '_permisos', '', 'editar', '{\"p\":\"_permisos\",\"c\":\"editar\",\"a\":\"editar\",\"_permisos_id\":\"216\",\"_permisos_grupo\":\"administradores\",\"_permisos_pagina\":\"t_usuarios\",\"ver\":\"1\",\"crear\":\"1\",\"editar\":\"1\",\"borrar\":\"0\"}', '216', ''),
+(43, '2017-07-12 14:35:31', 'robincoello@hotmail.com', 'root', '::1', '', '_permisos', '', 'editar', '{\"p\":\"_permisos\",\"c\":\"editar\",\"a\":\"editar\",\"_permisos_id\":\"207\",\"_permisos_grupo\":\"administradores\",\"_permisos_pagina\":\"pedidos_otros\",\"ver\":\"1\",\"crear\":\"1\",\"editar\":\"1\",\"borrar\":\"0\"}', '207', ''),
+(44, '2017-07-12 14:35:43', 'robincoello@hotmail.com', 'root', '::1', '', '_permisos', '', 'editar', '{\"p\":\"_permisos\",\"c\":\"editar\",\"a\":\"editar\",\"_permisos_id\":\"207\",\"_permisos_grupo\":\"administradores\",\"_permisos_pagina\":\"pedidos_otros\",\"ver\":\"1\",\"crear\":\"1\",\"editar\":\"1\",\"borrar\":\"0\"}', '207', ''),
+(45, '2017-07-12 14:41:13', 'robincoello@hotmail.com', 'root', '::1', '', '_traducciones', '', 'editar', '{\"p\":\"_traducciones\",\"c\":\"editar\",\"a\":\"editar\",\"_traducciones_id\":\"5197\",\"_traducciones_frase\":\"Historial\",\"_traducciones_idioma\":\"en_GB\",\"_traducciones_traduccion\":\"History\"}', '5197', ''),
+(46, '2017-07-12 20:16:36', 'robincoello@hotmail.com', 'root', '::1', '', '_grupos', '', 'borrar', '{\"p\":\"_grupos\",\"c\":\"borrar\",\"_grupos_id\":\"31\"}', '31', ''),
+(47, '2017-07-17 13:35:07', 'robincoello@hotmail.com', 'root', '::1', '', '_permisos', '', 'editar', '{\"p\":\"_permisos\",\"c\":\"editar\",\"a\":\"editar\",\"_permisos_id\":\"244\",\"_permisos_grupo\":\"administradores\",\"_permisos_pagina\":\"_opciones\",\"ver\":\"0\",\"crear\":\"0\",\"editar\":\"0\",\"borrar\":\"0\"}', '244', ''),
+(48, '2017-07-17 13:49:40', 'robincoello@hotmail.com', 'root', '::1', '', '_menu', '', 'crear', '{\"p\":\"_menu\",\"c\":\"crear\",\"a\":\"crear\",\"_menu_ubicacion\":\"\",\"_menu_padre\":\"\",\"_menu_label\":\"\",\"_menu_url\":\"\",\"_menu_icono\":\"\",\"_menu_orden\":\"\"}', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pedidos`
+--
+
+CREATE TABLE `pedidos` (
+  `id` int(11) NOT NULL,
+  `ref` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `empresa` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  `contacto` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  `descripcion` text COLLATE utf8_unicode_ci NOT NULL,
+  `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `notas` text COLLATE utf8_unicode_ci NOT NULL,
+  `estatus` int(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `pedidos`
+--
+
+INSERT INTO `pedidos` (`id`, `ref`, `empresa`, `contacto`, `email`, `descripcion`, `fecha`, `notas`, `estatus`) VALUES
+(4, '5964ece11a65c', 'ZFacturas.be', 'Robinson Coello S.', 'robincoello@hotmail.com', '{\"p\":\"pedidos\",\"c\":\"crear\",\"a\":\"crear\",\"pedidos_ref\":\"5964ece11a65c\",\"pedidos_fecha\":\"2017-07-11\",\"pedidos_email\":\"robincoello@hotmail.com\",\"du_numero\":\"\",\"perdida_auditiva\":\"legere\",\"orejera\":\"dure\",\"custom_dume\":\"1\",\"epaulemnent\":\"1\",\"thermosoft\":\"1\",\"ventilation_gauche\":\"e\",\"ventilation_droite\":\"e\",\"couleur_gauche\":\"\",\"marques\":\"e\",\"models\":\"e\",\"couleur_droite\":\"\",\"notas\":\"\"}', '2017-07-11 15:21:18', '', 1),
+(5, '596753857747e', 'Factu', 'roencosa', 'roencosa@facturas.be', '{\"p\":\"pedidos\",\"c\":\"crear\",\"a\":\"crear\",\"pedidos_ref\":\"596753857747e\",\"pedidos_fecha\":\"2017-07-13\",\"pedidos_email\":\"roencosa@facturas.be\",\"payant\":\"1\",\"remake\":\"1\",\"du_numero\":\"1020\",\"perdida_auditiva\":\"legere\",\"orejera\":\"molle\",\"bte\":\"1\",\"rite\":\"1\",\"slim_tube\":\"1\",\"custom_dume\":\"1\",\"natation\":\"1\",\"dormir\":\"1\",\"anti_bruit\":\"1\",\"invisible\":\"1\",\"coquille\":\"1\",\"conduit_seul\":\"1\",\"epaulemnent\":\"1\",\"prince_de_crave\":\"1\",\"iros\":\"1\",\"resine\":\"1\",\"silicone\":\"1\",\"thermotec\":\"1\",\"thermosoft\":\"1\",\"anti_bacterie\":\"1\",\"mix\":\"1\",\"ventilation_gauche\":\"20\",\"ventilation_droite\":\"25\",\"couleur_gauche\":\"amarillo\",\"marques\":\"mercedes\",\"models\":\"vito\",\"couleur_droite\":\"negro\",\"hoka\":\"1\",\"cordon\":\"1\",\"pailletes\":\"1\",\"fil_nylon\":\"1\",\"coude_soupe\":\"1\",\"implant\":\"1\",\"notas\":\"Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4Esta es la nota para el pedido 4\"}', '2017-07-13 11:04:17', '', 1),
+(6, '5967678ae6411', 'Factu', 'roencosa', 'roencosa@facturas.be', '{\"p\":\"pedidos\",\"c\":\"crear\",\"a\":\"crear\",\"pedidos_ref\":\"5967678ae6411\",\"pedidos_fecha\":\"2017-07-13\",\"pedidos_email\":\"roencosa@facturas.be\",\"payant\":\"1\",\"remake\":\"1\",\"du_numero\":\"5\",\"perdida_auditiva\":\"legere\",\"orejera\":\"dure\",\"bte\":\"1\",\"invisible\":\"1\",\"resine\":\"1\",\"ventilation_gauche\":\"e\",\"ventilation_droite\":\"e\",\"couleur_gauche\":\"\",\"marques\":\"e\",\"models\":\"e\",\"couleur_droite\":\"\",\"notas\":\"\"}', '2017-07-13 12:29:12', '', 1),
+(7, '596a7df8253af', 'Andres SPRL', 'Andres Peralta', 'andres@andres.com', '{\"p\":\"pedidos\",\"c\":\"crear\",\"a\":\"crear\",\"pedidos_ref\":\"596a7df8253af\",\"pedidos_fecha\":\"2017-07-15\",\"pedidos_email\":\"andres@andres.com\",\"payant\":\"1\",\"remake\":\"1\",\"du_numero\":\"20\",\"perdida_auditiva\":\"moyenne\",\"orejera\":\"molle\",\"bte\":\"1\",\"invisible\":\"1\",\"resine\":\"1\",\"ventilation_gauche\":\"20\",\"ventilation_droite\":\"120\",\"couleur_gauche\":\"red\",\"marques\":\"mercedes\",\"models\":\"Vito\",\"couleur_droite\":\"White\",\"hoka\":\"1\",\"notas\":\"sdtest de ingles\"}', '2017-07-15 20:42:11', '', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test`
+--
+
+CREATE TABLE `test` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `apellidos` varchar(50) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `test`
+--
+
+INSERT INTO `test` (`id`, `nombre`, `apellidos`) VALUES
+(1, 'angi', 'Coello'),
+(2, 'Javier', 'Coelo'),
+(3, 'Vini', 'coello'),
+(4, 'Saya', 'Mahado'),
+(5, 'Andrea', 'Jolie');
 
 -- --------------------------------------------------------
 
@@ -842,7 +970,11 @@ INSERT INTO `_menu` (`id`, `ubicacion`, `padre`, `label`, `url`, `icono`, `orden
 (63, 'sidebar', 'gestion', 'Pedidos', '?p=pedidos', 'shopping-cart', 10),
 (64, 'top', 'config', '_opciones', '?p=_opciones&c=index', 'folder-close', 0),
 (67, 'top', 'config', 'cambio_claves', '?p=cambio_claves&c=index', 'folder-close', 0),
-(68, 'top', 'config', 'actualizaciones', '?p=actualizaciones&c=index', 'folder-close', 0);
+(68, 'top', 'config', 'actualizaciones', '?p=actualizaciones&c=index', 'folder-close', 0),
+(69, 'top', 'config', 'logs', '?p=logs&c=index', 'folder-close', 0),
+(70, 'top', 'config', 'test', '?p=test&c=index', 'folder-close', 0),
+(71, 'top', 'config', 'test', '?p=test&c=index', 'folder-close', 0),
+(72, 'top', 'config', 'test', '?p=test&c=index', 'folder-close', 0);
 
 -- --------------------------------------------------------
 
@@ -862,9 +994,9 @@ CREATE TABLE `_opciones` (
 --
 
 INSERT INTO `_opciones` (`id`, `opcion`, `valor`, `grupo`) VALUES
-(1, 'nombre_web', 'Magia_PHP', 10),
-(2, 'url', 'https://github.com/robincoello/magia_php', 10),
-(3, 'direccion', 'Av del codigo abierto 1970, \\n1000 Bruselas, \\nBégica\"', 10),
+(1, 'nombre_web', 'Jiholabo SA', 10),
+(2, 'url', 'http://www.jiholabo.com', 10),
+(3, 'direccion', 'Rue de la fcturation 12, <br>1081 Koekelberg, <br>Belgica', 10),
 (4, 'tel', '+32(0) 474 62 4707', 10),
 (5, 'logo', '../imagenes/logo.jpg', 10),
 (6, 'idioma', 'es_ES', 10),
@@ -877,6 +1009,13 @@ INSERT INTO `_opciones` (`id`, `opcion`, `valor`, `grupo`) VALUES
 (13, 'email_pop_puerto', '995', 20),
 (14, 'email_smtp', 'mail.facturas.be', 20),
 (15, 'email_smtp_puerto', '465', 20),
+(16, 'email_cc_nombre', 'Robinson Coello S.', 30),
+(17, 'email_cc_usuario', 'robinson@facturas.be', 30),
+(18, 'email_cc_clave', 'HIhSu6IEuFDo', 30),
+(19, 'email_cc_pop', 'mail.facturas.be', 30),
+(20, 'email_cc_pop_puerto', '995', 30),
+(21, 'email_cc_smtp', 'mail.facturas.be', 30),
+(22, 'email_cc_smtp_puerto', '465', 30),
 (23, '_opciones_thead', '{\"id\":\"id\",\"opcion\":\"opcion\",\"valor\":\"valor\",\"codigo\":\"codigo\"}', 1000),
 (25, 'debug', '0', 9000),
 (28, 'grupo_por_defecto', 'centros', 10),
@@ -885,10 +1024,7 @@ INSERT INTO `_opciones` (`id`, `opcion`, `valor`, `grupo`) VALUES
 (31, 'cambio_claves_thead', '{\"id\":\"id\",\"usuario\":\"usuario\",\"codigo\":\"codigo\",\"fecha_solicitud\":\"fecha_solicitud\",\"codigo_usado\":\"codigo_usado\"}', 1000),
 (33, 'actualizaciones_thead', '{\"id\":\"id\",\"codigo\":\"codigo\",\"requiere\":\"requiere\",\"nombre\":\"nombre\",\"descripcion\":\"descripcion\",\"ejecutar\":\"ejecutar\"}', 1000),
 (34, 'logs_thead', '{\"id\":\"id\",\"fecha\":\"fecha\",\"usuario\":\"usuario\",\"p\":\"pre\",\"c\":\"c\",\"a\":\"a\",\"sospechoso\":\"sospechoso\"}', 1000),
-(35, 'test_thead', '{\"id\":\"id\",\"nombre\":\"nombre\",\"apellidos\":\"apellidos\"}', 0),
-(38, 'categorias_thead', '{\"id\":\"id\",\"categoria\":\"categoria\",\"orden\":\"orden\"}', 1000),
-(39, 'eventos_thead', '{\"id\":\"id\",\"id_categoria\":\"id_categoria\",\"id_contacto\":\"id_contacto\",\"titulo\":\"titulo\",\"descripcion\":\"descripcion\",\"fecha_inicio\":\"fecha_inicio\",\"fecha_fin\":\"fecha_fin\",\"precio\":\"precio\",\"orden\":\"orden\",\"estatus\":\"estatus\"}', 0),
-(40, 'lugares_thead', '{\"id\":\"id\",\"lugar\":\"lugar\",\"orden\":\"orden\",\"estatus\":\"estatus\"}', 0);
+(35, 'test_thead', '{\"id\":\"id\",\"nombre\":\"nombre\",\"apellidos\":\"apellidos\"}', 0);
 
 -- --------------------------------------------------------
 
@@ -920,11 +1056,11 @@ INSERT INTO `_paginas` (`id`, `pagina`) VALUES
 (72, 'cambiar_clave_otros'),
 (73, 'cambiar_idioma'),
 (78, 'cambio_claves'),
-(82, 'categorias'),
 (62, 'contactos'),
 (64, 'contactos_otros'),
 (65, 'home'),
 (70, 'logs'),
+(61, 'pedidos'),
 (69, 'pedidos_estatus'),
 (66, 'pedidos_otros'),
 (68, 't_usuarios'),
@@ -972,6 +1108,9 @@ INSERT INTO `_permisos` (`id`, `grupo`, `pagina`, `permiso`) VALUES
 (192, 'root', '_usuarios', '1111'),
 (193, 'administradores', '_usuarios', '0000'),
 (195, 'centros', '_usuarios', '0000'),
+(196, 'root', 'pedidos', '1111'),
+(197, 'administradores', 'pedidos', '1110'),
+(199, 'centros', 'pedidos', '1110'),
 (200, 'root', 'contactos', '1111'),
 (201, 'administradores', 'contactos', '1110'),
 (202, 'centros', 'cambiar_clave', '1110'),
@@ -1015,8 +1154,7 @@ INSERT INTO `_permisos` (`id`, `grupo`, `pagina`, `permiso`) VALUES
 (255, 'root', 'cambio_claves', '1111'),
 (256, 'administradores', 'cambio_claves', '1110'),
 (258, 'root', 'test', '1111'),
-(259, 'administradores', 'test', '1110'),
-(270, 'root', 'categorias', '111');
+(259, 'administradores', 'test', '1110');
 
 -- --------------------------------------------------------
 
@@ -2281,11 +2419,21 @@ CREATE TABLE `_usuarios` (
 --
 
 INSERT INTO `_usuarios` (`id`, `grupo`, `usuario`, `clave`, `estatus`) VALUES
-(26, 'root', 'robincoello@hotmail.com', '$2y$12$3lnUh.FbwS4frwYGd92LwuPQ0Dyup0J2dQJnyEAj.jQ8QdEcQO9VG', 1);
+(26, 'root', 'robincoello@hotmail.com', '$2y$12$3lnUh.FbwS4frwYGd92LwuPQ0Dyup0J2dQJnyEAj.jQ8QdEcQO9VG', 1),
+(101, 'centros', 'roencosa@gmail.com', '$2y$12$/tktE6Iqsukg5iuROV0UkOYTAVyO4F2yd/iuC5Z6m7MJc0Anu4xhG', 1),
+(102, 'gerente', 'roencosa@facturas.be', '$2y$12$P3cXgP9pFzNZ8wT1h3EXKO9hfQMcs/NRjrzXxB0OQmjpROrrTA6P2', 0),
+(103, 'centros', 'des@mas.com', '$2y$12$dIFd5ktHdRxV5qUVgZBHjun.ovWwnasoLo0rwaNHZCo24yWy6ltry', 0),
+(104, 'centros', 'andres@andres.com', '$2y$12$B99/B.wnW6pbaeKlYz82Ke83DmOumntwGJzvnsIYF32MiAfzfAET.', 1);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `actualizaciones`
+--
+ALTER TABLE `actualizaciones`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `cambio_claves`
@@ -2304,6 +2452,19 @@ ALTER TABLE `contactos`
 -- Indexes for table `logs`
 --
 ALTER TABLE `logs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pedidos`
+--
+ALTER TABLE `pedidos`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `ref` (`ref`);
+
+--
+-- Indexes for table `test`
+--
+ALTER TABLE `test`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2378,6 +2539,11 @@ ALTER TABLE `_usuarios`
 --
 
 --
+-- AUTO_INCREMENT for table `actualizaciones`
+--
+ALTER TABLE `actualizaciones`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT for table `cambio_claves`
 --
 ALTER TABLE `cambio_claves`
@@ -2391,7 +2557,17 @@ ALTER TABLE `contactos`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+--
+-- AUTO_INCREMENT for table `pedidos`
+--
+ALTER TABLE `pedidos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `test`
+--
+ALTER TABLE `test`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `_contenido`
 --
@@ -2416,22 +2592,22 @@ ALTER TABLE `_menu`
 -- AUTO_INCREMENT for table `_opciones`
 --
 ALTER TABLE `_opciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 --
 -- AUTO_INCREMENT for table `_paginas`
 --
 ALTER TABLE `_paginas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 --
 -- AUTO_INCREMENT for table `_permisos`
 --
 ALTER TABLE `_permisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=273;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=270;
 --
 -- AUTO_INCREMENT for table `_traducciones`
 --
 ALTER TABLE `_traducciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5342;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5290;
 --
 -- AUTO_INCREMENT for table `_usuarios`
 --
