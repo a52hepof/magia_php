@@ -6,19 +6,6 @@
     <div class="col-lg-6">
 
 
-        <?php
-        /*            <form class="form-inline">
-          <div class="form-group">
-          <label for="login" class="sr-only">Login</label>
-          <input type="text" class="form-control" id="login" placeholder="Login">
-          </div>
-          <div class="form-group">
-          <label for="clave" class="sr-only">Clave</label>
-          <input type="password" class="form-control" id="clave" placeholder="clave">
-          </div>
-          <button type="submit" class="btn btn-default">Entrar</button>
-          </form> */
-        ?>
 
 
 
@@ -36,7 +23,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.php">Magia Formularios</a>
+            <a class="navbar-brand" href="index.php">Magia_PHP</a>
         </div>
 
 
