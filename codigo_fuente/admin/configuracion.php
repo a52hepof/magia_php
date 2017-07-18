@@ -1,11 +1,11 @@
 <?php
 // DATOS DE LA EMPRESA
-$path_imagenes = "/var/www/html/audio/imagenes";
+$path_imagenes = "/var/www/html/";
 $config_debug = 0; 
-$config_nombre_web = "JIHOLABO";
-$config_url = "http://audio.facturas.be"; // sin / al final
-$config_direccion = "Rue de la Technologie 65, \n1082 Berchem-Sainte-Agathe, \nBelgique";
-$config_tel = "+32(0)2 345 37 94";
+$config_nombre_web = "Magia_php";
+$config_url = "https://github.com/robincoello/magia_php"; // sin / al final
+$config_direccion = "Av del codigo abierto 1970, \n1000 Bruselas, \nBégica";
+$config_tel = "+32(0)474 62 47 07";
 $config_logo = "logo.png";
 //
 $config_grupo_por_defecto = 'centros';
@@ -40,27 +40,6 @@ $config_email_pop_puerto = "995";
 $config_email_smtp = "mail.facturas.be";
 # email_smtp_puerto
 $config_email_smtp_puerto = "465";
-# Carbon Copie
-# CC
-# email_nombres y apellidos
-$config_email_cc_nombre = "Robinson Coello S."; 
-# email_usuario, generalmente formato email
-$config_email_cc_usuario = "robinson@facturas.be"; 
-// suele ser el mismo email
-$config_email_cc_usuario = "robinson@facturas.be"; 
-# email_clave, la clave del email
-$config_email_cc_clave = "HIhSu6IEuFDo"; 
-# email_pop, seridor entrante
-$config_email_cc_pop = "mail.facturas.be";
-# email_pop_puerto
-$config_email_cc_pop_puerto = "995";
-# email_smtp Servidor Saliente
-$config_email_cc_smtp = "mail.facturas.be";
-# email_smtp_puerto
-$config_email_cc_smtp_puerto = "465";
-#
-$r1 = 1;
-$r2 = 1;
 // envio de emails
 #contacto | admin | Motivo
 #--------|-------|---------------------------------------------		 

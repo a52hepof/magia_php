@@ -11,7 +11,7 @@
  * </code></pre>
  */
 function magia_version() {
-    return "0.0.8";
+    return "0.0.11";
 }
 
 function m($v1, $v2) {
