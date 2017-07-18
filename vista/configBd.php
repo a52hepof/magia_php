@@ -24,7 +24,7 @@
     <div class="form-group">
         <label for="inputPassword3" class="col-sm-2 control-label">Clave</label>
         <div class="col-sm-10">
-            <input type="password" name="clave" class="form-control" id="clave" placeholder="password, en ocaciones se deja en blanco" value="<?php echo $clave; ?>">
+            <input type="text" name="clave" class="form-control" id="clave" placeholder="password, en ocaciones se deja en blanco" value="<?php echo $clave; ?>">
         </div>
     </div>
 

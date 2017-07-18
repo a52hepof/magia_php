@@ -1,4 +1,5 @@
-
+<?php 
+/*
 <H2>Config menu</H2>                    
 <form class="form-horizontal" method="get" action="?">
     <input  type="hidden" name="p" value="plugins_lista">
@@ -88,3 +89,5 @@ foreach ($grupos as $grupo) {
 ?>
 
 
+*/
+?>
