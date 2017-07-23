@@ -371,7 +371,7 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
         $t = count($mvc); // cuenta las carpetas        
         crear_carpeta("$path_plugins", "$nombrePlugin");
         $contenido = contenido_extenciones_funciones($nombrePlugin);
-        crear_fichero("$path_web/extenciones/funciones", "$nombrePlugin.php", $contenido);
+        //crear_fichero("$path_web/extenciones/funciones", "$nombrePlugin.php", $contenido);
 
 // si la carpeta existe, registro el nombre del plugin en la base de datos como una pagina
         registrar_pagina_en_bd($nombrePlugin);
@@ -2591,8 +2591,8 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/ ?>' . "\n";
             $fuente .= '<h1> ' . "\n";
-            $fuente .= '<span class="<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
-            $fuente .= '<?php echo _t("Detalles"); ?> ' . "\n";
+            $fuente .= '<span class="glyphicon glyphicon-info-sign"></span> ' . "\n\n";
+            $fuente .= 'Detalles ' . "\n";
             $fuente .= '</h1> ' . "\n";
             
             $fuente .= '<ul> ' . "\n";
@@ -2616,7 +2616,7 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
                     
                     $var1 = $reg[0];
                     $var2 = "$nombrePlugin"."_"."$var1";                                            
-                    $fuente .= '<li><?php _t("' . ucfirst($reg[0]) . '"); ?>: %'.$var2.'%</li>' . "\n";
+                    $fuente .= '<li>' . ucfirst($reg[0]) . ' : %'.$var2.'%</li>' . "\n";
                     //$fuente .= '  ' . "\n";                    
                 }
                 $i++;
@@ -3162,8 +3162,136 @@ function contenido_plugin($pagina, $nombrePlugin) {
 
     switch ($pagina) {
         case 'funciones.php':
-            $fuente = "Plugin: $nombrePlugin \n";
-            $fuente .= 'magia_version: ' . magia_version() . ' ' . "\n";
+    $nombre_sin_id = bdd_quita_id_inicio($nombrePlugin);
+    $lista_campos = bdd_lista_campos_segun_tabla($nombrePlugin);
+    $campo_parecido = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre_sin_id, $lista_campos);
+
+    $fuente = '<?php ' . "\n";
+    $fuente .= ' /**  ' . "\n";
+    $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
+    $fuente .= ' **/' . "\n";
+    $fuente .= ' ';
+    $fuente .= 'function ' . $nombrePlugin . '_campo($campo, $id) {
+    global $conexion;
+    $sql = mysql_query(
+            "SELECT $campo FROM ' . $nombrePlugin . ' WHERE id = $id   ", $conexion) or error(__DIR__, __FILE__, __LINE__);
+    $reg = mysql_fetch_array($sql); 
+    
+    
+    
+    if($reg[$campo]){
+        return $reg[$campo];
+    } else {
+        return false;
+    }
+}
+function ' . $nombrePlugin . '_campo_add($campo, $label, $selecionado = "", $excluir = "") {
+    global $conexion;
+    $sql = mysql_query(
+            "SELECT DISTINCT $campo FROM _menu order by $campo   ", $conexion) 
+            or error(__DIR__, __FILE__, __LINE__);
+    while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
+        //include "../gestion/' . $nombrePlugin . '/reg/reg.php"; 
+
+        echo "<option ";
+        if ($selecionado == $' . $nombrePlugin . '[$campo]) {
+            echo " selected ";
+        } else {
+            echo "";
+        }
+        if ($excluir == $' . $nombrePlugin . '[$campo]) {
+            echo " disabled ";
+        } else {
+            echo "";
+        }
+        echo "value=\"$' . $nombrePlugin . '[$campo]\">$' . $nombrePlugin . '[$campo]</option> \n";
+    }
+}
+
+function ' . $nombrePlugin . '_add($selecionado="",$excluir=""){  
+global $conexion; 
+$sql=mysql_query(
+        "SELECT * FROM ' . $nombrePlugin . '  ",$conexion) or error(__DIR__, __FILE__, __LINE__);
+while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
+    
+        include "../gestion/' . $nombrePlugin . '/reg/reg.php"; 
+    
+   echo "<option "; 
+   if($selecionado==$' . $nombrePlugin . '[0]) {echo " selected "; } else {echo ""; }
+   if($excluir==$' . $nombrePlugin . '[0] ) {echo " disabled "; } else {echo ""; }
+   //echo "value=\"$' . $nombrePlugin . '[0]\">$' . $nombrePlugin . '[0]</option>";
+   echo "value=\"$' . $nombrePlugin . '[0]\">$' . $nombrePlugin . '_' . $campo_parecido . '</option>";
+} 
+}
+/**/
+function '.$nombrePlugin.'_numero_actual() {
+    global $conexion;
+    $sql = mysql_query(
+            "SELECT MAX(id) FROM ' . $nombrePlugin . '   ", $conexion) or error(__DIR__, __FILE__, __LINE__);
+    $reg = mysql_fetch_array($sql);
+
+    if ($reg[0]) {
+        return $reg[0];
+    } else {
+        return false;
+    }
+}
+
+
+function '.$nombrePlugin.'_campos_disponibles(){
+     global $conexion;
+    $data = array();
+     $sql = mysql_query( "SHOW COLUMNS FROM '.$nombrePlugin.'  ", $conexion) or error(__DIR__, __FILE__, __LINE__);
+    
+    while ($reg = mysql_fetch_array($sql)) {
+        $data[$reg[0]] = $reg[0];
+    }
+    
+    return $data;
+}
+/**
+ * Son los campos que se debe mostrar en la tabla del index
+ * @global type $conexion
+ * @return type
+ */
+function '.$nombrePlugin.'_campos_a_mostrar(){
+     global $conexion;
+    $data = array();
+     $sql = mysql_query( "SELECT valor FROM _opciones WHERE opcion = \''.$nombrePlugin.'_thead\' ", $conexion) or error(__DIR__, __FILE__, __LINE__);
+    
+    $reg = mysql_fetch_array($sql);
+    
+    return json_decode($reg[0],true);
+}
+
+function '.$nombrePlugin.'_thead(){    
+    $campo_disponibles = '.$nombrePlugin.'_campos_disponibles();   
+    $'.$nombrePlugin.'_campos_a_mostrar = '.$nombrePlugin.'_campos_a_mostrar();        
+    echo "
+     <thead>
+        <tr> ";
+    echo "<th>"._tr("#")."</th> "; // numero de linea
+    foreach ($campo_disponibles as $value) {        
+        if(in_array($value, $'.$nombrePlugin.'_campos_a_mostrar)){
+            echo "<th>"._tr($value)."</th> "; 
+        }        
+    }
+    echo "<th>"._tr("Acción")."</th> "; // accion             
+    echo "    </tr>
+    </thead>"; 
+}
+/**
+ * 
+ */
+function '.$nombrePlugin.'_tfoot(){    
+   '.$nombrePlugin.'_thead();
+}
+
+
+';
+    
+            return $fuente;
+            
             break;
 
         case 'readme.txt':
@@ -3211,11 +3339,38 @@ function contenido_admin($pagina) {
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/ ' . "\n";
-            $fuente .= '  
-$bd_servidor = "' . $servidor . '"; 
-$bd_bdatos = "' . $bdatos . '"; 
-$bd_usuario = "' . $usuario . '"; 
-$bd_clave = "' . $clave . '";';
+            
+            
+            $fuente .= '
+switch ($_SERVER["SERVER_NAME"]) {
+    case "127.0.0.1":
+    case "localhost":
+    //case "192.168.1.26":
+        $bd_servidor = "'.$servidor.'";
+        $bd_bdatos = "'.$bdatos.'";
+        $bd_usuario = "'.$usuario.'";
+        $bd_clave = "'.$clave.'";
+        error_reporting(E_ALL);
+        ini_set("display_errors", 1);
+        break;
+    case "http://www.misuperweb.be":
+    case "audio.facturas.be":
+    case "123.456.789.012":
+        $bd_servidor = "localhost";
+        $bd_bdatos = "Web_base";
+        $bd_usuario = "user";
+        $bd_clave = "1!eQ.ed(Ung0";
+        break;
+    default:
+        break;
+}'; 
+            
+            
+            
+            
+            
+            
+            
             return $fuente;
             break;
 
@@ -3947,8 +4102,9 @@ function '.$nombrePlugin.'_tfoot(){
     
     
     
-
-    return $fuente;
+    
+    //return $fuente;
+    return "";
 }
 
 function contenido_config($pagina) {

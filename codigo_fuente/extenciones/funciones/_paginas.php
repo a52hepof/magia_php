@@ -57,7 +57,7 @@ function _paginas_add($selecionado = "", $excluir = "") {
             echo "";
         }
         // mando un array de paginas a excluir
-        if(in_array($_paginas[pagina], $excluir)){
+        if(in_array($_paginas['pagina'], $excluir)){
             echo " disabled ";
         }
                 

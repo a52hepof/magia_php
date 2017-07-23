@@ -1,6 +1,1 @@
-<?php
-
-$servidor = "localhost";
-$bdatos = "robin";
-$usuario = "root";
-$clave = "root";
+<?php  $servidor = "localhost"; $bdatos = "factura-electronica"; $usuario = "root"; $clave = "root";
