@@ -869,6 +869,7 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";
             $fuente .= '     $' . $nombrePlugin . '_id 		= mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);   ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/var.php"; ' . "\n";
+            $fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
             
             //$fuente .= '     include "./' . $nombrePlugin . '/vista/var.php"; ' . "\n";
             $fuente .= '     $html = file_get_contents("./' . $nombrePlugin . '/vista/var.php"); ' . "\n";
