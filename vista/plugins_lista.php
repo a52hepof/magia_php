@@ -14,7 +14,7 @@ $magia_tablas = array(
 );
 
 $ubicacion = (isset($_GET['ubicacion'])) ? "$_GET[ubicacion]" : "top";
-$padre = (isset($_GET['padre'])) ? "$_GET[padre]" : "config";
+$padre = (isset($_GET['padre'])) ? "$_GET[padre]" : "gestion";
 $p = (isset($_GET['p'])) ? "$_GET[p]" : "plugins_lista";
 ?>
 

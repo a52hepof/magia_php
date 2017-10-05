@@ -1,1 +1,1 @@
-<?php  $path_web = "/var/www/html/factura-electronica"; $path_plugins = "/var/www/html/factura-electronica/gestion"; $path_plugins_controlador = "path_plugins_controlador"; $path_plugins_modelos = ""; $path_plugins_vista = ""; $path_plugins_reg = "";
+<?php  $path_web = "/var/www/html/paty_web"; $path_plugins = "/var/www/html/paty_web/gestion"; $path_plugins_controlador = "path_plugins_controlador"; $path_plugins_modelos = ""; $path_plugins_vista = ""; $path_plugins_reg = "";
