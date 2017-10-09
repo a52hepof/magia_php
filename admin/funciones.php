@@ -2030,7 +2030,7 @@ function contenido_vista($vista, $nombrePlugin) {
             
             
             
-            $fuente.= '<?php '.$nombrePlugin.'_thead(); ?>';
+            $fuente.= '<?php $ganchos=array(); '.$nombrePlugin.'_thead($ganchos); ?>';
             
             
             
@@ -3265,7 +3265,8 @@ function '.$nombrePlugin.'_campos_a_mostrar(){
     return json_decode($reg[0],true);
 }
 
-function '.$nombrePlugin.'_thead(){    
+function '.$nombrePlugin.'_thead($ganchos=array()){
+    
     $campo_disponibles = '.$nombrePlugin.'_campos_disponibles();   
     $'.$nombrePlugin.'_campos_a_mostrar = '.$nombrePlugin.'_campos_a_mostrar();        
     echo "
@@ -3277,6 +3278,19 @@ function '.$nombrePlugin.'_thead(){
             echo "<th>"._tr($value)."</th> "; 
         }        
     }
+    
+
+    if ($gancho) {
+        $i = 0;
+        while ($i < count($gancho)) {
+            echo "<th>$gancho[$i]</th>";
+            $i++;
+        }
+    }
+    
+
+
+
     echo "<th>"._tr("Acción")."</th> "; // accion             
     echo "    </tr>
     </thead>"; 
