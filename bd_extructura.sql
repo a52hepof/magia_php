@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 18, 2017 at 08:52 AM
--- Server version: 5.7.17
--- PHP Version: 5.6.30
+-- Generation Time: Oct 10, 2017 at 11:22 PM
+-- Server version: 5.7.18
+-- PHP Version: 5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `robin`
+-- Database: `blog`
 --
 
 -- --------------------------------------------------------
@@ -33,6 +33,13 @@ CREATE TABLE `cambio_claves` (
   `fecha_solicitud` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `codigo_usado` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `cambio_claves`
+--
+
+INSERT INTO `cambio_claves` (`id`, `usuario`, `codigo`, `fecha_solicitud`, `codigo_usado`) VALUES
+(23, 'robincoello@hotmail.com', 'QDCRsGdLyb', '2017-10-10 23:11:08', 0);
 
 -- --------------------------------------------------------
 
@@ -70,7 +77,7 @@ CREATE TABLE `contactos` (
 --
 
 INSERT INTO `contactos` (`id`, `idioma`, `tipo_documento`, `ruc_prefijo`, `numero_documento`, `empresa`, `contacto`, `saludo`, `direccion`, `cpostal`, `ciudad`, `provincia`, `pais`, `tel`, `fax`, `email`, `notas`, `tipo`, `fecha_registro`, `es_contacto`, `estrellas`, `estatus`) VALUES
-(34, 'es_ES', 'Pasaporte', 'BE', '1020304050', 'Facturas.be', 'Robinson Coello S.', 'Mr.', 'Av de codigo 1970', '1020', 'Bruxelles', '', 'Belgique', '+32474624707', '', 'robincoello@hotmail.com', 'Nada que decir', 0, '2017-06-21 08:50:22', '', 1, 1);
+(1110, 'en_GB', '', '', '123.123.123', 'Empresa Blog', 'Admin', '', 'Av de la programacion 12', '1200', 'Bruselles', '', 'Belgique', '+3265987455', '', 'admin@localhost', '', 0, '2017-10-10 23:20:04', NULL, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -2279,7 +2286,7 @@ CREATE TABLE `_usuarios` (
 --
 
 INSERT INTO `_usuarios` (`id`, `grupo`, `usuario`, `clave`, `estatus`) VALUES
-(26, 'root', 'robincoello@hotmail.com', '$2y$12$3lnUh.FbwS4frwYGd92LwuPQ0Dyup0J2dQJnyEAj.jQ8QdEcQO9VG', 1);
+(107, 'root', 'admin@localhost', '$2y$12$exRD3glEc99UdCIX6C56l.C8eIYl2jyrk2tqFHClvIP3GsbDUHkeS', 1);
 
 --
 -- Indexes for dumped tables
@@ -2379,12 +2386,12 @@ ALTER TABLE `_usuarios`
 -- AUTO_INCREMENT for table `cambio_claves`
 --
 ALTER TABLE `cambio_claves`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `contactos`
 --
 ALTER TABLE `contactos`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1108;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1111;
 --
 -- AUTO_INCREMENT for table `logs`
 --
@@ -2434,7 +2441,7 @@ ALTER TABLE `_traducciones`
 -- AUTO_INCREMENT for table `_usuarios`
 --
 ALTER TABLE `_usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 --
 -- Constraints for dumped tables
 --
