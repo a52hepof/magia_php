@@ -10,6 +10,7 @@ include "./admin/coneccion.php";
 include "./admin/funciones.php";
 include "./admin/gestion_bd.php";
 include "./admin/permisos.php";
+include "./admin/mensajes.php";
 
 if (isset($_REQUEST['ubicacion'])) {
     $ubicacion = $_REQUEST['ubicacion'];
