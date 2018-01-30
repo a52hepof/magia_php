@@ -3215,7 +3215,7 @@ $sql=mysql_query(
         "SELECT * FROM ' . $nombrePlugin . '  ",$conexion) or error(__DIR__, __FILE__, __LINE__);
 while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
     
-        include "../gestion/' . $nombrePlugin . '/reg/reg.php"; 
+        include "./gestion/' . $nombrePlugin . '/reg/reg.php"; 
     
    echo "<option "; 
    if($selecionado==$' . $nombrePlugin . '[0]) {echo " selected "; } else {echo ""; }
