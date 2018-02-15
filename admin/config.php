@@ -1,1 +1,1 @@
-<?php  $path_web = "/var/www/html/eventos-tema"; $path_plugins = "/var/www/html/eventos-tema/gestion"; $path_plugins_controlador = "path_plugins_controlador"; $path_plugins_modelos = ""; $path_plugins_vista = ""; $path_plugins_reg = "";
+<?php  $path_web = "/var/www/html/eventos-tema"; $path_plugins = "/var/www/html/eventos-tema/gestion"; $path_plugins_controlador = "path_plugins_controlador"; $path_plugins_modelos = ""; $path_plugins_vista = ""; $path_plugins_reg = ""; $path_temas = "/var/www/html/mago-temas/pato/admin";

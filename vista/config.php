@@ -120,6 +120,19 @@ echo "$path_plugins_reg";
         </div>
     </div>
 
+    <div class="form-group">
+        <label for="path_temas" class="col-sm-2 control-label">Path temas</label>
+        <div class="col-sm-10">
+            <input type="text" 
+                   name="path_temas" 
+                   class="form-control" 
+                   id="path_temas" 
+                   placeholder="path_temas" 
+                   value="<?php echo "$path_temas"; ?>"
+                   >
+        </div>
+    </div>
+
 
 
 
