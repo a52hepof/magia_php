@@ -378,8 +378,8 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
 
 // tambien registro el item en el menu    
         registra_item_al_menu($nombrePlugin, $ubicacion, $padre, $label);
-// registro los campos visibles
-        
+
+// registro los campos visibles        
         $json_campos_segun_tabla = json_encode(bdd_lista_campos_segun_tabla($nombrePlugin));
         echo "Los campos en json"; 
         echo var_dump($json_campos_segun_tabla);
@@ -388,9 +388,7 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
 
         
         
-        
-        
-        
+                        
 // ahora registro el permiso del root en 1111
         registrar_permiso_pagina_grupo('root', "$nombrePlugin", '1111');
         registrar_permiso_pagina_grupo('administradores', "$nombrePlugin", '1110');
@@ -425,7 +423,8 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
                 crear_carpeta("$path_plugins/$nombrePlugin",$mvc[$i]);
                 crear_carpeta("$path_plugins/$nombrePlugin/$mvc[$i]", 'publico');
             }
-            // dentro de cada carpeta creo los ficheros que cada carpeta debe contenir
+            // dentro de cada carpeta (Controlador, modelos, vista, reg) 
+            // creo los ficheros que cada carpeta
             magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvc[$i]);
             $i++;
         }
@@ -618,7 +617,13 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             $fuente .= ' if (permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo)) { ' . "\n";
             $fuente .= ' $' . $nombrePlugin . '_id 		= mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']); ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/modelos/borrar.php"; ' . "\n";
+            $fuente .='// si hay uno nuevo
+                        if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/borrar.php")) {
+                            include "../temas/$config_tema/admin/' . $nombrePlugin . '/vista/borrar.php";
+                        } else {
+                            include "./' . $nombrePlugin . '/vista/borrar.php";
+                        }';            
+            //$fuente .= ' include "./' . $nombrePlugin . '/modelos/borrar.php"; ' . "\n";
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
@@ -635,9 +640,21 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina, $_usuarios_grupo)) { ' . "\n";
             $fuente .= '       $inicia = (isset($_REQUEST[\'pag\']) && $_REQUEST[\'pag\'] != 0 ) ? $_REQUEST[\'pag\'] * $cfg_limite_items_en_tablas : 0;  ' . "\n";
-            $fuente .= '     include "./' . $nombrePlugin . '/modelos/buscar.php"; ' . "\n";
+            $fuente .='// si hay uno nuevo
+                        if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/buscar.php")) {
+                            include "../temas/$config_tema/admin/' . $nombrePlugin . '/vista/buscar.php";
+                        } else {
+                            include "./' . $nombrePlugin . '/vista/buscar.php";
+                        }';            
+            //$fuente .= '     include "./' . $nombrePlugin . '/modelos/buscar.php"; ' . "\n";
             //$fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
-            $fuente .= '     include "./' . $nombrePlugin . '/vista/buscar.php"; ' . "\n";
+            
+                   
+                                    
+          //  $fuente .= '     include "./' . $nombrePlugin . '/vista/buscar.php"; ' . "\n";
+            
+            
+            
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina,$_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
@@ -656,8 +673,30 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";
             $fuente .= ' if(isset($_REQUEST[\'a\'])==\'crear\'){ ' . "\n";
 
+            
+            
+            //$fuente .= ' include "./' . $nombrePlugin . '/reg/post.php";  ' . "\n";                        
+            //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/reg/post.php")) { ' . "\n";
+            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/reg/post.php"; ' . "\n";
+            $fuente .=' } else { ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/reg/post.php";  ' . "\n";
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
+            
+            
+            
+            
+            //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/crear.php")) { ' . "\n";
+            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/crear.php"; ' . "\n";
+            $fuente .=' } else { ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/crear.php";  ' . "\n";
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
+            
+            
+            
         //    $fuente .= ' include "./' . $nombrePlugin . '/modelos/index.php";  ' . "\n";
         //    $fuente .= ' include "./' . $nombrePlugin . '/vista/index.php";  ' . "\n";
             
@@ -668,7 +707,18 @@ function contenido_controlador($controlador, $nombrePlugin) {
             
             
             $fuente .= ' }else{ ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/vista/crear.php";  ' . "\n";
+
+            
+            $fuente .='// si hay uno nuevo
+                        if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/crear.php")) {
+                            include "../temas/$config_tema/admin/' . $nombrePlugin . '/vista/crear.php";
+                        } else {
+                            include "./' . $nombrePlugin . '/vista/crear.php";
+                        }';
+            
+//            $fuente .= ' include "./' . $nombrePlugin . '/vista/crear.php";  ' . "\n";
+            
+            
             $fuente .= ' }          ' . "\n";
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
@@ -713,17 +763,90 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' if(isset($_REQUEST[\'a\'])==\'editar\'){ ' . "\n";
 
             $fuente .= ' $' . $nombrePlugin . '_id = mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);      ' . "\n";
+            //$fuente .= ' include "./' . $nombrePlugin . '/reg/post.php";  ' . "\n";
+                        //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/reg/post.php")) { ' . "\n";
+            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/reg/post.php"; ' . "\n";
+            $fuente .=' } else { ' . "\n";            
             $fuente .= ' include "./' . $nombrePlugin . '/reg/post.php";  ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/modelos/editar.php";  ' . "\n\n";
-
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
+                                    
+            
+            //$fuente .= ' include "./' . $nombrePlugin . '/modelos/editar.php";  ' . "\n\n";
+            //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/editar.php")) { ' . "\n";
+            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/editar.php"; ' . "\n";
+            $fuente .=' } else { ' . "\n";
+            $fuente .= ' include "./' . $nombrePlugin . '/modelos/editar.php";  ' . "\n";
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
+                                    
+            //$fuente .= ' include "./' . $nombrePlugin . '/modelos/ver.php";  ' . "\n";
+                        //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php")) { ' . "\n";
+            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
+            $fuente .=' } else { ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/ver.php";  ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
+            
+            //$fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
+                        //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php")) { ' . "\n";
+            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
+            $fuente .=' } else { ' . "\n";
+            $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php";  ' . "\n";
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
+            
+            //$fuente .= ' include "./' . $nombrePlugin . '/vista/ver.php";  ' . "\n";
+                        //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/ver.php")) { ' . "\n";
+            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/vista/ver.php"; ' . "\n";
+            $fuente .=' } else { ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/vista/ver.php";  ' . "\n";
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
+                                                
+            
             $fuente .= ' }else{ ' . "\n";
+            
+            
             $fuente .= ' $' . $nombrePlugin . '_id = mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);      ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/vista/editar.php"; ' . "\n";
+            //$fuente .= ' include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
+                        //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php")) { ' . "\n";
+            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
+            $fuente .=' } else { ' . "\n";
+            $fuente .= ' include "./' . $nombrePlugin . '/modelos/ver.php";  ' . "\n";
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
+            
+            
+            //$fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
+                        //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php")) { ' . "\n";
+            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
+            $fuente .=' } else { ' . "\n";
+            $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php";  ' . "\n";
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
+            
+            
+            
+            
+            
+            
+            $fuente .='// si hay uno nuevo
+                        if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/editar.php")) {
+                            include "../temas/$config_tema/admin/' . $nombrePlugin . '/vista/editar.php";
+                        } else {
+                            include "./' . $nombrePlugin . '/vista/editar.php";
+                        }';
+            
+             //$fuente .= ' include "./' . $nombrePlugin . '/vista/editar.php"; ' . "\n";
+            
             $fuente .= ' }  ' . "\n";
 
             $fuente .= ' } else { ' . "\n";
@@ -767,11 +890,33 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";
             $fuente .= '  $inicia = (isset($_REQUEST[\'pag\']) && $_REQUEST[\'pag\'] != 0 ) ? $_REQUEST[\'pag\'] * $cfg_limite_items_en_tablas : 0;    ' . "\n";
-            $fuente .= '     include "./' . $nombrePlugin . '/modelos/index.php"; ' . "\n";
+            
+            //$fuente .= '     include "./' . $nombrePlugin . '/modelos/index.php"; ' . "\n";
+            //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/index.php")) { ' . "\n";
+            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/index.php"; ' . "\n";
+            $fuente .=' } else { ' . "\n";
+            $fuente .= ' include "./' . $nombrePlugin . '/modelos/index.php";  ' . "\n";
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
+            
+                        
 //            $fuente .= ' // esto es par el paginador     ' . "\n";
 //            $fuente .= ' $total_items_por_pagina = $config_total_items_por_pagina; // esto viene de la configuracion    ' . "\n";
 //            $fuente .= ' $total_paginas = ceil($total_items / $cfg_limite_items_en_tablas);    ' . "\n";
-            $fuente .= '     include "./' . $nombrePlugin . '/vista/index.php"; ' . "\n";
+            
+            
+            $fuente .='// si hay uno nuevo
+                        if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/index.php")) {
+                            include "../temas/$config_tema/admin/' . $nombrePlugin . '/vista/index.php";
+                        } else {
+                            include "./' . $nombrePlugin . '/vista/index.php";
+                        }';
+
+            
+            
+           // $fuente .= '     include "./' . $nombrePlugin . '/vista/index.php"; ' . "\n";
+            
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
@@ -822,12 +967,47 @@ function contenido_controlador($controlador, $nombrePlugin) {
             //     $fuente .= ' include \'header.php\';  '."\n";
             //     $fuente .= ' include "./'.$nombrePlugin.'/funciones.php"; '."\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";
-
             $fuente .= '     $' . $nombrePlugin . '_id 		= mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);   ' . "\n";
 
-            $fuente .= '     include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
-            $fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
-            $fuente .= '     include "./' . $nombrePlugin . '/vista/data.php"; ' . "\n";
+            
+            
+            //$fuente .= '     include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
+            //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php")) { ' . "\n";
+            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
+            $fuente .=' } else { ' . "\n";
+            $fuente .= ' include "./' . $nombrePlugin . '/modelos/ver.php";  ' . "\n";
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
+            
+            
+            
+            
+            //$fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
+            //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php")) { ' . "\n";
+            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
+            $fuente .=' } else { ' . "\n";
+            $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php";  ' . "\n";
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
+            
+            
+            
+            
+            
+            $fuente .='// si hay uno nuevo
+                        if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/data.php")) {
+                            include "../temas/$config_tema/admin/' . $nombrePlugin . '/vista/data.php";
+                        } else {
+                            include "./' . $nombrePlugin . '/vista/data.php";
+                        }';
+            
+            //$fuente .= '     include "./' . $nombrePlugin . '/vista/data.php"; ' . "\n";
+            
+            
+            
+            
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
@@ -868,16 +1048,59 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";                        
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";
             $fuente .= '     $' . $nombrePlugin . '_id 		= mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);   ' . "\n";
-            $fuente .= '     include "./' . $nombrePlugin . '/modelos/var.php"; ' . "\n";
-            $fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
+            
+            
+            //$fuente .= '     include "./' . $nombrePlugin . '/modelos/var.php"; ' . "\n";
+            //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/var.php")) { ' . "\n";
+            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/var.php"; ' . "\n";
+            $fuente .=' } else { ' . "\n";
+            $fuente .= ' include "./' . $nombrePlugin . '/modelos/var.php";  ' . "\n";
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
+            
+            
+            
+            //$fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
+            //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php")) { ' . "\n";
+            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
+            $fuente .=' } else { ' . "\n";
+            $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php";  ' . "\n";
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
+            
+            
+            
             
             //$fuente .= '     include "./' . $nombrePlugin . '/vista/var.php"; ' . "\n";
+            //$fuente .= '     $html = file_get_contents("./' . $nombrePlugin . '/vista/var.php"); ' . "\n";
+            //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/var.php")) { ' . "\n";
+            $fuente .= '     $html = file_get_contents("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/var.php"); ' . "\n";
+            $fuente .=' } else { ' . "\n";
             $fuente .= '     $html = file_get_contents("./' . $nombrePlugin . '/vista/var.php"); ' . "\n";
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
             
             
-            $fuente .= '     include "./' . $nombrePlugin . '/reg/var.php"; ' . "\n";
-            $fuente .= '     // aca la traduccion no va ya que imprimimos el html directo ' . "\n";
             
+            
+            
+            //$fuente .= '     include "./' . $nombrePlugin . '/reg/var.php"; ' . "\n";
+            //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/reg/var.php")) { ' . "\n";
+            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/reg/var.php"; ' . "\n";
+            $fuente .=' } else { ' . "\n";
+            $fuente .= ' include "./' . $nombrePlugin . '/reg/var.php";  ' . "\n";
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
+            
+            
+            
+            
+            
+            $fuente .= '     // aca la traduccion no va ya que imprimimos el html directo ' . "\n";            
             $fuente .= '     echo $html; ' . "\n";
             
             $fuente .= ' } else { ' . "\n";
@@ -918,9 +1141,43 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";            
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";
             $fuente .= '     $' . $nombrePlugin . '_id 		= mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);   ' . "\n";
-            $fuente .= '     include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
-            $fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
-            $fuente .= '     include "./' . $nombrePlugin . '/vista/ver.php"; ' . "\n";
+            
+            
+            //$fuente .= '     include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
+            //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php")) { ' . "\n";
+            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
+            $fuente .=' } else { ' . "\n";
+            $fuente .= ' include "./' . $nombrePlugin . '/modelos/ver.php";  ' . "\n";
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
+            
+            
+            //$fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
+            //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php")) { ' . "\n";
+            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
+            $fuente .=' } else { ' . "\n";
+            $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php";  ' . "\n";
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
+            
+            
+            
+            $fuente .='// si hay uno nuevo
+                        if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/ver.php")) {
+                            include "../temas/$config_tema/admin/' . $nombrePlugin . '/vista/ver.php";
+                        } else {
+                            include "./' . $nombrePlugin . '/vista/ver.php";
+                        }';            
+//            $fuente .= '     include "./' . $nombrePlugin . '/vista/ver.php"; ' . "\n";
+            
+            
+            
+            
+            
+            
+            
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
@@ -963,9 +1220,35 @@ function contenido_controlador($controlador, $nombrePlugin) {
 
             $fuente .= '     $' . $nombrePlugin . '_id 		= mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);   ' . "\n";
 
-            $fuente .= '     include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
-            $fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
-            $fuente .= '     include "./' . $nombrePlugin . '/vista/txt.php"; ' . "\n";
+            //$fuente .= '     include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
+            //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php")) { ' . "\n";
+            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
+            $fuente .=' } else { ' . "\n";
+            $fuente .= ' include "./' . $nombrePlugin . '/modelos/ver.php";  ' . "\n";
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
+            
+            
+            //$fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
+            //------------------------------------------------------------------
+            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php")) { ' . "\n";
+            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
+            $fuente .=' } else { ' . "\n";
+            $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php";  ' . "\n";
+            $fuente .=' } ' . "\n";     
+            //------------------------------------------------------------------
+            
+            
+            
+            $fuente .='// si hay uno nuevo
+                        if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/txt.php")) {
+                            include "../temas/$config_tema/admin/' . $nombrePlugin . '/vista/txt.php";
+                        } else {
+                            include "./' . $nombrePlugin . '/vista/txt.php";
+                        }';            
+            //$fuente .= '     include "./' . $nombrePlugin . '/vista/txt.php"; ' . "\n";
+            
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
@@ -1598,8 +1881,6 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-
-
                     $nombre = $reg['Field'];
                     $tipo = $reg['Type'];
                     $nul = $reg['Null'];
@@ -1687,9 +1968,9 @@ function contenido_vista($vista, $nombrePlugin) {
             
             
             
-            $fuente .=' <?php 
+            $fuentexxxxxxxxxxxxxxxxxx .=' <?php 
                         $campos = array(';
-
+/*
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
@@ -1697,23 +1978,25 @@ function contenido_vista($vista, $nombrePlugin) {
                     $campo = $reg[0];
                     $plugin_campo = "$nombrePlugin" . "_" . "$campo";
 
-                    $fuente .='array(
-"type" => "text",
-"name" => "' . $plugin_campo . '",
-"value" => "$' . $plugin_campo . '",                                                                        
-    
-"for" => "' . $plugin_campo . '",
-"label" => "'.$campo.'",
-"class" => "form-control",
-"id" => "' . $plugin_campo . '",
-"placeholder" => "'.$campo.'",
-                    ),';
-                }
+                    $fuentexxxxxxxxxxxxxxxxxxxxxxxxx .='array(
+                                "type" => "text",
+                                "name" => "' . $plugin_campo . '",
+                                "value" => "$' . $plugin_campo . '",                                                                        
 
-                $i++;
-            }
+                                "for" => "' . $plugin_campo . '",
+                                "label" => "'.$campo.'",
+                                "class" => "form-control",
+                                "id" => "' . $plugin_campo . '",
+                                "placeholder" => "'.$campo.'",
+                                                    ),';
+                                                }
 
-            $fuente .=');
+                                                $i++;
+                                            }
+*/
+                                            
+                                            
+            $fuentexxxxxxxxxxxxxxxxxxx .=');
 
         foreach ($campos as $key => $value) {
 
@@ -1887,12 +2170,10 @@ function contenido_vista($vista, $nombrePlugin) {
 ';       
             
             
+          
             
             
-            
-            
-            /*
-            
+
             
             
             $i = 0;
@@ -1937,11 +2218,8 @@ function contenido_vista($vista, $nombrePlugin) {
 
                         break;
 
-                        case 'opciones':
-                            
-                            $tabla_relacionada = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre, bdd_lista_tablas_bdd());
-                            
-                            
+                        case 'opciones':                            
+                            $tabla_relacionada = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre, bdd_lista_tablas_bdd());                                                        
                             $fuente .= campo_html_opciones($tabla_relacionada, $var2, $reg[0], $nombrePlugin, $valor);
 
                             break;
@@ -1969,20 +2247,22 @@ function contenido_vista($vista, $nombrePlugin) {
 
                       $var1 = $reg[0];
                       $var2 = "$nombrePlugin"."_"."$var1";
-
-                      $fuente .= ' <div class="form-group"> ' . "\n";
+/*
+                      $fuente .= ' <div class="form-9999999group"> ' . "\n";
                       $fuente .= '     <label for="' . $reg[0] . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '"); ?></label> ' . "\n";
                       $fuente .= '     <div class="col-sm-10"> ' . "\n";
                       $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?>" value="<?php echo $' . $var2 . '; ?>"> ' . "\n";
                       $fuente .= '     </div> ' . "\n";
                       $fuente .= '   </div> ' . "\n\n\n";
+ * 
+ */
 
                      
                 }
                 $i++;
             }
             
-            */
+       
 
             $fuente .= '   <div class="form-group"> ' . "\n";
             $fuente .= ' <div class="col-sm-offset-2 col-sm-10"> ' . "\n";
@@ -5007,7 +5287,14 @@ function registra_campos_visibles($nombrePlugin,$valor) {
             )
     );
 }
-
+/**
+ * 
+ * @global type $path_plugins
+ * @global type $dbh
+ * @global string $icon_fichero_copiar
+ * @param type $nombrePlugin
+ * @param type $mvcg
+ */
 function magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvcg) {
     global $path_plugins, $dbh, $icon_fichero_copiar;
 
