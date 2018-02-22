@@ -3,6 +3,7 @@
 $path_imagenes = "/var/www/html/";
 $config_debug = 0; 
 $config_nombre_web = "Magia_php";
+$config_tema = "pato";
 $config_url = "https://github.com/robincoello/magia_php"; // sin / al final
 $config_direccion = "Av del codigo abierto 1970, \n1000 Bruselas, \nBégica";
 $config_tel = "+32(0)474 62 47 07";

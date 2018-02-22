@@ -64,10 +64,7 @@
         
         plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label);        
 
-
-  
-        
-        
+                  
     }
     ?>
 </ul>
