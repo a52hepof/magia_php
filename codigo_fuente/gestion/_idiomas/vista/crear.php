@@ -35,6 +35,13 @@
         </div> 
     </div> 
 
+    <div class="form-group"> 
+        <label for="_idiomas_orden" class="col-sm-2 control-label"><?php _t("Orden"); ?></label> 
+        <div class="col-sm-10"> 
+            <input type="text" class="form-control" name="_idiomas_orden" id="_idiomas_orden" placeholder="<?php _t("Orden"); ?>" value=""   > 
+        </div> 
+    </div> 
+
 
     <div class="form-group"> 
         <div class="col-sm-offset-2 col-sm-10"> 

@@ -1,1 +1,1 @@
-<?php  $servidor = "localhost"; $bdatos = "paises"; $usuario = "root"; $clave = "root";
+<?php  $servidor = "localhost"; $bdatos = "demo"; $usuario = "root"; $clave = "root";

@@ -136,6 +136,11 @@ esta acción, si esta en 0, no puede realizarla.
 
 
 
+## Recuerdos 
+idiomas
+
+http://omegat.sourceforge.net/manual-latest/es/appendix.languages.html
+
 
 
 

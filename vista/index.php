@@ -30,5 +30,4 @@
     <li><a href="index.php?p=permisos">chmod -R 777 <?php echo "$path_web"; ?> Click aquí</a></li>    
     <li><a href="index.php?p=plugins_lista">Crear plugin</a></li>            
     <li><a href="#">Entrar a tu web</a></li>            
-    <li><a href="index.php?p=base_tema_lista">Base para un tema</a></li>   
 </ol>
