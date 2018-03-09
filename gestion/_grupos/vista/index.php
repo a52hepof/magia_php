@@ -18,8 +18,7 @@
     <thead>
         <tr> 
             <th>#</th>
-
-            <th><?php echo _t("Grupo"); ?></th> 
+            <th><?php ordenpor("index.php?p=$p", 'Grupo', 'grupo', $orden);?></th>                         
             <th><?php echo _t("Usuarios"); ?></th> 
             <th><?php echo _t("Accion"); ?></th> 
         </tr>
