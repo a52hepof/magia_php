@@ -14,6 +14,7 @@ $pdf->Cell($w * 1, $h, '#', $border, $ln, $align, $fill, $link);
 $pdf->Cell($w * 1, $h, 'ID', $border, $ln, $align, $fill, $link);
 $pdf->Cell($w * 5, $h, _tr("Codigo"), $border, $ln, $align, $fill, $link);
 $pdf->Cell($w * 5, $h, _tr("Idioma"), $border, $ln, $align, $fill, $link);
+$pdf->Cell($w * 5, $h, _tr("Orden"), $border, $ln, $align, $fill, $link);
 $pdf->Ln();
 //********************
 $i = 1;
@@ -24,6 +25,7 @@ while ($_idiomas = mysql_fetch_array($sql)) {
     $pdf->Cell($w * 1, $h, $_idiomas_id, $border, $ln, $align, $fill, $link);
     $pdf->Cell($w * 5, $h, $_idiomas_idioma, $border, $ln, $align, $fill, $link);
     $pdf->Cell($w * 5, $h, $_idiomas_nombre, $border, $ln, $align, $fill, $link);
+    $pdf->Cell($w * 5, $h, $_idiomas_orden, $border, $ln, $align, $fill, $link);
     
     $pdf->Ln();
     $i++;

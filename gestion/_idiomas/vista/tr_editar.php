@@ -13,6 +13,7 @@ $borrar = (permisos_tiene_permiso("borrar", "_idiomas", $_usuarios_grupo)) ? '<a
         <td></td> 
         <td><input class="form-control" type="text" name="_idiomas_idioma" value="<?php echo $_idiomas_idioma; ?>" placeholder="<?php _t("Idioma"); ?>"></td> 
         <td><input class="form-control" type="text" name="_idiomas_nombre" value="<?php echo $_idiomas_nombre; ?>" placeholder="<?php _t("Nombre"); ?>"></td> 
+        <td><input class="form-control" type="number" name="_idiomas_orden" value="<?php echo $_idiomas_orden; ?>" placeholder="<?php _t("Orden"); ?>"></td> 
         <td><input class="btn btn-primary" type="submit" value="<?php _t("Registrar"); ?>" >
             <?php echo $borrar; ?>
         </td>        

@@ -215,3 +215,26 @@ function logo() {
     global $config_logo;
     echo '<a href="index.php" class="thumbnail"><img src="../imagenes/' . $config_logo . '" alt=""></a>';
 }
+
+/**
+ * Enlaces para ordenar una tabla
+ * @param type $url
+ * @param type $label
+ * @param type $ordenpor
+ * @param type $orden
+ */
+function ordenpor($url, $label, $ordenpor, $orden){
+    
+    $icono_arriba   = '<span class="glyphicon glyphicon-chevron-up"></span>'; 
+    $icono_abajo    = '<span class="glyphicon glyphicon-chevron-down"></span>'; 
+    
+    if($orden == 'ASC'){
+        $enlace = '<a href="'.$url.'&ordenpor='.$ordenpor.'&orden=DESC">'.$label.' '.$icono_abajo.' </a>';
+        
+    }else{
+        $enlace = '<a href="'.$url.'&ordenpor='.$ordenpor.'&orden=ASC">'.$icono_arriba.' '.$label.'  </a>';
+    }
+    
+    echo $enlace; 
+    
+}
