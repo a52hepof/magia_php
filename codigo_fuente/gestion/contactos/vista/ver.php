@@ -61,7 +61,7 @@
     </div> 
 
 
-
+<?php /*
 
     <hr>
     <div class="form-group"> 
@@ -70,7 +70,7 @@
             <input type="text" class="form-control" name="contactos_direccion" id="contactos_direccion" placeholder="<?php _t("Direccion"); ?>" value="<?php echo $contactos_direccion; ?>"  disabled > 
         </div> 
     </div> 
-
+   
 
     <div class="form-group"> 
         <label for="contactos_cpostal" class="col-sm-2 control-label"><?php _t("Cpostal"); ?></label> 
@@ -88,13 +88,13 @@
     </div> 
 
 
-    <?php /* <div class="form-group"> 
+  <div class="form-group"> 
       <label for="contactos_provincia" class="col-sm-2 control-label"><?php _t("Provincia"); ?></label>
       <div class="col-sm-10">
       <input type="text" class="form-control" name="contactos_provincia" id="contactos_provincia" placeholder="<?php _t("Provincia"); ?>" value="<?php echo $contactos_provincia; ?>"  disabled >
       </div>
       </div>
-     */ ?>
+     
 
     <div class="form-group"> 
         <label for="contactos_pais" class="col-sm-2 control-label"><?php _t("Pais"); ?></label> 
@@ -122,7 +122,7 @@
             <input type="text" class="form-control" name="contactos_email" id="contactos_email" placeholder="<?php _t("Email"); ?>" value="<?php echo $contactos_email; ?>"  disabled > 
         </div> 
     </div> 
-
+*/ ?>
 
     <div class="form-group"> 
         <label for="contactos_notas" class="col-sm-2 control-label"><?php _t("Notas"); ?></label> 
@@ -214,3 +214,114 @@
     </div>     
 </form> 
 <a href="index.php?p=contactos&c=txt&contactos_id=<?php echo $contactos_id; ?>">Formato texto</a> 
+
+<hr>
+
+
+<h2>Empleados de esta emprea <?php echo $contactos_id; ?></h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Id_empresa</th>
+            <th>Id_contacto</th>            
+            <th>Cargo</th>
+            <th>Fecha Ingreso</th>            
+            <th>Orden</th>
+            <th>Estatus</th>                        
+        </tr>
+    </thead>
+<?php 
+
+    empleados_empresa_segun_id_empresa($contactos_id);
+?>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>Direcciones de este contacto <?php echo $contactos_id; ?></h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id_cliente</th>
+            <th>nombre</th>
+            <th>pais</th>
+            <th>Provincia</th>
+            <th>Ciudad</th>
+        </tr>
+    </thead>
+<?php 
+
+    direcciones_segun_id_contacto($contactos_id);
+?>
+</table>
+
+<h2>Telefonos de <?php echo $contactos_id; ?></h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id_cliente</th>
+            <th>Id</th>
+            <th>Dato</th>
+            <th>Descripcion</th>
+            <th>Extencion</th>
+        </tr>
+    </thead>
+<?php 
+
+    directorio_segun_id_contacto($contactos_id);
+?>
+</table>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>

@@ -1,12 +1,39 @@
-<h1>Bienvenidos</h1>
-
-<p>Puede poner un texto de ayuda aca</p>
+<?php 
 
 
-<h2>Errores Posibles</h2>
 
-<ul>
-    <li>Al estar conectado en una misma computadora con dos usuarios diferentes, ejemplo como administrador y como contacto esto puede causar problemas</li>
-</ul>
+$array = array(
+    "index.php"=>"Inicio", 
+    "index.php?p=contactos"=>"Contactos",     
+    ); 
+
+bst_dropdowns('Menu', $array); 
 
 
+
+
+
+
+
+echo "<hr>"; 
+
+
+
+
+
+echo "<pre>"; 
+var_dump($array);
+echo "</pre>"; 
+
+$json = json_encode($array);
+
+echo "<pre>"; 
+var_dump($json);
+echo "</pre>"; 
+
+$json_decode = json_decode($json);
+
+
+echo "<pre>"; 
+var_dump($json_decode);
+echo "</pre>"; 

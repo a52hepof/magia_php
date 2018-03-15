@@ -1,17 +1,27 @@
 <?php
-
-function emails_enviar($email, $body, $sujeto='') {
-    global  $config_nombre_web,
-            $config_email_nombre, 
-            $config_email_email,
-            $config_idioma;
+/**
+ * 
+ * @global type $config_nombre_web
+ * @global type $config_email_nombre
+ * @global type $config_email_email
+ * @global type $config_idioma
+ * @param type $email
+ * @param type $body
+ * @param type $sujeto
+ */
+function emails_enviar($email, $body, $sujeto = '') {
+    global 
+    $config_nombre_web,
+    $config_email_nombre,
+    $config_email_email,
+    $config_idioma;
     // Datos del destinatario segun email 
-    $destino_empresa = (contactos_campo_segun_email('empresa', $email))?contactos_campo_segun_email('empresa', $email):_tr('Empresa');
-    $destino_contacto = (contactos_campo_segun_email('contacto', $email))?contactos_campo_segun_email('contacto', $email):_tr('Contacto');
+    $destino_empresa = (contactos_campo_segun_email('empresa', $email)) ? contactos_campo_segun_email('empresa', $email) : _tr('Empresa');
+    $destino_contacto = (contactos_campo_segun_email('contacto', $email)) ? contactos_campo_segun_email('contacto', $email) : _tr('Contacto');
     // buscamos el dioma del usuario, caso que no tenga configurado
     // cojemos el idioma por defecto del sitio 
-    $destino_idioma  = (contactos_campo_segun_email('idioma', $email))?contactos_campo_segun_email('idioma', $email):$config_idioma;
-    $destino_email   = $email;
+    $destino_idioma = (contactos_campo_segun_email('idioma', $email)) ? contactos_campo_segun_email('idioma', $email) : $config_idioma;
+    $destino_email = $email;
 
 
     /**
@@ -29,9 +39,9 @@ function emails_enviar($email, $body, $sujeto='') {
     // Datos del destinatario
     $mail->addReplyTo($destino_email, "$destino_contacto");
 //Set who the message is to be sent to
-    $mail->addAddress($destino_email,"$destino_contacto");
+    $mail->addAddress($destino_email, "$destino_contacto");
     // copia para el admin
-    $mail->addBCC($config_email_email,"$config_email_nombre");
+    $mail->addBCC($config_email_email, "$config_email_nombre");
 //Set the subject line
     $mail->Subject = "$config_nombre_web : $sujeto";
 //Read an HTML message body from an external file, convert referenced images to embedded,
@@ -49,4 +59,3 @@ function emails_enviar($email, $body, $sujeto='') {
         echo "Message sent!";
     }
 }
-

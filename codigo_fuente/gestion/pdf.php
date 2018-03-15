@@ -75,4 +75,3 @@ $align = "L";
 $fill = false;
 $link = false;
 include "../gestion/$p/controlador/$c.php";
-?>

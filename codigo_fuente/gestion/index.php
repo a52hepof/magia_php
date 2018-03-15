@@ -7,6 +7,7 @@ include "../admin/funciones.php";
 include "../admin/configuracion.php";
 include "../admin/coneccion.php";
 include "../admin/conec.php";
+include "../admin/mvc.php";
 include "../admin/funciones_sql.php";
 include "../admin/getbootstrap.php";
 include "../admin/permisos.php";
@@ -20,12 +21,19 @@ include "../admin/paginacion.php";
 _incluir_funciones();
 $aqui_seccion = "";
 $aqui_pagina = "";
+
 $_usuarios_idioma = contactos_campo_segun_email('idioma', $_usuarios_usuario);
 
 $p = (isset($_REQUEST['p'])) ? $_REQUEST['p'] : "home";
 $c = (isset($_REQUEST['c'])) ? $_REQUEST['c'] : "index";
 // para las paginaciones de todas las paginas
 $pag = (isset($_REQUEST['pag'])) ? $_REQUEST['pag'] : 0;
+
+
+
+
+
+
 
 ?>
 
@@ -49,12 +57,12 @@ $pag = (isset($_REQUEST['pag'])) ? $_REQUEST['pag'] : 0;
         <link rel="stylesheet" href="estilo.css"/>
 
         <?php
-        $scripts = "./$p/scripts/$c.php";                  
+        $scripts = "./$p/scripts/$c.php";
         (file_exists($scripts)) ? include "$scripts" : "";
         ?>
 
     </head>
-    
+
     <body id="<?php echo "$p" . "_" . "$c"; ?>">
 
 
@@ -88,18 +96,30 @@ $pag = (isset($_REQUEST['pag'])) ? $_REQUEST['pag'] : 0;
 
                     <?php
                     include "home/vista/sidebar.php";
-                    include './' . $p . '/controlador/' . $c . '.php';                    
+                    
+                    $controlador = "./$p/controlador/$c.php"; 
+                    
+                    if(file_exists($controlador)){
+                        include $controlador;
+                    }else{
+                        echo "Controlador <b>$controlador</b> no existe";  
+                    }
+                    
+                    
+                    
+                    
+                    
                     ?>
 
                 </div>	  <!-- /3 --> 
             </div>  <!-- /2 -->
         </div>	<!-- /1 -->
 
-                    <?php
-                    include "home/vista/footer.php";
-                    // cerramos la coneccion 
-                  //  mysql_close($conexion);
-                    ?>
+        <?php
+        include "home/vista/footer.php";
+        // cerramos la coneccion 
+        //  mysql_close($conexion);
+        ?>
 
 
         <!-- Bootstrap core JavaScript

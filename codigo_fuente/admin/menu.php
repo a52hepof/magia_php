@@ -1,7 +1,6 @@
 <?php
-
 /**
- * 
+ * Crea un menu conlos items de ubicacion 'top'
  * @global type $conexion
  */
 function _menu_top() {
@@ -35,7 +34,7 @@ function _menu_top() {
 }
 
 /**
- * 
+ * Regresa los items segun su padre
  * @global type $conexion
  * @param type $padre
  * @param type $ubicacion
@@ -58,7 +57,7 @@ function _menu_items_segun_padre_ubicacion($padre, $ubicacion) {
 }
 
 /**
- * 
+ * Crea el menu lateral 'segun ubicacion 'sidebar'
  * @global type $conexion
  * @param type $p
  */
@@ -86,7 +85,7 @@ function _menu_sidebar($p) {
 }
 
 /**
- * 
+ * Regresa el icono del menu segun el label 
  * @global type $conexion
  * @param type $label
  * @return type

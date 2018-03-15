@@ -43,6 +43,7 @@ function _campo($tabla, $id, $campo) {
  * Incluye las funciones creadas para cada tabla
  */
 function _incluir_funciones() {
+    
     $ruta = "../extenciones/funciones/";
     $directorio = scandir($ruta); //ruta actual
     $i = 2; // empiezo en el segundo fichero  

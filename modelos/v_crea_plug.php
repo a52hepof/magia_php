@@ -7,7 +7,6 @@ $stmt->execute(array(
         )
 );
 $resultados = $stmt->fetchAll();
- 
 
 
 

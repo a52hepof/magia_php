@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * 
+ * @param type $tipo
+ * @param type $sms
+ */
 // atencion	//	ayuda//	alto//	info//	ok
 function mensaje($tipo, $sms) {
 
@@ -52,7 +56,10 @@ function mensaje($tipo, $sms) {
             break;
     }
 }
-
+/**
+ * 
+ * @param type $sms
+ */
 function sms($sms) {
     mensaje('alto', $sms);
 }

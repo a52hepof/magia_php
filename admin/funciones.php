@@ -605,9 +605,46 @@ function copiar_carpeta($origen, $destino) {
  * @param type $nombrePlugin
  * @return string
  */
+/*
+function info_de_campo($nombrePlugin, $info){
+    global $dbh; 
+
+
+$sql = "SHOW COLUMNS FROM $nombrePlugin";
+$stmt = $dbh->prepare($sql);
+$stmt->execute(array(
+    ":tabla" => "$nombrePlugin"
+        )
+);
+$resultados = $stmt->fetchAll();
+
+
+foreach ($resultados as $reg) {
+    $campo_nombre = $reg['Field'];
+    $campo_tipo = $reg['Type'];
+    $campo_nul = $reg['Null'];
+    $campo_clave = $reg['Key'];
+    $campo_defecto = ($reg['Default']) ? $reg['Default'] : "null";
+    $campo_extra = $reg['Extra'];
+    $campo_tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
+    $campo_tipo_campo = tipo_campo($tipo);
+    $campo_var1 = $reg[0];
+    $campo_var2 = "$nombrePlugin" . "_" . "$var1";
+}
+
+return $campo_nombre[0];
+    
+}*/
+
+//*******************************************************************
+
+
 function contenido_controlador($controlador, $nombrePlugin) {
     global $path_plugins, $dbh;
     //$resultados = resultados($nombrePlugin);
+    
+    
+    
     include "./modelos/v_crea_plug.php";
     $total_resultados = count($resultados);
 
@@ -718,8 +755,8 @@ function contenido_controlador($controlador, $nombrePlugin) {
             */
             
             
-            $fuente .= ' include "./' . $nombrePlugin . '/modelos/index.php";  ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/vista/index.php";  ' . "\n";
+            $fuente .= ' include "./' . $nombrePlugin . '/modelos/crear.php";  ' . "\n";
+            //$fuente .= ' include "./' . $nombrePlugin . '/vista/index.php";  ' . "\n";
             
             $fuente .= ' if(!$config_debug){  ' . "\n";
             $fuente .= ' echo \'<meta http-equiv="refresh" content="0; url=index.php?p=\'.$p.\'&c=index">\';  ';
@@ -1578,7 +1615,7 @@ if($config_debug){
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/ ' . "\n";
-            $fuente .= '$comando = "SELECT * FROM ' . $nombrePlugin . ' ORDER BY id DESC  "; ' . "\n";
+            $fuente .= '$comando = "SELECT * FROM ' . $nombrePlugin . ' ORDER BY $ordenpor $orden  "; ' . "\n";
             $fuente .= '$sql=mysql_query("$comando Limit $inicia, $cfg_limite_items_en_tablas ",$conexion) ' . "\n";
             $fuente .= 'or error(__DIR__, __FILE__, __LINE__);	  ' . "\n";
             $fuente .= '// esto es para la paginacion	  ' . "\n";
@@ -1612,7 +1649,7 @@ if($config_debug){
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/ ' . "\n";
-            $fuente .= '$comando = "SELECT * FROM ' . $nombrePlugin . ' ORDER BY id DESC  "; ' . "\n";
+            $fuente .= '$comando = "SELECT * FROM ' . $nombrePlugin . '   "; ' . "\n";
            // $fuente .= '$sql=mysql_query("$comando Limit $inicia, $cfg_limite_items_en_tablas ",$conexion) ' . "\n";
             $fuente .= '$sql=mysql_query("$comando ",$conexion) ' . "\n";
             $fuente .= 'or error(__DIR__, __FILE__, __LINE__);	  ' . "\n";
@@ -2434,6 +2471,14 @@ function contenido_vista($vista, $nombrePlugin) {
                //echo paginacion($p, $c, isset($_REQUEST[\'pag\'])); 
                echo paginacion_master($p, $c, $total_items, $pag);
                ?>';
+               
+               
+               
+               $fuente .='<a href="pdf.php?p=<?php echo $p; ?>">PDF</a>';
+               
+               
+               
+               
 
             return $fuente;
             break;
@@ -3585,7 +3630,13 @@ function contenido_plugin($pagina, $nombrePlugin) {
     $fuente .= ' /**  ' . "\n";
     $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
     $fuente .= ' **/' . "\n";
-    $fuente .= ' ';
+    $fuente .= '/**
+            * Otiene un valor del $campo de la tabla ' . $nombrePlugin . ' segun el $id que le pase 
+            * @global type $conexion
+            * @param type $campo Nombre de $campo 
+            * @param type $id identificador del registro el cual deseo el valor del $campo
+            * @return boolean Regreso el $campo o false segun exista o no
+            */ ';    
     $fuente .= 'function ' . $nombrePlugin . '_campo($campo, $id) {
     global $conexion;
     $sql = mysql_query(
@@ -3600,6 +3651,9 @@ function contenido_plugin($pagina, $nombrePlugin) {
         return false;
     }
 }
+
+
+
 function ' . $nombrePlugin . '_campo_add($campo, $label, $selecionado = "", $excluir = "") {
     global $conexion;
     $sql = mysql_query(
@@ -3622,7 +3676,18 @@ function ' . $nombrePlugin . '_campo_add($campo, $label, $selecionado = "", $exc
         echo "value=\"$' . $nombrePlugin . '[$campo]\">$' . $nombrePlugin . '[$campo]</option> \n";
     }
 }
-
+/**
+ * @todo poner un array de valores a excluir, 
+ * @todo quitar de la lista los valores a excluir, actualmente solo desactivados 
+ * Crea los items de un select de la tabla ' . $nombrePlugin . '
+ * <pre>
+ * <option value="$' . $nombrePlugin . '[0]">$' . $nombrePlugin . '[0]</option>
+ * </pre>
+ * @global type $conexion
+ * @param type $selecionado valor a ser seleccionado 
+ * @param type $excluir Valor a excluir de la lista
+ * @return type html <option>
+ */
 function ' . $nombrePlugin . '_add($selecionado="",$excluir=""){  
 global $conexion; 
 $sql=mysql_query(
