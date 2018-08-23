@@ -102,3 +102,16 @@ function _paginas_total() {
     }
 }
 
+function _paginas_existe($pagina) {
+    global $conexion;
+    $sql = mysql_query(
+            "SELECT id FROM _paginas WHERE pagina = '$pagina'   ", $conexion) or die("Error: _paginas_campo()" . mysql_error());
+    $reg = mysql_fetch_array($sql);
+
+
+    if ($reg[0]) {
+        return $reg[0];
+    } else {
+        return false;
+    }
+}

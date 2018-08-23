@@ -1,8 +1,8 @@
 <?php
 $nombreProyecto = "blog"; 
 
-echo "<p>Vamos a crear los ficheros del proyecto</p>"; 
-echo "El path_plugins: ". $path_plugins; 
+echo "<h2><p>Vamos a crear los ficheros del proyecto</p></h2>"; 
+echo "<p>El path_plugins: ". $path_plugins . "</p>"; 
 magia_crear_ficheros_en_proyecto($nombreProyecto);
 
 

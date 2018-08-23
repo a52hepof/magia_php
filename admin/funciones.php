@@ -575,7 +575,7 @@ function copiar_carpeta($origen, $destino) {
                 if (!file_exists($destino . '/' . $entry)) {
                     copiar_carpeta($Entry, $destino . '/' . $entry);
                 } else {
-                    echo "<p><b>$icon_error [error]</b> : ya existe: $destino/$entry </p>";
+                    echo "<p class=\"error\" ><b>$icon_error [error]</b> : ya existe: $destino/$entry </p>";
                 }
 
 
@@ -586,7 +586,7 @@ function copiar_carpeta($origen, $destino) {
                 copy($Entry, $destino . '/' . $entry);
                 chmod("$destino", 0777);
             } else {
-                echo "<p><b>$icon_error [error]</b>  Ya existe: $destino/$entry)</p>";
+                echo "<p class=\"error\"><b>$icon_error [error]</b>  Ya existe: $destino/$entry)</p>";
             }
         }
 

@@ -6,7 +6,7 @@ $config_nombre_web = "Magia_php";
 $config_url = "https://github.com/robincoello/magia_php"; // sin / al final
 $config_direccion = "Av del codigo abierto 1970, \n1000 Bruselas, \nBégica";
 $config_tel = "+32(0)474 62 47 07";
-$config_logo = "logo.png";
+$config_logo = "logo.jpg";
 //
 $config_grupo_por_defecto = 'centros';
 // si el numero de pedido es inferior a x cifras llenara con ceros en la parte izquierda 
