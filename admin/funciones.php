@@ -3824,7 +3824,15 @@ function '.$nombrePlugin.'_tfoot(){
             break;
     }
 }
-
+/**
+ * Llena el fichero de la carpeta admin
+ * @global type $servidor
+ * @global type $bdatos
+ * @global type $usuario
+ * @global type $clave
+ * @param type $pagina
+ * @return string
+ */
 function contenido_admin($pagina) {
     global $servidor, $bdatos, $usuario, $clave;
     switch ($pagina) {
@@ -3861,10 +3869,6 @@ switch ($_SERVER["SERVER_NAME"]) {
             
             
             
-            
-            
-            
-            
             return $fuente;
             break;
 
@@ -3874,7 +3878,7 @@ switch ($_SERVER["SERVER_NAME"]) {
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/' . "\n";
             $fuente .= '	
-$dbh = new PDO("mysql:host=$servidor; dbname=$bdatos",   $usuario, $clave);
+$dbh = new PDO("mysql:host=$bd_servidor; dbname=$bd_bdatos",   $bd_usuario, $bd_clave);
 ';
             return $fuente;
             break;
@@ -3883,8 +3887,8 @@ $dbh = new PDO("mysql:host=$servidor; dbname=$bdatos",   $usuario, $clave);
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/' . "\n";
-            $fuente .= ' $conexion = mysql_connect("$servidor", "$usuario", "$clave") or error(__DIR__, __FILE__, __LINE__); '. "\n";            
-            $fuente .= ' mysql_select_db("$bdatos", $conexion) or error(__DIR__, __FILE__, __LINE__); '. "\n";
+            $fuente .= ' $conexion = mysql_connect("$bd_servidor", "$bd_usuario", "$bd_clave") or error(__DIR__, __FILE__, __LINE__); '. "\n";            
+            $fuente .= ' mysql_select_db("$bd_bdatos", $conexion) or error(__DIR__, __FILE__, __LINE__); '. "\n";
             
             return $fuente;
             break;
@@ -5658,7 +5662,7 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
     copiar_carpeta("./codigo_fuente/extenciones/funciones", "$path_web/extenciones/funciones");
 
 
-    // ahora creamos los ficheros dentro de las carpetas
+    // ahora creamos los ficheros dentro de las carpetas y 
     // llenamos el contenido de los ficheros
 
     $i = 0;
@@ -5668,18 +5672,18 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
             switch ($carpetas[$i]) {
                 case 'admin':
                     $ficheros = [
-                        'bd.php'
-                            /* 'conec.php',
-                              'coneccion.php',
+                             'bd.php',
+                            // 'conec.php',
+                            //  'coneccion.php',
                               'configuracion.php',
-                              'funciones.php',
-                              'index.php',
-                              'menu.php',
-                              'modelo.css',
-                              'permisos.php',
-                              'traductor.php',
-                              'contenido.php',
-                              'formularios.php' */
+                            //  'funciones.php',
+                            //  'index.php',
+                            //  'menu.php',
+                            //  'modelo.css',
+                            //  'permisos.php',
+                            //  'traductor.php',
+                            //  'contenido.php',
+                            //  'formularios.php' 
                     ];
                     $j = 0;
                     while ($j < count($ficheros)) {
