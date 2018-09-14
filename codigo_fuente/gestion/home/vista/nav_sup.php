@@ -10,7 +10,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="index.php">
-                <?php echo $config_nombre_web; ?>
+                <?php echo _opciones_valor_segun_opcion("nombre_web") ?>
             </a>
         </div>
 

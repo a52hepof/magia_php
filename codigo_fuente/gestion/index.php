@@ -47,7 +47,7 @@ $pag = (isset($_REQUEST['pag'])) ? $_REQUEST['pag'] : 0;
         <meta name="author" content="">
         <link rel="icon" href="favicon.ico">
 
-        <title><?php echo "$config_nombre_web"; ?></title>
+        <title><?php echo _opciones_valor_segun_opcion("nombre_web") ?></title>
 
         <link rel="stylesheet" href="../includes/bootstrap/css/bootstrap.min.css">
 

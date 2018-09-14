@@ -1,8 +1,7 @@
 <?php
 
 
-echo "<p>Los usuarios se crean automaticamente al crear un nuevo contacto</p>"; 
-
+mensaje('info',"Los usuarios se crean automaticamente al crear un nuevo contacto");
 
 /**
   magia_version: 0.0.8

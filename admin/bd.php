@@ -1,1 +1,1 @@
-<?php  $servidor = "localhost"; $bdatos = "directorio"; $usuario = "root"; $clave = "root";
+<?php  $servidor = "localhost"; $bdatos = "factux_admin"; $usuario = "root"; $clave = "root";
