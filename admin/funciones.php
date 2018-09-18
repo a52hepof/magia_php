@@ -381,7 +381,7 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
 // si la carpeta existe, registro el nombre del plugin en la base de datos como una pagina
         registrar_pagina_en_bd($nombrePlugin);
 
-// tambien registro el item en el menu    
+// tambien registro el item en el menu 
         registra_item_al_menu($nombrePlugin, $ubicacion, $padre, $label);
 
 // registro los campos visibles        
@@ -2376,7 +2376,7 @@ function contenido_vista($vista, $nombrePlugin) {
                         foreach ($resultados as $reg) {
                             if ($i > $usar_id) {
                                 /**$fuente .= ' <th><?php echo _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '"); ?></th> ' . "\n"; */
-                                $fuente .= ' <th><?php ordenpor("index.php?p=$p", "' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '", "' . bdd_quita_guiones(bdd_quita_id_inicio($reg[0])) . '", $orden); ?></th> ' . "\n"; 
+                                $fuente .= ' <th><?php ordenpor("index.php?p=$p", _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '"), "' . (($reg[0])) . '", $orden); ?></th> ' . "\n"; 
 
                             }
                             $i++;
@@ -2394,7 +2394,7 @@ function contenido_vista($vista, $nombrePlugin) {
                             foreach ($resultados as $reg) {
                                 if ($i > $usar_id) {
                                     /**$fuente .= ' <th><?php echo _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '"); ?></th> ' . "\n"; */
-                                    $fuente .= ' <th><?php ordenpor("index.php?p=$p", "' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '", "' . bdd_quita_guiones(bdd_quita_id_inicio($reg[0])) . '", $orden); ?></th> ' . "\n"; 
+                                    $fuente .= ' <th><?php ordenpor("index.php?p=$p", "' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '", _tr("' . (($reg[0])) . '"), $orden); ?></th> ' . "\n"; 
 
                                 }
                                 $i++;
@@ -5525,7 +5525,14 @@ function registrar_extructura_magia($vceb  ,  $tabla  ,  $campo  ,  $tipo  ,  $t
             ":activo"=>"$_magia_activo"              ) 
         ); 
 }
-
+/**
+ * Registro en _menu el item del plugin
+ * @global type $dbh
+ * @param type $plugin
+ * @param type $ubicacion
+ * @param type $padre
+ * @param type $label
+ */
 function registra_item_al_menu($plugin, $ubicacion, $padre, $label) {
     global $dbh;
     echo "<p>$plugin $ubicacion $padre $label</p>";
