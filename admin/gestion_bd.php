@@ -140,7 +140,7 @@ function bdd_lista_tablas_bdd() {
 
     //$l = array("contactos","reservas","casas","empresas");
 
-    $l = array("Robinson", "Coello");
+    $l = array();
 
 
     foreach ($resultado as $reg) {

@@ -2376,7 +2376,7 @@ function contenido_vista($vista, $nombrePlugin) {
                         foreach ($resultados as $reg) {
                             if ($i > $usar_id) {
                                 /**$fuente .= ' <th><?php echo _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '"); ?></th> ' . "\n"; */
-                                $fuente .= ' <th><?php ordenpor("index.php?p=$p", _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '"), "' . (($reg[0])) . '", $orden); ?></th> ' . "\n"; 
+                                $fuente .= ' <th><?php ordenpor("index.php?p=$p", _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '"), _tr("' . (($reg[0])) . '"), $orden); ?></th> ' . "\n"; 
 
                             }
                             $i++;
@@ -2394,7 +2394,7 @@ function contenido_vista($vista, $nombrePlugin) {
                             foreach ($resultados as $reg) {
                                 if ($i > $usar_id) {
                                     /**$fuente .= ' <th><?php echo _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '"); ?></th> ' . "\n"; */
-                                    $fuente .= ' <th><?php ordenpor("index.php?p=$p", "' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '", _tr("' . (($reg[0])) . '"), $orden); ?></th> ' . "\n"; 
+                                    $fuente .= ' <th><?php ordenpor("index.php?p=$p", _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '"), _tr("' . (($reg[0])) . '"), $orden); ?></th> ' . "\n"; 
 
                                 }
                                 $i++;

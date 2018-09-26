@@ -77,3 +77,19 @@ function _menu_numero_actual() {
         return false;
     }
 }
+
+function _menu_ubicaciones() {
+    global $conexion;
+    $sql = mysql_query(
+            "SELECT DISTINCT ubicacion FROM _menu   ", $conexion) or die("Error: _menu_ubicaciones()" . mysql_error());
+    
+    $r = array(); 
+    
+    while ($reg = mysql_fetch_array($sql)) {
+        array_push($r, $reg['ubicacion']);
+    }
+
+    return $r;
+
+
+}
