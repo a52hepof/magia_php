@@ -10,6 +10,26 @@
 <?php echo _t("Items"); ?>: 
 <?php echo _paginas_total(); ?>
 
+
+
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-1 col-md-3 col-lg-3">
+
+
+            <?php 
+            include "menu2.php"; 
+            ?>
+
+        </div>
+        <div class="col-sm-11 col-md-9 col-lg-9">
+            
+        
+            
+            
 <table class="table table-striped">
     <thead>
         <tr> 
@@ -73,6 +93,12 @@
 
 </table> 
 
+            
+            
+                    </div>
+
+    </div>
+</div>
 <?php
 echo paginacion_master($p, $c, $total_items, $pag);
 ?>

@@ -1,7 +1,7 @@
 <?php /**
   magia_version: 0.0.8
  * */ ?>
-<?php // include "tabs.php";         ?>
+<?php // include "tabs.php";        ?>
 <h2> 
     <span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> 
 
@@ -74,9 +74,7 @@
                     <tr> 
                         <th>#</th>
 
-                        <th><?php echo _t("Grupo"); ?></th> 
                         <th><?php echo _t("Página"); ?></th> 
-                        <th><?php echo _t("Permisos"); ?></th> 
                         <?php
                         foreach (_grupos_array() as $key => $value) {
                             //    echo '<th>' . _tr($value) . '</th>';
