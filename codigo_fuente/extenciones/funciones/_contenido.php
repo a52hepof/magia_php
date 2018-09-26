@@ -105,3 +105,15 @@ function _contenido_numero_actual() {
         return false;
     }
 }
+function _contenido_total() {
+    global $conexion;
+    $sql = mysql_query(
+            "SELECT count(*) FROM _contenido   ", $conexion) or die("Error: _contenido_total()" . mysql_error());
+    $reg = mysql_fetch_array($sql);
+
+    if ($reg[0]) {
+        return $reg[0];
+    } else {
+        return false;
+    }
+}
