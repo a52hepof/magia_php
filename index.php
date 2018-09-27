@@ -23,16 +23,19 @@ if (isset($_REQUEST['a'])) {
 } else {
     $a = "";
 }
+
 if (isset($_REQUEST['p'])) {
     $p = $_REQUEST['p'];
 } else {
     $p = "index";
 }
+
 if (isset($_REQUEST['c'])) {
     $c = $_REQUEST['c'];
 } else {
     $c = "index";
 }
+
 if (isset($_REQUEST['tabla'])) {
     $tabla = mysql_real_escape_string($_REQUEST['tabla']);
 }
@@ -76,6 +79,10 @@ if (isset($_REQUEST['tabla'])) {
                     } else {
                         include "./vista/menu_izq_.php";
                     }
+                    ?>
+                    <hr>
+                    <?php
+                    include "./vista/menu_izq_desarrollo.php";
                     ?>
 
 

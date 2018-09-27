@@ -11,11 +11,7 @@ include "./admin/funciones.php";
 include "./admin/gestion_bd.php";
 include "./admin/permisos.php";
 
-if (isset($_REQUEST['ubicacion'])) {
-    $ubicacion = $_REQUEST['ubicacion'];
-} else {
-    $ubicacion = "top";
-}
+
 //--------------------------
 if (isset($_REQUEST['a'])) {
     $a = $_REQUEST['a'];
@@ -56,25 +52,12 @@ if (isset($_REQUEST['tabla'])) {
             include "./vista/header.php";
             ?>
 
-            <?php
-            if ($a == 'configBd') {
-                include "./request/updateDb.php";
-            }
-
-            if ($a == 'config') {
-                include "./request/config.php";
-            }
-            ?>
-
+           
             <div class="row">
                 <div class="col-lg-3">
 
                     <?php
-                    if (file_exists("./vista/menu_izq_$p.php")) {
-                        include "./vista/menu_izq_$p.php";
-                    } else {
-                        include "./vista/menu_izq_.php";
-                    }
+                   include "./vista/menu_izq_.php";
                     ?>
 
 

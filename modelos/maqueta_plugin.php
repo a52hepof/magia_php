@@ -1,11 +1,9 @@
 <?php
-/**
- * 
- */
-$sql = "SHOW COLUMNS FROM $tabla";
+
+$sql = "SHOW COLUMNS FROM $nombrePlugin";
 $stmt = $dbh->prepare($sql);
 $stmt->execute(array(
-    ":tabla" => "$tabla"
+    //":tabla" => "$nombrePlugin"
         )
 );
 $resultado = $stmt->fetchAll();
