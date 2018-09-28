@@ -499,7 +499,11 @@ function crear_carpeta($path, $nombre_carpeta) {
     global $icon_error, $icon_ok, $icon_carpeta_cerrada, $icon_carpeta_abierta;
 
     if (file_exists("$path/$nombre_carpeta")) {
-        echo "<p><b>$icon_error [error]</b> La carpeta $path/<b>$nombre_carpeta</b>, existe o no tiene derechos de escritura</p>";
+        //echo "<p><b>$icon_error [error]</b> La carpeta $path/<b>$nombre_carpeta</b>, existe o no tiene derechos de escritura</p>";
+        
+        mensaje('atencion', "<p><b>$icon_error [error]</b> La carpeta $path/<b>$nombre_carpeta</b>, existe o no tiene derechos de escritura</p>");
+        
+        
     } else {
         mkdir("$path/$nombre_carpeta", 0777);
         chmod("$path/$nombre_carpeta", 0777);
@@ -539,6 +543,13 @@ function crear_fichero($path, $fichero, $contenido = '') {
 
     if (file_exists("$path/$fichero")) {
         echo "<p><b>$icon_error [error]</b> El fichero $path/<b>$fichero</b> Ya existe</p>";
+        
+        
+        mensaje("atencion", "<b>Fichero:</b> $path/$fichero  ya existe");
+        
+        
+        
+        
         return 1;
     } else {
         echo "<p>---$icon_fichero $fichero creado con exito</p>";
@@ -576,6 +587,7 @@ function copiar_carpeta($origen, $destino) {
                     copiar_carpeta($Entry, $destino . '/' . $entry);
                 } else {
                     echo "<p class=\"error\" ><b>$icon_error [error]</b> : ya existe: $destino/$entry </p>";
+                    mensaje("atencion", "<b>Carpeta:</b> $destino/$entry  ya existe");
                 }
 
 
@@ -586,7 +598,8 @@ function copiar_carpeta($origen, $destino) {
                 copy($Entry, $destino . '/' . $entry);
                 chmod("$destino", 0777);
             } else {
-                echo "<p class=\"error\"><b>$icon_error [error]</b>  Ya existe: $destino/$entry)</p>";
+                //echo "<p class=\"error\"><b>$icon_error [error]</b>  Ya existe: $destino/$entry)</p>";
+                mensaje("atencion", "<b>$destino/$entry</b> Archivo ya existe");
             }
         }
 
