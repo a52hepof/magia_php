@@ -1,3 +1,9 @@
+<?php
+include "header.php"; 
+?>
+
+
+
 <h1>Configurar la base de datos </h1>
 
 
@@ -44,3 +50,8 @@
 
 </form>
 
+
+
+<?php
+include "footer.php"; 
+?>

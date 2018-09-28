@@ -5,7 +5,7 @@
     <input type="hidden" name="p" value="maqueta_plugin">
     
     <div class="form-group">
-        <label for="nombrePlugin"><?php _t("Tabla"); ?></label>
+        <label for="nombrePlugin"><?php _t("Tablas en"); ?>: <?php echo $bdatos; ?></label>
         <select class="form-control" name="nombrePlugin">
 
             <?php

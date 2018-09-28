@@ -1,4 +1,9 @@
 <?php
+include "header.php";
+?>
+
+
+<?php
 include "maqueta_plugin_tabs.php";
 ?>
 
@@ -25,8 +30,8 @@ include "maqueta_plugin_tabs.php";
                 <optgroup label="Text">
                     <option>Text</option>                
                 </optgroup>
-                
-                
+
+
                 <optgroup label="Fechas">
                     <option>Date</option>                
                 </optgroup>
@@ -40,21 +45,18 @@ include "maqueta_plugin_tabs.php";
 
                     <?php
                     foreach (bdd_lista_tablas_bdd() as $key => $tabla) {
-                        
-                        
+
+
                         foreach (bdd_lista_campos_segun_tabla($tabla) as $key => $campo) {
-                        
-                            echo '<option>'.$tabla.' : '.$campo.'</option>';
-                            
+
+                            echo '<option>' . $tabla . ' : ' . $campo . '</option>';
                         }
-                        
-                        
                     }
                     ?>
 
 
 
-                    
+
                 </optgroup>
 
 
@@ -64,36 +66,36 @@ include "maqueta_plugin_tabs.php";
     </div>
 
 
-    <?php
-    $i = 1;
-    foreach ($resultado as $key => $value) {
+<?php
+$i = 1;
+foreach ($resultado as $key => $value) {
 
 
 
-        //   echo "<pre>"; 
-        //var_dump($resultado);
-        //   echo "</pre>"; 
+    //   echo "<pre>"; 
+    //var_dump($resultado);
+    //   echo "</pre>"; 
 
-        echo '  <div class="form-group">
+    echo '  <div class="form-group">
     <label for="' . $value['Field'] . '" class="col-sm-2 control-label">' . $value['Field'] . '</label>
     <div class="col-sm-10">
-        <input type="text"  name="' . $value['Field'] . '" id="' . $value['Field'] . '" class="form-control" id="inputPassword3" placeholder="' . $value['Field'] . '">
+        <input type="text"  name="' . $value['Field'] . '" id="' . $value['Field'] . '" class="form-control" id="inputPassword3" placeholder="' . $value['Field'] . '" DISABLED>
     </div>
   </div>';
-        /*
-          echo "Campo: $key<b>$value[Field]</b><br>";
-          echo "Tipo: $value[Type]<br>";
-          echo "Null: $value[Null]<br>";
-          echo "Key: $value[Key]<br>";
-          echo "Defecto: $value[Default]<br>";
-          echo "Extra: $value[Extra]<br>";
+    /*
+      echo "Campo: $key<b>$value[Field]</b><br>";
+      echo "Tipo: $value[Type]<br>";
+      echo "Null: $value[Null]<br>";
+      echo "Key: $value[Key]<br>";
+      echo "Defecto: $value[Default]<br>";
+      echo "Extra: $value[Extra]<br>";
 
-          echo "<hr>";
-         */
+      echo "<hr>";
+     */
 
-        $i++;
-    }
-    ?>
+    $i++;
+}
+?>
 
 
 
@@ -146,7 +148,9 @@ include "maqueta_plugin_tabs.php";
 
 
 
-
+<?php
+include "footer.php"; 
+?>
 
 
 

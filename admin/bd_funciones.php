@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 
  * @global type $dbh
@@ -20,6 +21,7 @@ function bd_tablas() {
     }
     return $r;
 }
+
 /**
  * 
  * @global type $dbh
@@ -44,6 +46,7 @@ function bd_grupos() {
     }
     return $r;
 }
+
 /**
  * 
  * @global type $dbh

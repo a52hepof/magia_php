@@ -1,4 +1,11 @@
 <?php
+include "header.php"; 
+?>
+
+    
+    
+    
+    <?php
 $cf = [
     [
         'nombre' => 'id',
@@ -352,3 +359,9 @@ echo tipo_de_campo($cf[$i]['tipo'], $cf[$i]['nombre'], $cf[$i]['valor'], $cf[$i]
 
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+
+<?php
+include "footer.php"; 
+?>

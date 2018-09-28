@@ -3833,13 +3833,15 @@ function '.$nombrePlugin.'_tfoot(){
  * @param type $pagina
  * @return string
  */
-function contenido_admin($pagina) {
+function contenido_admin($pagina, $nombreProyecto) {
     global $servidor, $bdatos, $usuario, $clave;
     switch ($pagina) {
         case 'bd.php':
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
+            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
+            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/ ' . "\n";
             
             
@@ -3876,6 +3878,8 @@ switch ($_SERVER["SERVER_NAME"]) {
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
+            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
+            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/' . "\n";
             $fuente .= '	
 $dbh = new PDO("mysql:host=$bd_servidor; dbname=$bd_bdatos",   $bd_usuario, $bd_clave);
@@ -3886,6 +3890,8 @@ $dbh = new PDO("mysql:host=$bd_servidor; dbname=$bd_bdatos",   $bd_usuario, $bd_
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
+            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
+            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/' . "\n";
             $fuente .= ' $conexion = mysql_connect("$bd_servidor", "$bd_usuario", "$bd_clave") or error(__DIR__, __FILE__, __LINE__); '. "\n";            
             $fuente .= ' mysql_select_db("$bd_bdatos", $conexion) or error(__DIR__, __FILE__, __LINE__); '. "\n";
@@ -3896,7 +3902,8 @@ $dbh = new PDO("mysql:host=$bd_servidor; dbname=$bd_bdatos",   $bd_usuario, $bd_
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
-            $fuente .= ' Fecha de creacion: ' . date("d/m/Y") . ' ' . "\n";
+            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
+            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/' . "\n";
             $fuente .= ' 
 
@@ -3904,7 +3911,7 @@ $dbh = new PDO("mysql:host=$bd_servidor; dbname=$bd_bdatos",   $bd_usuario, $bd_
 define("MAGIA_GESTION_PATH", "./admin");
 $path_imagenes = "/var/www/html/";
 $config_debug = 0; 
-$config_nombre_web = "Magia_php";
+$config_nombre_web = "'.$nombreProyecto.'";
 $config_url = "https://github.com/robincoello/magia_php"; // sin / al final
 $config_direccion = "Av del codigo abierto 1970, \n1000 Bruselas, \nBégica";
 $config_tel = "+32(0)474 62 47 07";
@@ -4068,6 +4075,8 @@ function _estatus($estatus) {
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
+            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
+            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/ ' . "\n";
             $fuente .= ' 
 include "bd.php";
@@ -4165,6 +4174,8 @@ incluir_funciones();
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
+            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
+            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/ ' . "\n";
             $fuente .= ' 
 function permisos_obtiene_permiso($p,$g){
@@ -4230,6 +4241,8 @@ function permisos_sin_permiso($accion, $pagina, $_usuarios_usuario){
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
+            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
+            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/' . "\n";
             $fuente .= '
 
@@ -4298,6 +4311,8 @@ return 0;
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
+            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
+            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/' . "\n";
             $fuente .= '
 
@@ -4341,6 +4356,8 @@ return 0;
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
+            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
+            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/ ' . "\n";
             $fuente .= '
 function _menu_top(){
@@ -4412,6 +4429,8 @@ function _menu_sidebar($p){
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
+            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
+            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/' . "\n";
             $fuente .= '
 function formularios_campo_escondido($nombre,$valor){    
@@ -5763,7 +5782,7 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
                     ];
                     $j = 0;
                     while ($j < count($ficheros)) {
-                        crear_fichero("$path_web/admin", $ficheros[$j], contenido_admin($ficheros[$j]));
+                        crear_fichero("$path_web/admin", $ficheros[$j], contenido_admin( $ficheros[$j], $nombreProyecto    ));
                         $j++;
                     }
                     break;

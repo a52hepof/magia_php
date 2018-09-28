@@ -1,3 +1,7 @@
+<?php
+include "header.php"; 
+?>
+
 <h1>Hola, Bienvenidos</h1>
 
 
@@ -16,6 +20,7 @@
                 <option value="bd_modelo_facturas">Facturas</option>
                 <option value="bd_modelo_eventos">Eventos(categorias, eventos, lugares)</option>
                 <option value="bd_modelo_audio">Audio)</option>
+                <option value="bd_modelo_hoteles">brussels-hotels</option>
             </select>
 
 
@@ -31,3 +36,8 @@
     <li><a href="index.php?p=plugins_lista">Crear plugin</a></li>            
     <li><a href="#">Entrar a tu web</a></li>            
 </ol>
+
+
+<?php
+include "footer.php"; 
+?>

@@ -1,4 +1,9 @@
-<?php 
+<?php
+include "header.php"; 
+?>
+
+    
+    <?php 
 include "maqueta_plugin_tabs.php"; 
 ?>
 
@@ -8,6 +13,19 @@ include "maqueta_plugin_tabs.php";
     
     <div class="form-group">
     <label for="inputEmail3" class="col-sm-2 control-label"><?php _t("Tabla"); ?></label>
+    <div class="col-sm-10">
+        <input type="text" class="form-control" id="" placeholder="" value="<?php echo "$nombrePlugin"; ?>" disabled="">
+    </div>
+  </div>
+    
+    <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label"><?php _t("p"); ?></label>
+    <div class="col-sm-10">
+        <input type="text" class="form-control" id="" placeholder="" value="<?php echo "$nombrePlugin"; ?>" disabled="">
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label"><?php _t("c"); ?></label>
     <div class="col-sm-10">
         <input type="text" class="form-control" id="" placeholder="" value="<?php echo "$nombrePlugin"; ?>" disabled="">
     </div>
@@ -26,11 +44,38 @@ include "maqueta_plugin_tabs.php";
         //var_dump($resultado);
         //   echo "</pre>"; 
 
-        echo '  <div class="form-group">
+        echo '  <div class="form-group row">
     <label for="'.$value['Field'].'" class="col-sm-2 control-label">'.$value['Field'].'</label>
-    <div class="col-sm-10">
+    <div class="col-sm-3">
         <input type="text"  name="'.$value['Field'].'" id="'.$value['Field'].'" class="form-control" id="inputPassword3" placeholder="'.$value['Type'].'">
     </div>
+    
+        <div class="col-xs-2">
+
+            <select  class="form-control">
+            <option>hidden</option>
+            <option>text</option>
+            <option>number</option>
+            <option>date</option>
+            <option>text</option>
+            <option>select</option>
+            <option>radio</option>
+            <option>chackbox</option>
+            
+            <optgroup label="select">';        
+                    foreach (bdd_lista_tablas_bdd() as $key => $tabla) {                                                
+                        foreach (bdd_lista_campos_segun_tabla($tabla) as $key => $campo) {                        
+                            echo '<option>'.$tabla.' : '.$campo.'</option>';                            
+                        }                        
+                    }
+                    
+                echo '<option>tabla::campo</option>                
+                <option>tabla::campo</option>                
+                <option>tabla::campo</option>                
+           </optgroup>
+
+        </select>
+          </div>
   </div>'; 
 /*
         echo "Campo: $key<b>$value[Field]</b><br>";
@@ -47,18 +92,11 @@ include "maqueta_plugin_tabs.php";
     }
     ?>
     
-
-    
-    
-    
-    
-    
-  <div class="form-group">
+     <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default">Sign in</button>
+      <button type="submit" class="btn btn-primary"><?php _t("Registrar"); ?></button>
     </div>
   </div>
-    
     
 </form>
 
@@ -97,10 +135,7 @@ include "maqueta_plugin_tabs.php";
 
 
 
-
-
-
-
-
-
+<?php
+include "footer.php"; 
+?>
 

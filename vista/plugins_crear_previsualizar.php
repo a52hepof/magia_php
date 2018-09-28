@@ -1,4 +1,10 @@
-<?php 
+<?php
+include "header.php"; 
+?>
+
+    
+    
+    <?php 
 function _x_(){
     return '<select class="form-control">
             <option value="1">Text</option>
@@ -125,7 +131,9 @@ array(12) {
 
 
 
-
+<?php
+include "footer.php"; 
+?>
 
 
 

@@ -1,4 +1,10 @@
 <?php
+include "header.php"; 
+?>
+
+    
+    
+    <?php
 
 while ($reg = mysql_fetch_array($sql)) {
     
@@ -40,3 +46,10 @@ echo "<br>";
 echo "<br>"; 
 echo "<br>"; 
 echo "<br>"; 
+
+
+?>
+
+<?php
+include "footer.php"; 
+?>

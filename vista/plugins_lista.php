@@ -1,4 +1,10 @@
 <?php
+include "header.php"; 
+?>
+
+    
+    
+    <?php
 // tablas de magia
 $magia_tablas = array(
     "_contenido",
@@ -63,7 +69,8 @@ $p = (isset($_GET['p'])) ? "$_GET[p]" : "plugins_lista";
                 $p = $reg[0];
                 
                 // verifico si existe 
-                    if (file_exists($path_plugins . '/' . $reg[0]) && !in_array($magia_tablas, $path_plugins)) {
+                    //if (file_exists($path_plugins . '/' . $reg[0]) && !in_array($magia_tablas, $path_plugins)) {
+                    if (file_exists($path_plugins . '/' . $reg[0])  ) {
                     echo '<tr>        
                         <td>' . $i . '</td>
                         <td><b>' . $reg[0] . '</b><br>' . $path_plugins . '/' . $reg[0] . '</td>
@@ -114,4 +121,9 @@ $p = (isset($_GET['p'])) ? "$_GET[p]" : "plugins_lista";
   ?>
   </ol>
  */
+?>
+
+
+<?php
+include "footer.php"; 
 ?>
