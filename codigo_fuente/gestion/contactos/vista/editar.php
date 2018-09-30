@@ -266,10 +266,12 @@
 
 
 
+<?php if (permisos_tiene_permiso('borrar', $pagina, $_usuarios_grupo)) { ?>
 
-
-<h2><?php _t("Atención"); ?></h2>
-<p><?php _t("Ud esta va a borrar definitivamente este registro, desea hacerlo?"); ?></p>
-<a class="btn btn-danger" href="index.php?p=contactos&c=borrar&contactos_email=<?php echo $contactos_email; ?>">
+    <h2><?php _t("Atención"); ?></h2>
+    <p><?php _t("Ud esta va a borrar definitivamente este registro, desea hacerlo?"); ?></p>
+    <a class="btn btn-danger" href="index.php?p=contactos&c=borrar&contactos_email=<?php echo $contactos_email; ?>">
     <?php _t("Si,borrar"); ?>
-</a>
+    </a>
+
+<?php } ?>

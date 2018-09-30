@@ -44,4 +44,8 @@ include "./controladores/$p.php";
 
 /**
  *  [error] El fichero /var/www/html/magia/admin/configuracion.php Ya existe
+ * 
+ * http://www.erdiagrams.com/datamodel-online-shop-idef1x.html
+ * 
+ * 
  */
