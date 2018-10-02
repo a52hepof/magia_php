@@ -1,10 +1,10 @@
 <div class="col-sm-3 col-md-2 sidebar">
 
-    
-        <?php 
-        logo();
-        ?>
-    
+
+    <?php
+    logo();
+    ?>
+
 
 
     <ul class="nav nav-sidebar">
@@ -19,21 +19,27 @@
                     <?php _t("Inicio"); ?>
                 </a>
             </li>
-            
-          <?php _menu_sidebar($p); ?>
-            
 
-            
-            
-            
+            <?php _menu_sidebar($p); ?>
+
+
         <?php } ?>                    
         <?php
-      //  _menu_sidebar($p);
+        //  _menu_sidebar($p);
         ?>                        
     </ul>         
 
-    
-    
+
+    <?php
+    // esto es para un menu personalizado segun el plugin donde estemos
+    if (file_exists("./$p/vista/menu_lateral_izq.php")) {
+        include "./$p/vista/menu_lateral_izq.php";
+    }
+    ?>
+
+
+
+
     <footer>
         <?php //echo $config_direccion; ?>
         <br>
