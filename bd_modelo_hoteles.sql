@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 28, 2018 at 12:23 AM
+-- Generation Time: Oct 07, 2018 at 10:05 AM
 -- Server version: 5.7.18
 -- PHP Version: 5.6.31
 
@@ -17,16 +17,16 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `brussels-hotels`
+-- Database: `magia`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `direcciones`
+-- Table structure for table `hotel_direcciones`
 --
 
-CREATE TABLE `direcciones` (
+CREATE TABLE `hotel_direcciones` (
   `id` int(11) NOT NULL,
   `id_hotel` int(11) NOT NULL,
   `direccion` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
@@ -41,19 +41,19 @@ CREATE TABLE `direcciones` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `direcciones`
+-- Dumping data for table `hotel_direcciones`
 --
 
-INSERT INTO `direcciones` (`id`, `id_hotel`, `direccion`, `numero`, `cpostal`, `barrio`, `ciudad`, `pais`, `fecha_registro`, `orden`, `estatus`) VALUES
+INSERT INTO `hotel_direcciones` (`id`, `id_hotel`, `direccion`, `numero`, `cpostal`, `barrio`, `ciudad`, `pais`, `fecha_registro`, `orden`, `estatus`) VALUES
 (1, 1, 'Av de la gran plaza', '250', '1000', 'Bruxelles', 'Bruxelles', 'Belgique', '2018-09-28 00:22:48', 10, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hoteles`
+-- Table structure for table `hotel_hoteles`
 --
 
-CREATE TABLE `hoteles` (
+CREATE TABLE `hotel_hoteles` (
   `id` int(11) NOT NULL,
   `id_contacto` int(11) NOT NULL,
   `nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -66,19 +66,19 @@ CREATE TABLE `hoteles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `hoteles`
+-- Dumping data for table `hotel_hoteles`
 --
 
-INSERT INTO `hoteles` (`id`, `id_contacto`, `nombre`, `estrellas`, `habitaciones`, `tipo`, `sector`, `orden`, `estatus`) VALUES
+INSERT INTO `hotel_hoteles` (`id`, `id_contacto`, `nombre`, `estrellas`, `habitaciones`, `tipo`, `sector`, `orden`, `estatus`) VALUES
 (1, 1, 'Amigo', 1, 120, 'Familiar', 'Centro', 10, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mensajes`
+-- Table structure for table `hotel_mensajes`
 --
 
-CREATE TABLE `mensajes` (
+CREATE TABLE `hotel_mensajes` (
   `id` int(11) NOT NULL,
   `email_sender` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
   `email_reciver` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
@@ -91,10 +91,10 @@ CREATE TABLE `mensajes` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sectores`
+-- Table structure for table `hotel_sectores`
 --
 
-CREATE TABLE `sectores` (
+CREATE TABLE `hotel_sectores` (
   `id` int(11) NOT NULL,
   `sector` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `orden` int(11) NOT NULL,
@@ -102,20 +102,20 @@ CREATE TABLE `sectores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `sectores`
+-- Dumping data for table `hotel_sectores`
 --
 
-INSERT INTO `sectores` (`id`, `sector`, `orden`, `estatus`) VALUES
+INSERT INTO `hotel_sectores` (`id`, `sector`, `orden`, `estatus`) VALUES
 (1, 'Centro', 10, 1),
 (2, 'Sur', 20, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tipos`
+-- Table structure for table `hotel_tipos`
 --
 
-CREATE TABLE `tipos` (
+CREATE TABLE `hotel_tipos` (
   `id` int(11) NOT NULL,
   `tipo` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `orden` int(11) NOT NULL,
@@ -123,10 +123,10 @@ CREATE TABLE `tipos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `tipos`
+-- Dumping data for table `hotel_tipos`
 --
 
-INSERT INTO `tipos` (`id`, `tipo`, `orden`, `estatus`) VALUES
+INSERT INTO `hotel_tipos` (`id`, `tipo`, `orden`, `estatus`) VALUES
 (1, 'Internacional', 10, 1),
 (2, 'Familiar', 20, 1);
 
@@ -135,37 +135,37 @@ INSERT INTO `tipos` (`id`, `tipo`, `orden`, `estatus`) VALUES
 --
 
 --
--- Indexes for table `direcciones`
+-- Indexes for table `hotel_direcciones`
 --
-ALTER TABLE `direcciones`
+ALTER TABLE `hotel_direcciones`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_hotel` (`id_hotel`);
 
 --
--- Indexes for table `hoteles`
+-- Indexes for table `hotel_hoteles`
 --
-ALTER TABLE `hoteles`
+ALTER TABLE `hotel_hoteles`
   ADD PRIMARY KEY (`id`),
   ADD KEY `tipo` (`tipo`),
   ADD KEY `sector` (`sector`);
 
 --
--- Indexes for table `mensajes`
+-- Indexes for table `hotel_mensajes`
 --
-ALTER TABLE `mensajes`
+ALTER TABLE `hotel_mensajes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `sectores`
+-- Indexes for table `hotel_sectores`
 --
-ALTER TABLE `sectores`
+ALTER TABLE `hotel_sectores`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `sector` (`sector`);
 
 --
--- Indexes for table `tipos`
+-- Indexes for table `hotel_tipos`
 --
-ALTER TABLE `tipos`
+ALTER TABLE `hotel_tipos`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `tipo` (`tipo`);
 
@@ -174,46 +174,46 @@ ALTER TABLE `tipos`
 --
 
 --
--- AUTO_INCREMENT for table `direcciones`
+-- AUTO_INCREMENT for table `hotel_direcciones`
 --
-ALTER TABLE `direcciones`
+ALTER TABLE `hotel_direcciones`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT for table `hoteles`
+-- AUTO_INCREMENT for table `hotel_hoteles`
 --
-ALTER TABLE `hoteles`
+ALTER TABLE `hotel_hoteles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT for table `mensajes`
+-- AUTO_INCREMENT for table `hotel_mensajes`
 --
-ALTER TABLE `mensajes`
+ALTER TABLE `hotel_mensajes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `sectores`
+-- AUTO_INCREMENT for table `hotel_sectores`
 --
-ALTER TABLE `sectores`
+ALTER TABLE `hotel_sectores`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT for table `tipos`
+-- AUTO_INCREMENT for table `hotel_tipos`
 --
-ALTER TABLE `tipos`
+ALTER TABLE `hotel_tipos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `direcciones`
+-- Constraints for table `hotel_direcciones`
 --
-ALTER TABLE `direcciones`
-  ADD CONSTRAINT `direcciones_ibfk_1` FOREIGN KEY (`id_hotel`) REFERENCES `hoteles` (`id`) ON UPDATE CASCADE;
+ALTER TABLE `hotel_direcciones`
+  ADD CONSTRAINT `hotel_direcciones_ibfk_1` FOREIGN KEY (`id_hotel`) REFERENCES `hotel_hoteles` (`id`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `hoteles`
+-- Constraints for table `hotel_hoteles`
 --
-ALTER TABLE `hoteles`
-  ADD CONSTRAINT `hoteles_ibfk_1` FOREIGN KEY (`tipo`) REFERENCES `tipos` (`tipo`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `hoteles_ibfk_2` FOREIGN KEY (`sector`) REFERENCES `sectores` (`sector`) ON UPDATE CASCADE;
+ALTER TABLE `hotel_hoteles`
+  ADD CONSTRAINT `hotel_hoteles_ibfk_1` FOREIGN KEY (`tipo`) REFERENCES `hotel_tipos` (`tipo`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `hotel_hoteles_ibfk_2` FOREIGN KEY (`sector`) REFERENCES `hotel_sectores` (`sector`) ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

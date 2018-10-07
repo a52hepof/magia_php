@@ -379,7 +379,15 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
         //crear_fichero("$path_web/extenciones/funciones", "$nombrePlugin.php", $contenido);
 
 // si la carpeta existe, registro el nombre del plugin en la base de datos como una pagina
-        registrar_pagina_en_bd($nombrePlugin);
+         
+        registrar_pagina_en_bd($nombrePlugin); 
+        
+        (busca_pagina_en_bd($nombrePlugin))?mensaje('info', 'pagina registrada en BD') : mensaje('info', 'Error al registrar la pagina en la BD'); 
+        
+        
+        
+        
+        
 
 // tambien registro el item en el menu 
         registra_item_al_menu($nombrePlugin, $ubicacion, $padre, $label);
@@ -2655,56 +2663,6 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
                 $pdf->Output();
 
                   ' . "\n";
-
-            
-
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
 
             return $fuente;
             break;
@@ -5519,6 +5477,15 @@ function registrar_pagina_en_bd($pagina) {
         ":pagina" => "$pagina"
             )
     );
+}
+
+function busca_pagina_en_bd($pagina) {
+    global $conexion;
+    $comando = "SELECT id FROM _paginas WHERE pagina = '$pagina'  "; 
+    $sql=mysql_query("$comando ",$conexion) or die ("Error: en el fichero:" .__FILE__ .' linea: '. __LINE__ .'  '.mysql_error());	
+    $reg = mysql_fetch_array($sql);	  
+    
+    return $reg[0];
 }
 
 function registrar_permiso_pagina_grupo($grupo, $pagina, $permiso) {

@@ -8,7 +8,7 @@ include "header.php";
 <ol>
     <li><a href="index.php?p=configBd">Configura la base de datos</a></li>    
     <li><a href="index.php?p=config">Define rutas de los plugins</a></li>    
-    <li><a href="index.php?p=copiar_bd&base_datos=bd_extructura">Copiar base.sql (grupos, idiomas, paginas, permisos, usuarios)</a></li>
+    <li><a href="index.php?p=copiar_bd&base_datos=bd_extructura">Copiar base.sql (12 tablas grupos, idiomas, paginas, permisos, usuarios)</a></li>
     <li>Si deseas puedes usar una base de datos ejemplo</li>
     <li>
 
@@ -18,9 +18,11 @@ include "header.php";
             <select name="base_datos">
                 <option >Copiar Base datos ejemplo</option>
                 <option value="bd_modelo_facturas">Facturas</option>
-                <option value="bd_modelo_eventos">Eventos(categorias, eventos, lugares)</option>
-                <option value="bd_modelo_audio">Audio)</option>
-                <option value="bd_modelo_hoteles">brussels-hotels</option>
+                <option value="bd_modelo_contaFacturas">conta_facturas</option>
+                <option value="bd_modelo_agenda">agenda_agenda</option>
+                <option value="bd_modelo_eventos">eve_ventos</option>
+                <option value="bd_modelo_audio">Audio</option>
+                <option value="bd_modelo_hoteles">hotel_hoteles</option>
             </select>
 
 
