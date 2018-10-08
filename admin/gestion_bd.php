@@ -21,7 +21,7 @@ function gestion_bd_crear_tabla($base_datos) {
     foreach ($sql as $query) {
 
         if ($conn->query($query) === TRUE) {
-            echo "<p>Table: $ query creada con exito</p>";
+            echo "<p>Table creada con exito</p>";
         } else {
             echo "<p>Error creating table: $query[0] " . $conn->error . "</p>";
         }

@@ -1,1 +1,1 @@
-<?php  $servidor = "localhost"; $bdatos = "npp"; $usuario = "root"; $clave = "root";
+<?php  $servidor = "localhost"; $bdatos = "a7"; $usuario = "root"; $clave = "root";

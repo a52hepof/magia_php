@@ -3878,18 +3878,15 @@ $dbh = new PDO("mysql:host=$bd_servidor; dbname=$bd_bdatos",   $bd_usuario, $bd_
             $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/' . "\n";
             $fuente .= ' 
-
-// DATOS DE LA EMPRESA
-define("MAGIA_GESTION_PATH", "./admin");
 $path_imagenes = "/var/www/html/";
 $config_debug = 0; 
-$config_nombre_web = "'.$nombreProyecto.'";
+$config_nombre_web = "Magia_php";
 $config_url = "https://github.com/robincoello/magia_php"; // sin / al final
 $config_direccion = "Av del codigo abierto 1970, \n1000 Bruselas, \nBégica";
 $config_tel = "+32(0)474 62 47 07";
-$config_logo = "logo.jpg";
+$config_logo = "logo.png";
 //
-$config_grupo_por_defecto = "centros";
+$config_grupo_por_defecto = "centros"";
 // si el numero de pedido es inferior a x cifras llenara con ceros en la parte izquierda 
 // cuantas cifras debe tener min?
 $config_ceros_bon = 6; 
