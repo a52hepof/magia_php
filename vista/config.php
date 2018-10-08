@@ -1,6 +1,4 @@
-<?php
-include "header.php"; 
-?>
+
 
 
 
@@ -140,7 +138,3 @@ echo "$path_plugins_reg";
 
 </form>
 
-
-<?php
-include "footer.php"; 
-?>

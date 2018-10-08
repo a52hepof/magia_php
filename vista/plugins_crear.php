@@ -1,6 +1,3 @@
-<?php
-include "header.php"; 
-?>
 
 
 <div class="list-group">
@@ -11,6 +8,3 @@ include "header.php";
   <a href="#" class="list-group-item"><?php echo $label; ?></a>
 </div>
 
-<?php
-include "footer.php"; 
-?>

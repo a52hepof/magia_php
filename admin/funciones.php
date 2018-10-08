@@ -2318,7 +2318,8 @@ function contenido_vista($vista, $nombrePlugin) {
                         break;
 
                         case 'opciones':                            
-                            $tabla_relacionada = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre, bdd_lista_tablas_bdd());                                                        
+                            $tabla_relacionada = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre, bdd_lista_tablas_bdd());      
+                            
                             $fuente .= campo_html_opciones($tabla_relacionada, $var2, $reg[0], $nombrePlugin, $valor);
 
                             break;

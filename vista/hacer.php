@@ -1,6 +1,3 @@
-<?php
-include "header.php"; 
-?>
 
 
 <h1>Hacer</h1>
@@ -12,7 +9,3 @@ include "header.php";
     <li></li>
 </ul>
 
-
-<?php
-include "footer.php"; 
-?>

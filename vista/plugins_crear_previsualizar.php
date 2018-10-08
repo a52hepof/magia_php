@@ -1,6 +1,3 @@
-<?php
-include "header.php"; 
-?>
 
     
     
@@ -126,14 +123,5 @@ array(12) {
     
     
     </form>
-
-
-
-
-
-<?php
-include "footer.php"; 
-?>
-
 
 

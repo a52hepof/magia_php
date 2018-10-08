@@ -1,8 +1,4 @@
-<?php
-include "header.php"; 
-?>
 
-    
     
     <?php
 
@@ -35,21 +31,4 @@ if($resultado !== FALSE){
 }
 
 
-echo "<br>"; 
-echo "<br>"; 
-echo "<br>"; 
-echo "<br>"; 
-echo "<br>"; 
-echo "<br>"; 
-echo "<br>"; 
-echo "<br>"; 
-echo "<br>"; 
-echo "<br>"; 
-echo "<br>"; 
 
-
-?>
-
-<?php
-include "footer.php"; 
-?>

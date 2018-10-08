@@ -1,6 +1,3 @@
-<?php
-include "header.php"; 
-?>
 
 
 
@@ -90,6 +87,3 @@ array(12) {
   <button type="submit" class="btn btn-default">Submit</button>
 </form>
 
-<?php
-include "footer.php"; 
-?>

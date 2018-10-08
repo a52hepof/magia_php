@@ -1,5 +1,4 @@
-<?php
-include "header.php"; ?>
+
 
 <form class="form-horizontal" method="get" action="index.php">
     <input type="hidden" name="p" value="crear_proyecto">
@@ -25,5 +24,3 @@ include "header.php"; ?>
 </form>
 
 
-<?php
-include "footer.php"; ?>

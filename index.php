@@ -40,8 +40,10 @@ if (isset($_REQUEST['tabla'])) {
     $tabla = mysql_real_escape_string($_REQUEST['tabla']);
 }
 
-include "./controladores/$p.php";
 
+include "./vista/header.php"; 
+include "./controladores/$p.php";
+include "./vista/footer.php"; 
 /**
  *  [error] El fichero /var/www/html/magia/admin/configuracion.php Ya existe
  * 

@@ -1,6 +1,4 @@
-<?php
-include "header.php";
-?>
+
 
 
 <?php
@@ -143,14 +141,6 @@ foreach ($resultado as $key => $value) {
   }
  *             */
 ?> 
-
-
-
-
-
-<?php
-include "footer.php"; 
-?>
 
 
 

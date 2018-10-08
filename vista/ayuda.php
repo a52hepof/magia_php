@@ -1,8 +1,3 @@
-<?php
-include "header.php"; 
-?>
-
-
 
 
 <h1>Ayuda</h1>
@@ -16,6 +11,3 @@ include "header.php";
 </p>
 
 
-<?php
-include "footer.php"; 
-?>

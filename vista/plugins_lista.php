@@ -1,8 +1,4 @@
-<?php
-include "header.php"; 
-?>
 
-    
     
     <?php
 // tablas de magia
@@ -123,7 +119,3 @@ $p = (isset($_GET['p'])) ? "$_GET[p]" : "plugins_lista";
  */
 ?>
 
-
-<?php
-include "footer.php"; 
-?>

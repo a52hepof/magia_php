@@ -1,6 +1,3 @@
-<?php
-include "header.php"; 
-?>
 
     
     <?php 
@@ -133,9 +130,4 @@ include "maqueta_plugin_tabs.php";
      *             */
     ?> 
 
-
-
-<?php
-include "footer.php"; 
-?>
 

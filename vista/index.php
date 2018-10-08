@@ -1,6 +1,4 @@
-<?php
-include "header.php"; 
-?>
+
 
 <h1>Hola, Bienvenidos</h1>
 
@@ -40,6 +38,3 @@ include "header.php";
 </ol>
 
 
-<?php
-include "footer.php"; 
-?>

@@ -1,6 +1,3 @@
-<?php
-include "header.php"; 
-?>
 
 
 
@@ -90,15 +87,6 @@ array(12) {
             
             ?> 
 </ul>
-
-
-
-
-<?php
-include "footer.php"; 
-?>
-
-
 
 
 

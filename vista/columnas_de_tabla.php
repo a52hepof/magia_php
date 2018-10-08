@@ -1,6 +1,3 @@
-<?php
-include "header.php"; 
-?>
 
 
 
@@ -227,16 +224,6 @@ foreach ($grupos as $grupo => $permiso) {
      *             */
     ?> 
 </ul>
-
-
-
-
-
-<?php
-include "footer.php"; 
-?>
-
-
 
 
 
