@@ -1,13 +1,13 @@
 <?php
 
 $body = "";
-$body .= "<p>" . _tr("Estimado/a") . ", $contactos_contacto ($contactos_email)</p>";
+$body .= "<p>" . _tr("Estimado/a") . ", $_contactos_contacto ($_contactos_email)</p>";
 $body .= "<p>" . _tr("Ud. (u otra persona), ha solicitado el acceso a la plataforma web para realizar pedidos en: $config_nombre_web</p>") . "</p>";
 $body .= "<p>" . _tr("Un mensaje ha sido enviado al administrador para que apruebe su registro, una vez aprobado podra realizar pedidos") . "</p>";
 $body .= "<p>" . _tr("Si tiene alguna pregunta, no dude en contactarnos") . "</p>";
 
-$body .= "<p>" . _tr("Usuario") . ":  $contactos_email</p>";
-$body .= "<p>" . _tr("Clave") .   ":  $contactos_clave_sin_codiicar</p>";
+$body .= "<p>" . _tr("Usuario") . ":  $_contactos_email</p>";
+$body .= "<p>" . _tr("Clave") .   ":  $_contactos_clave_sin_codiicar</p>";
 
 
 //***************************************************

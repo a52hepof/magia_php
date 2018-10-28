@@ -6,7 +6,7 @@ function empleados_empresa_segun_id_empresa($empleados_empresa_id_empresa) {
    
     
     while ($reg = mysql_fetch_array($sql)) {
-        //include "../gestion/contactos/reg/reg.php";
+        //include "../gestion/_contactos/reg/reg.php";
         echo "<tr>";
         echo "<td>$reg[id]</td>"; 
         echo "<td>$reg[id_empresa]</td>"; 

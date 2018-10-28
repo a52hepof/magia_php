@@ -191,12 +191,12 @@
     <tbody>
         <?php
         $i = 1;
-        while ($contactos = mysql_fetch_array($sql)) {
-            include "./contactos/reg/reg.php";
+        while ($_contactos = mysql_fetch_array($sql)) {
+            include "./_contactos/reg/reg.php";
 
             // solo el root puede ver al root
-            if (_usuarios_campo_segun_email("grupo", $contactos['email']) != 'root' || $_usuarios_grupo == 'root') {
-                include "./contactos/vista/tr.php";
+            if (_usuarios_campo_segun_email("grupo", $_contactos['email']) != 'root' || $_usuarios_grupo == 'root') {
+                include "./_contactos/vista/tr.php";
             }
             $i++;
         }

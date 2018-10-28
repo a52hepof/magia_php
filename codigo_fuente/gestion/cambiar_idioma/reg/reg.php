@@ -3,32 +3,32 @@
  magia_version: 0.0.8 
  **/ 
 
-  $contactos_id = $contactos['id']; 
-  $contactos_idioma = $contactos['idioma']; 
-  $contactos_tipo_documento = $contactos['tipo_documento']; 
-  $contactos_ruc_prefijo = $contactos['ruc_prefijo']; 
-  $contactos_numero_documento = $contactos['numero_documento']; 
-  $contactos_empresa = $contactos['empresa']; 
-  $contactos_contacto = $contactos['contacto']; 
-  $contactos_saludo = $contactos['saludo']; 
-  $contactos_direccion = $contactos['direccion']; 
-  $contactos_cpostal = $contactos['cpostal']; 
-  $contactos_ciudad = $contactos['ciudad']; 
-  $contactos_provincia = $contactos['provincia']; 
-  $contactos_pais = $contactos['pais']; 
-  $contactos_tel = $contactos['tel']; 
-  $contactos_fax = $contactos['fax']; 
-  $contactos_email = $contactos['email']; 
-  $contactos_notas = $contactos['notas']; 
-  $contactos_tipo = $contactos['tipo']; 
-  $contactos_fecha_registro = $contactos['fecha_registro']; 
-  $contactos_es_contacto = $contactos['es_contacto']; 
-  $contactos_estrellas = $contactos['estrellas']; 
-  $contactos_estatus = $contactos['estatus']; 
- $contactos_estatus_0 = "";   $contactos_estatus_1 = "";      if($contactos_estatus==0){
-      $contactos_estatus_0 = " checked "; 
-      $contactos_estatus_1 = ""; 
+  $_contactos_id = $_contactos['id']; 
+  $_contactos_idioma = $_contactos['idioma']; 
+  $_contactos_tipo_documento = $_contactos['tipo_documento']; 
+  $_contactos_ruc_prefijo = $_contactos['ruc_prefijo']; 
+  $_contactos_numero_documento = $_contactos['numero_documento']; 
+  $_contactos_empresa = $_contactos['empresa']; 
+  $_contactos_contacto = $_contactos['contacto']; 
+  $_contactos_saludo = $_contactos['saludo']; 
+  $_contactos_direccion = $_contactos['direccion']; 
+  $_contactos_cpostal = $_contactos['cpostal']; 
+  $_contactos_ciudad = $_contactos['ciudad']; 
+  $_contactos_provincia = $_contactos['provincia']; 
+  $_contactos_pais = $_contactos['pais']; 
+  $_contactos_tel = $_contactos['tel']; 
+  $_contactos_fax = $_contactos['fax']; 
+  $_contactos_email = $_contactos['email']; 
+  $_contactos_notas = $_contactos['notas']; 
+  $_contactos_tipo = $_contactos['tipo']; 
+  $_contactos_fecha_registro = $_contactos['fecha_registro']; 
+  $_contactos_es_contacto = $_contactos['es_contacto']; 
+  $_contactos_estrellas = $_contactos['estrellas']; 
+  $_contactos_estatus = $_contactos['estatus']; 
+ $_contactos_estatus_0 = "";   $_contactos_estatus_1 = "";      if($_contactos_estatus==0){
+      $_contactos_estatus_0 = " checked "; 
+      $_contactos_estatus_1 = ""; 
   }else {
-      $contactos_estatus_0 = ""; 
-      $contactos_estatus_1 = "checked";       
+      $_contactos_estatus_0 = ""; 
+      $_contactos_estatus_1 = "checked";       
   }  

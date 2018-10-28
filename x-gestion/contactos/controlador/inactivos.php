@@ -14,8 +14,8 @@ if (permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo)) {
     
     
     
-    include "./contactos/modelos/inactivos.php";
-    include "./contactos/vista/index.php";
+    include "./_contactos/modelos/inactivos.php";
+    include "./_contactos/vista/index.php";
 } else {
     permisos_sin_permiso($accion, $pagina, $_usuarios_usuario);
 } 

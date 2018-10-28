@@ -3886,7 +3886,7 @@ $config_direccion = "Av del codigo abierto 1970, \n1000 Bruselas, \nBégica";
 $config_tel = "+32(0)474 62 47 07";
 $config_logo = "logo.png";
 //
-$config_grupo_por_defecto = "centros"";
+$config_grupo_por_defecto = "centros";
 // si el numero de pedido es inferior a x cifras llenara con ceros en la parte izquierda 
 // cuantas cifras debe tener min?
 $config_ceros_bon = 6; 

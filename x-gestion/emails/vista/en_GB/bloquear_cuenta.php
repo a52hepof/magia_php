@@ -1,7 +1,7 @@
 <?php
 
 $body = "";
-$body .= "<p>Hi, $contactos_contacto ($contactos_email)</p>";
+$body .= "<p>Hi, $_contactos_contacto ($_contactos_email)</p>";
 $body .= "<p>The admin has bloqued your account at: $config_nombre_web</p>";
 //$body .= "<p>" . _tr("El administrador ha bloqueado su cuenta en") . ": $config_nombre_web</p>";
 $body .= "<p>You can see your orders, but no make a new</p>";

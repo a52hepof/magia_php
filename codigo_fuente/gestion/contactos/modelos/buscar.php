@@ -3,7 +3,7 @@
  magia_version: 0.0.8 
  **/ 
  $comando= "SELECT *  
- FROM contactos  
+ FROM _contactos  
  WHERE  
  tipo_documento like '%$b%'    
  OR  ruc_prefijo like '%$b%'    
@@ -28,7 +28,7 @@
  ORDER BY id DESC ";
  
  
- //$comando = "SELECT * FROM contactos ORDER BY id DESC  "; 
+ //$comando = "SELECT * FROM _contactos ORDER BY id DESC  "; 
  
 $sql=mysql_query("$comando Limit $inicia, $cfg_limite_items_en_tablas ",$conexion) 
 or die ("Error: en el fichero:" .__FILE__ .' linea: '. __LINE__ .'  '.mysql_error());	  

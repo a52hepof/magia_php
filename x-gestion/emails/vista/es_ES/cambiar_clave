@@ -1,8 +1,8 @@
 <?php
 
 $body = "";
-$body .= "<p>Estimado/a, $contactos_email </p>";
-$body .= "<p>Clave cambiada del usuario $contactos_email</p>";
+$body .= "<p>Estimado/a, $_contactos_email </p>";
+$body .= "<p>Clave cambiada del usuario $_contactos_email</p>";
 
 
 $body .= "<p>Atentamente,</p>";

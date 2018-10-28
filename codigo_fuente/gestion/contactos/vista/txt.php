@@ -27,7 +27,7 @@ contactos_estrellas : %contactos_estrellas%
 contactos_estatus : %contactos_estatus%
 ";
 
-                include "./contactos/reg/var.php";
+                include "./_contactos/reg/var.php";
 
                 echo "<h1>Variables disponibles</h1><pre>$html</pre>";
                 ?>

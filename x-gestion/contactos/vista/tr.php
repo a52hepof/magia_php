@@ -1,5 +1,5 @@
 <?php
-if (_usuarios_campo_segun_email("estatus", $contactos_email)) {
+if (_usuarios_campo_segun_email("estatus", $_contactos_email)) {
     $t_usuarios_estatus_icono = '<span style="color:blue"><span class="glyphicon glyphicon-ok-circle"></span>';
 } else {
     $t_usuarios_estatus_icono = '<span style="color:red"><span class="glyphicon glyphicon-ban-circle"></span>';
@@ -7,19 +7,19 @@ if (_usuarios_campo_segun_email("estatus", $contactos_email)) {
 
 
 
-if (contactos_tiene_login($contactos_email)) {
-    // $contactos_tiene_login = '<span style="color:blue"><span class="glyphicon glyphicon-ok-circle"></span>';
-    $contactos_tiene_login = _tr("Si");
+if (contactos_tiene_login($_contactos_email)) {
+    // $_contactos_tiene_login = '<span style="color:blue"><span class="glyphicon glyphicon-ok-circle"></span>';
+    $_contactos_tiene_login = _tr("Si");
 } else {
-    //$contactos_tiene_login = '<span style="color:red"><span class="glyphicon glyphicon-ban-circle"></span>';
-    $contactos_tiene_login = (permisos_tiene_permiso('crear', $p, $_usuarios_grupo)) ?
+    //$_contactos_tiene_login = '<span style="color:red"><span class="glyphicon glyphicon-ban-circle"></span>';
+    $_contactos_tiene_login = (permisos_tiene_permiso('crear', $p, $_usuarios_grupo)) ?
             "<a href=\"index.php?p=_usuarios&c=crear\">" . _tr('No, crear uno.') . "</a>" : "No";
 }
 
-$candado = (!$contactos_estatus) ? '<span class="glyphicon glyphicon-ban-circle"></span>' : '';
+$candado = (!$_contactos_estatus) ? '<span class="glyphicon glyphicon-ban-circle"></span>' : '';
 
 
-switch ($contactos_estatus) {
+switch ($_contactos_estatus) {
     case 0:
         $candado = '<span class="glyphicon glyphicon-ban-circle"></span>';
         break;
@@ -41,17 +41,17 @@ switch ($contactos_estatus) {
 echo ' 
 <tr>
  
- <td><img src="../imagenes/usuario.jpg">' . $candado . ' ' . $contactos_empresa . '</td> 
- <td>' . $contactos_contacto . '</td> '; 
- //echo '<td>' . pedidos_segun_email($contactos_email) . '</td> '; 
+ <td><img src="../imagenes/usuario.jpg">' . $candado . ' ' . $_contactos_empresa . '</td> 
+ <td>' . $_contactos_contacto . '</td> '; 
+ //echo '<td>' . pedidos_segun_email($_contactos_email) . '</td> '; 
  
- echo '<td>' . $contactos_ciudad . '</td> 
- <td><a href="mailto:'.$contactos_email.'">' . $contactos_email . '</a></td> 
- <td>'.$contactos_idioma.'</td> 
- <td>' . ucfirst(_usuarios_campo_segun_email("grupo", $contactos_email)) . '</td> 
+ echo '<td>' . $_contactos_ciudad . '</td> 
+ <td><a href="mailto:'.$_contactos_email.'">' . $_contactos_email . '</a></td> 
+ <td>'.$_contactos_idioma.'</td> 
+ <td>' . ucfirst(_usuarios_campo_segun_email("grupo", $_contactos_email)) . '</td> 
  <td>
-    <a href=' . $_SERVER['PHP_SELF'] . '?p=contactos&c=ver&contactos_id=' . $contactos_id . '>'._tr('Ver').'</a> |  
-    <a href=' . $_SERVER['PHP_SELF'] . '?p=contactos&c=editar&contactos_id=' . $contactos_id . '>'._tr('Editar').'</a>                        
+    <a href=' . $_SERVER['PHP_SELF'] . '?p=contactos&c=ver&contactos_id=' . $_contactos_id . '>'._tr('Ver').'</a> |  
+    <a href=' . $_SERVER['PHP_SELF'] . '?p=contactos&c=editar&contactos_id=' . $_contactos_id . '>'._tr('Editar').'</a>                        
 </td>     
 
  </tr>';

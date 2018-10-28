@@ -6,7 +6,7 @@
 function contactos_campo($campo, $id) {
     global $conexion;
     $sql = mysql_query(
-            "SELECT $campo FROM contactos WHERE id = $id   ", $conexion) or die("Error: contactos_campo()" . mysql_error());
+            "SELECT $campo FROM _contactos WHERE id = $id   ", $conexion) or die("Error: contactos_campo()" . mysql_error());
     $reg = mysql_fetch_array($sql);
 
     if ($reg[$campo]) {
@@ -21,21 +21,21 @@ function contactos_campo_add($campo, $label, $selecionado = "", $excluir = "") {
     $sql = mysql_query(
             "SELECT DISTINCT $campo FROM _menu order by $campo   ", $conexion)
             or die("Error:" . mysql_error());
-    while ($contactos = mysql_fetch_array($sql)) {
-        //include "../gestion/contactos/reg/reg.php"; 
+    while ($_contactos = mysql_fetch_array($sql)) {
+        //include "../gestion/_contactos/reg/reg.php"; 
 
         echo "<option ";
-        if ($selecionado == $contactos[$campo]) {
+        if ($selecionado == $_contactos[$campo]) {
             echo " selected ";
         } else {
             echo "";
         }
-        if ($excluir == $contactos[$campo]) {
+        if ($excluir == $_contactos[$campo]) {
             echo " disabled ";
         } else {
             echo "";
         }
-        echo "value=\"$contactos[$campo]\">$contactos[$campo]</option> \n";
+        echo "value=\"$_contactos[$campo]\">$_contactos[$campo]</option> \n";
     }
 }
 
@@ -45,41 +45,41 @@ function contactos_add($selecionado = "", $excluir = "") {
     // grupo segun usuario 
     // si ese grupo puede crear pedidos_otros 
     if (permisos_tiene_permiso('crear', 'pedidos_otros', $_usuarios_grupo)) {
-        $sql = mysql_query("SELECT * FROM contactos ORDER BY estatus DESC, empresa ", $conexion);
+        $sql = mysql_query("SELECT * FROM _contactos ORDER BY estatus DESC, empresa ", $conexion);
     } else {
-        $sql = mysql_query("SELECT * FROM contactos WHERE email = '$_usuarios_usuario' ", $conexion);
+        $sql = mysql_query("SELECT * FROM _contactos WHERE email = '$_usuarios_usuario' ", $conexion);
     }
     // sino 
 
-    while ($contactos = mysql_fetch_array($sql)) {
+    while ($_contactos = mysql_fetch_array($sql)) {
 
-        include "../gestion/contactos/reg/reg.php";
+        include "../gestion/_contactos/reg/reg.php";
 
         echo "<option ";
-        if ($selecionado == $contactos['email']) {
+        if ($selecionado == $_contactos['email']) {
             echo " selected ";
         } else {
             echo "";
         }
-        if ($excluir == $contactos[0] || $contactos['estatus'] == 0) {
+        if ($excluir == $_contactos[0] || $_contactos['estatus'] == 0) {
             echo " disabled ";
         } else {
             echo "";
         }
-        //echo "value=\"$contactos[0]\">$contactos[0]</option>";
-        echo "value=\"$contactos[email]\">" . strtoupper($contactos['empresa']) . " - $contactos[contacto] ($contactos[email])</option>";
+        //echo "value=\"$_contactos[0]\">$_contactos[0]</option>";
+        echo "value=\"$_contactos[email]\">" . strtoupper($_contactos['empresa']) . " - $_contactos[contacto] ($_contactos[email])</option>";
     }
 }
 
 function contactos_sin_usuario_add($selecionado = "", $excluir = "") {
     global $conexion;
     $sql = mysql_query(
-            "SELECT * FROM contactos  ", $conexion) or die("Error:" . mysql_error());
-    while ($contactos = mysql_fetch_array($sql)) {
-        include "../gestion/contactos/reg/reg.php";
+            "SELECT * FROM _contactos  ", $conexion) or die("Error:" . mysql_error());
+    while ($_contactos = mysql_fetch_array($sql)) {
+        include "../gestion/_contactos/reg/reg.php";
 
-        if (!contactos_tiene_login($contactos['email']) && $contactos['email']) {
-            echo "<option value=\"$contactos[email]\">$contactos[empresa] - $contactos[contacto] - $contactos[email]</option>";
+        if (!contactos_tiene_login($_contactos['email']) && $_contactos['email']) {
+            echo "<option value=\"$_contactos[email]\">$_contactos[empresa] - $_contactos[contacto] - $_contactos[email]</option>";
         } // fi tiene login 
     }
 }
@@ -87,7 +87,7 @@ function contactos_sin_usuario_add($selecionado = "", $excluir = "") {
 function contactos_numero_actual() {
     global $conexion;
     $sql = mysql_query(
-            "SELECT MAX(id) FROM contactos   ", $conexion) or die("Error: contactos_campo()" . mysql_error());
+            "SELECT MAX(id) FROM _contactos   ", $conexion) or die("Error: contactos_campo()" . mysql_error());
     $reg = mysql_fetch_array($sql);
 
     if ($reg[0]) {
@@ -122,7 +122,7 @@ function contactos_tiene_login($email) {
 function contactos_campo_segun_email($campo, $email) {
     global $conexion;
     $sql = mysql_query(
-            "SELECT $campo FROM contactos WHERE email = '$email'   ", $conexion)
+            "SELECT $campo FROM _contactos WHERE email = '$email'   ", $conexion)
             or die("Error: contactos_campo_segun_email()" . mysql_error());
     $reg = mysql_fetch_array($sql);
 
@@ -166,7 +166,7 @@ function contactos_tabla_index_titulo($orden) {
 function contactos_total_segun_estatus($estatus) {
     global $conexion;
     $sql = mysql_query(
-            "SELECT COUNT(id) FROM contactos WHERE estatus = '$estatus'   ", $conexion) or die("Error: contactos_total_segun_estatus()" . mysql_error());
+            "SELECT COUNT(id) FROM _contactos WHERE estatus = '$estatus'   ", $conexion) or die("Error: contactos_total_segun_estatus()" . mysql_error());
     $reg = mysql_fetch_array($sql);
 
     if ($reg[0]) {

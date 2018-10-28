@@ -2,7 +2,7 @@
 
 $body = "";
 $body .= "<p>Hi,</p>";
-$body .= "<p>$contactos_email has change the password</p>";
+$body .= "<p>$_contactos_email has change the password</p>";
 
 $body .= "<p>Best regards</p>";
 

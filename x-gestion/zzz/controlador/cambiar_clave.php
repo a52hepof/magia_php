@@ -21,20 +21,20 @@ if (isset($_REQUEST['a']) == 'cambiar_clave') {
         // cambio de clave, 
         $_usuarios_usuario = $email;
         $t_usuarios_clave_nueva = $clave;
-        $contactos_idioma = contactos_campo_segun_email('idioma', $email);
+        $_contactos_idioma = contactos_campo_segun_email('idioma', $email);
         
         // envio email al usuario
-        include "./emails/vista/$contactos_idioma/confirmacion_cambio_clave.php";
-        emails_enviar($email, utf8_decode($body), _tr("Clave cambiada",false,$contactos_idioma));
+        include "./emails/vista/$_contactos_idioma/confirmacion_cambio_clave.php";
+        emails_enviar($email, utf8_decode($body), _tr("Clave cambiada",false,$_contactos_idioma));
         
        // echo $body;
         
                 
         
         // envio email al administrador 
-        $contactos_idioma = contactos_campo_segun_email('idioma', $email_usuario);
-        include "./emails/vista/$contactos_idioma/confirmacion_cambio_clave.php";
-        emails_enviar($email_usuario, utf8_decode($body), _tr('Clave cambiada',false,$contactos_idioma));   
+        $_contactos_idioma = contactos_campo_segun_email('idioma', $email_usuario);
+        include "./emails/vista/$_contactos_idioma/confirmacion_cambio_clave.php";
+        emails_enviar($email_usuario, utf8_decode($body), _tr('Clave cambiada',false,$_contactos_idioma));   
         //echo $body;
         
     }   

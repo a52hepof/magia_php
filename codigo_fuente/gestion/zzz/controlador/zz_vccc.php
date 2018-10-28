@@ -39,10 +39,10 @@ if (isset($_REQUEST['a']) == 'zz_vccc') {
         
         // envio email al usuario
         
-        $contactos_idioma = contactos_campo_segun_email('idioma', $email);
+        $_contactos_idioma = contactos_campo_segun_email('idioma', $email);
         
-        include "./emails/vista/$contactos_idioma/confirmacion_cambio_clave.php";
-        emails_enviar($email, utf8_decode($body), _tr('Cambio de clave realizado',false,$contactos_idioma));
+        include "./emails/vista/$_contactos_idioma/confirmacion_cambio_clave.php";
+        emails_enviar($email, utf8_decode($body), _tr('Cambio de clave realizado',false,$_contactos_idioma));
                 
         
 

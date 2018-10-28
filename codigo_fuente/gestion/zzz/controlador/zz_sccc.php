@@ -23,10 +23,10 @@ if (isset($_REQUEST['a']) == 'zz_sccc') {
     $cambio_claves_codigo_usado = 0;
     include './cambio_claves/modelos/crear.php';
     
-    $contactos_idioma = contactos_campo_segun_email('idioma', $email);
+    $_contactos_idioma = contactos_campo_segun_email('idioma', $email);
     
-    include "./emails/vista/$contactos_idioma/solicitud_cambio_clave.php";    
-    emails_enviar($email, utf8_decode($body),_tr("Cambio de clave solicitado",false,$contactos_idioma));
+    include "./emails/vista/$_contactos_idioma/solicitud_cambio_clave.php";    
+    emails_enviar($email, utf8_decode($body),_tr("Cambio de clave solicitado",false,$_contactos_idioma));
     //echo $body; 
     
     mensaje('info', 'Verifique su email');

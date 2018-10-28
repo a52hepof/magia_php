@@ -22,6 +22,7 @@
 
             <?php _menu_sidebar($p); ?>
 
+           
 
         <?php } ?>                    
         <?php
@@ -30,15 +31,19 @@
     </ul>         
 
 
-    <?php
-    // esto es para un menu personalizado segun el plugin donde estemos
-    if (file_exists("./$p/vista/menu_lateral_izq.php")) {
-        include "./$p/vista/menu_lateral_izq.php";
-    }
-    ?>
-
-
-
+    
+            
+            <?php 
+            
+            
+            
+            (file_exists("$p/vista/sidebar_2.php"))?
+                
+                include "$p/vista/sidebar_2.php"
+            :
+                ""
+            ;
+            ?>
 
     <footer>
         <?php //echo $config_direccion; ?>

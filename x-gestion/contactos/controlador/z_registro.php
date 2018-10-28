@@ -11,33 +11,33 @@ if (permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo)) {
     
     if (isset($_REQUEST['a']) == 'auto_registro') {
         
-        include "./contactos/reg/post.php";
+        include "./_contactos/reg/post.php";
         
         // si no se envia email
-        if(!$contactos_email){
+        if(!$_contactos_email){
             mensaje('info', 'Olvido email'); 
             die();
         }
         
         
         // si ya existe
-        if(contactos_campo_segun_email('id', $contactos_email)){
+        if(contactos_campo_segun_email('id', $_contactos_email)){
             mensaje('info', 'Email ya existe en la base de datos'); 
             die();
         }
         
         
 
-        include "./contactos/modelos/crear.php";
+        include "./_contactos/modelos/crear.php";
             
         // procedemos a registrar el login 
-        $contactos_grupo = 'centros';     
+        $_contactos_grupo = 'centros';     
         // asiganmos un estatus 
-        $contactos_estatus = 0; //bloqueado
+        $_contactos_estatus = 0; //bloqueado
         // generamos una clave automatica        
-        $contactos_clave = genera_clave();
+        $_contactos_clave = genera_clave();
 
-        include "./contactos/modelos/reg_login.php";
+        include "./_contactos/modelos/reg_login.php";
         
 
                 
@@ -46,7 +46,7 @@ if (permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo)) {
         
         
     } else {
-        include "./contactos/vista/crear.php";
+        include "./_contactos/vista/crear.php";
     }
 } else {
     permisos_sin_permiso($accion, $pagina, $_usuarios_usuario);

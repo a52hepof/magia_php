@@ -7,30 +7,43 @@ $accion = "editar";
 $pagina = "contactos";
 if (permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo)) {
     if (isset($_REQUEST['a']) == 'editar') {
-        $contactos_id = mysql_real_escape_string($_REQUEST['contactos_id']);
-        include "./contactos/reg/post.php";
+        $_contactos_id = mysql_real_escape_string($_REQUEST['contactos_id']);
+        include "./_contactos/reg/post.php";
 
         // consigo el estatus actual del contacto
-        $contactos_estatus_actual = contactos_campo_segun_email('estatus', $contactos_email);
-       // echo "<hr>$contactos_estatus_actual<hr>";
+        $_contactos_estatus_actual = contactos_campo_segun_email('estatus', $_contactos_email);
+        // echo "<hr>$_contactos_estatus_actual<hr>";
         // y si el estatus que viene es diferente 
-        if ($contactos_estatus_actual != $contactos_estatus) {
+        if ($_contactos_estatus_actual != $_contactos_estatus) {
             mensaje('info', 'Estatus actualizado, email enviado a contacto');
             // depende del nuevo estatus, mando el mensaje            
-            
-            switch ($contactos_estatus) {
+
+            switch ($_contactos_estatus) {
                 case 0:
                     // mando el email al nuevo usuario
-                    
-                    include "./emails/vista/$contactos_idioma/bloquear_cuenta.php";
-                    emails_enviar($contactos_email, utf8_decode($body),_tr('Cuenta bloqueada',false,$contactos_idioma));
+                    //include "./emails/vista/$_contactos_idioma/bloquear_cuenta.php";
+                    $email_mensaje = "./emails/vista/$_contactos_idioma/bloquear_cuenta.php";
+
+                    (file_exists($email_mensaje)) ?
+                                    include "$email_mensaje" :
+                                    include "./emails/vista/en_GB/bloquear_cuenta.php"
+                    ;
+
+                    emails_enviar($_contactos_email, utf8_decode($body), _tr('Cuenta bloqueada', false, $_contactos_idioma));
                     echo $body;
 
                     break;
                 case 1:
                     // mando el email al nuevo usuario
-                    include "./emails/vista/$contactos_idioma/activar_cuenta.php";
-                    emails_enviar($contactos_email, utf8_decode($body),_tr('Cuenta activada',false,$contactos_idioma));
+                    //include "./emails/vista/$_contactos_idioma/activar_cuenta.php";
+                    $email_mensaje = "./emails/vista/$_contactos_idioma/activar_cuenta.php";
+
+                    (file_exists($email_mensaje)) ?
+                                    include "$email_mensaje" :
+                                    include "./emails/vista/en_GB/activar_cuenta.php"
+                    ;
+
+                    emails_enviar($_contactos_email, utf8_decode($body), _tr('Cuenta activada', false, $_contactos_idioma));
                     echo $body;
                     break;
                 default:
@@ -38,19 +51,19 @@ if (permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo)) {
             }
         }
 
-        include "./contactos/modelos/editar.php";
+        include "./_contactos/modelos/editar.php";
 
 
 
         // procedemos a registrar el login 
-        $contactos_grupo = (isset($_POST['contactos_grupo'])) ? mysql_real_escape_string(trim($_POST['contactos_grupo'])) : 'centros';
-        $contactos_clave = (isset($_POST['contactos_clave'])) ? mysql_real_escape_string(trim($_POST['contactos_clave'])) : false;
+        $_contactos_grupo = (isset($_POST['contactos_grupo'])) ? mysql_real_escape_string(trim($_POST['contactos_grupo'])) : 'centros';
+        $_contactos_clave = (isset($_POST['contactos_clave'])) ? mysql_real_escape_string(trim($_POST['contactos_clave'])) : false;
 
-        include "./contactos/modelos/editar_grupo.php";
+        include "./_contactos/modelos/editar_grupo.php";
 
-        if ($contactos_clave) {
-            $contactos_clave = codifica_clave($contactos_clave);
-            include "./contactos/modelos/editar_clave.php";
+        if ($_contactos_clave) {
+            $_contactos_clave = codifica_clave($_contactos_clave);
+            include "./_contactos/modelos/editar_clave.php";
             // enviar mensaje al admin
             // enviar mensaje al usuario de cambia cambiada
         }
@@ -60,15 +73,15 @@ if (permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo)) {
 
 
         /*
-          include "./contactos/modelos/ver.php";
-          include "./contactos/reg/reg.php";
-          include "./contactos/vista/ver.php";
+          include "./_contactos/modelos/ver.php";
+          include "./_contactos/reg/reg.php";
+          include "./_contactos/vista/ver.php";
          */
     } else {
-        $contactos_id = mysql_real_escape_string($_REQUEST['contactos_id']);
-        include "./contactos/modelos/ver.php";
-        include "./contactos/reg/reg.php";
-        include "./contactos/vista/editar.php";
+        $_contactos_id = mysql_real_escape_string($_REQUEST['contactos_id']);
+        include "./_contactos/modelos/ver.php";
+        include "./_contactos/reg/reg.php";
+        include "./_contactos/vista/editar.php";
     }
 } else {
     permisos_sin_permiso($accion, $pagina, $_usuarios_usuario);

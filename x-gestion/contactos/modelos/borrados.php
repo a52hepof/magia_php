@@ -2,7 +2,7 @@
  /**  
  magia_version: 0.0.8 
  **/ 
-$comando = "SELECT * FROM contactos WHERE estatus = '-1' ORDER BY $ordenpor $orden  "; 
+$comando = "SELECT * FROM _contactos WHERE estatus = '-1' ORDER BY $ordenpor $orden  "; 
 $sql=mysql_query("$comando Limit $inicia, $cfg_limite_items_en_tablas ",$conexion) 
 or die ("Error: en el fichero:" .__FILE__ .' linea: '. __LINE__ .'  '.mysql_error());	  
 // esto es para la paginacion	  

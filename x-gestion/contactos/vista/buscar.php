@@ -42,20 +42,20 @@
 
         <?php
         if (permisos_tiene_permiso("ver", "contactos", $_usuarios_grupo)) {
-            //   include "./contactos/vista/tr_buscar.php";
+            //   include "./_contactos/vista/tr_buscar.php";
         }
         ?>
 
 
 <?php
 $i = 1;
-while ($contactos = mysql_fetch_array($sql)) {
-    include "./contactos/reg/reg.php";
+while ($_contactos = mysql_fetch_array($sql)) {
+    include "./_contactos/reg/reg.php";
     if (permisos_tiene_permiso("editar", "contactos", $_usuarios_grupo)) {
-        include "./contactos/vista/tr.php";
-        // include "./contactos/vista/tr_editar.php";
+        include "./_contactos/vista/tr.php";
+        // include "./_contactos/vista/tr_editar.php";
     } else {
-        include "./contactos/vista/tr.php";
+        include "./_contactos/vista/tr.php";
     }
     $i++;
 }
@@ -63,7 +63,7 @@ while ($contactos = mysql_fetch_array($sql)) {
     </tbody>
         <?php
         if (permisos_tiene_permiso("crear", "contactos", $_usuarios_grupo)) {
-            //   include "./contactos/vista/tr_anadir.php";
+            //   include "./_contactos/vista/tr_anadir.php";
         }
         ?>
 
