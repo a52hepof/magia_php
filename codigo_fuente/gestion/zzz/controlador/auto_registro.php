@@ -2,43 +2,43 @@
 
 if (isset($_REQUEST['a']) == 'auto_registro') {
 
-    include "./_contactos/reg/post.php";
+    include "./contactos/reg/post.php";
 
-    if (!$_contactos_email) {
+    if (!$contactos_email) {
         mensaje('info', 'Olvido email');
         die();
     }
 
 
-    if (contactos_campo_segun_email('id', $_contactos_email)) {
+    if (contactos_campo_segun_email('id', $contactos_email)) {
         mensaje('info', 'Email ya existe en la base de datos');
         die();
     }
 
     include "./zzz/modelos/auto_registro.php";
 
-    $_contactos_grupo = $config_grupo_por_defecto; 
-    $_contactos_estatus = 0;
-    $_contactos_clave_sin_codiicar = genera_clave();
-    $_contactos_clave = codifica_clave($_contactos_clave_sin_codiicar);
+    $contactos_grupo = $config_grupo_por_defecto; 
+    $contactos_estatus = 0;
+    $contactos_clave_sin_codiicar = genera_clave();
+    $contactos_clave = codifica_clave($contactos_clave_sin_codiicar);
     
     
-    include "./_contactos/modelos/reg_login.php";
+    include "./contactos/modelos/reg_login.php";
    
     
     // Envia email al contacto
     // Envia email al contacto
     // Envia email al contacto
     if($config_enviar_email_contacto_auto_registro){          
-        include "./emails/vista/$_contactos_idioma/auto_registro.php";
-        emails_enviar($_contactos_email, utf8_decode($body),_tr('Nuevo usuario',false,$_contactos_idioma));
+        include "./emails/vista/$contactos_idioma/auto_registro.php";
+        emails_enviar($contactos_email, utf8_decode($body),_tr('Nuevo usuario',false,$contactos_idioma));
        // echo $body;
-       // echo "\$_contactos_idioma $_contactos_idioma ";
+       // echo "\$contactos_idioma $contactos_idioma ";
     }
      
 
     // si el login esta registrado correctamente, 
-    if (contactos_campo_segun_email('id', $_contactos_email)) {
+    if (contactos_campo_segun_email('id', $contactos_email)) {
         echo '<h2>' . _t('Registrado con exito') . '</h2>';
         echo '<h2>' . _t('Revise su email') . '</h2>';
     }

@@ -1,6 +1,3 @@
-
-
-
 <h1>Configurar la base de datos </h1>
 
 

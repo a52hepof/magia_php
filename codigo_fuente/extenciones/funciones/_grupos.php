@@ -3,18 +3,13 @@
 /**
   magia_version: 0.0.8
  * */
-/**
- * Otiene un valor del $campo de la tabla segun el $id que le pase
- * @global type $conexion
- * @param type $campo
- * @param type $id
- * @return boolean
- */
 function _grupos_campo($campo, $id) {
     global $conexion;
     $sql = mysql_query(
             "SELECT $campo FROM _grupos WHERE id = $id   ", $conexion) or die("Error: _grupos_campo()" . mysql_error());
     $reg = mysql_fetch_array($sql);
+
+
 
     if ($reg[$campo]) {
         return $reg[$campo];
@@ -22,14 +17,7 @@ function _grupos_campo($campo, $id) {
         return false;
     }
 }
-/**
- * Crea los items del select con los distintos valores segun el $campo
- * @global type $conexion
- * @param type $campo
- * @param type $label
- * @param type $selecionado
- * @param type $excluir
- */
+
 function _grupos_campo_add($campo, $label, $selecionado = "", $excluir = "") {
     global $conexion;
     $sql = mysql_query(
@@ -122,7 +110,6 @@ function _grupos_array() {
 
     return $g;
 }
-
 /**
  * Alias de _grupos_array()
  * @global type $conexion
@@ -131,7 +118,6 @@ function _grupos_array() {
 function _grupos() {
     return _grupos_array();
 }
-
 function _grupos_existe($grupo) {
     global $conexion;
     $sql = mysql_query(

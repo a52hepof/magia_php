@@ -1,7 +1,3 @@
-
-
-
-
 <p>Lista de tablas en la base de datos <b><?php echo "$bdatos"; ?></b>: 
     
     <a href="index.php?p=plugins_lista"><span class="glyphicon glyphicon-refresh"></span></a>
@@ -86,4 +82,3 @@ array(12) {
     
   <button type="submit" class="btn btn-default">Submit</button>
 </form>
-

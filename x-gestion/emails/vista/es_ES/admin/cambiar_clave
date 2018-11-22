@@ -1,7 +1,0 @@
-<?php
-
-$body = "";
-$body .= "<p>Hola,</p>";
-$body .= "<p>$_contactos_email ha cambiadosu clave</p>";
-
-$body .= "<p>Saludos</p>";

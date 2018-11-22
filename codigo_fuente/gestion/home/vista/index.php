@@ -1,33 +1,12 @@
-<h1>No problem parking</h1>
+<h1>Bienvenidos</h1>
 
-<?php /*<h1>No problem parking</h1>
-<p>This is a web site created with magia_php</p>
-<h3>Robinson Coello S.</h3>
-<p>208, av de la liberte </p>
-<p>1081 Koekelberg</p>
-<?php 
-$array = array(
-    "index.php"=>"Inicio", 
-    "index.php?p=contactos"=>"Contactos",     
-    ); 
-
-bst_dropdowns('Menu', $array); 
-echo "<hr>"; 
-echo "<pre>"; 
-var_dump($array);
-echo "</pre>"; 
-
-$json = json_encode($array);
-
-echo "<pre>"; 
-var_dump($json);
-echo "</pre>"; 
-
-$json_decode = json_decode($json);
+<p>Puede poner un texto de ayuda aca</p>
 
 
-echo "<pre>"; 
-var_dump($json_decode);
+<h2>Errores Posibles</h2>
 
- * 
- * echo "</pre>"; */
+<ul>
+    <li>Al estar conectado en una misma computadora con dos usuarios diferentes, ejemplo como administrador y como contacto esto puede causar problemas</li>
+</ul>
+
+

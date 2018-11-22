@@ -1,13 +1,12 @@
 <?php
 session_start("magia_php");
-include "../admin/bd.php";
-include "../admin/configuracion.php";
-include "../admin/coneccion.php";
 include "z_verificar.php";
+include "../admin/bd.php";
 include "../admin/errores.php";
 include "../admin/funciones.php";
+include "../admin/configuracion.php";
+include "../admin/coneccion.php";
 include "../admin/conec.php";
-include "../admin/mvc.php";
 include "../admin/funciones_sql.php";
 include "../admin/getbootstrap.php";
 include "../admin/permisos.php";
@@ -17,24 +16,17 @@ include "../admin/formularios.php";
 include "../admin/menu.php";
 include "../admin/mensajes.php";
 include "../admin/paginacion.php";
-//*******************************************
-include "../gestion/autos/funciones.php";
-//include "../gestion/_contactos/funciones.php";
-include "../gestion/reserva_estatus/funciones.php";
-include "../gestion/parkings/funciones.php";
-include "../gestion/reservaciones/funciones.php";
-//include "../includes/robincoello/fechas/fechas.php";
-include "../vendor/robincoello/fechas/fechas.php";
-include "../vendor/robincoello/horas/horas.php";
 ///require '../includes/PHPMailer-5.2.23/PHPMailerAutoload.php';
 _incluir_funciones();
 $aqui_seccion = "";
 $aqui_pagina = "";
 $_usuarios_idioma = contactos_campo_segun_email('idioma', $_usuarios_usuario);
+
 $p = (isset($_REQUEST['p'])) ? $_REQUEST['p'] : "home";
 $c = (isset($_REQUEST['c'])) ? $_REQUEST['c'] : "index";
 // para las paginaciones de todas las paginas
 $pag = (isset($_REQUEST['pag'])) ? $_REQUEST['pag'] : 0;
+
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +39,7 @@ $pag = (isset($_REQUEST['pag'])) ? $_REQUEST['pag'] : 0;
         <meta name="author" content="">
         <link rel="icon" href="favicon.ico">
 
-        <title><?php echo _opciones_valor_segun_opcion("nombre_web") ?></title>
+        <title><?php echo "$config_nombre_web"; ?></title>
 
         <link rel="stylesheet" href="../includes/bootstrap/css/bootstrap.min.css">
 
@@ -56,21 +48,13 @@ $pag = (isset($_REQUEST['pag'])) ? $_REQUEST['pag'] : 0;
         <link rel="stylesheet" href="home/vista/gestion.css" >
         <link rel="stylesheet" href="estilo.css"/>
 
-        
-            
-
-        
-  
-  
-  
-  
         <?php
-        $scripts = "./$p/scripts/$c.php";
+        $scripts = "./$p/scripts/$c.php";                  
         (file_exists($scripts)) ? include "$scripts" : "";
         ?>
 
     </head>
-
+    
     <body id="<?php echo "$p" . "_" . "$c"; ?>">
 
 
@@ -104,46 +88,27 @@ $pag = (isset($_REQUEST['pag'])) ? $_REQUEST['pag'] : 0;
 
                     <?php
                     include "home/vista/sidebar.php";
-                    
-                    $controlador = "./$p/controlador/$c.php"; 
-                    
-                    if(file_exists($controlador)){
-                        include $controlador;
-                    }else{
-                        echo "Controlador <b>$controlador</b> no existe";  
-                    }
-                    
-                    
-                    
-                    
-                    
+                    include './' . $p . '/controlador/' . $c . '.php';                    
                     ?>
 
                 </div>	  <!-- /3 --> 
             </div>  <!-- /2 -->
         </div>	<!-- /1 -->
 
-        <?php
-        include "home/vista/footer.php";
-        // cerramos la coneccion 
-        //  mysql_close($conexion);
-        ?>
+                    <?php
+                    include "home/vista/footer.php";
+                    // cerramos la coneccion 
+                  //  mysql_close($conexion);
+                    ?>
 
 
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        
-        
-        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        
-        
         <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
         <script src="../includes/bootstrap/js/bootstrap.min.js"></script>
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-        
-        
     </body>
 </html>

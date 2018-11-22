@@ -1,9 +1,5 @@
 <?php
-/**
- * muestra un mensaje 
- * @param type $tipo [atencion, ayuda, alto, info, ok] por defecto es info
- * @param type $sms Texto a ser enviado como mensaje
- */
+
 // atencion	//	ayuda//	alto//	info//	ok
 function mensaje($tipo, $sms) {
 
@@ -15,6 +11,7 @@ function mensaje($tipo, $sms) {
     $info = _tr("Info");
     $ok = _tr("Ok");
     $msj = _tr("$sms");
+
 
     switch ($tipo) {
         case "atencion" :
@@ -55,10 +52,7 @@ function mensaje($tipo, $sms) {
             break;
     }
 }
-/**
- * Es un mensaje de Alto conel texto dado
- * @param type $sms Mensaje a ser mostrado
- */
+
 function sms($sms) {
     mensaje('alto', $sms);
 }

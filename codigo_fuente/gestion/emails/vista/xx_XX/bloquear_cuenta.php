@@ -1,7 +1,7 @@
 <?php
 
 $body = "";
-$body .= "<p>" . _tr("Estimado/a") . ", $_contactos_contacto ($_contactos_email)</p>";
+$body .= "<p>" . _tr("Estimado/a") . ", $contactos_contacto ($contactos_email)</p>";
 $body .= "<p>" . _tr("El administrador ha bloqueado su cuenta en") . ": $config_nombre_web</p>";
 $body .= "<p>" . _tr("Ud. puede consultar sus pedidos realizados pero no puede realizar nuevos") . "</p>";
 $body .= "<p>" . _tr("Si tiene alguna pregunta, porfavor contactenos") . "</p>";

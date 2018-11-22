@@ -1,7 +1,3 @@
-
-
-
-
 <p>Lista de tablas en la base de datos <b><?php echo "$bdatos"; ?></b>: 
 
     <a href="index.php?p=plugins_lista"><span class="glyphicon glyphicon-refresh"></span></a>
@@ -224,6 +220,13 @@ foreach ($grupos as $grupo => $permiso) {
      *             */
     ?> 
 </ul>
+
+
+
+
+
+
+
 
 
 

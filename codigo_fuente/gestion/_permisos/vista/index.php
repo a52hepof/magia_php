@@ -20,7 +20,7 @@ mensaje("atencion","Si no esta seguro, no modifique nada porfavor");
     <input type="hidden" name="c" value="buscar">
     <input type="hidden" name="donde" value="grupo">
     <select name="busqueda">
-        <?php _grupos_add($busqueda); ?>
+        <?php _grupos_add(); ?>
     </select>
     <input class="btn btn-default" type="submit" value="<?php _t("Cambiar de grupo"); ?>">
 </form>

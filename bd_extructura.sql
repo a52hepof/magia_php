@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 14, 2018 at 07:15 PM
--- Server version: 5.7.18
--- PHP Version: 5.6.31
+-- Generation Time: Jul 18, 2017 at 08:52 AM
+-- Server version: 5.7.17
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `factux_admin`
+-- Database: `robin`
 --
 
 -- --------------------------------------------------------
@@ -33,13 +33,6 @@ CREATE TABLE `cambio_claves` (
   `fecha_solicitud` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `codigo_usado` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `cambio_claves`
---
-
-INSERT INTO `cambio_claves` (`id`, `usuario`, `codigo`, `fecha_solicitud`, `codigo_usado`) VALUES
-(23, 'robincoello@hotmail.com', 'QDCRsGdLyb', '2017-10-10 23:11:08', 0);
 
 -- --------------------------------------------------------
 
@@ -77,7 +70,7 @@ CREATE TABLE `contactos` (
 --
 
 INSERT INTO `contactos` (`id`, `idioma`, `tipo_documento`, `ruc_prefijo`, `numero_documento`, `empresa`, `contacto`, `saludo`, `direccion`, `cpostal`, `ciudad`, `provincia`, `pais`, `tel`, `fax`, `email`, `notas`, `tipo`, `fecha_registro`, `es_contacto`, `estrellas`, `estatus`) VALUES
-(1110, 'es_ES', '', '', '123.123.123', 'Empresa Blog', 'Admin', '', 'Av de la programacion 12', '1200', 'Bruselles', '', 'Belgique', '+3265987455', '', 'admin@localhost', '', 0, '2017-10-10 23:20:04', NULL, 1, 0);
+(34, 'es_ES', 'Pasaporte', 'BE', '1020304050', 'Facturas.be', 'Robinson Coello S.', 'Mr.', 'Av de codigo 1970', '1020', 'Bruxelles', '', 'Belgique', '+32474624707', '', 'robincoello@hotmail.com', 'Nada que decir', 0, '2017-06-21 08:50:22', '', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -99,17 +92,6 @@ CREATE TABLE `logs` (
   `argumento` text COLLATE utf8_unicode_ci NOT NULL,
   `sospechoso` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `logs`
---
-
-INSERT INTO `logs` (`id`, `fecha`, `usuario`, `grupo`, `ip`, `mac`, `p`, `c`, `a`, `comando`, `argumento`, `sospechoso`) VALUES
-(1, '2018-09-14 19:06:39', 'admin@localhost', 'root', '::1', '', '_grupos', '', 'editar', '{\"p\":\"_grupos\",\"c\":\"editar\",\"a\":\"editar\",\"_grupos_id\":\"13\",\"_grupos_grupo\":\"usuarios\"}', '13', ''),
-(2, '2018-09-14 19:06:50', 'admin@localhost', 'root', '::1', '', '_grupos', '', 'editar', '{\"p\":\"_grupos\",\"c\":\"editar\",\"a\":\"editar\",\"_grupos_id\":\"14\",\"_grupos_grupo\":\"invitados\"}', '14', ''),
-(3, '2018-09-14 19:07:31', 'admin@localhost', 'root', '::1', '', '_grupos', '', 'editar', '{\"p\":\"_grupos\",\"c\":\"editar\",\"a\":\"editar\",\"_grupos_id\":\"14\",\"_grupos_grupo\":\"invitados\"}', '14', ''),
-(4, '2018-09-14 19:09:14', 'admin@localhost', 'root', '::1', '', '_grupos', '', 'editar', '{\"p\":\"_grupos\",\"c\":\"editar\",\"a\":\"editar\",\"_grupos_id\":\"14\",\"_grupos_grupo\":\"invitados\"}', '14', ''),
-(5, '2018-09-14 19:11:30', 'admin@localhost', 'root', '::1', '', '_grupos', 'controlador', 'crear', '{\"p\":\"_grupos\",\"c\":\"crear\",\"a\":\"crear\",\"_grupos_grupo\":\"nuevo\"}', '', '');
 
 -- --------------------------------------------------------
 
@@ -702,7 +684,6 @@ INSERT INTO `_contenido` (`id`, `frase`, `contexto`) VALUES
 (531, 'info', NULL),
 (184, 'info@mail.com', NULL),
 (321, 'invisible', NULL),
-(664, 'invitados', NULL),
 (601, 'ip', NULL),
 (326, 'iros', NULL),
 (309, 'legere', NULL),
@@ -720,7 +701,6 @@ INSERT INTO `_contenido` (`id`, `frase`, `contexto`) VALUES
 (590, 'nombre', NULL),
 (450, 'notas', NULL),
 (305, 'notes', NULL),
-(662, 'nuevo', NULL),
 (544, 'nuevos', NULL),
 (354, 'ok', NULL),
 (536, 'opcion', NULL),
@@ -764,7 +744,6 @@ INSERT INTO `_contenido` (`id`, `frase`, `contexto`) VALUES
 (626, 'types', NULL),
 (131, 'users', NULL),
 (583, 'usuario', NULL),
-(663, 'usuarios', NULL),
 (537, 'valor', NULL),
 (374, 'vendedores', NULL),
 (300, 'ventilation_droite', NULL),
@@ -798,9 +777,8 @@ CREATE TABLE `_grupos` (
 INSERT INTO `_grupos` (`id`, `grupo`, `orden`) VALUES
 (11, 'root', 40),
 (12, 'administradores', 20),
-(13, 'usuarios', 10),
-(14, 'invitados', 30),
-(15, 'nuevo', NULL);
+(13, 'centros', 10),
+(14, 'gerente', 30);
 
 -- --------------------------------------------------------
 
@@ -882,7 +860,7 @@ CREATE TABLE `_opciones` (
 --
 
 INSERT INTO `_opciones` (`id`, `opcion`, `valor`, `grupo`) VALUES
-(1, 'nombre_web', 'Web mia', 10),
+(1, 'nombre_web', 'Magia_PHP', 10),
 (2, 'url', 'https://github.com/robincoello/magia_php', 10),
 (3, 'direccion', 'Av del codigo abierto 1970, \\n1000 Bruselas, \\nBégica\"', 10),
 (4, 'tel', '+32(0) 474 62 4707', 10),
@@ -970,64 +948,64 @@ CREATE TABLE `_permisos` (
 INSERT INTO `_permisos` (`id`, `grupo`, `pagina`, `permiso`) VALUES
 (164, 'root', '_contenido', '1111'),
 (165, 'administradores', '_contenido', '0000'),
-(167, 'usuarios', '_contenido', '0000'),
+(167, 'centros', '_contenido', '0000'),
 (168, 'root', '_grupos', '1111'),
 (169, 'administradores', '_grupos', '0000'),
-(171, 'usuarios', '_grupos', '0000'),
+(171, 'centros', '_grupos', '0000'),
 (172, 'root', '_idiomas', '1111'),
 (173, 'administradores', '_idiomas', '0000'),
-(175, 'usuarios', '_idiomas', '0000'),
+(175, 'centros', '_idiomas', '0000'),
 (176, 'root', '_menu', '1111'),
 (177, 'administradores', '_menu', '0000'),
-(179, 'usuarios', '_menu', '0000'),
+(179, 'centros', '_menu', '0000'),
 (180, 'root', '_paginas', '1111'),
 (181, 'administradores', '_paginas', '0000'),
-(183, 'usuarios', '_paginas', '0000'),
+(183, 'centros', '_paginas', '0000'),
 (184, 'root', '_permisos', '1111'),
 (185, 'administradores', '_permisos', '0000'),
-(187, 'usuarios', '_permisos', '0000'),
+(187, 'centros', '_permisos', '0000'),
 (188, 'root', '_traducciones', '1111'),
 (189, 'administradores', '_traducciones', '0000'),
-(191, 'usuarios', '_traducciones', '0000'),
+(191, 'centros', '_traducciones', '0000'),
 (192, 'root', '_usuarios', '1111'),
 (193, 'administradores', '_usuarios', '0000'),
-(195, 'usuarios', '_usuarios', '0000'),
+(195, 'centros', '_usuarios', '0000'),
 (200, 'root', 'contactos', '1111'),
 (201, 'administradores', 'contactos', '1110'),
-(202, 'usuarios', 'cambiar_clave', '1110'),
+(202, 'centros', 'cambiar_clave', '1110'),
 (203, 'administradores', 'cambiar_clave', '1110'),
 (204, 'root', 'cambiar_clave', '1111'),
-(205, 'usuarios', 'home', '1000'),
+(205, 'centros', 'home', '1000'),
 (206, 'root', 'pedidos_otros', '1111'),
 (207, 'administradores', 'pedidos_otros', '1110'),
-(208, 'usuarios', 'pedidos_otros', '0000'),
+(208, 'centros', 'pedidos_otros', '0000'),
 (209, 'root', 'home', '1111'),
 (210, 'administradores', 'contactos_otros', '1110'),
 (211, 'root', 'contactos_otros', '1111'),
-(213, 'usuarios', 'contactos_otros', '0000'),
-(214, 'usuarios', 'contactos', '0000'),
+(213, 'centros', 'contactos_otros', '0000'),
+(214, 'centros', 'contactos', '0000'),
 (215, 'root', 't_usuarios', '1111'),
 (216, 'administradores', 't_usuarios', '1110'),
-(217, 'usuarios', 'pedidos_estatus', '0000'),
+(217, 'centros', 'pedidos_estatus', '0000'),
 (218, 'administradores', 'pedidos_estatus', '1110'),
 (219, 'root', 'pedidos_estatus', '1111'),
-(220, 'invitados', 'pedidos_estatus', '1111'),
+(220, 'gerente', 'pedidos_estatus', '1111'),
 (221, 'root', 'logs', '1111'),
 (222, 'administradores', 'logs', '1110'),
 (223, 'root', 'cambiar_clave_otros', '1111'),
 (224, 'administradores', 'home', '1110'),
-(225, 'invitados', 'home', '1110'),
-(226, 'invitados', '_contenido', '1000'),
-(227, 'invitados', '_grupos', '1110'),
-(230, 'invitados', '_idiomas', '1111'),
-(231, 'invitados', '_menu', '0000'),
+(225, 'gerente', 'home', '1110'),
+(226, 'gerente', '_contenido', '1000'),
+(227, 'gerente', '_grupos', '1110'),
+(230, 'gerente', '_idiomas', '1111'),
+(231, 'gerente', '_menu', '0000'),
 (232, 'root', 'cambiar_idioma', '1111'),
-(233, 'invitados', 'cambiar_idioma', '1110'),
-(234, 'usuarios', 'cambiar_idioma', '1110'),
+(233, 'gerente', 'cambiar_idioma', '1110'),
+(234, 'centros', 'cambiar_idioma', '1110'),
 (235, 'administradores', 'cambiar_idioma', '1110'),
 (238, 'administradores', 'cambiar_clave_otros', '1110'),
-(239, 'usuarios', 'cambiar_clave_otros', '0000'),
-(240, 'invitados', 'cambiar_clave_otros', '0000'),
+(239, 'centros', 'cambiar_clave_otros', '0000'),
+(240, 'gerente', 'cambiar_clave_otros', '0000'),
 (241, 'root', 'actualizaciones', '1111'),
 (242, 'administradores', 'actualizaciones', '1110'),
 (243, 'root', '_opciones', '1111'),
@@ -1069,9 +1047,9 @@ INSERT INTO `_traducciones` (`id`, `frase`, `idioma`, `traduccion`) VALUES
 (18, 'Lista de _contenido', 'es_ES', 'Lista de _contenido'),
 (19, 'Nueva', 'es_ES', 'Nueva'),
 (20, 'Accion', 'es_ES', 'Acción'),
-(21, '_grupos', 'es_ES', 'grupos'),
+(21, '_grupos', 'es_ES', '_grupos'),
 (22, 'Grupo', 'es_ES', 'Grupo'),
-(23, 'Lista de _grupos', 'es_ES', 'Lista de grupos'),
+(23, 'Lista de _grupos', 'es_ES', 'Lista de _grupos'),
 (24, 'pedidos', 'es_ES', 'pedidos'),
 (25, 'Ref', 'es_ES', 'Ref'),
 (26, 'Empresa', 'es_ES', 'Empresa'),
@@ -1959,7 +1937,7 @@ INSERT INTO `_traducciones` (`id`, `frase`, `idioma`, `traduccion`) VALUES
 (4890, 'Lista de _paginas', 'en_GB', 'Page List'),
 (4891, 'Lista de _menu', 'en_GB', 'List of _menu'),
 (4892, 'Lista de _idiomas', 'en_GB', 'List of languages'),
-(4893, 'Lista de _grupos', 'en_GB', 'List of groups'),
+(4893, 'Lista de _grupos', 'en_GB', 'List of _groups'),
 (4894, 'Lista de _contenido', 'en_GB', 'List of _container'),
 (4895, 'Lista', 'en_GB', 'List'),
 (4896, 'Ligera', 'en_GB', 'Light'),
@@ -2280,10 +2258,7 @@ INSERT INTO `_traducciones` (`id`, `frase`, `idioma`, `traduccion`) VALUES
 (5286, 'Test', 'es_ES', 'Test'),
 (5287, 'test', 'es_ES', 'test'),
 (5288, 'Apellidos', 'es_ES', 'Apellidos'),
-(5289, 'apellidos', 'es_ES', 'apellidos'),
-(5350, 'nuevo', 'es_ES', 'nuevo'),
-(5351, 'usuarios', 'es_ES', 'usuarios'),
-(5352, 'invitados', 'es_ES', 'invitados');
+(5289, 'apellidos', 'es_ES', 'apellidos');
 
 -- --------------------------------------------------------
 
@@ -2304,7 +2279,7 @@ CREATE TABLE `_usuarios` (
 --
 
 INSERT INTO `_usuarios` (`id`, `grupo`, `usuario`, `clave`, `estatus`) VALUES
-(107, 'root', 'admin@localhost', '$2y$12$exRD3glEc99UdCIX6C56l.C8eIYl2jyrk2tqFHClvIP3GsbDUHkeS', 1);
+(26, 'root', 'robincoello@hotmail.com', '$2y$12$3lnUh.FbwS4frwYGd92LwuPQ0Dyup0J2dQJnyEAj.jQ8QdEcQO9VG', 1);
 
 --
 -- Indexes for dumped tables
@@ -2404,27 +2379,27 @@ ALTER TABLE `_usuarios`
 -- AUTO_INCREMENT for table `cambio_claves`
 --
 ALTER TABLE `cambio_claves`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `contactos`
 --
 ALTER TABLE `contactos`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1111;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1108;
 --
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `_contenido`
 --
 ALTER TABLE `_contenido`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=665;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=662;
 --
 -- AUTO_INCREMENT for table `_grupos`
 --
 ALTER TABLE `_grupos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `_idiomas`
 --
@@ -2454,12 +2429,12 @@ ALTER TABLE `_permisos`
 -- AUTO_INCREMENT for table `_traducciones`
 --
 ALTER TABLE `_traducciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5353;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5342;
 --
 -- AUTO_INCREMENT for table `_usuarios`
 --
 ALTER TABLE `_usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 --
 -- Constraints for dumped tables
 --

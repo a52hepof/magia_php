@@ -1,6 +1,4 @@
-
-    
-    <?php
+<?php
 
 while ($reg = mysql_fetch_array($sql)) {
     
@@ -31,4 +29,14 @@ if($resultado !== FALSE){
 }
 
 
-
+echo "<br>"; 
+echo "<br>"; 
+echo "<br>"; 
+echo "<br>"; 
+echo "<br>"; 
+echo "<br>"; 
+echo "<br>"; 
+echo "<br>"; 
+echo "<br>"; 
+echo "<br>"; 
+echo "<br>"; 

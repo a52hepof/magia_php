@@ -1,13 +1,13 @@
 <?php
 
 $body = "";
-$body .= "<p>Hi, $_contactos_contacto ($_contactos_email)</p>";
+$body .= "<p>Hi, $contactos_contacto ($contactos_email)</p>";
 $body .= "<p>GB Ud. (u otra persona), ha solicitado el acceso a la plataforma web para realizar pedidos en: $config_nombre_web</p>";
 $body .= "<p>GB Un mensaje ha sido enviado al administrador para que apruebe su registro, una vez aprobado podra realizar pedidos</p>";
 $body .= "<p>GB Si tiene alguna pregunta, no dude en contactarnos</p>";
 
-$body .= "<p>User: $_contactos_email</p>";
-$body .= "<p>Password:  $_contactos_clave_sin_codiicar</p>";
+$body .= "<p>User: $contactos_email</p>";
+$body .= "<p>Password:  $contactos_clave_sin_codiicar</p>";
 
 
 //***************************************************

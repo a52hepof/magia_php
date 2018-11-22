@@ -2,8 +2,8 @@
 // para mostrar los errores
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
+     
 include "./admin/bd.php";
-include "./admin/bd_funciones.php";
 include "./admin/config.php";
 include "./admin/conec.php";
 include "./admin/coneccion.php";
@@ -11,12 +11,25 @@ include "./admin/funciones.php";
 include "./admin/gestion_bd.php";
 include "./admin/permisos.php";
 
-if (isset($_REQUEST['ubicacion'])) {
-    $ubicacion = $_REQUEST['ubicacion'];
-} else {
-    $ubicacion = "top";
-}
-//--------------------------
+
+$plugins_carpetas = [
+    "controlador",
+    "modelos",
+    "reg",
+    "vista"
+    ];
+
+$controlador = [
+    "ver.php",
+    "crear.php",
+    "editar.php",
+    "borrar.php"];
+
+
+
+
+?>
+<?php
 if (isset($_REQUEST['a'])) {
     $a = $_REQUEST['a'];
 } else {
@@ -38,7 +51,7 @@ if (isset($_REQUEST['tabla'])) {
 ?>
 <html>
     <head>
-        <title>Magia php <?php echo magia_version(); ?></title>
+        <title>Magia php</title>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
@@ -48,10 +61,9 @@ if (isset($_REQUEST['tabla'])) {
 
     <body>
         <div class="container">
-
-
-
-
+            
+           
+            
             <?php
             include "./vista/header.php";
             ?>
@@ -68,38 +80,33 @@ if (isset($_REQUEST['tabla'])) {
 
             <div class="row">
                 <div class="col-lg-3">
-
+                    
+                    
                     <?php
-                    if (file_exists("./vista/menu_izq_$p.php")) {
-                        include "./vista/menu_izq_$p.php";
-                    } else {
-                        include "./vista/menu_izq_.php";
+                    if (isset($tabla)) {
+                        include "./vista/menu.php";
                     }
-                    ?>
-
-
-
+                    
+                    if($p =='maqueta' ){
+                       include "./vista/maqueta_izq.php"; 
+                    }
+                    
+                     if($p=='index'){
+                       include "./vista/izq.php"; 
+                    }
+                    
+                    
+                    ?>    
+                    
+                    <ul>
+                        <li><a href="paso1.php">Paso 1</a></li>
+                        <li><a href="paso2.php">Paso 2</a></li>
+                        <li><a href="paso3.php">Paso 3</a></li>
+                    </ul>
+                    
+                    
 
                 </div>
                 <div class="col-lg-9">
 
-                    <?php
-                    include "./controladores/$p.php";
-                    ?>        
-
-
-                </div>
-
-
-            </div>
-
-            <hr>Magia_php 2017
-
-        </div>            
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-
-    </body>
-</html>
+                 

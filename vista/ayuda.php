@@ -1,5 +1,3 @@
-
-
 <h1>Ayuda</h1>
 
 <p>El código y la última versión de magia_php esta en <a href="https://github.com/robincoello/magia_php">https://github.com/robincoello/magia_php</a></p>
@@ -9,5 +7,3 @@
 <p>
     La mejor forma de instalar magia_php es atravez de composer
 </p>
-
-

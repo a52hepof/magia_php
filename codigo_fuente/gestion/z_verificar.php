@@ -1,6 +1,6 @@
 <?php
-//include "../admin/bd.php";
-//include "../admin/coneccion.php";
+include "../admin/bd.php";
+include "../admin/coneccion.php";
 if (isset($_SESSION['s_username'])) {
     $username = "$_SESSION[s_username]";    
     $sql = mysql_query("SELECT * "

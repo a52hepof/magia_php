@@ -52,12 +52,9 @@
         include "./_grupos/vista/tr_anadir.php";
     }
     ?>
+
+
 </table> 
-
-
-<a href="pdf.php?p=_grupos&c=pdf">PDF</a>
-
-
 
 <?php
 echo paginacion_master($p, $c, $total_items, $pag);

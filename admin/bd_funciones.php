@@ -1,10 +1,5 @@
 <?php
 
-/**
- * 
- * @global type $dbh
- * @return array
- */
 function bd_tablas() {
     global $dbh;
     $sql = "SHOW FULL TABLES";
@@ -22,11 +17,7 @@ function bd_tablas() {
     return $r;
 }
 
-/**
- * 
- * @global type $dbh
- * @return array
- */
+
 function bd_grupos() {
     global $dbh;
     $sql = "SELECT grupo FROM _grupos  ";
@@ -39,20 +30,13 @@ function bd_grupos() {
     $resultado = $stmt->fetchAll();
 
     $r = array();
-
+    
     foreach ($resultado as $grupo) {
-
-        array_push($r, $grupo);
+        
+         array_push($r, $grupo);
     }
     return $r;
 }
-
-/**
- * 
- * @global type $dbh
- * @param type $tabla
- * @return type
- */
 function bd_lista_campos_segun_tabla($tabla) {
     global $dbh;
     include "./modelos/columnas_de_tabla.php";

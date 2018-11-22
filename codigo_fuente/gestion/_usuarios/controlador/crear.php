@@ -1,6 +1,7 @@
 <?php
 
-mensaje('info',"Los usuarios se crean automaticamente al crear un nuevo contacto");
+
+echo "<p>Los usuarios se crean automaticamente al crear un nuevo contacto</p>"; 
 
 
 /**

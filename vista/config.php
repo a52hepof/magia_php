@@ -1,8 +1,3 @@
-
-
-
-
-
 <h1>Web</h1>
 
 <p>Donde deseas crear tu web?</p>
@@ -137,4 +132,3 @@ echo "$path_plugins_reg";
 
 
 </form>
-

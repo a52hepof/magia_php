@@ -121,40 +121,6 @@ function campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor 
     return $html;
 }
 
-
-
-/**
- * 
- * @param type $nombre
- * @param type $id
- * @param type $placeholder
- * @param type $label
- * @param type $contexto
- * @param type $valor
- * @param type $extras
- * @return string
- */
-function campo_html_numerico($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
-
-    $html = ' <div class="form-group"> ' . "\n";
-    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_guiones(bdd_tiene_id_al_inicio($label))) . '"); ?></label> ' . "\n";
-    $html .= '     <div class="col-sm-10"> ' . "\n";
-    $html .= '       <input type="number" '
-            . 'class="form-control" '
-            . 'name="' . $nombre . '" '
-            . 'id="' . $id . '" '
-            . 'placeholder="<?php _t("' . ucfirst(bdd_tiene_id_al_inicio($placeholder)) . '"); ?>" '
-            . 'value="' . $valor . '" '
-            . ' ' . $extras . ' > ' . "\n";
-    $html .= '     </div> ' . "\n";
-    $html .= '   </div> ' . "\n\n\n";
-
-    return $html;
-}
-
-
-
-
 /**
  * 
  * @param type $nombre
@@ -246,6 +212,35 @@ function campo_html_areaDeTexto($nombre, $id, $placeholder, $label, $contexto, $
 
 /**
  * 
+ * @param type $nombre
+ * @param type $id
+ * @param type $placeholder
+ * @param type $label
+ * @param type $contexto
+ * @param type $valor
+ * @param type $extras
+ * @return string
+ */
+function campo_html_numerico($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "") {
+
+    $html = ' <div class="form-group"> ' . "\n";
+    $html .= '     <label for="' . $id . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_guiones(bdd_tiene_id_al_inicio($label))) . '"); ?></label> ' . "\n";
+    $html .= '     <div class="col-sm-10"> ' . "\n";
+    $html .= '       <input type="number" '
+            . 'class="form-control" '
+            . 'name="' . $nombre . '" '
+            . 'id="' . $id . '" '
+            . 'placeholder="<?php _t("' . ucfirst(bdd_tiene_id_al_inicio($placeholder)) . '"); ?>" '
+            . 'value="' . $valor . '" '
+            . ' ' . $extras . ' > ' . "\n";
+    $html .= '     </div> ' . "\n";
+    $html .= '   </div> ' . "\n\n\n";
+
+    return $html;
+}
+
+/**
+ * Campo tipo radio (a dos valores)
  * @param type $nombre
  * @param type $id
  * @param type $label
@@ -379,20 +374,12 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
         //crear_fichero("$path_web/extenciones/funciones", "$nombrePlugin.php", $contenido);
 
 // si la carpeta existe, registro el nombre del plugin en la base de datos como una pagina
-         
-        registrar_pagina_en_bd($nombrePlugin); 
-        
-        (busca_pagina_en_bd($nombrePlugin))?mensaje('info', 'pagina registrada en BD') : mensaje('info', 'Error al registrar la pagina en la BD'); 
-        
-        
-        
-        
-        
+        registrar_pagina_en_bd($nombrePlugin);
 
-// tambien registro el item en el menu 
+// tambien registro el item en el menu    
         registra_item_al_menu($nombrePlugin, $ubicacion, $padre, $label);
-
-// registro los campos visibles        
+// registro los campos visibles
+        
         $json_campos_segun_tabla = json_encode(bdd_lista_campos_segun_tabla($nombrePlugin));
         echo "Los campos en json"; 
         echo var_dump($json_campos_segun_tabla);
@@ -401,7 +388,9 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
 
         
         
-                        
+        
+        
+        
 // ahora registro el permiso del root en 1111
         registrar_permiso_pagina_grupo('root', "$nombrePlugin", '1111');
         registrar_permiso_pagina_grupo('administradores', "$nombrePlugin", '1110');
@@ -436,8 +425,7 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
                 crear_carpeta("$path_plugins/$nombrePlugin",$mvc[$i]);
                 crear_carpeta("$path_plugins/$nombrePlugin/$mvc[$i]", 'publico');
             }
-            // dentro de cada carpeta (Controlador, modelos, vista, reg) 
-            // creo los ficheros que cada carpeta
+            // dentro de cada carpeta creo los ficheros que cada carpeta debe contenir
             magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvc[$i]);
             $i++;
         }
@@ -507,11 +495,7 @@ function crear_carpeta($path, $nombre_carpeta) {
     global $icon_error, $icon_ok, $icon_carpeta_cerrada, $icon_carpeta_abierta;
 
     if (file_exists("$path/$nombre_carpeta")) {
-        //echo "<p><b>$icon_error [error]</b> La carpeta $path/<b>$nombre_carpeta</b>, existe o no tiene derechos de escritura</p>";
-        
-        mensaje('atencion', "<p><b>$icon_error [error]</b> La carpeta $path/<b>$nombre_carpeta</b>, existe o no tiene derechos de escritura</p>");
-        
-        
+        echo "<p><b>$icon_error [error]</b> La carpeta $path/<b>$nombre_carpeta</b>, existe o no tiene derechos de escritura</p>";
     } else {
         mkdir("$path/$nombre_carpeta", 0777);
         chmod("$path/$nombre_carpeta", 0777);
@@ -551,13 +535,6 @@ function crear_fichero($path, $fichero, $contenido = '') {
 
     if (file_exists("$path/$fichero")) {
         echo "<p><b>$icon_error [error]</b> El fichero $path/<b>$fichero</b> Ya existe</p>";
-        
-        
-        mensaje("atencion", "<b>Fichero:</b> $path/$fichero  ya existe");
-        
-        
-        
-        
         return 1;
     } else {
         echo "<p>---$icon_fichero $fichero creado con exito</p>";
@@ -594,8 +571,7 @@ function copiar_carpeta($origen, $destino) {
                 if (!file_exists($destino . '/' . $entry)) {
                     copiar_carpeta($Entry, $destino . '/' . $entry);
                 } else {
-                    echo "<p class=\"error\" ><b>$icon_error [error]</b> : ya existe: $destino/$entry </p>";
-                    mensaje("atencion", "<b>Carpeta:</b> $destino/$entry  ya existe");
+                    echo "<p><b>$icon_error [error]</b> : ya existe: $destino/$entry </p>";
                 }
 
 
@@ -606,8 +582,7 @@ function copiar_carpeta($origen, $destino) {
                 copy($Entry, $destino . '/' . $entry);
                 chmod("$destino", 0777);
             } else {
-                //echo "<p class=\"error\"><b>$icon_error [error]</b>  Ya existe: $destino/$entry)</p>";
-                mensaje("atencion", "<b>$destino/$entry</b> Archivo ya existe");
+                echo "<p><b>$icon_error [error]</b>  Ya existe: $destino/$entry)</p>";
             }
         }
 
@@ -626,46 +601,9 @@ function copiar_carpeta($origen, $destino) {
  * @param type $nombrePlugin
  * @return string
  */
-/*
-function info_de_campo($nombrePlugin, $info){
-    global $dbh; 
-
-
-$sql = "SHOW COLUMNS FROM $nombrePlugin";
-$stmt = $dbh->prepare($sql);
-$stmt->execute(array(
-    ":tabla" => "$nombrePlugin"
-        )
-);
-$resultados = $stmt->fetchAll();
-
-
-foreach ($resultados as $reg) {
-    $campo_nombre = $reg['Field'];
-    $campo_tipo = $reg['Type'];
-    $campo_nul = $reg['Null'];
-    $campo_clave = $reg['Key'];
-    $campo_defecto = ($reg['Default']) ? $reg['Default'] : "null";
-    $campo_extra = $reg['Extra'];
-    $campo_tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
-    $campo_tipo_campo = tipo_campo($tipo);
-    $campo_var1 = $reg[0];
-    $campo_var2 = "$nombrePlugin" . "_" . "$var1";
-}
-
-return $campo_nombre[0];
-    
-}*/
-
-//*******************************************************************
-
-
 function contenido_controlador($controlador, $nombrePlugin) {
     global $path_plugins, $dbh;
     //$resultados = resultados($nombrePlugin);
-    
-    
-    
     include "./modelos/v_crea_plug.php";
     $total_resultados = count($resultados);
 
@@ -680,14 +618,6 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             $fuente .= ' if (permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo)) { ' . "\n";
             $fuente .= ' $' . $nombrePlugin . '_id 		= mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']); ' . "\n";
-            /*$fuente .='// si hay uno nuevo
-                        if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/borrar.php")) {
-                            include "../temas/$config_tema/admin/' . $nombrePlugin . '/vista/borrar.php";
-                        } else {
-                            include "./' . $nombrePlugin . '/vista/borrar.php";
-                        }';            
-             * 
-             */
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/borrar.php"; ' . "\n";
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
@@ -704,36 +634,10 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' $accion = "buscar"; ' . "\n";
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina, $_usuarios_grupo)) { ' . "\n";
-            //$fuente .= '  $inicia = (isset($_REQUEST[\'pag\']) && $_REQUEST[\'pag\'] != 0 ) ? $_REQUEST[\'pag\'] * $cfg_limite_items_en_tablas : 0;  ' . "\n";
-            
-            $fuente .='     $inicia = (isset($_REQUEST[\'pag\']) && $_REQUEST[\'pag\'] != 0 ) ? mysql_real_escape_string($_REQUEST[\'pag\']) * $cfg_limite_items_en_tablas : 0; ' . "\n";
-            $fuente .='     // ordenamos por id por defecto ' . "\n";
-            $fuente .='     $ordenpor   = (isset($_REQUEST[\'ordenpor\']) && $_REQUEST[\'ordenpor\'] != \'\' ) ? mysql_real_escape_string($_REQUEST[\'ordenpor\'])  : \'id\'; ' . "\n";
-            $fuente .='     //asc / desc ' . "\n";
-            $fuente .='     $orden   = (isset($_REQUEST[\'orden\']) && $_REQUEST[\'orden\'] != \'\' ) ? mysql_real_escape_string($_REQUEST[\'orden\'])  : \'ASC\'; ' . "\n"; 
-
-
-
-            //$fuente .='// si hay uno nuevo
-            //            if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/buscar.php")) {
-            //                include "../temas/$config_tema/admin/' . $nombrePlugin . '/vista/buscar.php";
-            //            } else {
-            //                include "./' . $nombrePlugin . '/vista/buscar.php";
-            //            }';   
-            
+            $fuente .= '       $inicia = (isset($_REQUEST[\'pag\']) && $_REQUEST[\'pag\'] != 0 ) ? $_REQUEST[\'pag\'] * $cfg_limite_items_en_tablas : 0;  ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/buscar.php"; ' . "\n";
-            $fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
-            $fuente .= '     include "./' . $nombrePlugin . '/reg/index.php"; ' . "\n";
-            
-            $fuente .= ' // esto es par el paginador     ' . "\n";
-            $fuente .= ' $total_items_por_pagina = $cfg_limite_items_en_tablas; // esto viene de la configuracion    ' . "\n";
-            $fuente .= ' $total_paginas = ceil($total_items / $cfg_limite_items_en_tablas);    ' . "\n";
-                               
-                                    
-          //  $fuente .= '     include "./' . $nombrePlugin . '/vista/buscar.php"; ' . "\n";
-            
-            
-            
+            //$fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
+            $fuente .= '     include "./' . $nombrePlugin . '/vista/buscar.php"; ' . "\n";
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina,$_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
@@ -752,32 +656,10 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";
             $fuente .= ' if(isset($_REQUEST[\'a\'])==\'crear\'){ ' . "\n";
 
-            
-            
-            $fuente .= ' include "./' . $nombrePlugin . '/reg/post.php";  ' . "\n";                        
-            /*//------------------------------------------------------------------
-            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/reg/post.php")) { ' . "\n";
-            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/reg/post.php"; ' . "\n";
-            $fuente .=' } else { ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/reg/post.php";  ' . "\n";
-            $fuente .=' } ' . "\n";     
-            //------------------------------------------------------------------
-            */
-            
-            
-            /*
-            //------------------------------------------------------------------
-            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/crear.php")) { ' . "\n";
-            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/crear.php"; ' . "\n";
-            $fuente .=' } else { ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/crear.php";  ' . "\n";
-            $fuente .=' } ' . "\n";     
-            //------------------------------------------------------------------
-            */
-            
-            
-            $fuente .= ' include "./' . $nombrePlugin . '/modelos/crear.php";  ' . "\n";
-            //$fuente .= ' include "./' . $nombrePlugin . '/vista/index.php";  ' . "\n";
+        //    $fuente .= ' include "./' . $nombrePlugin . '/modelos/index.php";  ' . "\n";
+        //    $fuente .= ' include "./' . $nombrePlugin . '/vista/index.php";  ' . "\n";
             
             $fuente .= ' if(!$config_debug){  ' . "\n";
             $fuente .= ' echo \'<meta http-equiv="refresh" content="0; url=index.php?p=\'.$p.\'&c=index">\';  ';
@@ -786,18 +668,7 @@ function contenido_controlador($controlador, $nombrePlugin) {
             
             
             $fuente .= ' }else{ ' . "\n";
-
-            /*
-            $fuente .='// si hay uno nuevo
-                        if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/crear.php")) {
-                            include "../temas/$config_tema/admin/' . $nombrePlugin . '/vista/crear.php";
-                        } else {
-                            include "./' . $nombrePlugin . '/vista/crear.php";
-                        }';
-            */
             $fuente .= ' include "./' . $nombrePlugin . '/vista/crear.php";  ' . "\n";
-            
-            
             $fuente .= ' }          ' . "\n";
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
@@ -843,91 +714,16 @@ function contenido_controlador($controlador, $nombrePlugin) {
 
             $fuente .= ' $' . $nombrePlugin . '_id = mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);      ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/reg/post.php";  ' . "\n";
-            /*            //------------------------------------------------------------------
-            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/reg/post.php")) { ' . "\n";
-            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/reg/post.php"; ' . "\n";
-            $fuente .=' } else { ' . "\n";            
-            $fuente .= ' include "./' . $nombrePlugin . '/reg/post.php";  ' . "\n";
-            $fuente .=' } ' . "\n";     
-            //------------------------------------------------------------------
-              */                      
-            
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/editar.php";  ' . "\n\n";
-            /*//------------------------------------------------------------------
-            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/editar.php")) { ' . "\n";
-            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/editar.php"; ' . "\n";
-            $fuente .=' } else { ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/modelos/editar.php";  ' . "\n";
-            $fuente .=' } ' . "\n";     
-            //------------------------------------------------------------------
-              */                      
-            
+
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/ver.php";  ' . "\n";
-            /*            //------------------------------------------------------------------
-            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php")) { ' . "\n";
-            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
-            $fuente .=' } else { ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/modelos/ver.php";  ' . "\n";
-            $fuente .=' } ' . "\n";     
-            //------------------------------------------------------------------
-            */
             $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
-            /*  
-            //------------------------------------------------------------------
-            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php")) { ' . "\n";
-            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
-            $fuente .=' } else { ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php";  ' . "\n";
-            $fuente .=' } ' . "\n";     
-            //------------------------------------------------------------------
-            */
             $fuente .= ' include "./' . $nombrePlugin . '/vista/ver.php";  ' . "\n";
-            /*            //------------------------------------------------------------------
-            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/ver.php")) { ' . "\n";
-            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/vista/ver.php"; ' . "\n";
-            $fuente .=' } else { ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/vista/ver.php";  ' . "\n";
-            $fuente .=' } ' . "\n";     
-            //------------------------------------------------------------------
-              */                                  
-            
             $fuente .= ' }else{ ' . "\n";
-            
-            
             $fuente .= ' $' . $nombrePlugin . '_id = mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);      ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
-            /*            //------------------------------------------------------------------
-            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php")) { ' . "\n";
-            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
-            $fuente .=' } else { ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/modelos/ver.php";  ' . "\n";
-            $fuente .=' } ' . "\n";     
-            //------------------------------------------------------------------
-            */
-            
             $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
-            /*            //------------------------------------------------------------------
-            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php")) { ' . "\n";
-            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
-            $fuente .=' } else { ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php";  ' . "\n";
-            $fuente .=' } ' . "\n";     
-            //------------------------------------------------------------------
-            */
-            
-            
-            
-            
-            /*
-            $fuente .='// si hay uno nuevo
-                        if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/editar.php")) {
-                            include "../temas/$config_tema/admin/' . $nombrePlugin . '/vista/editar.php";
-                        } else {
-                            include "./' . $nombrePlugin . '/vista/editar.php";
-                        }';
-            */
             $fuente .= ' include "./' . $nombrePlugin . '/vista/editar.php"; ' . "\n";
-            
             $fuente .= ' }  ' . "\n";
 
             $fuente .= ' } else { ' . "\n";
@@ -970,43 +766,12 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' $accion = "ver"; ' . "\n";
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";
-            //$fuente .= '  $inicia = (isset($_REQUEST[\'pag\']) && $_REQUEST[\'pag\'] != 0 ) ? $_REQUEST[\'pag\'] * $cfg_limite_items_en_tablas : 0;    ' . "\n";
-            $fuente .='     $inicia = (isset($_REQUEST[\'pag\']) && $_REQUEST[\'pag\'] != 0 ) ? mysql_real_escape_string($_REQUEST[\'pag\']) * $cfg_limite_items_en_tablas : 0; ' . "\n";
-            $fuente .='     // ordenamos por id por defecto ' . "\n";
-            $fuente .='     $ordenpor   = (isset($_REQUEST[\'ordenpor\']) && $_REQUEST[\'ordenpor\'] != \'\' ) ? mysql_real_escape_string($_REQUEST[\'ordenpor\'])  : \'id\'; ' . "\n";
-            $fuente .='     //asc / desc ' . "\n";
-            $fuente .='     $orden   = (isset($_REQUEST[\'orden\']) && $_REQUEST[\'orden\'] != \'\' ) ? mysql_real_escape_string($_REQUEST[\'orden\'])  : \'ASC\'; ' . "\n"; 
-
-            
+            $fuente .= '  $inicia = (isset($_REQUEST[\'pag\']) && $_REQUEST[\'pag\'] != 0 ) ? $_REQUEST[\'pag\'] * $cfg_limite_items_en_tablas : 0;    ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/index.php"; ' . "\n";
-            //------------------------------------------------------------------
-            /*
-            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/index.php")) { ' . "\n";
-            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/index.php"; ' . "\n";
-            $fuente .=' } else { ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/modelos/index.php";  ' . "\n";
-            $fuente .=' } ' . "\n";     
-             * 
-             */
-            //------------------------------------------------------------------
-            
-                        
-            $fuente .= ' // esto es par el paginador     ' . "\n";
-            $fuente .= ' $total_items_por_pagina = $cfg_limite_items_en_tablas; // esto viene de la configuracion    ' . "\n";
-            $fuente .= ' $total_paginas = ceil($total_items / $cfg_limite_items_en_tablas);    ' . "\n";
-            
-            /*
-            $fuente .='// si hay uno nuevo
-                        if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/index.php")) {
-                            include "../temas/$config_tema/admin/' . $nombrePlugin . '/vista/index.php";
-                        } else {
-                            include "./' . $nombrePlugin . '/vista/index.php";
-                        }';
-*/
-            
-            
+//            $fuente .= ' // esto es par el paginador     ' . "\n";
+//            $fuente .= ' $total_items_por_pagina = $config_total_items_por_pagina; // esto viene de la configuracion    ' . "\n";
+//            $fuente .= ' $total_paginas = ceil($total_items / $cfg_limite_items_en_tablas);    ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/vista/index.php"; ' . "\n";
-            
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
@@ -1057,50 +822,12 @@ function contenido_controlador($controlador, $nombrePlugin) {
             //     $fuente .= ' include \'header.php\';  '."\n";
             //     $fuente .= ' include "./'.$nombrePlugin.'/funciones.php"; '."\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";
+
             $fuente .= '     $' . $nombrePlugin . '_id 		= mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);   ' . "\n";
 
-            
-            
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
-           /*
-            //------------------------------------------------------------------
-            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php")) { ' . "\n";
-            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
-            $fuente .=' } else { ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/modelos/ver.php";  ' . "\n";
-            $fuente .=' } ' . "\n";     
-            //------------------------------------------------------------------
-            */
-            
-            
-            
             $fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
-            //------------------------------------------------------------------
-            /*$fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php")) { ' . "\n";
-            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
-            $fuente .=' } else { ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php";  ' . "\n";
-            $fuente .=' } ' . "\n";     
-             * 
-             */
-            //------------------------------------------------------------------
-            
-            
-            
-            
-            /*
-            $fuente .='// si hay uno nuevo
-                        if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/data.php")) {
-                            include "../temas/$config_tema/admin/' . $nombrePlugin . '/vista/data.php";
-                        } else {
-                            include "./' . $nombrePlugin . '/vista/data.php";
-                        }';
-            */
             $fuente .= '     include "./' . $nombrePlugin . '/vista/data.php"; ' . "\n";
-            
-            
-            
-            
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
@@ -1141,59 +868,16 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";                        
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";
             $fuente .= '     $' . $nombrePlugin . '_id 		= mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);   ' . "\n";
-            
-            
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/var.php"; ' . "\n";
-            /*//------------------------------------------------------------------
-            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/var.php")) { ' . "\n";
-            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/var.php"; ' . "\n";
-            $fuente .=' } else { ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/modelos/var.php";  ' . "\n";
-            $fuente .=' } ' . "\n";     
-            //------------------------------------------------------------------
-            */
-            
-            
             $fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
-            /*//------------------------------------------------------------------
-            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php")) { ' . "\n";
-            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
-            $fuente .=' } else { ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php";  ' . "\n";
-            $fuente .=' } ' . "\n";     
-            //------------------------------------------------------------------
-            */
             
-            
-            
-            $fuente .= '     include "./' . $nombrePlugin . '/vista/var.php"; ' . "\n";
+            //$fuente .= '     include "./' . $nombrePlugin . '/vista/var.php"; ' . "\n";
             $fuente .= '     $html = file_get_contents("./' . $nombrePlugin . '/vista/var.php"); ' . "\n";
-            /*//------------------------------------------------------------------
-            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/var.php")) { ' . "\n";
-            $fuente .= '     $html = file_get_contents("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/var.php"); ' . "\n";
-            $fuente .=' } else { ' . "\n";
-            $fuente .= '     $html = file_get_contents("./' . $nombrePlugin . '/vista/var.php"); ' . "\n";
-            $fuente .=' } ' . "\n";     
-            //------------------------------------------------------------------
-            */
-            
-            
             
             
             $fuente .= '     include "./' . $nombrePlugin . '/reg/var.php"; ' . "\n";
-            /*//------------------------------------------------------------------
-            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/reg/var.php")) { ' . "\n";
-            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/reg/var.php"; ' . "\n";
-            $fuente .=' } else { ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/reg/var.php";  ' . "\n";
-            $fuente .=' } ' . "\n";     
-            //------------------------------------------------------------------
-            */
+            $fuente .= '     // aca la traduccion no va ya que imprimimos el html directo ' . "\n";
             
-            
-            
-            
-            $fuente .= '     // aca la traduccion no va ya que imprimimos el html directo ' . "\n";            
             $fuente .= '     echo $html; ' . "\n";
             
             $fuente .= ' } else { ' . "\n";
@@ -1234,43 +918,9 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";            
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";
             $fuente .= '     $' . $nombrePlugin . '_id 		= mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);   ' . "\n";
-            
-            
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
-            /*//------------------------------------------------------------------
-            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php")) { ' . "\n";
-            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
-            $fuente .=' } else { ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/modelos/ver.php";  ' . "\n";
-            $fuente .=' } ' . "\n";     
-            //------------------------------------------------------------------
-            */
-            
             $fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
-            /*//------------------------------------------------------------------
-            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php")) { ' . "\n";
-            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
-            $fuente .=' } else { ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php";  ' . "\n";
-            $fuente .=' } ' . "\n";     
-            //------------------------------------------------------------------
-            */
-            
-            /*
-            $fuente .='// si hay uno nuevo
-                        if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/ver.php")) {
-                            include "../temas/$config_tema/admin/' . $nombrePlugin . '/vista/ver.php";
-                        } else {
-                            include "./' . $nombrePlugin . '/vista/ver.php";
-                        }';            */
             $fuente .= '     include "./' . $nombrePlugin . '/vista/ver.php"; ' . "\n";
-            
-            
-            
-            
-            
-            
-            
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
@@ -1314,37 +964,8 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= '     $' . $nombrePlugin . '_id 		= mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);   ' . "\n";
 
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
-            /*//------------------------------------------------------------------
-            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php")) { ' . "\n";
-            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
-            $fuente .=' } else { ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/modelos/ver.php";  ' . "\n";
-            $fuente .=' } ' . "\n";     
-            //------------------------------------------------------------------
-            */
-            
             $fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
-            /*
-            //------------------------------------------------------------------
-            $fuente .=' if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php")) { ' . "\n";
-            $fuente .=' include "../temas/$config_tema/admin/' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
-            $fuente .=' } else { ' . "\n";
-            $fuente .= ' include "./' . $nombrePlugin . '/reg/reg.php";  ' . "\n";
-            $fuente .=' } ' . "\n";     
-            //------------------------------------------------------------------
-            */
-            
-            /*
-            $fuente .='// si hay uno nuevo
-                        if (file_exists("../temas/$config_tema/admin/' . $nombrePlugin . '/vista/txt.php")) {
-                            include "../temas/$config_tema/admin/' . $nombrePlugin . '/vista/txt.php";
-                        } else {
-                            include "./' . $nombrePlugin . '/vista/txt.php";
-                        }';            
-             * 
-             */
             $fuente .= '     include "./' . $nombrePlugin . '/vista/txt.php"; ' . "\n";
-            
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
@@ -1636,7 +1257,7 @@ if($config_debug){
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/ ' . "\n";
-            $fuente .= '$comando = "SELECT * FROM ' . $nombrePlugin . ' ORDER BY $ordenpor $orden  "; ' . "\n";
+            $fuente .= '$comando = "SELECT * FROM ' . $nombrePlugin . ' ORDER BY id DESC  "; ' . "\n";
             $fuente .= '$sql=mysql_query("$comando Limit $inicia, $cfg_limite_items_en_tablas ",$conexion) ' . "\n";
             $fuente .= 'or error(__DIR__, __FILE__, __LINE__);	  ' . "\n";
             $fuente .= '// esto es para la paginacion	  ' . "\n";
@@ -1670,7 +1291,7 @@ if($config_debug){
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/ ' . "\n";
-            $fuente .= '$comando = "SELECT * FROM ' . $nombrePlugin . '   "; ' . "\n";
+            $fuente .= '$comando = "SELECT * FROM ' . $nombrePlugin . ' ORDER BY id DESC  "; ' . "\n";
            // $fuente .= '$sql=mysql_query("$comando Limit $inicia, $cfg_limite_items_en_tablas ",$conexion) ' . "\n";
             $fuente .= '$sql=mysql_query("$comando ",$conexion) ' . "\n";
             $fuente .= 'or error(__DIR__, __FILE__, __LINE__);	  ' . "\n";
@@ -1977,6 +1598,8 @@ function contenido_vista($vista, $nombrePlugin) {
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
+
+
                     $nombre = $reg['Field'];
                     $tipo = $reg['Type'];
                     $nul = $reg['Null'];
@@ -1990,7 +1613,7 @@ function contenido_vista($vista, $nombrePlugin) {
 
                     switch ($tipo_campo) {
                         case 'texto':
-                        case 'numerico':    
+                        case 'numerico':
 
                             if (bdd_tiene_id_al_inicio($nombre)) {
                                 //  $tabla = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre, );
@@ -2007,19 +1630,16 @@ function contenido_vista($vista, $nombrePlugin) {
                             
                                 }
                             }
-                            break;
                             
                             
-                            
-                            
+                                                        
 
-                          
-                                
+                            break;
                         case 'fecha':
                             $fuente .= campo_html_fecha($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
                             break;
                         case 'areaDeTexto':
-                            $fuente .= campo_html_areaDeTexto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
+                            $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin);
                             break;
                         case 'buleano':
                             $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, false, false, 'crear');
@@ -2067,9 +1687,9 @@ function contenido_vista($vista, $nombrePlugin) {
             
             
             
-            $fuentexxxxxxxxxxxxxxxxxx .=' <?php 
+            $fuente .=' <?php 
                         $campos = array(';
-/*
+
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
@@ -2077,25 +1697,23 @@ function contenido_vista($vista, $nombrePlugin) {
                     $campo = $reg[0];
                     $plugin_campo = "$nombrePlugin" . "_" . "$campo";
 
-                    $fuentexxxxxxxxxxxxxxxxxxxxxxxxx .='array(
-                                "type" => "text",
-                                "name" => "' . $plugin_campo . '",
-                                "value" => "$' . $plugin_campo . '",                                                                        
+                    $fuente .='array(
+"type" => "text",
+"name" => "' . $plugin_campo . '",
+"value" => "$' . $plugin_campo . '",                                                                        
+    
+"for" => "' . $plugin_campo . '",
+"label" => "'.$campo.'",
+"class" => "form-control",
+"id" => "' . $plugin_campo . '",
+"placeholder" => "'.$campo.'",
+                    ),';
+                }
 
-                                "for" => "' . $plugin_campo . '",
-                                "label" => "'.$campo.'",
-                                "class" => "form-control",
-                                "id" => "' . $plugin_campo . '",
-                                "placeholder" => "'.$campo.'",
-                                                    ),';
-                                                }
+                $i++;
+            }
 
-                                                $i++;
-                                            }
-*/
-                                            
-                                            
-            $fuentexxxxxxxxxxxxxxxxxxx .=');
+            $fuente .=');
 
         foreach ($campos as $key => $value) {
 
@@ -2269,10 +1887,12 @@ function contenido_vista($vista, $nombrePlugin) {
 ';       
             
             
-          
             
             
-
+            
+            
+            /*
+            
             
             
             $i = 0;
@@ -2317,8 +1937,10 @@ function contenido_vista($vista, $nombrePlugin) {
 
                         break;
 
-                        case 'opciones':                            
-                            $tabla_relacionada = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre, bdd_lista_tablas_bdd());      
+                        case 'opciones':
+                            
+                            $tabla_relacionada = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre, bdd_lista_tablas_bdd());
+                            
                             
                             $fuente .= campo_html_opciones($tabla_relacionada, $var2, $reg[0], $nombrePlugin, $valor);
 
@@ -2347,22 +1969,20 @@ function contenido_vista($vista, $nombrePlugin) {
 
                       $var1 = $reg[0];
                       $var2 = "$nombrePlugin"."_"."$var1";
-/*
-                      $fuente .= ' <div class="form-9999999group"> ' . "\n";
+
+                      $fuente .= ' <div class="form-group"> ' . "\n";
                       $fuente .= '     <label for="' . $reg[0] . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '"); ?></label> ' . "\n";
                       $fuente .= '     <div class="col-sm-10"> ' . "\n";
                       $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?>" value="<?php echo $' . $var2 . '; ?>"> ' . "\n";
                       $fuente .= '     </div> ' . "\n";
                       $fuente .= '   </div> ' . "\n\n\n";
- * 
- */
 
                      
                 }
                 $i++;
             }
             
-       
+            */
 
             $fuente .= '   <div class="form-group"> ' . "\n";
             $fuente .= ' <div class="col-sm-offset-2 col-sm-10"> ' . "\n";
@@ -2382,54 +2002,35 @@ function contenido_vista($vista, $nombrePlugin) {
             $fuente .= '<?php include "tabs.php"; ?>' . "\n";
             $fuente .= '<h2> ' . "\n";
             $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
-            $fuente .= '<?php echo _t("' . ucfirst($nombrePlugin) . '"); ?> ' . "\n";
+            $fuente .= '<?php echo _t("' . $nombrePlugin . '"); ?> ' . "\n";
             $fuente .= '<a type="button" class="btn btn-primary navbar-btn" href="?p=' . $nombrePlugin . '&c=crear"> ' . "\n";
             $fuente .= ' <?php _t("Nuevo"); ?> ' . "\n";
             $fuente .= '</a>' . "\n";
             $fuente .= '</h2>' . "\n";
 
-            $fuente .= '<table class="table table-striped">' . "\n";
-            
-            $fuente .= '<thead>
-<tr> 
-<th>#</th>' . "\n";
-                        $i = 0;
-                        $usar_id = 0; // 0 no usa, -1 si usa
-                        foreach ($resultados as $reg) {
-                            if ($i > $usar_id) {
-                                /**$fuente .= ' <th><?php echo _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '"); ?></th> ' . "\n"; */
-                                $fuente .= ' <th><?php ordenpor("index.php?p=$p", _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '"), _tr("' . (($reg[0])) . '"), $orden); ?></th> ' . "\n"; 
-
-                            }
-                            $i++;
-                        }
-            $fuente .= ' <th><?php echo _t("Accion"); ?></th> ' . "\n";
-            $fuente .= ' </tr>
-                    </thead>' . "\n";
-            
-            
-            $fuente .= '<tfoot>
-                        <tr> 
-                        <th>#</th>' . "\n";
-                            $i = 0;
-                            $usar_id = 0; // 0 no usa, -1 si usa
-                            foreach ($resultados as $reg) {
-                                if ($i > $usar_id) {
-                                    /**$fuente .= ' <th><?php echo _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '"); ?></th> ' . "\n"; */
-                                    $fuente .= ' <th><?php ordenpor("index.php?p=$p", _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '"), _tr("' . (($reg[0])) . '"), $orden); ?></th> ' . "\n"; 
-
-                                }
-                                $i++;
-                            }
-            $fuente .= ' <th><?php echo _t("Accion"); ?></th> ' . "\n";
-            $fuente .= ' </tr>
-        </tfoot>';
-
+            $fuente .= '
+<table class="table table-striped">';
+            /*
+    $fuentexxxxxx = '<thead>
+        <tr> 
+        <th>#</th>' . "\n\n";
+            $i = 0;
+            $usar_id = 0; // 0 no usa, -1 si usa
+            foreach ($resultados as $reg) {
+                if ($i > $usar_id) {
+                    $fuentexxxxxx .= ' <th><?php echo _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '"); ?></th> ' . "\n";
+                }
+                $i++;
+            }
+            $fuentexxxxxx .= ' <th><?php echo _t("Accion"); ?></th> ' . "\n";
+            $fuentexxxxxx .= ' </tr>
+    </thead>';
+*/
             
             
             
             
-           /** $fuente.= '<?php $ganchos=array(); '.$nombrePlugin.'_thead($ganchos); ?>'; */
+            $fuente.= '<?php $ganchos=array(); '.$nombrePlugin.'_thead($ganchos); ?>';
             
             
             
@@ -2442,7 +2043,7 @@ function contenido_vista($vista, $nombrePlugin) {
             }
    ?>';
    
-
+/*
        $fuente .= '<?php
         $i=1;
         while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
@@ -2457,8 +2058,8 @@ function contenido_vista($vista, $nombrePlugin) {
         }
         ?>';
        
+  */     
        
-  /*     
            $fuente .='<?php
                 $i = 1; // cuenta lineas
                 while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
@@ -2474,7 +2075,7 @@ function contenido_vista($vista, $nombrePlugin) {
                     $i++;
                 }
                 ?>'; 
-    */        
+            
        
             $fuente .='</tbody>
                     <?php
@@ -2482,25 +2083,15 @@ function contenido_vista($vista, $nombrePlugin) {
                             //   include "./' . $nombrePlugin . '/vista/tr_anadir.php";
 
                            }
-                  ?>'; 
-                   
+                  ?>
+                   <?php '.$nombrePlugin.'_tfoot(); ?>
 
-                /*$fuente .='<?php '.$nombrePlugin.'_tfoot(); ?>'; */
-            
-               $fuente .='</table> 
+               </table> 
 
                <?php  
                //echo paginacion($p, $c, isset($_REQUEST[\'pag\'])); 
                echo paginacion_master($p, $c, $total_items, $pag);
                ?>';
-               
-               
-               
-               $fuente .='<a href="pdf.php?p=<?php echo $p; ?>">PDF</a>';
-               
-               
-               
-               
 
             return $fuente;
             break;
@@ -2649,11 +2240,12 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
                     $var2 = "$nombrePlugin" . "_" . "$var1";
                     // si el campo tiene _id_ lo quito 
                    // $var2 = (strpos($var2, '_id_')) ? str_replace('_id', '', $var2) : $var2;  // eventos_sala    
-                    $fuente .= ' $pdf->Cell($w * 1, $h, utf8_decode($'.$var2.'), $border, $ln, $align, $fill, $link);' . "\n";
+                    $fuente .= ' $pdf->Cell($w * 1, $h, $'.$var2.', $border, $ln, $align, $fill, $link);' . "\n";
                 }
 
                 $i++;
             }
+            
                     
                     $fuente .='
 
@@ -2664,6 +2256,56 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
                 $pdf->Output();
 
                   ' . "\n";
+
+            
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
 
             return $fuente;
             break;
@@ -2716,78 +2358,38 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/ ?>' . "\n";
             $fuente .= '<h2>' . "\n\n";
-            $fuente .= '<span class="glyphicon glyphicon-<?php echo _menu_icono_segun_pagina($p); ?>"></span> ' . "\n\n";
-            $fuente .= '<?php _t("Buscar"); ?></h2> ' . "\n\n";
+            $fuente .= '<span class="glyphicon glyphicon-search"></span>' . "\n\n";
+            $fuente .= '<?php _t("Buscar"); ?> ' . "\n\n";
             $fuente .= '</h2> ' . "\n\n";
-            $fuente .= '<form class="form-horizontal" action="index.php" method="get"> ' . "\n";
+            $fuente .= '<form class="" action="index.php" method="get"> ' . "\n";
             $fuente .= '<input type="hidden" name="p" value="' . $nombrePlugin . '"> ' . "\n";
             $fuente .= '<input type="hidden" name="c" value="buscar"> ' . "\n";
-            //$fuente .= '<input type="hidden" name="a" value="crear"> ' . "\n\n";
 
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
-                    $nombre = $reg['Field'];
-                    $tipo = $reg['Type'];
-                    $nul = $reg['Null'];
-                    $clave = $reg['Key'];
-                    $defecto = $reg['Default'];
-                    $extra = $reg['Extra'];
-                    $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
-                    $tipo_campo = tipo_campo($tipo);
                     $var1 = $reg[0];
                     $var2 = "$nombrePlugin" . "_" . "$var1";
 
-                    switch ($tipo_campo) {
-                        case 'texto':
-                        case 'numerico':    
-
-                            if (bdd_tiene_id_al_inicio($nombre)) {
-                                //  $tabla = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre, );
-                                $fuente .= campo_html_opciones($var2, $var2, $reg[0], $nombrePlugin, $extras);
-                            } else {
-                                $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
-                            }
-                            break;
-                            
-                            
-                            
-                            
-
-                          
-                                
-                        case 'fecha':
-                            $fuente .= campo_html_fecha($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
-                            break;
-                        case 'areaDeTexto':
-                            $fuente .= campo_html_areaDeTexto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
-                            break;
-                        case 'buleano':
-                            $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, false, false, 'crear');
-                            break;
-
-                        default:
-                            break;
-                    }
+                    $fuente .= '     <div class="form-group"> ' . "\n";
+                    $fuente .= '     <label for="' . $var2 . '" class="col-sm-2 control-label"><?php _t("' . ucfirst(bdd_quita_id_inicio($reg[0])) . '");?></label> ' . "\n";
+                    // $fuente .= '     <div class="col-sm-10"> ' . "\n";
+                    $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($var1) . '"); ?> "> ' . "\n";
+                    // $fuente .= '     </div> ' . "\n";
+                    $fuente .= '   </div> ' . "\n\n\n";
                 }
                 $i++;
             }
-
-            $fuente .= ' <div class="form-group"> ' . "\n";
-            $fuente .= '     <div class="col-sm-offset-2 col-sm-10"> ' . "\n";
+            //  $fuente .= ' <div class="form-group"> ' . "\n";
+            //  $fuente .= '     <div class="col-sm-offset-2 col-sm-10"> ' . "\n";
             $fuente .= '       <button type="submit" class="btn btn-primary"><?php _t("Buscar"); ?></button> ' . "\n";
-            $fuente .= '     </div> ' . "\n";
-            $fuente .= '   </div> ' . "\n";
+            //$fuente .= '     </div> ' . "\n";
+            //$fuente .= '   </div> ' . "\n";
             $fuente .= ' </form> ' . "\n";
 
-
             return $fuente;
-
-
-
             break;
-
 
         case 'tr.php':
 
@@ -2795,42 +2397,16 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/' . "\n";
-            
-            
-            $fuente .= '$menu = \'<div class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="' . $nombrePlugin . '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    \'._tr("Acción").\'
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="' . $nombrePlugin . '">
-    <li><a href=\'.$_SERVER[\'PHP_SELF\'].\'?p=' . $nombrePlugin . '&c=ver&' . $nombrePlugin . '_id=\'.$' . $nombrePlugin . '_id.\'>\'._tr("Ver").\'</a></li>
-    <li><a href=\'.$_SERVER[\'PHP_SELF\'].\'?p=' . $nombrePlugin . '&c=editar&' . $nombrePlugin . '_id=\'.$' . $nombrePlugin . '_id.\'>\'._tr("Editar").\'</a> </li>    
-  </ul>
-</div>\';  '; 
-            
-            
-            
-            
-            
-            
             $fuente .= '   ' . "\n";
-            
-            
-            $fuente .= ' echo \'<tr>\';  ' . "\n";
             $fuente .= ' echo \'<td>\' . $i . \'</td> \';  ' . "\n";
             
-            
-            
-            /*
             $fuente .= ' foreach ($campo_disponibles as $campo) {
                             if (in_array($campo, ' . $nombrePlugin . '_campos_a_mostrar())) {
                                 echo "<td>$' . $nombrePlugin . '[$campo]</td> ";
                             }
                         }  ' . "\n";                        
             
-            */
-            
-
+/*
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
@@ -2843,25 +2419,18 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
                     // si el campo tiene _id_ lo quito 
                    // $var2 = (strpos($var2, '_id_')) ? str_replace('_id', '', $var2) : $var2;  // eventos_sala    
 
-                    $fuente .= ' echo \'<td>\'.$' . $var2 . '.\'</td> \'; '. "\n";
+                    $fuente .= ' <td>\'.$' . $var2 . '.\'</td> ' . "\n";
                 }
 
                 $i++;
             }
-
-            $fuente .=' echo \'<td>\' . $menu . \'</td> \'; '. "\n";
-            
-            /*
+ * 
+ */
             $fuente .= ' echo \'<td>
 <a href=\'.$_SERVER[\'PHP_SELF\'].\'?p=' . $nombrePlugin . '&c=ver&' . $nombrePlugin . '_id=\'.$' . $nombrePlugin . '_id.\'>\'._tr("Ver").\'</a> |  
 <a href=\'.$_SERVER[\'PHP_SELF\'].\'?p=' . $nombrePlugin . '&c=editar&' . $nombrePlugin . '_id=\'.$' . $nombrePlugin . '_id.\'>\'._tr("Editar").\'</a>  
                       
                 </td>\';  ';
-            
-            */
-            
-            
-            $fuente .= ' echo \'</tr>\';  ' . "\n";
 
             return $fuente;
             break;
@@ -3602,13 +3171,7 @@ function contenido_plugin($pagina, $nombrePlugin) {
     $fuente .= ' /**  ' . "\n";
     $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
     $fuente .= ' **/' . "\n";
-    $fuente .= '/**
-            * Otiene un valor del $campo de la tabla ' . $nombrePlugin . ' segun el $id que le pase 
-            * @global type $conexion
-            * @param type $campo Nombre de $campo 
-            * @param type $id identificador del registro el cual deseo el valor del $campo
-            * @return boolean Regreso el $campo o false segun exista o no
-            */ ';    
+    $fuente .= ' ';
     $fuente .= 'function ' . $nombrePlugin . '_campo($campo, $id) {
     global $conexion;
     $sql = mysql_query(
@@ -3623,9 +3186,6 @@ function contenido_plugin($pagina, $nombrePlugin) {
         return false;
     }
 }
-
-
-
 function ' . $nombrePlugin . '_campo_add($campo, $label, $selecionado = "", $excluir = "") {
     global $conexion;
     $sql = mysql_query(
@@ -3648,25 +3208,14 @@ function ' . $nombrePlugin . '_campo_add($campo, $label, $selecionado = "", $exc
         echo "value=\"$' . $nombrePlugin . '[$campo]\">$' . $nombrePlugin . '[$campo]</option> \n";
     }
 }
-/**
- * @todo poner un array de valores a excluir, 
- * @todo quitar de la lista los valores a excluir, actualmente solo desactivados 
- * Crea los items de un select de la tabla ' . $nombrePlugin . '
- * <pre>
- * <option value="$' . $nombrePlugin . '[0]">$' . $nombrePlugin . '[0]</option>
- * </pre>
- * @global type $conexion
- * @param type $selecionado valor a ser seleccionado 
- * @param type $excluir Valor a excluir de la lista
- * @return type html <option>
- */
+
 function ' . $nombrePlugin . '_add($selecionado="",$excluir=""){  
 global $conexion; 
 $sql=mysql_query(
         "SELECT * FROM ' . $nombrePlugin . '  ",$conexion) or error(__DIR__, __FILE__, __LINE__);
 while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
     
-        include "./gestion/' . $nombrePlugin . '/reg/reg.php"; 
+        include "../gestion/' . $nombrePlugin . '/reg/reg.php"; 
     
    echo "<option "; 
    if($selecionado==$' . $nombrePlugin . '[0]) {echo " selected "; } else {echo ""; }
@@ -3731,10 +3280,10 @@ function '.$nombrePlugin.'_thead($ganchos=array()){
     }
     
 
-    if ($gancho) {
+    if ($ganchos) {
         $i = 0;
-        while ($i < count($gancho)) {
-            echo "<th>$gancho[$i]</th>";
+        while ($i < count($ganchos)) {
+            echo "<th>$ganchos[$i]</th>";
             $i++;
         }
     }
@@ -3796,24 +3345,14 @@ function '.$nombrePlugin.'_tfoot(){
             break;
     }
 }
-/**
- * Llena el fichero de la carpeta admin
- * @global type $servidor
- * @global type $bdatos
- * @global type $usuario
- * @global type $clave
- * @param type $pagina
- * @return string
- */
-function contenido_admin($pagina, $nombreProyecto) {
+
+function contenido_admin($pagina) {
     global $servidor, $bdatos, $usuario, $clave;
     switch ($pagina) {
         case 'bd.php':
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
-            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
-            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/ ' . "\n";
             
             
@@ -3843,6 +3382,10 @@ switch ($_SERVER["SERVER_NAME"]) {
             
             
             
+            
+            
+            
+            
             return $fuente;
             break;
 
@@ -3850,11 +3393,9 @@ switch ($_SERVER["SERVER_NAME"]) {
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
-            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
-            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/' . "\n";
             $fuente .= '	
-$dbh = new PDO("mysql:host=$bd_servidor; dbname=$bd_bdatos",   $bd_usuario, $bd_clave);
+$dbh = new PDO("mysql:host=$servidor; dbname=$bdatos",   $usuario, $clave);
 ';
             return $fuente;
             break;
@@ -3862,11 +3403,9 @@ $dbh = new PDO("mysql:host=$bd_servidor; dbname=$bd_bdatos",   $bd_usuario, $bd_
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
-            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
-            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/' . "\n";
-            $fuente .= ' $conexion = mysql_connect("$bd_servidor", "$bd_usuario", "$bd_clave") or error(__DIR__, __FILE__, __LINE__); '. "\n";            
-            $fuente .= ' mysql_select_db("$bd_bdatos", $conexion) or error(__DIR__, __FILE__, __LINE__); '. "\n";
+            $fuente .= ' $conexion = mysql_connect("$servidor", "$usuario", "$clave") or error(__DIR__, __FILE__, __LINE__); '. "\n";            
+            $fuente .= ' mysql_select_db("$bdatos", $conexion) or error(__DIR__, __FILE__, __LINE__); '. "\n";
             
             return $fuente;
             break;
@@ -3874,78 +3413,11 @@ $dbh = new PDO("mysql:host=$bd_servidor; dbname=$bd_bdatos",   $bd_usuario, $bd_
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
-            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
-            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/' . "\n";
             $fuente .= ' 
-$path_imagenes = "/var/www/html/";
-$config_debug = 0; 
-$config_nombre_web = "Magia_php";
-$config_url = "https://github.com/robincoello/magia_php"; // sin / al final
-$config_direccion = "Av del codigo abierto 1970, \n1000 Bruselas, \nBégica";
-$config_tel = "+32(0)474 62 47 07";
-$config_logo = "logo.png";
-//
-$config_grupo_por_defecto = "centros";
-// si el numero de pedido es inferior a x cifras llenara con ceros en la parte izquierda 
-// cuantas cifras debe tener min?
-$config_ceros_bon = 6; 
-// idioma por defecto del sistema
-$cfg_idioma  = "en_GB"; 
-$config_idioma  = $cfg_idioma; 
-// limite de lineas en las tablas de los diferentes items 
-$cfg_limite_items_en_tablas = 50; 
-date_default_timezone_set("Europe/Brussels");
-# configuracion del email 
-# configuracion del email 
-# configuracion del email 
-# configuracion del email 
-# configuracion del email 
-# 
-# email_nombres y apellidos
-$config_email_nombre = "Robinson Coello S."; 
-# email_usuario, generalmente formato email
-$config_email_email = "robinson@facturas.be";
-// suele ser el mismo email
-$config_email_usuario = "robinson@facturas.be"; 
-# email_clave, la clave del email
-$config_email_clave = "HIhSu6IEuFDo"; 
-# email_pop, seridor entrante
-$config_email_pop = "mail.facturas.be";
-# email_pop_puerto
-$config_email_pop_puerto = "995";
-# email_smtp Servidor Saliente
-$config_email_smtp = "mail.facturas.be";
-# email_smtp_puerto
-$config_email_smtp_puerto = "465";
-// envio de emails
-#contacto | admin | Motivo
-#--------|-------|---------------------------------------------		 
-#YES	| si	| al cambiar de estatus de un contacto
-#YES	| si	| al crear un pedido 
-#YES	| si 	| al editar un pedido -->> error, al editar el admin da error email
-#YES	| si 	| cuando un usuario se registra
-#YES	| si	| Cuando alguien solicita codigo para cambiar de clave
-#YES	| si	| cuando alguien cambia la clave
-#
-$config_enviar_email_contacto_cambia_estatus = true;
-$config_enviar_email_admin_cambia_estatus = true;
-#
-$config_enviar_email_contacto_crea_pedido = true;
-$config_enviar_email_admin_crea_pedido = true;
-#
-$config_enviar_email_contacto_editar_pedido = true;
-$config_enviar_email_admin_editar_pedido = true;
-#
-$config_enviar_email_contacto_auto_registro = true;
-$config_enviar_email_admin_auto_registro = true;
-#
-$config_enviar_email_contacto_scc = true; // solicita cambio de clave
-$config_enviar_email_admin_scc = true; // solicita cambio de clave
-#
-$config_enviar_email_contacto_cambia_clave = true;
-$config_enviar_email_admin_cambia_clave = true;
-
+$config_nombre_web          = "Mi sitio web";
+$config_idioma_por_defecto  = "es"; 
+$cfg_limite_items_en_tablas = 25; 
 ';
             return $fuente;
             break;
@@ -4044,8 +3516,6 @@ function _estatus($estatus) {
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
-            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
-            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/ ' . "\n";
             $fuente .= ' 
 include "bd.php";
@@ -4143,8 +3613,6 @@ incluir_funciones();
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
-            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
-            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/ ' . "\n";
             $fuente .= ' 
 function permisos_obtiene_permiso($p,$g){
@@ -4210,8 +3678,6 @@ function permisos_sin_permiso($accion, $pagina, $_usuarios_usuario){
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
-            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
-            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/' . "\n";
             $fuente .= '
 
@@ -4280,8 +3746,6 @@ return 0;
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
-            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
-            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/' . "\n";
             $fuente .= '
 
@@ -4325,8 +3789,6 @@ return 0;
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
-            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
-            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/ ' . "\n";
             $fuente .= '
 function _menu_top(){
@@ -4398,8 +3860,6 @@ function _menu_sidebar($p){
             $fuente = '<?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
-            $fuente .= ' nombreProyecto: ' . $nombreProyecto . ' ' . "\n";
-            $fuente .= ' Fecha de creación: ' . date("Y-m-d") . ' ' . "\n";
             $fuente .= ' **/' . "\n";
             $fuente .= '
 function formularios_campo_escondido($nombre,$valor){    
@@ -5238,7 +4698,7 @@ $c = (isset($_REQUEST["c"])) ? $_REQUEST["c"] : "index";
         <meta name="author" content="">
         <link rel="icon" href="favicon.ico">
 
-        <title>Magia_php <?php echo magia_version(); ?></title>
+        <title>Carousel Template for Bootstrap</title>
 
         <!-- Bootstrap core CSS -->
         <link href="includes/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -5435,7 +4895,7 @@ $c = (isset($_REQUEST["c"])) ? $_REQUEST["c"] : "index";
                 </li>
             </ul>
             
-            <form method="post" action="gestion/z_index.php" class="navbar-form navbar-right">
+            <form method="post" action="gestion/z_login.php" class="navbar-form navbar-right">
                 <input type="text" name="username" id="username" class="form-control" placeholder="Login" autofocus>
                 <input type="password" name="password" id="password" class="form-control" placeholder="Clave">
                 <button type="submit" class="btn btn-danger">Entrar</button>
@@ -5477,15 +4937,6 @@ function registrar_pagina_en_bd($pagina) {
     );
 }
 
-function busca_pagina_en_bd($pagina) {
-    global $conexion;
-    $comando = "SELECT id FROM _paginas WHERE pagina = '$pagina'  "; 
-    $sql=mysql_query("$comando ",$conexion) or die ("Error: en el fichero:" .__FILE__ .' linea: '. __LINE__ .'  '.mysql_error());	
-    $reg = mysql_fetch_array($sql);	  
-    
-    return $reg[0];
-}
-
 function registrar_permiso_pagina_grupo($grupo, $pagina, $permiso) {
     global $dbh;
     $sql = "INSERT INTO _permisos (grupo,pagina,permiso) VALUES (:grupo,:pagina,:permiso)";
@@ -5522,14 +4973,7 @@ function registrar_extructura_magia($vceb  ,  $tabla  ,  $campo  ,  $tipo  ,  $t
             ":activo"=>"$_magia_activo"              ) 
         ); 
 }
-/**
- * Registro en _menu el item del plugin
- * @global type $dbh
- * @param type $plugin
- * @param type $ubicacion
- * @param type $padre
- * @param type $label
- */
+
 function registra_item_al_menu($plugin, $ubicacion, $padre, $label) {
     global $dbh;
     echo "<p>$plugin $ubicacion $padre $label</p>";
@@ -5563,14 +5007,7 @@ function registra_campos_visibles($nombrePlugin,$valor) {
             )
     );
 }
-/**
- * 
- * @global type $path_plugins
- * @global type $dbh
- * @global string $icon_fichero_copiar
- * @param type $nombrePlugin
- * @param type $mvcg
- */
+
 function magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvcg) {
     global $path_plugins, $dbh, $icon_fichero_copiar;
 
@@ -5735,7 +5172,7 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
     copiar_carpeta("./codigo_fuente/extenciones/funciones", "$path_web/extenciones/funciones");
 
 
-    // ahora creamos los ficheros dentro de las carpetas y 
+    // ahora creamos los ficheros dentro de las carpetas
     // llenamos el contenido de los ficheros
 
     $i = 0;
@@ -5745,22 +5182,22 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
             switch ($carpetas[$i]) {
                 case 'admin':
                     $ficheros = [
-                             'bd.php',
-                            // 'conec.php',
-                            //  'coneccion.php',
+                        'bd.php'
+                            /* 'conec.php',
+                              'coneccion.php',
                               'configuracion.php',
-                            //  'funciones.php',
-                            //  'index.php',
-                            //  'menu.php',
-                            //  'modelo.css',
-                            //  'permisos.php',
-                            //  'traductor.php',
-                            //  'contenido.php',
-                            //  'formularios.php' 
+                              'funciones.php',
+                              'index.php',
+                              'menu.php',
+                              'modelo.css',
+                              'permisos.php',
+                              'traductor.php',
+                              'contenido.php',
+                              'formularios.php' */
                     ];
                     $j = 0;
                     while ($j < count($ficheros)) {
-                        crear_fichero("$path_web/admin", $ficheros[$j], contenido_admin( $ficheros[$j], $nombreProyecto    ));
+                        crear_fichero("$path_web/admin", $ficheros[$j], contenido_admin($ficheros[$j]));
                         $j++;
                     }
                     break;

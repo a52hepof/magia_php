@@ -191,7 +191,7 @@ function logs_historico($p, $c, $id){
     
     
     echo '<h3>'._tr("Historial").'</h3>'; 
-    echo '<table class="table" >'; 
+    echo '<table class="table">'; 
     echo '    <tr>
             
             <td>'._tr("Usuario").'</td>

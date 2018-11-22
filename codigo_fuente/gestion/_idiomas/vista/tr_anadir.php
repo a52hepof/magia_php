@@ -10,7 +10,6 @@
         <td></td> 
         <td><input class="form-control" type="text" name="_idiomas_idioma" value="" placeholder="<?php _t("Idioma"); ?>"></td> 
         <td><input class="form-control" type="text" name="_idiomas_nombre" value="" placeholder="<?php _t("Nombre"); ?>"></td> 
-        <td><input class="form-control" type="text" name="_idiomas_orden" value="" placeholder="<?php _t("Orden"); ?>"></td> 
         <td></td> 
         <td></td> 
         <td></td> 

@@ -1,10 +1,10 @@
 <div class="col-sm-3 col-md-2 sidebar">
 
-
-    <?php
-    logo();
-    ?>
-
+    
+        <?php 
+        logo();
+        ?>
+    
 
 
     <ul class="nav nav-sidebar">
@@ -19,32 +19,21 @@
                     <?php _t("Inicio"); ?>
                 </a>
             </li>
+            
+          <?php _menu_sidebar($p); ?>
+            
 
-            <?php _menu_sidebar($p); ?>
-
-           
-
+            
+            
+            
         <?php } ?>                    
         <?php
-        //  _menu_sidebar($p);
+      //  _menu_sidebar($p);
         ?>                        
     </ul>         
 
-
     
-            
-            <?php 
-            
-            
-            
-            (file_exists("$p/vista/sidebar_2.php"))?
-                
-                include "$p/vista/sidebar_2.php"
-            :
-                ""
-            ;
-            ?>
-
+    
     <footer>
         <?php //echo $config_direccion; ?>
         <br>

@@ -10,7 +10,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="index.php">
-                <?php echo _opciones_valor_segun_opcion("nombre_web") ?>
+                <?php echo $config_nombre_web; ?>
             </a>
         </div>
 
@@ -74,24 +74,6 @@
                             <a href="index.php?p=_usuarios&c=cambiar_clave">
                                 <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 
                                     <?php echo _t('Cambiar clave'); ?>
-                            </a>
-                        </li>
-
-                        
-
-                        <li>
-                            <a href="index.php?p=autos&c=mis_autos">
-                                <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 
-                                    <?php echo _t('Mis autos'); ?>
-                            </a>
-                        </li>
-
-                        
-
-                        <li>
-                            <a href="index.php?p=reservaciones&c=mis_reservas">
-                                <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 
-                                    <?php echo _t('Mis reservas'); ?>
                             </a>
                         </li>
 

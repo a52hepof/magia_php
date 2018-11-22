@@ -1,10 +1,10 @@
 <?php
 
 $body = "";
-$body .= "<p>Hi, $_contactos_contacto ($_contactos_email)</p>";
+$body .= "<p>Hi, $contactos_contacto ($contactos_email)</p>";
 $body .= "<p>The admin has bloqued your account at: $config_nombre_web</p>";
 //$body .= "<p>" . _tr("El administrador ha bloqueado su cuenta en") . ": $config_nombre_web</p>";
-//$body .= "<p>You can see your orders, but no make a new</p>";
+$body .= "<p>You can see your orders, but no make a new</p>";
 //$body .= "<p>" . _tr("Ud. puede consultar sus pedidos realizados pero no puede realizar nuevos") . "</p>";
 $body .= "<p>If you have a questions, please contact us</p>";
 //$body .= "<p>" . _tr("Si tiene alguna pregunta, porfavor contactenos") . "</p>";
