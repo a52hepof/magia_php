@@ -1,10 +1,12 @@
+<h3>Crear Pluging</h3>
 <ul>
     <?php
 
 // nombre plugin
     if (isset($_GET['nombrePlugin'])) {
         $nombrePlugin = trim(strtolower($_GET['nombrePlugin']));
-        echo "<li>ok: Nombre de plugin: $nombrePlugin</li>";
+        echo "<li> <span class=\"label label-info\">ok</span> Nombre de plugin: $nombrePlugin</li>";
+        
     } else {
         $nombrePlugin = false;
         die("Olvido el nombre del plugin");
@@ -13,7 +15,7 @@
 // ubicacion
     if (isset($_GET['ubicacion'])) {
         $ubicacion = trim(strtolower($_GET['ubicacion']));
-        echo "<li>ok:Su ubicacion en el menu es: $ubicacion</li>";
+        echo "<li><span class=\"label label-info\">ok</span> Su ubicacion en el menu es: $ubicacion</li>";
     } else {
         $ubicacion = false;
         die("Olvido la ubicacion");
@@ -21,7 +23,7 @@
 // Padre
     if (isset($_GET['padre'])) {
         $padre = trim(strtolower($_GET['padre']));
-        echo "<li>ok: Nombre padre es: $padre</li>";
+        echo "<li><span class=\"label label-info\">ok</span> Nombre padre es: $padre</li>";
     } else {
         $menu = false;
         die("Olvido el nombre del menu");
@@ -29,24 +31,27 @@
 // Label
     if (isset($_GET['label'])) {
         $label = trim(strtolower($_GET['label']));
-        echo "<li>ok: Nombre de plugin: $label</li>";
+        echo "<li><span class=\"label label-info\">ok</span> Label de plugin: $label</li>";
     } else {
         $label = false;
         die("Olvido el nombre del menu");
     }
 
+// verifica si el plugin existe o no    
     
     
     if (file_exists($path_plugins . '/' . $nombrePlugin)) {
-        echo "El plugin <b>$path_plugins/$nombrePlugin</b>  YA existe";
+        echo "<li><span class=\"label label-danger\">error</span> El plugin <b>$path_plugins/$nombrePlugin</b>  YA existe<li>";
         muestra_errores(__FiLE__, __FUNCTION__, __LINE__);
         $existe = true;
     } else {
-        echo "<li>ok: El plugin: $nombrePlugin no existe, puede continuar</li>";
+        echo "<li><span class=\"label label-info\">ok</span> El plugin: <b>$nombrePlugin</b> no existe, puede continuar</li>";
         $existe = false;
     }
 
 
+    
+    
 // fin de las verificaciones
 // ahora proecemos a crear
 
@@ -62,13 +67,19 @@
 
         $label = ($label)?"$label":"$nombrePlugin";
         
+        echo "<ul>"; 
         plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label);        
-
-
+        echo "</ul>";
   
         
         
     }
     ?>
 </ul>
+
+<?php 
+//include "vista/form_plugin_crear.php"; 
+?>
+
+
 <hr>

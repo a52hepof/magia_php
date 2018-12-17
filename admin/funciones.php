@@ -23,6 +23,7 @@ $icon_fichero_copiar = '<span class="glyphicon glyphicon-copy"></span>';
  * @param type $linea Linea del error
  */
 function muestra_errores($documento, $funcion, $linea) {
+    echo "<h3>Errores en:</h3>";
     echo "<pre>";
     echo "Documento: $documento <br>";
     echo "Funcion: $funcion <br>";
@@ -87,10 +88,6 @@ function tipo_campo($tipo) {
     }
     return "texto";
 }
-
-
-
-
 
 /**
  * Campo texto del formulario
@@ -361,74 +358,108 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
 
     if ($nombrePlugin) {
 
-      //  echo "<h3>1020 Dentro de plugin crear: <br>$path_plugins</h3>";
-        echo "<h3>Plugin: $nombrePlugin</h3>";
-        echo "<h3>Ruta: $path_plugins</h3>";
+        //  echo "<h3>1020 Dentro de plugin crear: <br>$path_plugins</h3>";
+        echo "<li><span class=\"label label-info\">ok</span> Nombre de plugin: $nombrePlugin</li>";
+        echo "<li><span class=\"label label-info\">ok</span> Path de plugin: $path_plugins</li>";
+
 
 
         $mvc = ['controlador', 'modelos', 'scripts', 'reg', 'vista', 'raiz'];
 
-        $t = count($mvc); // cuenta las carpetas        
+        $t = count($mvc); // cuenta las carpetas    
+
+        echo "<ul>";
+        // creamos la carpeta del plugin
         crear_carpeta("$path_plugins", "$nombrePlugin");
         $contenido = contenido_extenciones_funciones($nombrePlugin);
         //crear_fichero("$path_web/extenciones/funciones", "$nombrePlugin.php", $contenido);
+        echo "</ul>";
 
-// si la carpeta existe, registro el nombre del plugin en la base de datos como una pagina
-        registrar_pagina_en_bd($nombrePlugin);
 
-// tambien registro el item en el menu    
-        registra_item_al_menu($nombrePlugin, $ubicacion, $padre, $label);
-// registro los campos visibles
-        
+        // registra la pagina en la bd
+        if (registrar_pagina_en_bd($nombrePlugin)) {
+            echo "<li><span class=\"label label-info\">ok</span> Registro en _pagina <b>$nombrePlugin</b> en bd</li>";
+        } else {
+            echo "<li><span class=\"label label-danger\">error</span> Registro en _pagina <b>$nombrePlugin</b> en bd</li>";
+        }
+
+
+
+
+
+        // registra item en menu
+        if (registra_item_al_menu($nombrePlugin, $ubicacion, $padre, $label)) {
+            echo "<li><span class=\"label label-info\">ok</span> Registro <b>$nombrePlugin</b>  en _menu</li>";
+        } else {
+            echo "<li><span class=\"label label-danger\">error</span> Registro <b>$nombrePlugin</b>  en _menu</li>";
+        }
+
+
+
         $json_campos_segun_tabla = json_encode(bdd_lista_campos_segun_tabla($nombrePlugin));
-        echo "Los campos en json"; 
-        echo var_dump($json_campos_segun_tabla);
-        
-        registra_campos_visibles($nombrePlugin, $json_campos_segun_tabla);
+        echo "<li>Los campos en json<li>";
 
-        
-        
-        
-        
-        
+        echo var_dump($json_campos_segun_tabla);
+
+
+        if (registra_campos_visibles($nombrePlugin, $json_campos_segun_tabla)) {
+            echo "<li><span class=\"label label-info\">ok</span> Registro registra_campos_visibles del index.php</li>";
+        } else {
+            echo "<li><span class=\"label label-danger\">error</span> Registro registra_campos_visibles del index.php</li>";
+        }
+
+
+
+
+
+
+
+
+
+
+
 // ahora registro el permiso del root en 1111
         registrar_permiso_pagina_grupo('root', "$nombrePlugin", '1111');
         registrar_permiso_pagina_grupo('administradores', "$nombrePlugin", '1110');
         registrar_permiso_pagina_grupo('invitados', "$nombrePlugin", '1000');
         registrar_permiso_pagina_grupo('usuarios', "$nombrePlugin", '1110');
-        
+
         /*
-        //registrar_extructura_magia($vceb, $tabla, $campo, $tipo, $tabla_campo_relacionado, $opciones, $label, $nombre, $identidicador, $marca_agua, $valor, $clase, $obligatorio, $solo_lectura, $desactivado, $activo)
-        registrar_extructura_magia(
-                'ver', 
-                $nombrePlugin, 
-                $campo, 
-                $tipo, 
-                $tabla_campo_relacionado, 
-                $opciones, 
-                $label, 
-                $nombre, $identidicador, $marca_agua, 
-                $valor, $clase, $obligatorio, $solo_lectura, 
-                $desactivado, 
-                1);
-        */
-        
-        
-        
-        
+          //registrar_extructura_magia($vceb, $tabla, $campo, $tipo, $tabla_campo_relacionado, $opciones, $label, $nombre, $identidicador, $marca_agua, $valor, $clase, $obligatorio, $solo_lectura, $desactivado, $activo)
+          registrar_extructura_magia(
+          'ver',
+          $nombrePlugin,
+          $campo,
+          $tipo,
+          $tabla_campo_relacionado,
+          $opciones,
+          $label,
+          $nombre, $identidicador, $marca_agua,
+          $valor, $clase, $obligatorio, $solo_lectura,
+          $desactivado,
+          1);
+         */
+
+
+
+
 
         // registro el permiso de invitados, 
         // ahora hago una repeticion creando a cada vuelta las carpetas dentro del plugin
         $i = 0; // pongo 1 para no crear elfichero raiz
         while ($i < $t) {
             if ($mvc[$i] != 'raiz') { // la ultima no la creo (raiz)
-                crear_carpeta("$path_plugins/$nombrePlugin",$mvc[$i]);
+                crear_carpeta("$path_plugins/$nombrePlugin", $mvc[$i]);
                 crear_carpeta("$path_plugins/$nombrePlugin/$mvc[$i]", 'publico');
             }
             // dentro de cada carpeta creo los ficheros que cada carpeta debe contenir
             magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvc[$i]);
             $i++;
         }
+    } else {
+        echo "<li><span class=\"label label-danger\">error</span>";
+        echo "Falto el nombre del plugin</li>";
+        muestra_errores(__FiLE__, __FUNCTION__, __LINE__);
     }
 }
 
@@ -495,11 +526,11 @@ function crear_carpeta($path, $nombre_carpeta) {
     global $icon_error, $icon_ok, $icon_carpeta_cerrada, $icon_carpeta_abierta;
 
     if (file_exists("$path/$nombre_carpeta")) {
-        echo "<p><b>$icon_error [error]</b> La carpeta $path/<b>$nombre_carpeta</b>, existe o no tiene derechos de escritura</p>";
+        echo "<li><span class=\"label label-danger\">error</span> <b>$icon_error [error]</b> La carpeta $path/<b>$nombre_carpeta</b>, existe o no tiene derechos de escritura</li>";
     } else {
         mkdir("$path/$nombre_carpeta", 0777);
         chmod("$path/$nombre_carpeta", 0777);
-        echo "<p><b>$icon_carpeta_abierta</b>: $path/<b>$nombre_carpeta</b>, creada con exito</p>";
+        echo "<li><span class=\"label label-info\">ok</span> <b>$icon_carpeta_abierta</b>: $path/<b>$nombre_carpeta</b>, creada con exito</li>";
     }
 
 
@@ -658,15 +689,15 @@ function contenido_controlador($controlador, $nombrePlugin) {
 
             $fuente .= ' include "./' . $nombrePlugin . '/reg/post.php";  ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/modelos/crear.php";  ' . "\n";
-        //    $fuente .= ' include "./' . $nombrePlugin . '/modelos/index.php";  ' . "\n";
-        //    $fuente .= ' include "./' . $nombrePlugin . '/vista/index.php";  ' . "\n";
-            
+            //    $fuente .= ' include "./' . $nombrePlugin . '/modelos/index.php";  ' . "\n";
+            //    $fuente .= ' include "./' . $nombrePlugin . '/vista/index.php";  ' . "\n";
+
             $fuente .= ' if(!$config_debug){  ' . "\n";
             $fuente .= ' echo \'<meta http-equiv="refresh" content="0; url=index.php?p=\'.$p.\'&c=index">\';  ';
             $fuente .= ' } ' . "\n";
-            
-            
-            
+
+
+
             $fuente .= ' }else{ ' . "\n";
             $fuente .= ' include "./' . $nombrePlugin . '/vista/crear.php";  ' . "\n";
             $fuente .= ' }          ' . "\n";
@@ -729,9 +760,9 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' } else { ' . "\n";
             $fuente .= ' permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
-            
-            
-            
+
+
+
             $fuente .= '
             if($config_debug){
                 echo "<h3>Debug mode (".__FILE__." )</h3>";
@@ -743,7 +774,7 @@ function contenido_controlador($controlador, $nombrePlugin) {
                     "permisos_tiene_permiso(\$accion, \$pagina, \$_usuarios_grupo)"=>permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo),
                     "\$_REQUEST[\'a\']"=>"$_REQUEST[a]",
                     "\$_REQUEST[\'a\']"=>"$_REQUEST[a]",       
-                    "$'.$nombrePlugin.'_id"=>"$'.$nombrePlugin.'_id"        
+                    "$' . $nombrePlugin . '_id"=>"$' . $nombrePlugin . '_id"        
                 );
                 echo "<table border>";
                 echo "<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>";
@@ -753,7 +784,7 @@ function contenido_controlador($controlador, $nombrePlugin) {
                 echo "</table>";
             }';
 
-            
+
 
             return $fuente;
 
@@ -775,9 +806,9 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
-            
-                        
-            
+
+
+
             $fuente .= '
             if($config_debug){
                 echo "<h3>Debug mode (".__FILE__." )</h3>";
@@ -800,18 +831,18 @@ function contenido_controlador($controlador, $nombrePlugin) {
                 }
                 echo "</table>";
             }';
-            
-            
-                        
+
+
+
             return $fuente;
-            
+
         case 'pdf.php':
             $fuente = '<?php ' . "\n";
             $fuente .= 'include "./' . $nombrePlugin . '/vista/pdf.php"; ' . "\n";
-            
-                        
+
+
             return $fuente;
-            
+
         case 'data.php':
             $fuente = ' <?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
@@ -831,7 +862,7 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
-            
+
             $fuente .= '
             if($config_debug){
                 echo "<h3>Debug mode (".__FILE__." )</h3>";
@@ -841,7 +872,7 @@ function contenido_controlador($controlador, $nombrePlugin) {
                     "\$pagina"=>"$pagina",
                     "\$_usuarios_grupo"=>"$_usuarios_grupo",
                     "permisos_tiene_permiso(\$accion, \$pagina, \$_usuarios_grupo)"=>permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo),
-                    "\$'.$nombrePlugin.'_id"=>"$'.$nombrePlugin.'_id",
+                    "\$' . $nombrePlugin . '_id"=>"$' . $nombrePlugin . '_id",
                     "\$inicia"=>"$inicia"
                     
                     
@@ -853,10 +884,10 @@ function contenido_controlador($controlador, $nombrePlugin) {
                     echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
                 }
                 echo "</table>";
-            }';            
-            
-            
-            
+            }';
+
+
+
             return $fuente;
             break;
         case 'var.php':
@@ -865,26 +896,26 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/ ' . "\n";
             $fuente .= ' $accion = "ver"; ' . "\n";
-            $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";                        
+            $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";
             $fuente .= '     $' . $nombrePlugin . '_id 		= mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);   ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/var.php"; ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/reg/reg.php"; ' . "\n";
-            
+
             //$fuente .= '     include "./' . $nombrePlugin . '/vista/var.php"; ' . "\n";
             $fuente .= '     $html = file_get_contents("./' . $nombrePlugin . '/vista/var.php"); ' . "\n";
-            
-            
+
+
             $fuente .= '     include "./' . $nombrePlugin . '/reg/var.php"; ' . "\n";
             $fuente .= '     // aca la traduccion no va ya que imprimimos el html directo ' . "\n";
-            
+
             $fuente .= '     echo $html; ' . "\n";
-            
+
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
-            
-            
+
+
             $fuente .= '
             if($config_debug){
                 echo "<h3>Debug mode (".__FILE__." )</h3>";
@@ -902,20 +933,20 @@ function contenido_controlador($controlador, $nombrePlugin) {
                     echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
                 }
                 echo "</table>";
-            }';    
+            }';
 
-            
+
             return $fuente;
             break;
-        
-        
+
+
         case 'ver.php':
             $fuente = ' <?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/ ' . "\n";
             $fuente .= ' $accion = "ver"; ' . "\n";
-            $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";            
+            $fuente .= ' $pagina = "' . $nombrePlugin . '"; ' . "\n";
             $fuente .= ' if (permisos_tiene_permiso($accion,$pagina,$_usuarios_grupo)) { ' . "\n";
             $fuente .= '     $' . $nombrePlugin . '_id 		= mysql_real_escape_string($_REQUEST[\'' . $nombrePlugin . '_id\']);   ' . "\n";
             $fuente .= '     include "./' . $nombrePlugin . '/modelos/ver.php"; ' . "\n";
@@ -924,8 +955,8 @@ function contenido_controlador($controlador, $nombrePlugin) {
             $fuente .= ' } else { ' . "\n";
             $fuente .= '     permisos_sin_permiso($accion,$pagina, $_usuarios_usuario); ' . "\n";
             $fuente .= ' } ' . "\n";
-            
-            
+
+
             $fuente .= '
             if($config_debug){
                 echo "<h3>Debug mode (".__FILE__." )</h3>";
@@ -935,7 +966,7 @@ function contenido_controlador($controlador, $nombrePlugin) {
                     "\$pagina"=>"$pagina",
                     "\$_usuarios_grupo"=>"$_usuarios_grupo",
                     "permisos_tiene_permiso(\$accion, \$pagina, \$_usuarios_grupo)"=>permisos_tiene_permiso($accion, $pagina, $_usuarios_grupo),
-                    "\$'.$nombrePlugin.'_id"=>"$'.$nombrePlugin.'_id"                                           
+                    "\$' . $nombrePlugin . '_id"=>"$' . $nombrePlugin . '_id"                                           
                 );
                 echo "<table border>";
                 echo "<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>";
@@ -943,13 +974,13 @@ function contenido_controlador($controlador, $nombrePlugin) {
                     echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
                 }
                 echo "</table>";
-            }';    
+            }';
 
 
 
-            
+
             return $fuente;
-            break;        
+            break;
         case 'txt.php':
             $fuente = ' <?php ' . "\n";
             $fuente .= ' /**  ' . "\n";
@@ -1045,9 +1076,9 @@ function contenido_modelos($modelos, $nombrePlugin) {
             $fuente .= ' ORDER BY id DESC    ' . "\n";
             $fuente .= ' ",$conexion) or error(__DIR__, __FILE__, __LINE__);  ' . "\n";
             $fuente .= ' $total_items = mysql_num_rows(mysql_query("$comando ", $conexion)); ' . "\n";
-            
-            
-            
+
+
+
             $fuente .= '
 
             if($config_debug){
@@ -1068,7 +1099,7 @@ function contenido_modelos($modelos, $nombrePlugin) {
 
 
 
-            
+
             return $fuente;
             break;
 
@@ -1082,21 +1113,21 @@ function contenido_modelos($modelos, $nombrePlugin) {
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
-                    $nombre = $reg['Field'];
-                    $tipo = $reg['Type'];
-                    $nul = $reg['Null'];
-                    $clave = $reg['Key'];
-                    $defecto = ($reg['Default'])?$reg['Default']:"null";
-                    $extra = $reg['Extra'];
-                    $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
-                    $tipo_campo = tipo_campo($tipo);
-                    $var1 = $reg[0];
-                    $var2 = "$nombrePlugin" . "_" . "$var1";   
-                
+                $nombre = $reg['Field'];
+                $tipo = $reg['Type'];
+                $nul = $reg['Null'];
+                $clave = $reg['Key'];
+                $defecto = ($reg['Default']) ? $reg['Default'] : "null";
+                $extra = $reg['Extra'];
+                $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
+                $tipo_campo = tipo_campo($tipo);
+                $var1 = $reg[0];
+                $var2 = "$nombrePlugin" . "_" . "$var1";
+
                 if ($i > $usar_id) {
-                    if($defecto !="CURRENT_TIMESTAMP") {
-                        $fuente .= ' ' . $reg[0] . ' '. "\n";
-                        $fuente .= ($i < $total_resultados - 1) ? " , " : "";                        
+                    if ($defecto != "CURRENT_TIMESTAMP") {
+                        $fuente .= ' ' . $reg[0] . ' ' . "\n";
+                        $fuente .= ($i < $total_resultados - 1) ? " , " : "";
                     }
                 }
                 $i++;
@@ -1107,20 +1138,20 @@ function contenido_modelos($modelos, $nombrePlugin) {
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
-                    $nombre = $reg['Field'];
-                    $tipo = $reg['Type'];
-                    $nul = $reg['Null'];
-                    $clave = $reg['Key'];
-                    $defecto = ($reg['Default'])?$reg['Default']:"null";
-                    $extra = $reg['Extra'];
-                    $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
-                    $tipo_campo = tipo_campo($tipo);
-                    $var1 = $reg[0];
-                    $var2 = "$nombrePlugin" . "_" . "$var1";                   
-                
+                $nombre = $reg['Field'];
+                $tipo = $reg['Type'];
+                $nul = $reg['Null'];
+                $clave = $reg['Key'];
+                $defecto = ($reg['Default']) ? $reg['Default'] : "null";
+                $extra = $reg['Extra'];
+                $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
+                $tipo_campo = tipo_campo($tipo);
+                $var1 = $reg[0];
+                $var2 = "$nombrePlugin" . "_" . "$var1";
+
                 if ($i > $usar_id) {
-                    if($defecto !="CURRENT_TIMESTAMP") {
-                        $fuente .= ' :' . $reg[0] . ' '. "\n";
+                    if ($defecto != "CURRENT_TIMESTAMP") {
+                        $fuente .= ' :' . $reg[0] . ' ' . "\n";
                         $fuente .= ($i < $total_resultados - 1) ? " , " : "   )\";  " . "\n";
                     }
                 }
@@ -1131,19 +1162,19 @@ function contenido_modelos($modelos, $nombrePlugin) {
             $i = 0;
             $usar_id = 0; // 0 no usa el id, -1 si usa
             foreach ($resultados as $reg) {
-                    $nombre = $reg['Field'];
-                    $tipo = $reg['Type'];
-                    $nul = $reg['Null'];
-                    $clave = $reg['Key'];
-                    $defecto = ($reg['Default'])?$reg['Default']:"null";
-                    $extra = $reg['Extra'];
-                    $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
-                    $tipo_campo = tipo_campo($tipo);
-                    $var1 = $reg[0];
-                    $var2 = "$nombrePlugin" . "_" . "$var1";    
-                    
+                $nombre = $reg['Field'];
+                $tipo = $reg['Type'];
+                $nul = $reg['Null'];
+                $clave = $reg['Key'];
+                $defecto = ($reg['Default']) ? $reg['Default'] : "null";
+                $extra = $reg['Extra'];
+                $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
+                $tipo_campo = tipo_campo($tipo);
+                $var1 = $reg[0];
+                $var2 = "$nombrePlugin" . "_" . "$var1";
+
                 if ($i > $usar_id) {
-                    if($defecto !="CURRENT_TIMESTAMP") {
+                    if ($defecto != "CURRENT_TIMESTAMP") {
                         $fuente .= ' ":' . $reg[0] . '"=>"$' . $var2 . '" ' . "\n";
                         $fuente .= ($i < $total_resultados - 1) ? " , " : "";
                     }
@@ -1152,9 +1183,9 @@ function contenido_modelos($modelos, $nombrePlugin) {
             }
             $fuente .= '             ) ' . "\n";
             $fuente .= ' ); ' . "\n";
-            
-            
-$fuente .= '
+
+
+            $fuente .= '
 
 if($config_debug){
     echo "<h3>Debug mode (".__FILE__." )</h3>";
@@ -1171,15 +1202,15 @@ if($config_debug){
     echo "</table>";
 
 }';
-            
-            
-            
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
+
+
+
             return $fuente;
             break;
 
@@ -1192,21 +1223,21 @@ if($config_debug){
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
-                
-                    $nombre = $reg['Field'];
-                    $tipo = $reg['Type'];
-                    $nul = $reg['Null'];
-                    $clave = $reg['Key'];
-                    $defecto = ($reg['Default'])?$reg['Default']:"null";
-                    $extra = $reg['Extra'];
-                    $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
-                    $tipo_campo = tipo_campo($tipo);
-                    $var1 = $reg[0];
-                    $var2 = "$nombrePlugin" . "_" . "$var1";  
-                    
-                    
+
+                $nombre = $reg['Field'];
+                $tipo = $reg['Type'];
+                $nul = $reg['Null'];
+                $clave = $reg['Key'];
+                $defecto = ($reg['Default']) ? $reg['Default'] : "null";
+                $extra = $reg['Extra'];
+                $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
+                $tipo_campo = tipo_campo($tipo);
+                $var1 = $reg[0];
+                $var2 = "$nombrePlugin" . "_" . "$var1";
+
+
                 if ($i > $usar_id) {
-                    if($defecto !="CURRENT_TIMESTAMP") {
+                    if ($defecto != "CURRENT_TIMESTAMP") {
                         $fuente .= ' ' . $reg[0] . ' = \'$' . $var2 . '\'  ' . "\n";
                         $fuente .= ($i < $total_resultados - 1) ? " , " : "";
                     }
@@ -1215,8 +1246,8 @@ if($config_debug){
             }
             $fuente .= ' WHERE id = \'$' . $nombrePlugin . '_id\' ' . "\n";
             $fuente .= ' ",$conexion) or error(__DIR__, __FILE__, __LINE__);   ' . "\n";
-           
-            
+
+
             $fuente .= '
 
             if($config_debug){
@@ -1224,7 +1255,7 @@ if($config_debug){
 
                 $variables = array(
                     "\$sql"=>"$sql",
-                    "\$'.$nombrePlugin.'_id"=>"$'.$nombrePlugin.'_id"
+                    "\$' . $nombrePlugin . '_id"=>"$' . $nombrePlugin . '_id"
                 );
 
                 echo "<table border>";
@@ -1235,20 +1266,20 @@ if($config_debug){
                 echo "</table>";
 
             }';
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             return $fuente;
             break;
 
@@ -1292,7 +1323,7 @@ if($config_debug){
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/ ' . "\n";
             $fuente .= '$comando = "SELECT * FROM ' . $nombrePlugin . ' ORDER BY id DESC  "; ' . "\n";
-           // $fuente .= '$sql=mysql_query("$comando Limit $inicia, $cfg_limite_items_en_tablas ",$conexion) ' . "\n";
+            // $fuente .= '$sql=mysql_query("$comando Limit $inicia, $cfg_limite_items_en_tablas ",$conexion) ' . "\n";
             $fuente .= '$sql=mysql_query("$comando ",$conexion) ' . "\n";
             $fuente .= 'or error(__DIR__, __FILE__, __LINE__);	  ' . "\n";
             $fuente .= '// esto es para la paginacion	  ' . "\n";
@@ -1331,7 +1362,7 @@ if($config_debug){
             $fuente .= ' "SELECT * FROM ' . $nombrePlugin . ' WHERE id = \'$' . $nombrePlugin . '_id\' ORDER BY id DESC   ",$conexion) 	  ' . "\n";
             $fuente .= 'or error(__DIR__, __FILE__, __LINE__);	  ' . "\n";
             $fuente .= ' $' . $nombrePlugin . ' = mysql_fetch_array($sql);	  ' . "\n";
-            
+
             $fuente .= '
 
             if($config_debug){
@@ -1339,7 +1370,7 @@ if($config_debug){
 
                 $variables = array(
                     "\$sql"=>"$sql",
-                    "\$'.$nombrePlugin.'_id"=>"$'.$nombrePlugin.'_id"
+                    "\$' . $nombrePlugin . '_id"=>"$' . $nombrePlugin . '_id"
                     
                     
                 );
@@ -1353,12 +1384,12 @@ if($config_debug){
 
             }';
 
-            
+
             return $fuente;
             break;
 
-        
-        
+
+
 
         case 'ver.php':
             $fuente = ' <?php ' . "\n";
@@ -1377,7 +1408,7 @@ if($config_debug){
 
                 $variables = array(
                     "\$sql"=>"$sql",
-                    "\$'.$nombrePlugin.'_id"=>"$'.$nombrePlugin.'_id"
+                    "\$' . $nombrePlugin . '_id"=>"$' . $nombrePlugin . '_id"
                     
                     
                 );
@@ -1389,16 +1420,16 @@ if($config_debug){
                 }    
                 echo "</table>";
 
-            }';            
-            
+            }';
+
             return $fuente;
             break;
 
-        
-        
-        
-        
-        
+
+
+
+
+
         default:
             $fuente = $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
@@ -1619,20 +1650,18 @@ function contenido_vista($vista, $nombrePlugin) {
                                 //  $tabla = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre, );
                                 $fuente .= campo_html_opciones($var2, $var2, $reg[0], $nombrePlugin, $extras);
                             } else {
-                                
-                                if($nombre == 'clave'){
-                            //  $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
-                              //$fuente .= campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "");
-                                $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, '<?php echo genera_clave(); ?>', $extras = "");
-                                
-                                } else{
+
+                                if ($nombre == 'clave') {
+                                    //  $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
+                                    //$fuente .= campo_html_texto($nombre, $id, $placeholder, $label, $contexto, $valor = "", $extras = "");
+                                    $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, '<?php echo genera_clave(); ?>', $extras = "");
+                                } else {
                                     $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin);
-                            
                                 }
                             }
-                            
-                            
-                                                        
+
+
+
 
                             break;
                         case 'fecha':
@@ -1681,13 +1710,13 @@ function contenido_vista($vista, $nombrePlugin) {
             $fuente .= '     <input type="hidden" name="c" value="editar"> ' . "\n";
             $fuente .= '     <input type="hidden" name="a" value="editar"> ' . "\n";
             $fuente .= '     <input type="hidden" name="' . $nombrePlugin . '_id" value="<?php echo $' . $nombrePlugin . '_id; ?>"> ' . "\n\n";
-           
-            
-            
-            
-            
-            
-            $fuente .=' <?php 
+
+
+
+
+
+
+            $fuente .= ' <?php 
                         $campos = array(';
 
             $i = 0;
@@ -1697,23 +1726,23 @@ function contenido_vista($vista, $nombrePlugin) {
                     $campo = $reg[0];
                     $plugin_campo = "$nombrePlugin" . "_" . "$campo";
 
-                    $fuente .='array(
+                    $fuente .= 'array(
 "type" => "text",
 "name" => "' . $plugin_campo . '",
 "value" => "$' . $plugin_campo . '",                                                                        
     
 "for" => "' . $plugin_campo . '",
-"label" => "'.$campo.'",
+"label" => "' . $campo . '",
 "class" => "form-control",
 "id" => "' . $plugin_campo . '",
-"placeholder" => "'.$campo.'",
+"placeholder" => "' . $campo . '",
                     ),';
                 }
 
                 $i++;
             }
 
-            $fuente .=');
+            $fuente .= ');
 
         foreach ($campos as $key => $value) {
 
@@ -1884,105 +1913,105 @@ function contenido_vista($vista, $nombrePlugin) {
     
 ?>
 
-';       
-            
-            
-            
-            
-            
-            
+';
+
+
+
+
+
+
             /*
-            
-            
-            
-            $i = 0;
-            $usar_id = 0; // 0 no usa, -1 si usa
-            foreach ($resultados as $reg) {
-                if ($i > $usar_id) {
-
-
-                    $nombre = $reg['Field'];
-                    $tipo = $reg['Type'];
-                    $nul = $reg['Null'];
-                    $clave = $reg['Key'];
-                    $defecto = $reg['Default'];
-                    $extra = $reg['Extra'];
-                    //
-                    $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
-                    //
-                    
-                    
-                    // si la clave no es MUL (Multiple)
-                    
-                    $tipo_campo = ($clave !='MUL')? tipo_campo($tipo): "opciones";
-                    //                                                
-                    $var1 = $reg[0]; // nombre delcampo 
-                    $var2 = "$nombrePlugin" . "_" . "$var1";
-
-                    $valor = '<?php echo $' . $var2 . '; ?>';
-                    //                
-                    switch ($tipo_campo) {
-                        case 'texto':
-                        case 'numerico':
-
-                            if (bdd_tiene_id_al_inicio($nombre)) {
-
-                                //  $tabla = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre, );
-
-                                $fuente .= campo_html_opciones($var2, $var2, $reg[0], $nombrePlugin, $valor);
-                                //function campo_html_opciones($nombre, $id, $label, $tabla, $extras = "") {
-                            } else {
-                                $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, $valor);
-                            }
-
-                        break;
-
-                        case 'opciones':
-                            
-                            $tabla_relacionada = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre, bdd_lista_tablas_bdd());
-                            
-                            
-                            $fuente .= campo_html_opciones($tabla_relacionada, $var2, $reg[0], $nombrePlugin, $valor);
-
-                            break;
-                        case 'fecha':
-                            $fuente .= campo_html_fecha($var2, $var2, $reg[0], $reg[0], $nombrePlugin, $valor);
-                            break;
-                        case 'areaDeTexto':
-                            $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin, $valor);
-                            break;
-                        case 'buleano':
-                            $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, $selecionado = false);
-                            break;
-
-                        default:
-                            break;
-                    }
 
 
 
+              $i = 0;
+              $usar_id = 0; // 0 no usa, -1 si usa
+              foreach ($resultados as $reg) {
+              if ($i > $usar_id) {
 
 
-                    
+              $nombre = $reg['Field'];
+              $tipo = $reg['Type'];
+              $nul = $reg['Null'];
+              $clave = $reg['Key'];
+              $defecto = $reg['Default'];
+              $extra = $reg['Extra'];
+              //
+              $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
+              //
+
+
+              // si la clave no es MUL (Multiple)
+
+              $tipo_campo = ($clave !='MUL')? tipo_campo($tipo): "opciones";
+              //
+              $var1 = $reg[0]; // nombre delcampo
+              $var2 = "$nombrePlugin" . "_" . "$var1";
+
+              $valor = '<?php echo $' . $var2 . '; ?>';
+              //
+              switch ($tipo_campo) {
+              case 'texto':
+              case 'numerico':
+
+              if (bdd_tiene_id_al_inicio($nombre)) {
+
+              //  $tabla = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre, );
+
+              $fuente .= campo_html_opciones($var2, $var2, $reg[0], $nombrePlugin, $valor);
+              //function campo_html_opciones($nombre, $id, $label, $tabla, $extras = "") {
+              } else {
+              $fuente .= campo_html_texto($var2, $var2, $reg[0], $reg[0], $nombrePlugin, $valor);
+              }
+
+              break;
+
+              case 'opciones':
+
+              $tabla_relacionada = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre, bdd_lista_tablas_bdd());
+
+
+              $fuente .= campo_html_opciones($tabla_relacionada, $var2, $reg[0], $nombrePlugin, $valor);
+
+              break;
+              case 'fecha':
+              $fuente .= campo_html_fecha($var2, $var2, $reg[0], $reg[0], $nombrePlugin, $valor);
+              break;
+              case 'areaDeTexto':
+              $fuente .= campo_html_areaDeTexto($var2, $var2, $reg [0], $reg[0], $nombrePlugin, $valor);
+              break;
+              case 'buleano':
+              $fuente .= campo_html_buleano($var2, $var2, $reg[0], $nombrePlugin, $selecionado = false);
+              break;
+
+              default:
+              break;
+              }
 
 
 
-                      $var1 = $reg[0];
-                      $var2 = "$nombrePlugin"."_"."$var1";
 
-                      $fuente .= ' <div class="form-group"> ' . "\n";
-                      $fuente .= '     <label for="' . $reg[0] . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '"); ?></label> ' . "\n";
-                      $fuente .= '     <div class="col-sm-10"> ' . "\n";
-                      $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?>" value="<?php echo $' . $var2 . '; ?>"> ' . "\n";
-                      $fuente .= '     </div> ' . "\n";
-                      $fuente .= '   </div> ' . "\n\n\n";
 
-                     
-                }
-                $i++;
-            }
-            
-            */
+
+
+
+
+              $var1 = $reg[0];
+              $var2 = "$nombrePlugin"."_"."$var1";
+
+              $fuente .= ' <div class="form-group"> ' . "\n";
+              $fuente .= '     <label for="' . $reg[0] . '" class="col-sm-2 control-label"><?php _t("' . ucfirst($reg[0]) . '"); ?></label> ' . "\n";
+              $fuente .= '     <div class="col-sm-10"> ' . "\n";
+              $fuente .= '       <input type="text" class="form-control" name="' . $var2 . '" id="' . $var2 . '" placeholder="<?php _t("' . ucfirst($reg[0]) . '"); ?>" value="<?php echo $' . $var2 . '; ?>"> ' . "\n";
+              $fuente .= '     </div> ' . "\n";
+              $fuente .= '   </div> ' . "\n\n\n";
+
+
+              }
+              $i++;
+              }
+
+             */
 
             $fuente .= '   <div class="form-group"> ' . "\n";
             $fuente .= ' <div class="col-sm-offset-2 col-sm-10"> ' . "\n";
@@ -2011,29 +2040,29 @@ function contenido_vista($vista, $nombrePlugin) {
             $fuente .= '
 <table class="table table-striped">';
             /*
-    $fuentexxxxxx = '<thead>
-        <tr> 
-        <th>#</th>' . "\n\n";
-            $i = 0;
-            $usar_id = 0; // 0 no usa, -1 si usa
-            foreach ($resultados as $reg) {
-                if ($i > $usar_id) {
-                    $fuentexxxxxx .= ' <th><?php echo _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '"); ?></th> ' . "\n";
-                }
-                $i++;
-            }
-            $fuentexxxxxx .= ' <th><?php echo _t("Accion"); ?></th> ' . "\n";
-            $fuentexxxxxx .= ' </tr>
-    </thead>';
-*/
-            
-            
-            
-            
-            $fuente.= '<?php $ganchos=array(); '.$nombrePlugin.'_thead($ganchos); ?>';
-            
-            
-            
+              $fuentexxxxxx = '<thead>
+              <tr>
+              <th>#</th>' . "\n\n";
+              $i = 0;
+              $usar_id = 0; // 0 no usa, -1 si usa
+              foreach ($resultados as $reg) {
+              if ($i > $usar_id) {
+              $fuentexxxxxx .= ' <th><?php echo _t("' . ucfirst(bdd_quita_guiones(bdd_quita_id_inicio($reg[0]))) . '"); ?></th> ' . "\n";
+              }
+              $i++;
+              }
+              $fuentexxxxxx .= ' <th><?php echo _t("Accion"); ?></th> ' . "\n";
+              $fuentexxxxxx .= ' </tr>
+              </thead>';
+             */
+
+
+
+
+            $fuente .= '<?php $ganchos=array(); ' . $nombrePlugin . '_thead($ganchos); ?>';
+
+
+
             $fuente .= '<tbody>
     
  <?php
@@ -2042,25 +2071,25 @@ function contenido_vista($vista, $nombrePlugin) {
                 
             }
    ?>';
-   
-/*
-       $fuente .= '<?php
-        $i=1;
-        while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
-            include "./' . $nombrePlugin . '/reg/reg.php"; 
-                if(permisos_tiene_permiso("editar", "' . $nombrePlugin . '", $_usuarios_grupo)){
-                    include "./' . $nombrePlugin . '/vista/tr.php";
-                   // include "./' . $nombrePlugin . '/vista/tr_editar.php";
-                }else{
-                    include "./' . $nombrePlugin . '/vista/tr.php";
-                }      
-            $i++;    
-        }
-        ?>';
-       
-  */     
-       
-           $fuente .='<?php
+
+            /*
+              $fuente .= '<?php
+              $i=1;
+              while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
+              include "./' . $nombrePlugin . '/reg/reg.php";
+              if(permisos_tiene_permiso("editar", "' . $nombrePlugin . '", $_usuarios_grupo)){
+              include "./' . $nombrePlugin . '/vista/tr.php";
+              // include "./' . $nombrePlugin . '/vista/tr_editar.php";
+              }else{
+              include "./' . $nombrePlugin . '/vista/tr.php";
+              }
+              $i++;
+              }
+              ?>';
+
+             */
+
+            $fuente .= '<?php
                 $i = 1; // cuenta lineas
                 while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
 
@@ -2074,17 +2103,17 @@ function contenido_vista($vista, $nombrePlugin) {
 
                     $i++;
                 }
-                ?>'; 
-            
-       
-            $fuente .='</tbody>
+                ?>';
+
+
+            $fuente .= '</tbody>
                     <?php
                   if(permisos_tiene_permiso("crear", "' . $nombrePlugin . '", $_usuarios_grupo)){
                             //   include "./' . $nombrePlugin . '/vista/tr_anadir.php";
 
                            }
                   ?>
-                   <?php '.$nombrePlugin.'_tfoot(); ?>
+                   <?php ' . $nombrePlugin . '_tfoot(); ?>
 
                </table> 
 
@@ -2202,7 +2231,7 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
                         ';
 
 
-            
+
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
@@ -2210,44 +2239,44 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
                     $var1 = $reg[0];
                     $var2 = "$nombrePlugin" . "_" . "$var1";
                     // si el campo tiene _id_ lo quito 
-                   // $var2 = (strpos($var2, '_id_')) ? str_replace('_id', '', $var2) : $var2;  // eventos_sala    
-                    $fuente .= ' $pdf->Cell($w * 1, $h, _tr("'.$var1.'"), $border, $ln, $align, $fill, $link);' . "\n";
+                    // $var2 = (strpos($var2, '_id_')) ? str_replace('_id', '', $var2) : $var2;  // eventos_sala    
+                    $fuente .= ' $pdf->Cell($w * 1, $h, _tr("' . $var1 . '"), $border, $ln, $align, $fill, $link);' . "\n";
                 }
 
                 $i++;
             }
-            
-            
-            
-            
-            
-            
 
-                $fuente .=' $pdf->Ln();
+
+
+
+
+
+
+            $fuente .= ' $pdf->Ln();
                 //********************
                 $i = 1;
-                include "./'.$nombrePlugin.'/modelos/pdf.php";
-                while ($'.$nombrePlugin.' = mysql_fetch_array($sql)) {
-                    include "./'.$nombrePlugin.'/reg/reg.php";
+                include "./' . $nombrePlugin . '/modelos/pdf.php";
+                while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
+                    include "./' . $nombrePlugin . '/reg/reg.php";
                     $pdf->Cell($w * 1, $h, $i, $border, $ln, $align, $fill, $link);';
-                    
-                
-             $i = 0;
+
+
+            $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
                 if ($i > $usar_id) {
                     $var1 = $reg[0];
                     $var2 = "$nombrePlugin" . "_" . "$var1";
                     // si el campo tiene _id_ lo quito 
-                   // $var2 = (strpos($var2, '_id_')) ? str_replace('_id', '', $var2) : $var2;  // eventos_sala    
-                    $fuente .= ' $pdf->Cell($w * 1, $h, $'.$var2.', $border, $ln, $align, $fill, $link);' . "\n";
+                    // $var2 = (strpos($var2, '_id_')) ? str_replace('_id', '', $var2) : $var2;  // eventos_sala    
+                    $fuente .= ' $pdf->Cell($w * 1, $h, $' . $var2 . ', $border, $ln, $align, $fill, $link);' . "\n";
                 }
 
                 $i++;
             }
-            
-                    
-                    $fuente .='
+
+
+            $fuente .= '
 
                     $pdf->Ln();
                     $i++;
@@ -2257,55 +2286,55 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
 
                   ' . "\n";
 
-            
 
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             return $fuente;
             break;
@@ -2399,33 +2428,33 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
             $fuente .= ' **/' . "\n";
             $fuente .= '   ' . "\n";
             $fuente .= ' echo \'<td>\' . $i . \'</td> \';  ' . "\n";
-            
+
             $fuente .= ' foreach ($campo_disponibles as $campo) {
                             if (in_array($campo, ' . $nombrePlugin . '_campos_a_mostrar())) {
                                 echo "<td>$' . $nombrePlugin . '[$campo]</td> ";
                             }
-                        }  ' . "\n";                        
-            
-/*
-            $i = 0;
-            $usar_id = 0; // 0 no usa, -1 si usa
-            foreach ($resultados as $reg) {
+                        }  ' . "\n";
+
+            /*
+              $i = 0;
+              $usar_id = 0; // 0 no usa, -1 si usa
+              foreach ($resultados as $reg) {
 
 
-                if ($i > $usar_id) {
-                    $var1 = $reg[0];
-                    $var2 = "$nombrePlugin" . "_" . "$var1";
+              if ($i > $usar_id) {
+              $var1 = $reg[0];
+              $var2 = "$nombrePlugin" . "_" . "$var1";
 
-                    // si el campo tiene _id_ lo quito 
-                   // $var2 = (strpos($var2, '_id_')) ? str_replace('_id', '', $var2) : $var2;  // eventos_sala    
+              // si el campo tiene _id_ lo quito
+              // $var2 = (strpos($var2, '_id_')) ? str_replace('_id', '', $var2) : $var2;  // eventos_sala
 
-                    $fuente .= ' <td>\'.$' . $var2 . '.\'</td> ' . "\n";
-                }
+              $fuente .= ' <td>\'.$' . $var2 . '.\'</td> ' . "\n";
+              }
 
-                $i++;
-            }
- * 
- */
+              $i++;
+              }
+             * 
+             */
             $fuente .= ' echo \'<td>
 <a href=\'.$_SERVER[\'PHP_SELF\'].\'?p=' . $nombrePlugin . '&c=ver&' . $nombrePlugin . '_id=\'.$' . $nombrePlugin . '_id.\'>\'._tr("Ver").\'</a> |  
 <a href=\'.$_SERVER[\'PHP_SELF\'].\'?p=' . $nombrePlugin . '&c=editar&' . $nombrePlugin . '_id=\'.$' . $nombrePlugin . '_id.\'>\'._tr("Editar").\'</a>  
@@ -2595,9 +2624,9 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
             $fuente .= '<span class="glyphicon glyphicon-info-sign"></span> ' . "\n\n";
             $fuente .= 'Detalles ' . "\n";
             $fuente .= '</h1> ' . "\n";
-            
+
             $fuente .= '<ul> ' . "\n";
-            
+
             $i = 0;
             $usar_id = 0; // 0 no usa, -1 si usa
             foreach ($resultados as $reg) {
@@ -2614,16 +2643,16 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
                     $var1 = $reg[0];
                     $var2 = "$nombrePlugin" . "_" . "$var1";
                     $valor = '<?php echo $' . $var2 . '; ?>';
-                    
+
                     $var1 = $reg[0];
-                    $var2 = "$nombrePlugin"."_"."$var1";                                            
-                    $fuente .= '<li>' . ucfirst($reg[0]) . ' : %'.$var2.'%</li>' . "\n";
+                    $var2 = "$nombrePlugin" . "_" . "$var1";
+                    $fuente .= '<li>' . ucfirst($reg[0]) . ' : %' . $var2 . '%</li>' . "\n";
                     //$fuente .= '  ' . "\n";                    
                 }
                 $i++;
             }
             $fuente .= '</ul> ' . "\n";
-            
+
             return $fuente;
             break;
 
@@ -2767,7 +2796,7 @@ function paginacion($p, $c, $inicia = 0, $pagina_actual) {
                 }
                 $i++;
             }
-            $fuente .='";
+            $fuente .= '";
 
                 include "./' . $nombrePlugin . '/reg/var.php";
 
@@ -2875,18 +2904,18 @@ function contenido_reg($controlador, $nombrePlugin) {
             $i = 0;
             $usar_id = 'true'; // usa el id inicial de la tabla?
             foreach ($resultados as $reg) {
-                
-                    $nombre = $reg['Field'];
-                    $tipo = $reg['Type'];
-                    $nul = $reg['Null'];
-                    $clave = $reg['Key'];
-                    $defecto = $reg['Default'];
-                    $extra = $reg['Extra'];
-                    $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
-                    $tipo_campo = tipo_campo($tipo);
-                    $var1 = $reg[0];
-                    $var2 = "$nombrePlugin" . "_" . "$var1";                
-                
+
+                $nombre = $reg['Field'];
+                $tipo = $reg['Type'];
+                $nul = $reg['Null'];
+                $clave = $reg['Key'];
+                $defecto = $reg['Default'];
+                $extra = $reg['Extra'];
+                $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
+                $tipo_campo = tipo_campo($tipo);
+                $var1 = $reg[0];
+                $var2 = "$nombrePlugin" . "_" . "$var1";
+
                 // con esto verifico si deseo usar el id de la tabla o no
                 if ($usar_id && $i != '0') {
 
@@ -2908,29 +2937,25 @@ function contenido_reg($controlador, $nombrePlugin) {
             $i = 0;
             $usar_id = 'false'; // usa el id inicial de la tabla?
             foreach ($resultados as $reg) {
-                    $nombre = $reg['Field'];
-                    $tipo = $reg['Type'];
-                    $nul = $reg['Null'];
-                    $clave = $reg['Key'];
-                    $defecto = ($reg['Default'])?$reg['Default']:"null";
-                    $extra = $reg['Extra'];
-                    $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
-                    $tipo_campo = tipo_campo($tipo);
-                    $var1 = $reg[0];
-                    $var2 = "$nombrePlugin" . "_" . "$var1";   
-                    
+                $nombre = $reg['Field'];
+                $tipo = $reg['Type'];
+                $nul = $reg['Null'];
+                $clave = $reg['Key'];
+                $defecto = ($reg['Default']) ? $reg['Default'] : "null";
+                $extra = $reg['Extra'];
+                $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
+                $tipo_campo = tipo_campo($tipo);
+                $var1 = $reg[0];
+                $var2 = "$nombrePlugin" . "_" . "$var1";
+
                 // con esto verifico si deseo usar el id de la tabla o no
                 if ($usar_id && $i != '0') {
-                    
-                    if($defecto == 'CURRENT_TIMESTAMP'){
-                        $fuente .= '  #  $'.$var2.' = (isset($_GET[\''.$var2.'\']))?mysql_real_escape_string($_GET[\''.$var2.'\']):'.$defecto.';   ' . "\n";
-                    }else{
-                        $fuente .= '    $'.$var2.' = (isset($_GET[\''.$var2.'\']))?mysql_real_escape_string($_GET[\''.$var2.'\']):'.$defecto.';   ' . "\n";
+
+                    if ($defecto == 'CURRENT_TIMESTAMP') {
+                        $fuente .= '  #  $' . $var2 . ' = (isset($_GET[\'' . $var2 . '\']))?mysql_real_escape_string($_GET[\'' . $var2 . '\']):' . $defecto . ';   ' . "\n";
+                    } else {
+                        $fuente .= '    $' . $var2 . ' = (isset($_GET[\'' . $var2 . '\']))?mysql_real_escape_string($_GET[\'' . $var2 . '\']):' . $defecto . ';   ' . "\n";
                     }
-                    
-                    
-                    
-                    
                 } else {
                     $fuente .= '  //$' . $var2 . ' = mysql_real_escape_string($_GET[\'' . $var2 . '\']); ' . "\n";
                 }
@@ -2938,7 +2963,7 @@ function contenido_reg($controlador, $nombrePlugin) {
 
                 $i++;
             }
-            
+
             $fuente .= '
                 if ($config_debug) {
                     echo "<h3>Debug mode (" . __FILE__ . " )</h3>";    
@@ -2950,7 +2975,7 @@ function contenido_reg($controlador, $nombrePlugin) {
                     echo "</table>";
                 }';
 
-            
+
             return $fuente;
             break;
         case 'post.php':
@@ -2962,22 +2987,22 @@ function contenido_reg($controlador, $nombrePlugin) {
             $i = 0;
             $usar_id = 'false'; // usa el id inicial de la tabla?
             foreach ($resultados as $reg) {
-                    $nombre = $reg['Field'];
-                    $tipo = $reg['Type'];
-                    $nul = $reg['Null'];
-                    $clave = $reg['Key'];
-                    $defecto = ($reg['Default'])?$reg['Default']:"null";
-                    $extra = $reg['Extra'];
-                    $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
-                    $tipo_campo = tipo_campo($tipo);
-                    $var1 = $reg[0];
-                    $var2 = "$nombrePlugin" . "_" . "$var1";   
+                $nombre = $reg['Field'];
+                $tipo = $reg['Type'];
+                $nul = $reg['Null'];
+                $clave = $reg['Key'];
+                $defecto = ($reg['Default']) ? $reg['Default'] : "null";
+                $extra = $reg['Extra'];
+                $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
+                $tipo_campo = tipo_campo($tipo);
+                $var1 = $reg[0];
+                $var2 = "$nombrePlugin" . "_" . "$var1";
                 // con esto verifico si deseo usar el id de la tabla o no
-                if ($usar_id && $i != '0') {                    
-                     if($defecto == 'CURRENT_TIMESTAMP'){
-                        $fuente .= ' #    $'.$var2.' = (isset($_POST[\''.$var2.'\']))?mysql_real_escape_string($_POST[\''.$var2.'\']):'.$defecto.';   ' . "\n";                    
-                    }else{
-                        $fuente .= '    $'.$var2.' = (isset($_POST[\''.$var2.'\']))?mysql_real_escape_string($_POST[\''.$var2.'\']):'.$defecto.';   ' . "\n";                    
+                if ($usar_id && $i != '0') {
+                    if ($defecto == 'CURRENT_TIMESTAMP') {
+                        $fuente .= ' #    $' . $var2 . ' = (isset($_POST[\'' . $var2 . '\']))?mysql_real_escape_string($_POST[\'' . $var2 . '\']):' . $defecto . ';   ' . "\n";
+                    } else {
+                        $fuente .= '    $' . $var2 . ' = (isset($_POST[\'' . $var2 . '\']))?mysql_real_escape_string($_POST[\'' . $var2 . '\']):' . $defecto . ';   ' . "\n";
                     }
                 } else {
                     $fuente .= '  //$' . $var2 . ' = mysql_real_escape_string($_POST[\'' . $var2 . '\']); ' . "\n";
@@ -2986,7 +3011,7 @@ function contenido_reg($controlador, $nombrePlugin) {
 
                 $i++;
             }
-            
+
             $fuente .= '
                 if ($config_debug) {
                     echo "<h3>Debug mode (" . __FILE__ . " )</h3>";    
@@ -2996,10 +3021,10 @@ function contenido_reg($controlador, $nombrePlugin) {
                         echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
                     }
                     echo "</table>";
-                }'; 
-            
-            
-            
+                }';
+
+
+
             return $fuente;
             break;
         case 'reg.php':
@@ -3060,7 +3085,7 @@ function contenido_reg($controlador, $nombrePlugin) {
                 $hay_id = strpos($campo, '_id_');
                 if ($hay_id) {
                     //$eventos_sala = salas_campo('nombre', $eventos_id_sala);   
-                   // $fuente .= "  $$campo_sin_id = $posible_nombre('$var1_sin_id', $$campo);  \n";
+                    // $fuente .= "  $$campo_sin_id = $posible_nombre('$var1_sin_id', $$campo);  \n";
                 }
 
                 $i++;
@@ -3076,28 +3101,28 @@ function contenido_reg($controlador, $nombrePlugin) {
             $fuente .= '  ' . "\n";
             $i = 0;
             foreach ($resultados as $reg) {
-                    $nombre = $reg['Field'];
-                    $tipo = $reg['Type'];
-                    $nul = $reg['Null'];
-                    $clave = $reg['Key'];
-                    $defecto = ($reg['Default'])?$reg['Default']:"null";
-                    $extra = $reg['Extra'];
-                    $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
-                    $tipo_campo = tipo_campo($tipo);
-                    $var1 = $reg[0];
-                    $var2 = "$nombrePlugin" . "_" . "$var1";   
-                
-            if($defecto == 'CURRENT_TIMESTAMP'){
-                $fuente .= '   # $'.$var2.' = (isset($_REQUEST[\''.$var2.'\']))?mysql_real_escape_string($_REQUEST[\''.$var2.'\']):'.$defecto.';   ' . "\n";                
-            }else{
-                $fuente .= '    $'.$var2.' = (isset($_REQUEST[\''.$var2.'\']))?mysql_real_escape_string($_REQUEST[\''.$var2.'\']):'.$defecto.';   ' . "\n";
-            }
-                    
-                    
-                    
-                
-                
-                
+                $nombre = $reg['Field'];
+                $tipo = $reg['Type'];
+                $nul = $reg['Null'];
+                $clave = $reg['Key'];
+                $defecto = ($reg['Default']) ? $reg['Default'] : "null";
+                $extra = $reg['Extra'];
+                $tabla_nombre = "$nombrePlugin" . "_" . "$nombre";
+                $tipo_campo = tipo_campo($tipo);
+                $var1 = $reg[0];
+                $var2 = "$nombrePlugin" . "_" . "$var1";
+
+                if ($defecto == 'CURRENT_TIMESTAMP') {
+                    $fuente .= '   # $' . $var2 . ' = (isset($_REQUEST[\'' . $var2 . '\']))?mysql_real_escape_string($_REQUEST[\'' . $var2 . '\']):' . $defecto . ';   ' . "\n";
+                } else {
+                    $fuente .= '    $' . $var2 . ' = (isset($_REQUEST[\'' . $var2 . '\']))?mysql_real_escape_string($_REQUEST[\'' . $var2 . '\']):' . $defecto . ';   ' . "\n";
+                }
+
+
+
+
+
+
                 $i++;
             }
             $fuente .= '
@@ -3109,8 +3134,8 @@ function contenido_reg($controlador, $nombrePlugin) {
                         echo "<tr><td><b>$key:</b></td><td>$value</td></tr>";
                     }
                     echo "</table>";
-                }'; 
-            
+                }';
+
             return $fuente;
             break;
 
@@ -3125,11 +3150,11 @@ function contenido_reg($controlador, $nombrePlugin) {
             "' . $nombrePlugin . '"=>[';
             foreach ($resultados as $reg) {
                 $var1 = $reg[0];
-                $var2 = "$nombrePlugin" . "_" . "$var1";                              
+                $var2 = "$nombrePlugin" . "_" . "$var1";
                 $fuente .= ' "' . $var1 . '"=>"$' . $nombrePlugin . '_' . $var1 . '",  ' . "\n";
                 $i++;
             }
-            $fuente .='                ]
+            $fuente .= '                ]
         ];';
 
             foreach ($resultados as $reg) {
@@ -3163,16 +3188,16 @@ function contenido_plugin($pagina, $nombrePlugin) {
 
     switch ($pagina) {
         case 'funciones.php':
-    $nombre_sin_id = bdd_quita_id_inicio($nombrePlugin);
-    $lista_campos = bdd_lista_campos_segun_tabla($nombrePlugin);
-    $campo_parecido = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre_sin_id, $lista_campos);
+            $nombre_sin_id = bdd_quita_id_inicio($nombrePlugin);
+            $lista_campos = bdd_lista_campos_segun_tabla($nombrePlugin);
+            $campo_parecido = bdd_busca_tabla_con_nombre_igual_o_parecido($nombre_sin_id, $lista_campos);
 
-    $fuente = '<?php ' . "\n";
-    $fuente .= ' /**  ' . "\n";
-    $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
-    $fuente .= ' **/' . "\n";
-    $fuente .= ' ';
-    $fuente .= 'function ' . $nombrePlugin . '_campo($campo, $id) {
+            $fuente = '<?php ' . "\n";
+            $fuente .= ' /**  ' . "\n";
+            $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
+            $fuente .= ' **/' . "\n";
+            $fuente .= ' ';
+            $fuente .= 'function ' . $nombrePlugin . '_campo($campo, $id) {
     global $conexion;
     $sql = mysql_query(
             "SELECT $campo FROM ' . $nombrePlugin . ' WHERE id = $id   ", $conexion) or error(__DIR__, __FILE__, __LINE__);
@@ -3225,7 +3250,7 @@ while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
 } 
 }
 /**/
-function '.$nombrePlugin.'_numero_actual() {
+function ' . $nombrePlugin . '_numero_actual() {
     global $conexion;
     $sql = mysql_query(
             "SELECT MAX(id) FROM ' . $nombrePlugin . '   ", $conexion) or error(__DIR__, __FILE__, __LINE__);
@@ -3239,10 +3264,10 @@ function '.$nombrePlugin.'_numero_actual() {
 }
 
 
-function '.$nombrePlugin.'_campos_disponibles(){
+function ' . $nombrePlugin . '_campos_disponibles(){
      global $conexion;
     $data = array();
-     $sql = mysql_query( "SHOW COLUMNS FROM '.$nombrePlugin.'  ", $conexion) or error(__DIR__, __FILE__, __LINE__);
+     $sql = mysql_query( "SHOW COLUMNS FROM ' . $nombrePlugin . '  ", $conexion) or error(__DIR__, __FILE__, __LINE__);
     
     while ($reg = mysql_fetch_array($sql)) {
         $data[$reg[0]] = $reg[0];
@@ -3255,26 +3280,26 @@ function '.$nombrePlugin.'_campos_disponibles(){
  * @global type $conexion
  * @return type
  */
-function '.$nombrePlugin.'_campos_a_mostrar(){
+function ' . $nombrePlugin . '_campos_a_mostrar(){
      global $conexion;
     $data = array();
-     $sql = mysql_query( "SELECT valor FROM _opciones WHERE opcion = \''.$nombrePlugin.'_thead\' ", $conexion) or error(__DIR__, __FILE__, __LINE__);
+     $sql = mysql_query( "SELECT valor FROM _opciones WHERE opcion = \'' . $nombrePlugin . '_thead\' ", $conexion) or error(__DIR__, __FILE__, __LINE__);
     
     $reg = mysql_fetch_array($sql);
     
     return json_decode($reg[0],true);
 }
 
-function '.$nombrePlugin.'_thead($ganchos=array()){
+function ' . $nombrePlugin . '_thead($ganchos=array()){
     
-    $campo_disponibles = '.$nombrePlugin.'_campos_disponibles();   
-    $'.$nombrePlugin.'_campos_a_mostrar = '.$nombrePlugin.'_campos_a_mostrar();        
+    $campo_disponibles = ' . $nombrePlugin . '_campos_disponibles();   
+    $' . $nombrePlugin . '_campos_a_mostrar = ' . $nombrePlugin . '_campos_a_mostrar();        
     echo "
      <thead>
         <tr> ";
     echo "<th>"._tr("#")."</th> "; // numero de linea
     foreach ($campo_disponibles as $value) {        
-        if(in_array($value, $'.$nombrePlugin.'_campos_a_mostrar)){
+        if(in_array($value, $' . $nombrePlugin . '_campos_a_mostrar)){
             echo "<th>"._tr($value)."</th> "; 
         }        
     }
@@ -3298,15 +3323,15 @@ function '.$nombrePlugin.'_thead($ganchos=array()){
 /**
  * 
  */
-function '.$nombrePlugin.'_tfoot(){    
-   '.$nombrePlugin.'_thead();
+function ' . $nombrePlugin . '_tfoot(){    
+   ' . $nombrePlugin . '_thead();
 }
 
 
 ';
-    
+
             return $fuente;
-            
+
             break;
 
         case 'readme.txt':
@@ -3354,17 +3379,17 @@ function contenido_admin($pagina) {
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/ ' . "\n";
-            
-            
+
+
             $fuente .= '
 switch ($_SERVER["SERVER_NAME"]) {
     case "127.0.0.1":
     case "localhost":
     //case "192.168.1.26":
-        $bd_servidor = "'.$servidor.'";
-        $bd_bdatos = "'.$bdatos.'";
-        $bd_usuario = "'.$usuario.'";
-        $bd_clave = "'.$clave.'";
+        $bd_servidor = "' . $servidor . '";
+        $bd_bdatos = "' . $bdatos . '";
+        $bd_usuario = "' . $usuario . '";
+        $bd_clave = "' . $clave . '";
         error_reporting(E_ALL);
         ini_set("display_errors", 1);
         break;
@@ -3378,14 +3403,14 @@ switch ($_SERVER["SERVER_NAME"]) {
         break;
     default:
         break;
-}'; 
-            
-            
-            
-            
-            
-            
-            
+}';
+
+
+
+
+
+
+
             return $fuente;
             break;
 
@@ -3404,9 +3429,9 @@ $dbh = new PDO("mysql:host=$servidor; dbname=$bdatos",   $usuario, $clave);
             $fuente .= ' /**  ' . "\n";
             $fuente .= ' magia_version: ' . magia_version() . ' ' . "\n";
             $fuente .= ' **/' . "\n";
-            $fuente .= ' $conexion = mysql_connect("$servidor", "$usuario", "$clave") or error(__DIR__, __FILE__, __LINE__); '. "\n";            
-            $fuente .= ' mysql_select_db("$bdatos", $conexion) or error(__DIR__, __FILE__, __LINE__); '. "\n";
-            
+            $fuente .= ' $conexion = mysql_connect("$servidor", "$usuario", "$clave") or error(__DIR__, __FILE__, __LINE__); ' . "\n";
+            $fuente .= ' mysql_select_db("$bdatos", $conexion) or error(__DIR__, __FILE__, __LINE__); ' . "\n";
+
             return $fuente;
             break;
         case 'configuracion.php':
@@ -4033,7 +4058,7 @@ while ($' . $nombrePlugin . ' = mysql_fetch_array($sql)) {
 } 
 }
 /**/
-function '.$nombrePlugin.'_numero_actual() {
+function ' . $nombrePlugin . '_numero_actual() {
     global $conexion;
     $sql = mysql_query(
             "SELECT MAX(id) FROM ' . $nombrePlugin . '   ", $conexion) or error(__DIR__, __FILE__, __LINE__);
@@ -4047,10 +4072,10 @@ function '.$nombrePlugin.'_numero_actual() {
 }
 
 
-function '.$nombrePlugin.'_campos_disponibles(){
+function ' . $nombrePlugin . '_campos_disponibles(){
      global $conexion;
     $data = array();
-     $sql = mysql_query( "SHOW COLUMNS FROM '.$nombrePlugin.'  ", $conexion) or error(__DIR__, __FILE__, __LINE__);
+     $sql = mysql_query( "SHOW COLUMNS FROM ' . $nombrePlugin . '  ", $conexion) or error(__DIR__, __FILE__, __LINE__);
     
     while ($reg = mysql_fetch_array($sql)) {
         $data[$reg[0]] = $reg[0];
@@ -4063,25 +4088,25 @@ function '.$nombrePlugin.'_campos_disponibles(){
  * @global type $conexion
  * @return type
  */
-function '.$nombrePlugin.'_campos_a_mostrar(){
+function ' . $nombrePlugin . '_campos_a_mostrar(){
      global $conexion;
     $data = array();
-     $sql = mysql_query( "SELECT valor FROM _opciones WHERE opcion = \''.$nombrePlugin.'_thead\' ", $conexion) or error(__DIR__, __FILE__, __LINE__);
+     $sql = mysql_query( "SELECT valor FROM _opciones WHERE opcion = \'' . $nombrePlugin . '_thead\' ", $conexion) or error(__DIR__, __FILE__, __LINE__);
     
     $reg = mysql_fetch_array($sql);
     
     return json_decode($reg[0],true);
 }
 
-function '.$nombrePlugin.'_thead(){    
-    $campo_disponibles = '.$nombrePlugin.'_campos_disponibles();   
-    $'.$nombrePlugin.'_campos_a_mostrar = '.$nombrePlugin.'_campos_a_mostrar();        
+function ' . $nombrePlugin . '_thead(){    
+    $campo_disponibles = ' . $nombrePlugin . '_campos_disponibles();   
+    $' . $nombrePlugin . '_campos_a_mostrar = ' . $nombrePlugin . '_campos_a_mostrar();        
     echo "
      <thead>
         <tr> ";
     echo "<th>"._tr("#")."</th> "; // numero de linea
     foreach ($campo_disponibles as $value) {        
-        if(in_array($value, $'.$nombrePlugin.'_campos_a_mostrar)){
+        if(in_array($value, $' . $nombrePlugin . '_campos_a_mostrar)){
             echo "<th>"._tr($value)."</th> "; 
         }        
     }
@@ -4092,32 +4117,32 @@ function '.$nombrePlugin.'_thead(){
 /**
  * 
  */
-function '.$nombrePlugin.'_tfoot(){    
-   '.$nombrePlugin.'_thead();
+function ' . $nombrePlugin . '_tfoot(){    
+   ' . $nombrePlugin . '_thead();
 }
 
 
 ';
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //return $fuente;
     return "";
 }
@@ -4948,35 +4973,36 @@ function registrar_permiso_pagina_grupo($grupo, $pagina, $permiso) {
             )
     );
 }
-function registrar_extructura_magia($vceb  ,  $tabla  ,  $campo  ,  $tipo  ,  $tabla_campo_relacionado  ,  $opciones  ,  $label  ,  $nombre  ,  $identidicador  ,  $marca_agua  ,  $valor  ,  $clase  ,  $obligatorio  ,  $solo_lectura  ,  $desactivado  ,  $activo) {
+
+function registrar_extructura_magia($vceb, $tabla, $campo, $tipo, $tabla_campo_relacionado, $opciones, $label, $nombre, $identidicador, $marca_agua, $valor, $clase, $obligatorio, $solo_lectura, $desactivado, $activo) {
     global $dbh;
-        $sql = "INSERT INTO _magia ( 
+    $sql = "INSERT INTO _magia ( 
         vceb  ,  tabla  ,  campo  ,  tipo  ,  tabla_campo_relacionado  ,  opciones  ,  label  ,  nombre  ,  identidicador  ,  marca_agua  ,  valor  ,  clase  ,  obligatorio  ,  solo_lectura  ,  desactivado  ,  activo  ) VALUES ( 
-        :vceb  ,  :tabla  ,  :campo  ,  :tipo  ,  :tabla_campo_relacionado  ,  :opciones  ,  :label  ,  :nombre  ,  :identidicador  ,  :marca_agua  ,  :valor  ,  :clase  ,  :obligatorio  ,  :solo_lectura  ,  :desactivado  ,  :activo    )";  
-        $stmt = $dbh->prepare($sql); 
-        $stmt->execute(array( 
-        ":vceb"=>"$_magia_vceb"  ,  
-            ":tabla"=>"$_magia_tabla"  ,  
-            ":campo"=>"$_magia_campo"  ,  
-            ":tipo"=>"$_magia_tipo"  ,  
-            ":tabla_campo_relacionado"=>"$_magia_tabla_campo_relacionado"  ,  
-            ":opciones"=>"$_magia_opciones"  ,  
-            ":label"=>"$_magia_label"  ,  
-            ":nombre"=>"$_magia_nombre"  ,  
-            ":identidicador"=>"$_magia_identidicador"  ,  
-            ":marca_agua"=>"$_magia_marca_agua"  ,  
-            ":valor"=>"$_magia_valor"  ,  
-            ":clase"=>"$_magia_clase"  ,  
-            ":obligatorio"=>"$_magia_obligatorio"  ,  
-            ":solo_lectura"=>"$_magia_solo_lectura"  ,  
-            ":desactivado"=>"$_magia_desactivado"  ,  
-            ":activo"=>"$_magia_activo"              ) 
-        ); 
+        :vceb  ,  :tabla  ,  :campo  ,  :tipo  ,  :tabla_campo_relacionado  ,  :opciones  ,  :label  ,  :nombre  ,  :identidicador  ,  :marca_agua  ,  :valor  ,  :clase  ,  :obligatorio  ,  :solo_lectura  ,  :desactivado  ,  :activo    )";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array(
+        ":vceb" => "$_magia_vceb",
+        ":tabla" => "$_magia_tabla",
+        ":campo" => "$_magia_campo",
+        ":tipo" => "$_magia_tipo",
+        ":tabla_campo_relacionado" => "$_magia_tabla_campo_relacionado",
+        ":opciones" => "$_magia_opciones",
+        ":label" => "$_magia_label",
+        ":nombre" => "$_magia_nombre",
+        ":identidicador" => "$_magia_identidicador",
+        ":marca_agua" => "$_magia_marca_agua",
+        ":valor" => "$_magia_valor",
+        ":clase" => "$_magia_clase",
+        ":obligatorio" => "$_magia_obligatorio",
+        ":solo_lectura" => "$_magia_solo_lectura",
+        ":desactivado" => "$_magia_desactivado",
+        ":activo" => "$_magia_activo")
+    );
 }
 
 function registra_item_al_menu($plugin, $ubicacion, $padre, $label) {
     global $dbh;
-    echo "<p>$plugin $ubicacion $padre $label</p>";
+    echo "<li>$plugin $ubicacion $padre $label</li>";
     echo "<hr>";
     $sql = "INSERT INTO _menu (id,ubicacion, padre,label,url,icono,orden) VALUES (:id, :ubicacion, :padre,:label,:url,:icono,:orden)";
     $stmt = $dbh->prepare($sql);
@@ -4991,13 +5017,14 @@ function registra_item_al_menu($plugin, $ubicacion, $padre, $label) {
             )
     );
 }
-function registra_campos_visibles($nombrePlugin,$valor) {
+
+function registra_campos_visibles($nombrePlugin, $valor) {
     global $dbh;
     echo "<p>Registro en opciones</p>";
     echo "<hr>";
-    
-    $opcion = $nombrePlugin."_thead";
-    
+
+    $opcion = $nombrePlugin . "_thead";
+
     $sql = "INSERT INTO _opciones (opcion,valor,grupo) VALUES (:opcion,:valor,:grupo)";
     $stmt = $dbh->prepare($sql);
     $stmt->execute(array(
@@ -5035,15 +5062,15 @@ function magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvcg) {
             break;
         case 'modelos':
             $c = [
-                'index.php', 
-                'pdf.php', 
-                'ver.php', 
-                'var.php', 
-                'crear.php', 
-                'editar.php', 
-                'borrar.php', 
+                'index.php',
+                'pdf.php',
+                'ver.php',
+                'var.php',
+                'crear.php',
+                'editar.php',
+                'borrar.php',
                 'buscar.php'
-                ];
+            ];
             $i = 0;
             while ($i < count($c)) {
                 $path = "$path_plugins/$nombrePlugin/modelos";
@@ -5055,12 +5082,12 @@ function magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvcg) {
             break;
         case 'reg':
             $c = [
-                'get.php', 
-                'post.php', 
-                'reg.php', 
-                'request.php', 
+                'get.php',
+                'post.php',
+                'reg.php',
+                'request.php',
                 'var.php'
-                ];
+            ];
             $i = 0;
             while ($i < count($c)) {
                 $path = "$path_plugins/$nombrePlugin/reg";
@@ -5262,16 +5289,18 @@ function magia_crear_ficheros_en_proyecto($nombreProyecto) {
         $j++;
     }
 }
+
 /**
  * Traduce
  * @param type $palabra
  * @return type
  */
 function _t($palabra) {
-    echo  $palabra;
+    echo $palabra;
 }
+
 function _tr($palabra) {
-    return  $palabra;
+    return $palabra;
 }
 
 ?>
