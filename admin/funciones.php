@@ -375,6 +375,7 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
         //crear_fichero("$path_web/extenciones/funciones", "$nombrePlugin.php", $contenido);
         echo "</ul>";
 
+        echo "<li><h3>Registro en el _pagina</h3></li>"; 
 
         // registra la pagina en la bd
         if (registrar_pagina_en_bd($nombrePlugin)) {
@@ -385,7 +386,7 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
 
 
 
-
+        echo "<li><h3>Registro en el _menu</h3></li>"; 
 
         // registra item en menu
         if (registra_item_al_menu($nombrePlugin, $ubicacion, $padre, $label)) {
@@ -416,33 +417,24 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
 
 
 
-
+        echo "<li><h3>Registro de permisos</h3></li>"; 
 
 // ahora registro el permiso del root en 1111
-        registrar_permiso_pagina_grupo('root', "$nombrePlugin", '1111');
+        //registrar_permiso_pagina_grupo('root', "$nombrePlugin", '1111');
+
+        if (registrar_permiso_pagina_grupo('root', "$nombrePlugin", '1111')) {
+            //echo "<li><span class=\"label label-info\">ok</span> Registro de permiso 1111  para root </li>";
+            echo "<li><span class=\"label label-danger\">error</span> Registro de permiso 1111  para root </li>";
+        } else {
+            //echo "<li><span class=\"label label-danger\">error</span> Registro de permiso 1111  para root </li>";
+            echo "<li><span class=\"label label-info\">ok</span> Registro de permiso 1111  para root </li>";
+        }
+
         registrar_permiso_pagina_grupo('administradores', "$nombrePlugin", '1110');
         registrar_permiso_pagina_grupo('invitados', "$nombrePlugin", '1000');
         registrar_permiso_pagina_grupo('usuarios', "$nombrePlugin", '1110');
 
-        /*
-          //registrar_extructura_magia($vceb, $tabla, $campo, $tipo, $tabla_campo_relacionado, $opciones, $label, $nombre, $identidicador, $marca_agua, $valor, $clase, $obligatorio, $solo_lectura, $desactivado, $activo)
-          registrar_extructura_magia(
-          'ver',
-          $nombrePlugin,
-          $campo,
-          $tipo,
-          $tabla_campo_relacionado,
-          $opciones,
-          $label,
-          $nombre, $identidicador, $marca_agua,
-          $valor, $clase, $obligatorio, $solo_lectura,
-          $desactivado,
-          1);
-         */
-
-
-
-
+      echo "<li><h3>Crea carpeta y ficheros del MVC</h3></li>"; 
 
         // registro el permiso de invitados, 
         // ahora hago una repeticion creando a cada vuelta las carpetas dentro del plugin
@@ -450,10 +442,12 @@ function plugin_crear($path_plugins, $ubicacion, $nombrePlugin, $padre, $label) 
         while ($i < $t) {
             if ($mvc[$i] != 'raiz') { // la ultima no la creo (raiz)
                 crear_carpeta("$path_plugins/$nombrePlugin", $mvc[$i]);
-                crear_carpeta("$path_plugins/$nombrePlugin/$mvc[$i]", 'publico');
+              //  crear_carpeta("$path_plugins/$nombrePlugin/$mvc[$i]", 'publico');
             }
             // dentro de cada carpeta creo los ficheros que cada carpeta debe contenir
+            echo "<ul>"; 
             magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvc[$i]);
+            echo "</ul>"; 
             $i++;
         }
     } else {
@@ -565,10 +559,10 @@ function crear_fichero($path, $fichero, $contenido = '') {
     $contiene = ($contenido) ? $contenido : '';
 
     if (file_exists("$path/$fichero")) {
-        echo "<p><b>$icon_error [error]</b> El fichero $path/<b>$fichero</b> Ya existe</p>";
+        echo "<li><span class=\"label label-danger\">error</span> El fichero $path/<b>$fichero</b> Ya existe</li>";
         return 1;
-    } else {
-        echo "<p>---$icon_fichero $fichero creado con exito</p>";
+    } else {        
+        echo "<li><span class=\"label label-info\">ok</span> $icon_fichero <b>$fichero</b> creado con exito</li>";                
         $fp = fopen("$path/$fichero", 'w+');
         fwrite($fp, $contiene);
         fclose($fp);
@@ -5162,7 +5156,9 @@ function magia_crear_ficheros_dentro_mvc($nombrePlugin, $mvcg) {
                 // este va a ser el contedido que vamos a escribir en el documento                
                 $contenido = contenido_plugin($c[$i], $nombrePlugin);
                 crear_fichero($path, "$c[$i]", $contenido);
-                echo "<p>-----<b>$icon_fichero_copiar</b> $c[$i] se ha llenado el contenido </p>";
+                //echo "<p>-----<b>$icon_fichero_copiar</b> $c[$i] se ha llenado el contenido </p>";
+                echo "<li><span class=\"label label-info\">ok</span> $icon_fichero_copiar <b>$c[$i]</b> Llenado con exito</li>";
+                
                 $i++;
             }
 
